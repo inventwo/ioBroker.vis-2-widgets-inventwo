@@ -1,16 +1,16 @@
 {
-  "name": "iobroker.vis-2-widgets-react-template",
-  "version": "0.2.1",
-  "description": "ioBroker vis widget demo",
-  "author": "bluefox <dogafox@gmail.com>",
+  "name": "iobroker.vis-2-widgets-inventwo",
+  "version": "0.0.1",
+  "description": "ioBroker vis inventwo widgets",
+  "author": "jkvarel <jk@inventwo.com>",
   "contributors": [
-    "bluefox <dogafox@gmail.com>"
+    "jkvarel <jk@inventwo.com>"
   ],
-  "homepage": "https://github.com/ioBroker/ioBroker.vis-2-widgets-react-template",
+  "homepage": "https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ioBroker/ioBroker.vis-2-widgets-react-template"
+    "url": "https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo"
   },
   "keywords": [
     "ioBroker",
@@ -28,7 +28,7 @@
     "gulp": "^4.0.2",
     "mocha": "^10.2.0"
   },
-  "main": "widgets/vis-2-widgets-react-template/customWidgets.js",
+  "main": "widgets/vis-2-widgets-inventwo/customWidgets.js",
   "files": [
     "admin/",
     "widgets/",
@@ -48,7 +48,7 @@
     "npm": "npm i -f && cd src-widgets && npm i -f && cd .."
   },
   "bugs": {
-    "url": "https://github.com/ioBroker/ioBroker.vis-2-widgets-react-template/issues"
+    "url": "https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/issues"
   },
   "readmeFilename": "README.md"
 }

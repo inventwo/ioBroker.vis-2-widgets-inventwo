@@ -1,137 +1,61 @@
 {
   "common": {
-    "name": "vis-2-widgets-react-template",
-    "version": "0.2.1",
+    "name": "vis-2-widgets-inventwo",
+    "version": "0.0.1",
     "news": {
-      "0.2.1": {
-        "en": "update packages",
-        "de": "update-pakete",
-        "ru": "обновление пакетов",
-        "pt": "pacotes de atualização",
-        "nl": "vertaling:",
-        "fr": "mettre à jour les paquets",
-        "it": "pacchetti di aggiornamento",
-        "es": "actualizar paquetes",
-        "pl": "pakiet aktualizacji",
-        "uk": "оновлення пакетів",
-        "zh-cn": "更新包"
-      },
-      "0.2.0": {
-        "en": "Added CI tests",
-        "de": "CI-Tests",
-        "ru": "Добавлены CI тесты",
-        "pt": "Adicionados testes de IC",
-        "nl": "Toegevoegd CI testen",
-        "fr": "Essais CI ajoutés",
-        "it": "Test CI aggiunti",
-        "es": "Pruebas de CI adicionales",
-        "pl": "Added CI test",
-        "uk": "Додано тести CI",
-        "zh-cn": "增加CI试验"
-      },
-      "0.1.6": {
-        "en": "update packages",
-        "de": "update-pakete",
-        "ru": "обновление пакетов",
-        "pt": "pacotes de atualização",
-        "nl": "vertaling:",
-        "fr": "mettre à jour les paquets",
-        "it": "pacchetti di aggiornamento",
-        "es": "actualizar paquetes",
-        "pl": "pakiet aktualizacji",
-        "uk": "оновлення пакетів",
-        "zh-cn": "更新包"
-      },
-      "0.1.5": {
-        "en": "update packages",
-        "de": "update-pakete",
-        "ru": "обновление пакетов",
-        "pt": "pacotes de atualização",
-        "nl": "vertaling:",
-        "fr": "mettre à jour les paquets",
-        "it": "pacchetti di aggiornamento",
-        "es": "actualizar paquetes",
-        "pl": "pakiet aktualizacji",
-        "uk": "оновлення пакетів",
-        "zh-cn": "更新包"
-      },
-      "0.1.4": {
-        "en": "update packages",
-        "de": "update-pakete",
-        "ru": "обновление пакетов",
-        "pt": "pacotes de atualização",
-        "nl": "vertaling:",
-        "fr": "mettre à jour les paquets",
-        "it": "pacchetti di aggiornamento",
-        "es": "actualizar paquetes",
-        "pl": "pakiet aktualizacji",
-        "uk": "оновлення пакетів",
-        "zh-cn": "更新包"
-      },
-      "0.1.3": {
-        "en": "update packages",
-        "de": "update-pakete",
-        "ru": "обновление пакетов",
-        "pt": "pacotes de atualização",
-        "nl": "vertaling:",
-        "fr": "mettre à jour les paquets",
-        "it": "pacchetti di aggiornamento",
-        "es": "actualizar paquetes",
-        "pl": "pakiet aktualizacji",
-        "uk": "оновлення пакетів",
-        "zh-cn": "更新包"
-      },
-      "0.1.2": {
-        "en": "Packages were updated",
-        "de": "Pakete wurden aktualisiert",
-        "ru": "Пакеты были обновлены",
-        "pt": "Pacotes foram atualizados",
-        "nl": "Packages werden geüpload",
-        "fr": "Les paquets ont été mis à jour",
-        "it": "I pacchetti sono stati aggiornati",
-        "es": "Se actualizaron los paquetes",
-        "pl": "Pakiety zostały zaktualizowane",
-        "uk": "Пакети оновлено",
-        "zh-cn": "包装更新"
+      "0.0.1": {
+        "en": "Init",
+        "de": "Init",
+        "ru": "Init",
+        "pt": "Inspiração",
+        "nl": "Init",
+        "fr": "Init",
+        "it": "Init",
+        "es": "Init",
+        "pl": "Init",
+        "uk": "Увійти",
+        "zh-cn": "输入"
       }
     },
-    "title": "vis-2-widgets-react-template.org",
+    "title": "vis-2-widgets-inventwo.org",
     "titleLang": {
-      "en": "Vis-Widget template",
-      "de": "Vis-Widget template",
-      "ru": "Vis-Widget template",
-      "pt": "Vis-Widget template",
-      "nl": "Vis-Widget template",
-      "fr": "Vis-Widget template",
-      "it": "Vis-Widget template",
-      "es": "Vis-Widget template",
-      "pl": "Vis-Widget template",
-      "zh-cn": "Vis-Widget template"
+      "en": "Vis 2 inventwo widgets",
+      "de": "Vis 2 Erfinder Widgets",
+      "ru": "Vis 2 inventwo widgets",
+      "pt": "Vis 2 inventwo widgets",
+      "nl": "Vis 2 inventwo widgets",
+      "fr": "Vis 2 widgets inventwo",
+      "it": "Vis 2 widgets inventwo",
+      "es": "Vis 2 widgets inventwo",
+      "pl": "Vis 2 wynalazły dwa widżety",
+      "uk": "Vis 2 inventwo віджети",
+      "zh-cn": "Vis 2 输入两个部件"
     },
     "desc": {
-      "en": "Vis-Widget template",
-      "de": "Vis-Widget template",
-      "ru": "Vis-Widget template",
-      "pt": "Vis-Widget template",
-      "nl": "Vis-Widget template",
-      "fr": "Vis-Widget template",
-      "it": "Vis-Widget template",
-      "es": "Vis-Widget template",
-      "pl": "Vis-Widget template",
-      "zh-cn": "Vis-Widget template"
+      "en": "Vis 2 inventwo widgets",
+      "de": "Vis 2 Erfinder Widgets",
+      "ru": "Vis 2 inventwo widgets",
+      "pt": "Vis 2 inventwo widgets",
+      "nl": "Vis 2 inventwo widgets",
+      "fr": "Vis 2 widgets inventwo",
+      "it": "Vis 2 widgets inventwo",
+      "es": "Vis 2 widgets inventwo",
+      "pl": "Vis 2 wynalazły dwa widżety",
+      "uk": "Vis 2 inventwo віджети",
+      "zh-cn": "Vis 2 输入两个部件"
     },
     "authors": [
-      "bluefox <dogafox@gmail.com>"
+      "jkvarel <jk@inventwo.com>"
     ],
     "keywords": [
-      "vis-2-widgets-react-template"
+      "vis-2-widgets-inventwo"
     ],
     "license": "MIT",
     "platform": "Javascript/Node.js",
-    "icon": "vis-2-widgets-react-template.png",
-    "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.vis-2-widgets-react-template/master/admin/vis-2-widgets-react-template.png",
+    "icon": "vis-2-widgets-inventwo.png",
+    "extIcon": "https://raw.githubusercontent.com/inventwo/ioBroker.vis-2-widgets-inventwo/master/admin/vis-2-widgets-inventwo.png",
     "enabled": true,
-    "readme": "https://github.com/ioBroker/ioBroker.vis-2-widgets-react-template/blob/master/README.md",
+    "readme": "https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/master/README.md",
     "loglevel": "info",
     "mode": "once",
     "adminUI": {
@@ -142,18 +66,20 @@
     "connectionType": "cloud",
     "dataSource": "poll",
     "visWidgets": {
-      "vis2DemoWidget": {
+      "vis2Inventwo": {
         "i18n": "component",
-        "name": "vis2DemoWidget",
-        "url": "vis-2-widgets-react-template/customWidgets.js",
+        "name": "vis2Inventwo",
+        "url": "vis-2-widgets-inventwo/customWidgets.js",
         "components": [
-          "DemoWidget"
+          "InventwoWidgetUniversal",
+          "InventwoWidgetSlider"
         ]
       }
     },
     "restartAdapters": [
       "vis-2"
-    ]
+    ],
+    "tier": 3
   },
   "native": {},
   "objects": [],

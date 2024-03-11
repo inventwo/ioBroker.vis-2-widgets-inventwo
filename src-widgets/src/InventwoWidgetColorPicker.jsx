@@ -1,51 +1,45 @@
 import React from 'react';
-import {
-    Card, CardContent,
-} from '@mui/material';
 
-import { I18n } from '@iobroker/adapter-react-v5';
 import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
-
-class DemoWidget extends (window.visRxWidget || VisRxWidget) {
+import iro from '@jaames/iro';
+import {Card, CardContent} from "@mui/material";
+class InventwoWidgetColorPicker extends (window.visRxWidget || VisRxWidget) {
     constructor(props) {
         super(props);
-        this.state.inventwo = 1;
+        this.state.colorPicker = null;
     }
 
     static getWidgetInfo() {
         return {
-            id: 'tplInventwoDemoWidget',
+            id: 'tplInventwoWidgetColorPicker',
             visSet: 'vis2inventwo',
-            visSetLabel: 'vis_2_widgets_set_inventwo', // Widget set translated label (should be defined only in one widget of set)
-            visSetColor: 'rgba(69, 86, 24, 1)',                // Color of widget set. it is enough to set color only in one widget of set
-            visWidgetLabel: 'demo',
-            visName: 'DemoWidget',                 // Name of widget
+            visWidgetLabel: 'vis_2_widgets_inventwo_widget_color_picker',
+            visName: 'vis_2_widgets_inventwo_widget_color_picker',
             visAttrs: [
                 {
-                    name: 'common', // group name
+                    name: 'common',
                     fields: [
                         {
-                            name: 'type',    // name in data structure
-                            label: 'vis_2_widgets_template_type', // translated field label
-                            type: 'select',
-                            options: ['all', 'current', 'days'],
-                            default: 'all',
-                        },
-                    ],
-                },
-                {
-                    name: 'private', // group name
-                    label: 'vis_2_widgets_template_private', // translated group label
-                    fields: [
-                        {
-                            name: 'oid',     // name in data structure
+                            name: 'oid',
                             type: 'id',
-                            label: 'vis_2_widgets_template_oid', // translated field label
+                            label: 'oid',
                         },
                     ],
                 },
-                // check here all possible types https://github.com/ioBroker/ioBroker.vis/blob/react/src/src/Attributes/Widget/SCHEMA.md
+
+                {
+                    name: 'vis_2_widgets_inventwo_attr_group_css',
+                    label: 'vis_2_widgets_inventwo_attr_group_css',
+                    fields: [
+
+                    ],
+                },
             ],
+            visDefaultStyle: {
+                width: 360,
+                heigth: 400,
+                overflow: 'hidden',
+            },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-demo.png',
         };
     }
@@ -66,12 +60,18 @@ class DemoWidget extends (window.visRxWidget || VisRxWidget) {
 
         // Update data
         this.propertiesUpdate();
+
+        const el = document.querySelector(`#${this.props.id} .vis-inventwo-widget-color-picker-wrapper`);
+        this.state.colorPicker = new iro.ColorPicker(el, {
+            width: 320,
+            color: '#ffff00',
+        });
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
     // eslint-disable-next-line class-methods-use-this
     getWidgetInfo() {
-        return DemoWidget.getWidgetInfo();
+        return InventwoWidgetColorPicker.getWidgetInfo();
     }
 
     // This function is called every time when rxData is changed
@@ -91,21 +91,21 @@ class DemoWidget extends (window.visRxWidget || VisRxWidget) {
 
     }
 
-    onClick() {
-        this.setState({ inventwo: this.state.inventwo + 1 });
-    }
-
     renderWidgetBody(props) {
         super.renderWidgetBody(props);
 
-        return <Card style={{ width: '100%', height: '100%' }} onClick={() => this.onClick()}>
-            <CardContent>
-                {I18n.t('Counter: ')}
-                {this.state.inventwo}
-                {this.state.values[`${this.state.rxData.oid}.val`]}
+        return <Card
+
+        >
+            <CardContent
+
+            >
+                <div className="vis-inventwo-widget-color-picker-wrapper">
+                    {/*<div id={this.props.id}></div>*/}
+                </div>
             </CardContent>
         </Card>;
     }
 }
 
-export default DemoWidget;
+export default InventwoWidgetColorPicker;
