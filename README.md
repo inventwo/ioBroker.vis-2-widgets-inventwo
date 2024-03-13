@@ -8,9 +8,10 @@
 
 [![NPM](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo.png?downloads=true)](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo/)
 
+
+<!--
     ### **WORK IN PROGRESS**
-
-
+-->
 ## Changelog
 ### 0.0.1 (2024-03-11)
 * (jkvarel) Init
