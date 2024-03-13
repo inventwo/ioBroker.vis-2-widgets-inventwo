@@ -6,7 +6,6 @@ import { i18n as I18n } from '@iobroker/adapter-react-v5';
 // import DemoWidget from './DemoWidget';
 import InventwoWidgetUniversal from './InventwoWidgetUniversal';
 import InventwoWidgetSlider from './InventwoWidgetSlider';
-import InventwoWidgetColorPicker from './InventwoWidgetColorPicker';
 import translations from './translations';
 
 class App extends WidgetDemoApp {

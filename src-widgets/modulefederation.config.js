@@ -6,7 +6,6 @@ module.exports = makeFederation(
         // './DemoWidget': './src/DemoWidget', // List of all widgets in this package
         './InventwoWidgetUniversal': './src/InventwoWidgetUniversal',
         './InventwoWidgetSlider': './src/InventwoWidgetSlider',
-        './InventwoWidgetColorPicker': './src/InventwoWidgetColorPicker',
         './translations': './src/translations',
     },
 );
