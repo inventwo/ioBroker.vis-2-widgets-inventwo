@@ -16,19 +16,24 @@ class App extends WidgetDemoApp {
         I18n.extendTranslations(translations);
     }
 
-    // renderWidget() {
-    //     return;
-    //     // return <DemoWidget
-    //     //     socket={this.socket}
-    //     //     style={{
-    //     //         width: 600,
-    //     //         height: 200,
-    //     //     }}
-    //     //     data={{
-    //     //         type: 'all',
-    //     //     }}
-    //     // />;
-    // }
+    renderWidget() {
+        return <div>
+            <InventwoWidgetUniversal
+                socket={this.socket}
+                style={{
+                    width: 110,
+                    height: 110,
+                }}
+            />
+            <InventwoWidgetSlider
+                socket={this.socket}
+                style={{
+                    width: 110,
+                    height: 110,
+                }}
+            />
+        </div>;
+    }
 }
 
 export default App;
