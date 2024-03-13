@@ -1,7 +1,7 @@
 const helper = require('@iobroker/vis-2-widgets-testing');
 const adapterName = require('../package.json').name.split('.').pop();
 
-describe('vis-2-widgets-react-template', () => {
+describe('vis-2-widgets-inventwo', () => {
     before(async function (){
         this.timeout(180000);
         // install js-controller, web and vis-2-beta
@@ -10,13 +10,13 @@ describe('vis-2-widgets-react-template', () => {
         await helper.createProject();
 
         // open widgets
-        await helper.palette.openWidgetSet(null, 'demo');
+        await helper.palette.openWidgetSet(null, adapterName);
         await helper.screenshot(null, '02_widgets_opened');
     });
 
     it('Check all widgets', async function (){
         this.timeout(60000);
-        const widgets = await helper.palette.getListOfWidgets(null, 'demo');
+        const widgets = await helper.palette.getListOfWidgets(null, adapterName);
         for (let w = 0; w < widgets.length; w++) {
             const wid = await helper.palette.addWidget(null, widgets[w], true);
             await helper.screenshot(null, `10_${widgets[w]}`);
