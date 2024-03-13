@@ -1,11 +1,11 @@
-import React from 'react';
+// import React from 'react';
 
 import WidgetDemoApp from '@iobroker/vis-2-widgets-react-dev/widgetDemoApp';
 import { i18n as I18n } from '@iobroker/adapter-react-v5';
 
 // import DemoWidget from './DemoWidget';
-import InventwoWidgetUniversal from './InventwoWidgetUniversal';
-import InventwoWidgetSlider from './InventwoWidgetSlider';
+// import InventwoWidgetUniversal from './InventwoWidgetUniversal';
+// import InventwoWidgetSlider from './InventwoWidgetSlider';
 import translations from './translations';
 
 class App extends WidgetDemoApp {

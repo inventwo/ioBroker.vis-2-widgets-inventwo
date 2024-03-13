@@ -17,6 +17,7 @@ const styles = () => ({
     },
 });
 
+{/* eslint-disable-next-line react/no-danger */}
 class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     constructor(props) {
         super(props);
@@ -1434,7 +1435,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     }
 
     getContentImage(i = null) {
-        return <img
+        return <img alt=""
             src={this.getValueData(i).image}
             style={{
                 width: this.state.rxData.contentSize,
@@ -1449,6 +1450,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             style={{
                 fontSize: `${this.state.rxData.contentSize}px`,
             }}
+
             dangerouslySetInnerHTML={{ __html: this.getValueData(i).html }}
         ></div>;
     }
@@ -1456,10 +1458,6 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     getContentViewInWidget(i = null) {
         const view = this.getValueData(i).viewInWidget;
         return this.buildViewInWidget(view);
-    }
-
-    getContentColorPicker(i = null) {
-        return <div className="vis-inventwo-widget-color-picker-wrapper"></div>;
     }
 
     buildViewInWidget(view) {
@@ -1494,9 +1492,6 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             case 'viewInWidget':
                 c = this.getContentViewInWidget(i);
                 break;
-            // case 'colorPicker':
-            // c = this.getContentColorPicker(i);
-            // break;
             default:
                 c = '';
         }
