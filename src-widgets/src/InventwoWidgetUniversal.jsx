@@ -17,7 +17,6 @@ const styles = () => ({
     },
 });
 
-{/* eslint-disable-next-line react/no-danger */}
 class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     constructor(props) {
         super(props);
@@ -1435,7 +1434,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     }
 
     getContentImage(i = null) {
-        return <img alt=""
+        return <img
+            alt=""
             src={this.getValueData(i).image}
             style={{
                 width: this.state.rxData.contentSize,
@@ -1450,7 +1450,6 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             style={{
                 fontSize: `${this.state.rxData.contentSize}px`,
             }}
-
             dangerouslySetInnerHTML={{ __html: this.getValueData(i).html }}
         ></div>;
     }
