@@ -7,7 +7,8 @@ import { withStyles } from '@mui/styles';
 
 import { Icon } from '@iobroker/adapter-react-v5';
 import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
-import iro from '@jaames/iro';
+
+import iro from './lib/iro.min';
 
 const styles = () => ({
     dialogTitle: {
