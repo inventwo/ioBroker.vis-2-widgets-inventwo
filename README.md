@@ -1,6 +1,15 @@
+
 # Vis 2 inventwo widgets
 
+![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-installed.svg) 
+![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-stable.svg) 
+[![NPM version](http://img.shields.io/npm/v/iobroker.vis-2-widgets-inventwo.svg)](https://www.npmjs.com/package/iobroker.vis-2-widgets-inventwo)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.vis-2-widgets-inventwo.svg)](https://www.npmjs.com/package/iobroker.vis-2-widgets-inventwo)
+
+[![NPM](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo.png?downloads=true)](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo/)
+
     ### **WORK IN PROGRESS**
+
 
 ## Changelog
 ### 0.0.1 (2024-03-11)
