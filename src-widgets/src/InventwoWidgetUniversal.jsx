@@ -1450,6 +1450,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             style={{
                 fontSize: `${this.state.rxData.contentSize}px`,
             }}
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: this.getValueData(i).html }}
         ></div>;
     }
@@ -1597,6 +1598,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     color: this.getValueData(i).textColor,
                     margin: `${this.state.rxData.textMarginTop}px ${this.state.rxData.textMarginRight}px ${this.state.rxData.textMarginBottom}px ${this.state.rxData.textMarginLeft}px`,
                 }}
+                // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{ __html: this.getValueData(i).text }}
             ></div>
         </div>;
