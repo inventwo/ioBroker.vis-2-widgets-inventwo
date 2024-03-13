@@ -10,8 +10,10 @@
 
 
 <!--
+    Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
 ## Changelog
 ### 0.0.1 (2024-03-11)
 * (jkvarel) Init
