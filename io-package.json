@@ -57,10 +57,13 @@
     "enabled": true,
     "readme": "https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/master/README.md",
     "loglevel": "info",
-    "mode": "once",
+    "mode": "none",
+    "singleton": true,
+    "noConfig": true,
     "adminUI": {
       "config": "none"
     },
+    "nogit": true,
     "onlyWWW": true,
     "type": "visualization-widgets",
     "connectionType": "cloud",

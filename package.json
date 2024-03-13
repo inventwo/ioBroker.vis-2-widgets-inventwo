@@ -45,7 +45,7 @@
     "release-major": "release-script major --yes",
     "test": "mocha ./test/*.test.js",
     "update-packages": "ncu --upgrade && cd src-widgets && ncu --upgrade && cd ..",
-    "npm": "npm i -f && cd src-widgets && npm i -f && cd .."
+    "npm": "npm i && cd src-widgets && npm i -f"
   },
   "bugs": {
     "url": "https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/issues"
