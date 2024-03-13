@@ -15,7 +15,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
     static getWidgetInfo() {
         return {
             id: 'tplInventwoWidgetSlider',
-            visSet: 'vis2inventwo',
+            visSet: 'vis-2-widgets-inventwo',
             visWidgetLabel: 'vis_2_widgets_inventwo_widget_slider',
             visName: 'vis_2_widgets_inventwo_widget_slider',
             visAttrs: [

@@ -27,7 +27,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     static getWidgetInfo() {
         return {
             id: 'tplInventwoWidgetUniversal',
-            visSet: 'vis2inventwo',
+            visSet: 'vis-2-widgets-inventwo',
             visSetLabel: 'vis_2_widgets_set_inventwo',
             visWidgetLabel: 'vis_2_widgets_inventwo_widget_universal',
             visName: 'vis_2_widgets_inventwo_widget_universal',
