@@ -9,8 +9,15 @@
 
 
 <!--
-### 0.0.2 (2024-03-14)
+    Placeholder for the next version (at the beginning of the line):
+    ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* Bug fix
+
+### 0.0.2 (2024-03-14)
+* Bug fix
 
 ### 0.0.1 (2024-03-11)
 * (jkvarel) Init

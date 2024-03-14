@@ -21,6 +21,9 @@ module.exports = {
         'only-warn',
         'react',
     ],
+    ignorePatterns: [
+        'iro.min.js',
+    ],
     rules: {
         'arrow-parens': [1, 'as-needed'],
         'react/jsx-indent': 'off',

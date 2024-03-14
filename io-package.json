@@ -4,17 +4,17 @@
     "version": "0.0.2",
     "news": {
       "0.0.2": {
-        "en": "->",
-        "de": "->",
-        "ru": "->",
-        "pt": "->",
-        "nl": "->",
-        "fr": "->",
-        "it": "->",
-        "es": "->",
-        "pl": "->",
-        "uk": "->",
-        "zh-cn": "->"
+        "en": "Bug fix",
+        "de": "Fehlerbehebung",
+        "ru": "Задняя фиксация",
+        "pt": "Correção de bugs",
+        "nl": "Bugfix",
+        "fr": "Correction du bug",
+        "it": "Correzione di bug",
+        "es": "Corrección de errores",
+        "pl": "Naprawianie błędów",
+        "uk": "Виправлення помилок",
+        "zh-cn": "错误修复"
       },
       "0.0.1": {
         "en": "Init",
