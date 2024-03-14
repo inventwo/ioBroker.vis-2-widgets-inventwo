@@ -1,4 +1,3 @@
-
 # Vis 2 inventwo widgets
 
 ![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-installed.svg) 
@@ -10,10 +9,9 @@
 
 
 <!--
-### **WORK IN PROGRESS**
+### 0.0.2 (2024-03-14)
 -->
 
-## Changelog
 ### 0.0.1 (2024-03-11)
 * (jkvarel) Init
 

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "news": {
+      "0.0.2": {
+        "en": "->",
+        "de": "->",
+        "ru": "->",
+        "pt": "->",
+        "nl": "->",
+        "fr": "->",
+        "it": "->",
+        "es": "->",
+        "pl": "->",
+        "uk": "->",
+        "zh-cn": "->"
+      },
       "0.0.1": {
         "en": "Init",
         "de": "Init",
