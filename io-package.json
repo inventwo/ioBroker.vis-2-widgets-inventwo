@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "news": {
+      "0.0.4": {
+        "en": "Bug fix\nAdded new widget: Table, still work in progress\nCSS settings divided into single groups",
+        "de": "Fehlerbehebung\nNeues Widget hinzugefügt: Tabelle, noch in Arbeit\nCSS-Einstellungen in einzelne Gruppen unterteilt",
+        "ru": "Задняя фиксация\nДобавлен новый виджет: Таблица, все еще работа в процессе\nПараметры CSS, разделенные на отдельные группы",
+        "pt": "Correção de bugs\nAdicionado novo widget: Tabela, ainda trabalho em progresso\nConfigurações CSS divididas em grupos únicos",
+        "nl": "Bugfix\nNieuwe widget toegevoegd: Tabel, nog bezig\nCSS-instellingen verdeeld in groepen",
+        "fr": "Correction du bug\nAjout de nouveau widget: Table, toujours en cours\nParamètres CSS divisés en groupes uniques",
+        "it": "Correzione di bug\nAggiunto nuovo widget: Tabella, ancora lavoro in corso\nImpostazioni CSS divise in singoli gruppi",
+        "es": "Corrección de errores\nAñadido nuevo widget: Tabla, todavía trabajo en progreso\nAjustes CSS divididos en grupos individuales",
+        "pl": "Naprawianie błędów\nDodano nowy widget: Stół, nadal działa w toku\nUstawienia CSS podzielone na pojedyncze grupy",
+        "uk": "Виправлення помилок\nДодано новий віджет: Таблиця, як і раніше працює в прогресі\nНалаштування CSS розподілені на окремі групи",
+        "zh-cn": "错误修复\n添加新部件: 表格, 仍在进行中\nCSS 设置分为单组"
+      },
       "0.0.3": {
         "en": "Bug fix",
         "de": "Fehlerbehebung",

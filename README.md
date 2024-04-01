@@ -13,8 +13,7 @@
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.0.4 (2024-04-01)
 * Bug fix
 * Added new widget: Table, still work in progress
 * CSS settings divided into single groups
