@@ -1,4 +1,5 @@
-# Vis 2 inventwo widgets
+![Logo](admin/vis-2-widgets-inventwo.png)
+# inventwo Widgets for ioBroker.vis 2.0
 
 ![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-installed.svg) 
 ![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-stable.svg) 
@@ -12,6 +13,12 @@
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* Bug fix
+* Added new widget: Table, still work in progress
+* CSS settings divided into single groups
+
 ### 0.0.3 (2024-03-14)
 * Bug fix
 

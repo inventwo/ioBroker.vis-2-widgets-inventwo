@@ -6,6 +6,7 @@ import { i18n as I18n } from '@iobroker/adapter-react-v5';
 // import DemoWidget from './DemoWidget';
 import InventwoWidgetUniversal from './InventwoWidgetUniversal';
 import InventwoWidgetSlider from './InventwoWidgetSlider';
+import InventwoWidgetTable from './InventwoWidgetTable';
 import translations from './translations';
 
 class App extends WidgetDemoApp {
@@ -26,6 +27,13 @@ class App extends WidgetDemoApp {
                 }}
             />
             <InventwoWidgetSlider
+                socket={this.socket}
+                style={{
+                    width: 110,
+                    height: 110,
+                }}
+            />
+            <InventwoWidgetTable
                 socket={this.socket}
                 style={{
                     width: 110,

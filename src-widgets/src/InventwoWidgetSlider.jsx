@@ -45,16 +45,11 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             label: 'step',
                             default: 1,
                         },
-                    ],
-                },
-
-                {
-                    name: 'vis_2_widgets_inventwo_attr_group_css',
-                    label: 'vis_2_widgets_inventwo_attr_group_css',
-                    fields: [
                         {
-                            type: 'help',
-                            text: 'alignment',
+                            name: 'showMinMax',
+                            type: 'checkbox',
+                            label: 'show_min_max',
+                            default: true,
                         },
                         {
                             name: 'orientation',
@@ -66,13 +61,13 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             default: 'horizontal',
                             label: 'orientation',
                         },
-                        {
-                            type: 'delimiter',
-                        },
-                        {
-                            type: 'help',
-                            text: 'track',
-                        },
+                    ],
+                },
+
+                {
+                    name: 'vis_2_widgets_inventwo_attr_group_css_slider_track',
+                    label: 'vis_2_widgets_inventwo_attr_group_css_slider_track',
+                    fields: [
                         {
                             name: 'sliderRailColor',
                             type: 'color',
@@ -163,13 +158,12 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             default: 'rgba(0, 0, 0, 1)',
                             label: 'shadow_color',
                         },
-                        {
-                            type: 'delimiter',
-                        },
-                        {
-                            type: 'help',
-                            text: 'thumb',
-                        },
+                    ],
+                },
+                {
+                    name: 'vis_2_widgets_inventwo_attr_group_css_slider_slider_thumb',
+                    label: 'vis_2_widgets_inventwo_attr_group_css_slider_slider_thumb',
+                    fields: [
                         {
                             name: 'sliderThumbColor',
                             type: 'color',
@@ -245,6 +239,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                         },
                     ],
                 },
+
             ],
             visDefaultStyle: {
                 width: 110,
@@ -296,7 +291,6 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
     }
 
     onChange(e, value) {
-        console.log(value);
         if (this.props.editMode) return;
         const oid = this.state.rxData.oid;
         this.props.context.setValue(oid, value);
@@ -323,18 +317,20 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
         // }
 
         const marks = [];
-        marks.push({
-            value: this.state.rxData.minValue,
-            label: this.state.rxData.minValue,
-        });
-        marks.push({
-            value: this.state.rxData.maxValue,
-            label: this.state.rxData.maxValue,
-        });
-        marks.push({
-            value: 50,
-            label: '50',
-        });
+        if(this.state.rxData.showMinMax) {
+            marks.push({
+                value: this.state.rxData.minValue,
+                label: this.state.rxData.minValue,
+            });
+            marks.push({
+                value: this.state.rxData.maxValue,
+                label: this.state.rxData.maxValue,
+            });
+            // marks.push({
+            //     value: 50,
+            //     label: '50',
+            // });
+        }
 
         const sliderAttributes = {
             height: this.state.rxData.orientation === 'horizontal' ? this.state.rxData.trackWidth : '100%',
