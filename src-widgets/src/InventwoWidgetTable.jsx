@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import {VisRxWidget} from '@iobroker/vis-2-widgets-react-dev';
+import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
 
 class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
     static getWidgetInfo() {
@@ -210,10 +210,9 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
             }
 
             let maxRows = this.state.rxData.maxRows;
-            if(maxRows <= 0) {
+            if (maxRows <= 0) {
                 maxRows = json.length;
-            }
-            else {
+            } else {
                 maxRows = Math.min(maxRows, json.length);
             }
 
@@ -239,7 +238,9 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                                 textAlign: this.state.rxData[`columnContentAlign${i}`],
                             }}
                         >
-                            {columnPrefix}{r[columnKey]}{columnSuffix}
+                            {columnPrefix}
+                            {r[columnKey]}
+                            {columnSuffix}
                         </TableCell>);
                     }
                 }
@@ -253,7 +254,7 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
             }
         }
 
-        return <TableContainer component={Paper} style={{height: '100%'}}>
+        return <TableContainer component={Paper} style={{ height: '100%' }}>
             <Table>
                 <TableHead>
                     <TableRow>

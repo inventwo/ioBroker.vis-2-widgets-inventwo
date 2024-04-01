@@ -317,7 +317,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
         // }
 
         const marks = [];
-        if(this.state.rxData.showMinMax) {
+        if (this.state.rxData.showMinMax) {
             marks.push({
                 value: this.state.rxData.minValue,
                 label: this.state.rxData.minValue,
