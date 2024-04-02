@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "news": {
+      "0.0.5": {
+        "en": "Bug fix",
+        "de": "Fehlerbehebung",
+        "ru": "Задняя фиксация",
+        "pt": "Correção de bugs",
+        "nl": "Bugfix",
+        "fr": "Correction du bug",
+        "it": "Correzione di bug",
+        "es": "Corrección de errores",
+        "pl": "Naprawianie błędów",
+        "uk": "Виправлення помилок",
+        "zh-cn": "错误修复"
+      },
       "0.0.4": {
         "en": "Bug fix\nAdded new widget: Table, still work in progress\nCSS settings divided into single groups",
         "de": "Fehlerbehebung\nNeues Widget hinzugefügt: Tabelle, noch in Arbeit\nCSS-Einstellungen in einzelne Gruppen unterteilt",
