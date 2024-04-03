@@ -13,7 +13,7 @@
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.0.7 (2024-04-03)
 * Bug fix
 
 ### 0.0.6 (2024-04-03)

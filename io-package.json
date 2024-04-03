@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "news": {
+      "0.0.7": {
+        "en": "Bug fix",
+        "de": "Fehlerbehebung",
+        "ru": "Задняя фиксация",
+        "pt": "Correção de bugs",
+        "nl": "Bugfix",
+        "fr": "Correction du bug",
+        "it": "Correzione di bug",
+        "es": "Corrección de errores",
+        "pl": "Naprawianie błędów",
+        "uk": "Виправлення помилок",
+        "zh-cn": "错误修复"
+      },
       "0.0.6": {
         "en": "Bug fix",
         "de": "Fehlerbehebung",
