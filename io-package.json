@@ -95,7 +95,6 @@
         "zh-cn": "输入"
       }
     },
-    "title": "vis-2-widgets-inventwo.org",
     "titleLang": {
       "en": "Vis 2 inventwo widgets",
       "de": "Vis 2 inventwo Widgets",
@@ -128,7 +127,6 @@
     "keywords": [
       "vis-2-widgets-inventwo"
     ],
-    "license": "MIT",
     "platform": "Javascript/Node.js",
     "icon": "vis-2-widgets-inventwo.png",
     "extIcon": "https://raw.githubusercontent.com/inventwo/ioBroker.vis-2-widgets-inventwo/master/admin/vis-2-widgets-inventwo.png",
@@ -162,6 +160,7 @@
     ],
     "tier": 3,
     "licenseInformation": {
+      "license": "MIT",
       "type": "free",
       "link": "https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/master/LICENSE"
     }
