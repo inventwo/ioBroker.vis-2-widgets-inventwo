@@ -8,7 +8,7 @@
 
 [![NPM](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo.png?downloads=true)](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo/)
 
-
+## Changelog
 <!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
