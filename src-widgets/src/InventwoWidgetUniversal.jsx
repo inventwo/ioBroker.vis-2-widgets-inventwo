@@ -1398,6 +1398,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 }
                 break;
             case 'nav':
+                // eslint-disable-next-line no-case-declarations
                 const elCheckDialog = e.target.closest('.inventwo-dialog');
                 if (elCheckDialog !== undefined && elCheckDialog !== null) {
                     return;
