@@ -1045,7 +1045,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 position: 'absolute',
                 overflow: 'visible',
             },
-            visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-demo.png',
+            visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-universal.png',
         };
     }
 
@@ -1298,7 +1298,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         const oid = this.state.rxData.oid;
         const value = this.getValue(oid);
 
-        if (value !== undefined || index !== null) {
+        if (value !== undefined || index !== null || this.state.rxData.type === 'nav') {
             if (index === null) {
                 for (let i = 1; i <= this.state.rxData.countStates; i++) {
                     if (
@@ -1398,7 +1398,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 }
                 break;
             case 'nav':
-                if (e.target.closest('.inventwo-dialog') !== undefined) {
+                const elCheckDialog = e.target.closest('.inventwo-dialog');
+                if (elCheckDialog !== undefined && elCheckDialog !== null) {
                     return;
                 }
 
@@ -1640,6 +1641,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     position: 'absolute',
                     inset: 0,
                     color: 'unset',
+                    boxShadow: 'none',
                 }}
                 onClick={e => this.onClick(i, e)}
             >

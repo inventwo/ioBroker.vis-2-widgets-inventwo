@@ -165,6 +165,8 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
     renderWidgetBody(props) {
         super.renderWidgetBody(props);
 
+        this.wrappedContent = true;
+
         const oid = this.state.rxData.oid;
         const value = this.getValue(oid);
 

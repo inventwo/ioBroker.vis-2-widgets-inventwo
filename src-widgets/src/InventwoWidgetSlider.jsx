@@ -245,7 +245,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                 width: 110,
                 overflow: 'visible',
             },
-            visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-demo.png',
+            visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-slider.png',
         };
     }
 
