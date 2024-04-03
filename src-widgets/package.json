@@ -1,7 +1,7 @@
 {
     "name": "iobroker.vis-2-widgets-inventwo",
     "private": true,
-    "version": "0.0.5",
+    "version": "0.0.6",
     "dependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@craco/craco": "^7.1.0",
