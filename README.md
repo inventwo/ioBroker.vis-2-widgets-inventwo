@@ -8,11 +8,23 @@
 
 [![NPM](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo.png?downloads=true)](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo/)
 
+## About
+Adds switches, buttons, sliders and more as widgets for ioBroker VIS 2.0.
+More info will follow.
+
 ## Changelog
 <!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Added new widget: Switch
+* Added comparison operator and option to check for value or view for each state in universal widget
+* Added steps to slider widget
+* Fixed issue states not working if type is button or readonly
+* Fixed issue value is set with wrong data type
+
+
 ### 0.0.7 (2024-04-03)
 * Bug fix
 

@@ -36,10 +36,10 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             visSetColor: 'rgba(69, 86, 24, 1)',
             visAttrs: [
                 {
-                    name: 'common', // group name
+                    name: 'common',
                     fields: [
                         {
-                            name: 'type',     // name in data structure
+                            name: 'type',
                             type: 'select',
                             options: [
                                 { value: 'switch', label: 'switch' },
@@ -49,10 +49,11 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                                 { value: 'viewInDialog', label: 'view_in_dialog' },
                             ],
                             default: 'switch',
-                            label: 'type', // translated field label
+                            label: 'type',
+                            tooltip: 'tooltip_widget_type',
                         },
                         {
-                            name: 'mode',     // name in data structure
+                            name: 'mode',
                             type: 'select',
                             options: [
                                 { value: 'singleButton', label: 'single_button' },
@@ -60,6 +61,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             ],
                             default: 'singleButton',
                             label: 'mode', // translated field label
+                            tooltip: 'tooltip_widget_mode',
                         },
                         {
                             name: 'direction',     // name in data structure
@@ -76,7 +78,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'oid',     // name in data structure
                             type: 'id',
                             label: 'oid', // translated field label,
-                            hidden: 'data.type == "nav" || data.type == "viewInDialog"',
+                            hidden: '(data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value"',
                         },
                         {
                             name: 'view',     // name in data structure
@@ -94,9 +96,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'valueTrue',     // name in data structure
                             type: 'text',
                             label: 'value_true', // translated field label
-                            hidden: 'data.type == "nav" || data.type == "viewInDialog"  || data.mode == "separatedButtons"',
+                            hidden: '((data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value") || data.mode == "separatedButtons"',
                         },
-
                         {
                             name: 'dialogTitle',
                             type: 'text',
@@ -183,6 +184,10 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     label: 'vis_2_widgets_inventwo_attr_group_state_default',
                     fields: [
                         {
+                            type: 'help',
+                            text: 'text_and_content',
+                        },
+                        {
                             name: 'text',     // name in data structure
                             type: 'html',
                             label: 'text', // translated field label
@@ -254,7 +259,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'outerShadowColor',
                             type: 'color',
                             label: 'outer_shadow_color',
-                            default:' rgba(0, 0, 0, 1)',
+                            default: ' rgba(0, 0, 0, 1)',
                         },
                         {
                             name: 'innerShadowColor',
@@ -270,16 +275,62 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     label: 'vis_2_widgets_inventwo_attr_group_states',
                     fields: [
                         {
+                            type: 'help',
+                            text: 'condition',
+                        },
+                        {
+                            name: 'compareBy',
+                            type: 'select',
+                            options: [
+                                { value: 'default', label: 'compare_by_widget_default' },
+                                { value: 'value', label: 'value' },
+                                { value: 'view', label: 'view' },
+                            ],
+                            default: 'default',
+                            label: 'compare_by',
+                            hidden: 'data.mode == "separatedButtons"',
+                            tooltip: 'tooltip_compare_by',
+                        },
+                        {
+                            name: 'oid',
+                            type: 'id',
+                            label: 'oid',
+                            hidden: 'data.type == "nav" || data["compareBy" + index] == "view" || data.mode == "separatedButtons"',
+                            tooltip: 'tooltip_state_oid',
+                        },
+                        {
+                            name: 'comparisonOperator',
+                            type: 'select',
+                            options: [
+                                { value: '===', label: 'equal' },
+                                { value: '!=', label: 'not_equal' },
+                                { value: '>', label: 'greater' },
+                                { value: '<', label: 'lower' },
+                                { value: '>=', label: 'greater_equal' },
+                                { value: '<=', label: 'lower_equal' },
+                            ],
+                            default: '==',
+                            label: 'comparison_operator',
+                            hidden: 'data.type == "nav" || data["compareBy" + index] == "view" || data.mode == "separatedButtons"',
+                        },
+                        {
                             name: 'value',     // name in data structure
                             type: 'text',
                             label: 'value', // translated field label
-                            hidden: 'data.type == "nav" || (data.mode == "singleButton" && data.countStates <= 1)',
+                            hidden: 'data.type == "nav" || data["compareBy" + index] == "view"',
                         },
                         {
                             name: 'view',     // name in data structure
                             type: 'views',
                             label: 'view', // translated field label,
-                            hidden: 'data.type != "nav"',
+                            hidden: '(data.type != "nav" && data["compareBy" + index] != "view")',
+                        },
+                        {
+                            type: 'delimiter',
+                        },
+                        {
+                            type: 'help',
+                            text: 'text_and_content',
                         },
                         {
                             name: 'text',     // name in data structure
@@ -407,14 +458,14 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'outerShadowColor',
                             type: 'color',
                             label: 'outer_shadow_color',
-                            default:' rgba(0, 0, 0, 1)',
+                            default: ' rgba(0, 0, 0, 1)',
                         },
                         {
                             name: 'outerShadowColorTrue',
                             type: 'color',
                             label: 'outer_shadow_color_true',
                             hidden: 'data.mode == "singleButton"',
-                            default:' rgba(0, 0, 0, 1)',
+                            default: ' rgba(0, 0, 0, 1)',
                         },
                         {
                             name: 'innerShadowColor',
@@ -668,6 +719,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             ],
                             default: 'icon',
                             label: 'content_type',
+                            tooltip: 'tooltip_content_type',
                         },
                         {
                             name: 'contentMarginTop',
@@ -1294,24 +1346,102 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         return undefined;
     }
 
+    // eslint-disable-next-line class-methods-use-this
+    eval(value1, value2, operator = '===') {
+        // eslint-disable-next-line no-restricted-globals
+        if (isNaN(value1)) {
+            value1 = `"${value1}"`;
+        }
+        // eslint-disable-next-line no-restricted-globals
+        if (isNaN(value2)) {
+            value2 = `"${value2}"`;
+        }
+        // eslint-disable-next-line no-eval
+        return eval(`${value1} ${operator} ${value2}`);
+    }
+
     getValueData(index = null) {
         const oid = this.state.rxData.oid;
-        const value = this.getValue(oid);
+        let value = this.getValue(oid);
 
         if (value !== undefined || index !== null || this.state.rxData.type === 'nav') {
             if (index === null) {
                 for (let i = 1; i <= this.state.rxData.countStates; i++) {
+                    const stateOid = this.state.rxData[`oid${i}`];
+                    if (this.state.rxData.countStates > 1 && stateOid !== undefined && stateOid !== null) {
+                        value = this.getValue(stateOid);
+                    } else {
+                        value = this.getValue(oid);
+                    }
+
+                    let compareBy = this.state.rxData[`compareBy${i}`];
+                    if (compareBy === undefined) {
+                        compareBy = 'default';
+                    }
+
+                    let comparisonOperator = this.state.rxData[`comparisonOperator${i}`];
+                    if (comparisonOperator === undefined) {
+                        comparisonOperator = '===';
+                    }
+
+                    let compareValue = this.state.rxData.valueTrue;
+                    if (this.state.rxData[`value${i}`] !== undefined && this.state.rxData[`value${i}`] !== null) {
+                        compareValue = this.state.rxData[`value${i}`];
+                    }
+                    compareValue = this.convertValue(compareValue);
+
                     if (
-                        (this.state.rxData.type === 'switch' && this.state.rxData.mode === 'singleButton' && this.state.rxData.countStates === 1 && this.state.rxData.valueTrue === value)
-                        || (this.state.rxData.type === 'switch' && this.state.rxData[`value${i}`] === value)
-                        || (this.state.rxData.type === 'nav' && this.state.rxData[`view${i}`] === this.props.view)
+                        (
+                            (
+                                (
+                                    compareBy === 'default'
+                                    && (
+                                        this.state.rxData.type === 'switch'
+                                        || this.state.rxData.type === 'button'
+                                        || this.state.rxData.type === 'readonly'
+                                    )
+                                )
+                                || compareBy === 'value'
+                            )
+                            && this.eval(value, compareValue, comparisonOperator)
+                        )
+                        || (
+                            (
+                                (
+                                    compareBy === 'default'
+                                    && this.state.rxData.type === 'nav'
+                                )
+                                || compareBy === 'view'
+                            )
+                            && this.state.rxData.mode === 'singleButton'
+                            && this.state.rxData.countStates === 1
+                            && this.state.rxData.view === this.props.view
+                        )
+                        || (
+                            (
+                                (
+                                    compareBy === 'default'
+                                    && this.state.rxData.type === 'nav'
+                                )
+                                || compareBy === 'view'
+                            )
+                            && this.state.rxData.countStates > 1
+                            && this.state.rxData[`view${i}`] === this.props.view
+                        )
                     ) {
                         return this.getStateData(i);
                     }
                 }
             } else {
                 if (
-                    (this.state.rxData.type === 'switch' && this.state.rxData[`value${index}`] === value)
+                    (
+                        (
+                            this.state.rxData.type === 'switch'
+                            || this.state.rxData.type === 'button'
+                            || this.state.rxData.type === 'readonly'
+                        )
+                        && value === this.state.rxData[`value${index}`]
+                    )
                     || (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)
                 ) {
                     return this.getStateData(index, true);
@@ -1368,6 +1498,15 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         return data;
     }
 
+    // eslint-disable-next-line class-methods-use-this
+    convertValue(value) {
+        if (value === 'true') return true;
+        if (value === 'false') return false;
+        // eslint-disable-next-line no-restricted-globals
+        if (!isNaN(value)) return parseFloat(value);
+        return value;
+    }
+
     onClick(index = null, e = null) {
         if (this.props.editMode) return;
         if (e.target.closest('.IroColorPicker') !== null) return;
@@ -1381,20 +1520,21 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         switch (this.state.rxData.type) {
             case 'switch':
                 if (this.state.rxData.mode === 'singleButton') {
-                    if (this.state.values[`${oid}.val`] === this.state.rxData.valueTrue) {
-                        this.props.context.setValue(oid, this.state.rxData.valueFalse);
+                    const valueTrue = this.convertValue(this.state.rxData.valueTrue);
+                    if (this.state.values[`${oid}.val`] === valueTrue) {
+                        this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueFalse));
                     } else {
-                        this.props.context.setValue(oid, this.state.rxData.valueTrue);
+                        this.props.context.setValue(oid, valueTrue);
                     }
                 } else {
-                    this.props.context.setValue(oid, this.state.rxData[`value${index}`]);
+                    this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
                 }
                 break;
             case 'button':
                 if (this.state.rxData.mode === 'singleButton') {
-                    this.props.context.setValue(oid, this.state.rxData.valueTrue);
+                    this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
                 } else {
-                    this.props.context.setValue(oid, this.state.rxData[`value${index}`]);
+                    this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
                 }
                 break;
             case 'nav':
@@ -1512,18 +1652,18 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     }
 
     getContentImage(i = null) {
-        if (this.getValueData(i).image === null) {
+        const img = this.getValueData(i).image;
+        if (img === null) {
             return '';
         }
-        return <img
-            alt=""
-            src={this.getValueData(i).image}
+        return <Icon
+            src={img}
             style={{
                 width: this.state.rxData.contentSize,
                 height: this.state.rxData.contentSize,
                 // color: this.getValueData(i).contentColor,
             }}
-        ></img>;
+        ></Icon>;
     }
 
     getContentHtml(i = null) {
@@ -1598,7 +1738,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             shadow += `${this.state.rxData.outerShadowX}px ${this.state.rxData.outerShadowY}px ${this.state.rxData.outerShadowBlur}px ${this.state.rxData.outerShadowSize}px ${valueData.outerShadowColor}`;
         }
 
-        if (valueData.innerShadowColor  !== undefined && valueData.innerShadowColor !== null) {
+        if (valueData.innerShadowColor !== undefined && valueData.innerShadowColor !== null) {
             if (shadow !== '') {
                 shadow += ', ';
             }

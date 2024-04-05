@@ -151,7 +151,8 @@
         "url": "vis-2-widgets-inventwo/customWidgets.js",
         "components": [
           "InventwoWidgetUniversal",
-          "InventwoWidgetSlider"
+          "InventwoWidgetSlider",
+          "InventwoWidgetSwitch"
         ]
       }
     },

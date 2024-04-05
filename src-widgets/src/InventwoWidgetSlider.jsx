@@ -46,12 +46,6 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             default: 1,
                         },
                         {
-                            name: 'showMinMax',
-                            type: 'checkbox',
-                            label: 'show_min_max',
-                            default: true,
-                        },
-                        {
                             name: 'orientation',
                             type: 'select',
                             options: [
@@ -60,6 +54,50 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             ],
                             default: 'horizontal',
                             label: 'orientation',
+                        },
+                        {
+                            name: 'showMinMax',
+                            type: 'checkbox',
+                            label: 'show_min_max',
+                            default: true,
+                        },
+                        {
+                            type: 'delimiter',
+                        },
+                        {
+                            type: 'help',
+                            text: 'steps',
+                        },
+                        {
+                            name: 'showSteps',
+                            type: 'checkbox',
+                            label: 'show_steps',
+                            default: false,
+                        },
+                        {
+                            name: 'stepMode',
+                            type: 'select',
+                            options: [
+                                { value: 'auto', label: 'auto' },
+                                { value: 'custom', label: 'custom' },
+                            ],
+                            default: 'auto',
+                            label: 'step_mode',
+                            hidden: '!data.showSteps',
+                        },
+                        {
+                            name: 'stepDisplay',
+                            type: 'number',
+                            label: 'step_display',
+                            default: 10,
+                            hidden: '!data.showSteps || data.stepMode != "auto"',
+                        },
+                        {
+                            name: 'customSteps',
+                            type: 'text',
+                            label: 'custom_steps',
+                            hidden: '!data.showSteps || data.stepMode != "custom"',
+                            tooltip: 'custom_steps_tooltip',
                         },
                     ],
                 },
@@ -293,7 +331,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
     onChange(e, value) {
         if (this.props.editMode) return;
         const oid = this.state.rxData.oid;
-        this.props.context.setValue(oid, value);
+        this.props.context.setValue(oid, parseFloat(value));
     }
 
     getValue(oid) {
@@ -310,32 +348,52 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
         const value = this.getValue(oid);
         const trackBarType = this.state.rxData.trackBarType;
 
-        // let thumbOffset = 0;
-        //
-        // if(this.state.rxData.trackWidth > this.state.rxData.thumbSize) {
-        //     thumbOffset = this.state.rxData.trackWidth - this.state.rxData.thumbSize;
-        // }
+        const minValue = parseFloat(this.state.rxData.minValue);
+        const maxValue = parseFloat(this.state.rxData.maxValue);
 
         const marks = [];
         if (this.state.rxData.showMinMax) {
             marks.push({
-                value: this.state.rxData.minValue,
-                label: this.state.rxData.minValue,
+                value: minValue,
+                label: minValue,
             });
             marks.push({
-                value: this.state.rxData.maxValue,
-                label: this.state.rxData.maxValue,
+                value: maxValue,
+                label: maxValue,
             });
-            // marks.push({
-            //     value: 50,
-            //     label: '50',
-            // });
+        }
+
+        if (this.state.rxData.showSteps) {
+            if (this.state.rxData.stepMode === 'auto') {
+                const stepDisplay = parseFloat(this.state.rxData.stepDisplay);
+                if (stepDisplay > 0) {
+                    for (let i = minValue + stepDisplay; i < maxValue; i += stepDisplay) {
+                        marks.push({
+                            value:  parseFloat(i.toFixed(2).replace(/[.,]00$/, '')),
+                            label: i.toFixed(2).replace(/[.,]00$/, ''),
+                        });
+                    }
+                }
+            } else {
+                let customSteps = this.state.rxData.customSteps;
+                if (customSteps === undefined || customSteps === null) {
+                    customSteps = '';
+                }
+                customSteps = customSteps.split(',');
+
+                customSteps.forEach(step => {
+                    step = parseInt(step);
+                    marks.push({
+                        value: step,
+                        label: step,
+                    });
+                });
+            }
         }
 
         const sliderAttributes = {
             height: this.state.rxData.orientation === 'horizontal' ? this.state.rxData.trackWidth : '100%',
             width: this.state.rxData.orientation !== 'horizontal' ? this.state.rxData.trackWidth : '100%',
-            // color: trackBarType === 'normal' ? this.state.rxData.sliderRailActiveColor : trackBarType === 'inverted' ? this.state.rxData.sliderRailColor : '', // color of the slider between thumbs
             '& .MuiSlider-thumb': {
                 backgroundColor: this.state.rxData.sliderThumbColor, // color of thumbs
                 width: this.state.rxData.thumbSize,
@@ -362,16 +420,15 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
             '& .MuiSlider-mark': {
                 color: this.state.rxData.sliderRailActiveColor,
             },
+            '& .MuiSlider-markLabel': {
+                fontSize: this.state.rxStyle['font-size'],
+            },
         };
 
         if (this.state.rxData.orientation === 'horizontal') {
-            sliderAttributes['& .MuiSlider-markLabel'] = {
-                top: this.state.rxData.trackWidth + 20,
-            };
+            sliderAttributes['& .MuiSlider-markLabel'].top = this.state.rxData.trackWidth + 20;
         } else {
-            sliderAttributes['& .MuiSlider-markLabel'] = {
-                left: this.state.rxData.trackWidth + 20,
-            };
+            sliderAttributes['& .MuiSlider-markLabel'].left = this.state.rxData.trackWidth + 20;
         }
 
         const CustomSlider = styled(Slider)(() => (sliderAttributes));
