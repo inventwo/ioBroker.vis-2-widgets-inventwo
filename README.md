@@ -17,7 +17,7 @@ More info will follow.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.1 (2024-04-05)
 * Fixed wrong default value for comparison operator
 
 ### 0.1.0 (2024-04-05)

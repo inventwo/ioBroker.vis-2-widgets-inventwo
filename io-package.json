@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "news": {
+      "0.1.1": {
+        "en": "Fixed wrong default value for comparison operator",
+        "de": "Fehlerbehafteter Standardwert für Vergleichsoperator",
+        "ru": "Исправлено неправильное значение по умолчанию для оператора сравнения",
+        "pt": "Valor padrão errado fixo para operador de comparação",
+        "nl": "Foute standaardwaarde voor vergelijkingsoperator",
+        "fr": "Valeur par défaut fixe pour l'opérateur de comparaison",
+        "it": "Valore predefinito sbagliato fisso per operatore di confronto",
+        "es": "Valor por defecto fijo para el operador de comparación",
+        "pl": "Naprawiono błędną wartość domyślną dla operatora porównania",
+        "uk": "Виправлено неправильне значення за замовчуванням для оператора порівняння",
+        "zh-cn": "比较运算符的固定错误默认值"
+      },
       "0.1.0": {
         "en": "Added new widget: Switch\nAdded comparison operator and option to check for value or view for each state in universal widget\nAdded steps to slider widget\nFixed issue states not working if type is button or readonly\nFixed issue value is set with wrong data type",
         "de": "Neues Widget hinzugefügt: Switch\nHinzugefügt Vergleichsoperator und Option, um nach Wert oder Ansicht für jeden Zustand im universellen Widget zu überprüfen\nSchritte zum Slider Widget hinzugefügt\nBehobene Ausgabezustände funktionieren nicht, wenn Typ Knopf oder Readonly ist\nFixer Ausgabewert wird mit falschem Datentyp eingestellt",
@@ -69,19 +82,6 @@
         "zh-cn": "错误修复\n添加新部件: 表格, 仍在进行中\nCSS 设置分为单组"
       },
       "0.0.3": {
-        "en": "Bug fix",
-        "de": "Fehlerbehebung",
-        "ru": "Задняя фиксация",
-        "pt": "Correção de bugs",
-        "nl": "Bugfix",
-        "fr": "Correction du bug",
-        "it": "Correzione di bug",
-        "es": "Corrección de errores",
-        "pl": "Naprawianie błędów",
-        "uk": "Виправлення помилок",
-        "zh-cn": "错误修复"
-      },
-      "0.0.2": {
         "en": "Bug fix",
         "de": "Fehlerbehebung",
         "ru": "Задняя фиксация",
