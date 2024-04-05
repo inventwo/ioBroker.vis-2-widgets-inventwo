@@ -17,13 +17,12 @@ More info will follow.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.0 (2024-04-05)
 * Added new widget: Switch
 * Added comparison operator and option to check for value or view for each state in universal widget
 * Added steps to slider widget
 * Fixed issue states not working if type is button or readonly
 * Fixed issue value is set with wrong data type
-
 
 ### 0.0.7 (2024-04-03)
 * Bug fix
