@@ -17,6 +17,9 @@ More info will follow.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Fixed wrong default value for comparison operator
+
 ### 0.1.0 (2024-04-05)
 * Added new widget: Switch
 * Added comparison operator and option to check for value or view for each state in universal widget

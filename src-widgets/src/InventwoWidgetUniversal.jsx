@@ -309,7 +309,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                                 { value: '>=', label: 'greater_equal' },
                                 { value: '<=', label: 'lower_equal' },
                             ],
-                            default: '==',
+                            default: '===',
                             label: 'comparison_operator',
                             hidden: 'data.type == "nav" || data["compareBy" + index] == "view" || data.mode == "separatedButtons"',
                         },
