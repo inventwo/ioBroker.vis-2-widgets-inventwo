@@ -1362,108 +1362,113 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
 
     getValueData(index = null) {
         const oid = this.state.rxData.oid;
-        let value = this.getValue(oid);
+        let value = null;
+        let data = null;
 
-        if (value !== undefined || index !== null || this.state.rxData.type === 'nav') {
-            if (index === null) {
-                for (let i = 1; i <= this.state.rxData.countStates; i++) {
-                    const stateOid = this.state.rxData[`oid${i}`];
-                    if (this.state.rxData.countStates > 1 && stateOid !== undefined && stateOid !== null) {
-                        value = this.getValue(stateOid);
-                    } else {
-                        value = this.getValue(oid);
-                    }
-
-                    let compareBy = this.state.rxData[`compareBy${i}`];
-                    if (compareBy === undefined) {
-                        compareBy = 'default';
-                    }
-
-                    let comparisonOperator = this.state.rxData[`comparisonOperator${i}`];
-                    if (comparisonOperator === undefined) {
-                        comparisonOperator = '===';
-                    }
-
-                    let compareValue = this.state.rxData.valueTrue;
-                    if (this.state.rxData[`value${i}`] !== undefined && this.state.rxData[`value${i}`] !== null) {
-                        compareValue = this.state.rxData[`value${i}`];
-                    }
-                    compareValue = this.convertValue(compareValue);
-
-                    if (
-                        (
-                            (
-                                (
-                                    compareBy === 'default'
-                                    && (
-                                        this.state.rxData.type === 'switch'
-                                        || this.state.rxData.type === 'button'
-                                        || this.state.rxData.type === 'readonly'
-                                    )
-                                )
-                                || compareBy === 'value'
-                            )
-                            && this.eval(value, compareValue, comparisonOperator)
-                        )
-                        || (
-                            (
-                                (
-                                    compareBy === 'default'
-                                    && this.state.rxData.type === 'nav'
-                                )
-                                || compareBy === 'view'
-                            )
-                            && this.state.rxData.mode === 'singleButton'
-                            && this.state.rxData.countStates === 1
-                            && this.state.rxData.view === this.props.view
-                        )
-                        || (
-                            (
-                                (
-                                    compareBy === 'default'
-                                    && this.state.rxData.type === 'nav'
-                                )
-                                || compareBy === 'view'
-                            )
-                            && this.state.rxData.countStates > 1
-                            && this.state.rxData[`view${i}`] === this.props.view
-                        )
-                    ) {
-                        return this.getStateData(i);
-                    }
+        if (index === null) {
+            for (let i = 1; i <= this.state.rxData.countStates; i++) {
+                const stateOid = this.state.rxData[`oid${i}`];
+                if (this.state.rxData.countStates > 1 && stateOid !== undefined && stateOid !== null) {
+                    value = this.getValue(stateOid);
+                } else {
+                    value = this.getValue(oid);
                 }
-            } else {
+
+                let compareBy = this.state.rxData[`compareBy${i}`];
+                if (compareBy === undefined || compareBy === null) {
+                    compareBy = 'default';
+                }
+
+                let comparisonOperator = this.state.rxData[`comparisonOperator${i}`];
+                if (comparisonOperator === undefined || comparisonOperator === null) {
+                    comparisonOperator = '===';
+                }
+
+                let compareValue = this.state.rxData.valueTrue;
+                if (this.state.rxData[`value${i}`] !== undefined && this.state.rxData[`value${i}`] !== null) {
+                    compareValue = this.state.rxData[`value${i}`];
+                }
+                compareValue = this.convertValue(compareValue);
+
                 if (
                     (
                         (
-                            this.state.rxData.type === 'switch'
-                            || this.state.rxData.type === 'button'
-                            || this.state.rxData.type === 'readonly'
+                            (
+                                compareBy === 'default'
+                                && (
+                                    this.state.rxData.type === 'switch'
+                                    || this.state.rxData.type === 'button'
+                                    || this.state.rxData.type === 'readonly'
+                                )
+                            )
+                            || compareBy === 'value'
                         )
-                        && value === this.state.rxData[`value${index}`]
+                        && this.eval(value, compareValue, comparisonOperator)
                     )
-                    || (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)
+                    || (
+                        (
+                            (
+                                compareBy === 'default'
+                                && this.state.rxData.type === 'nav'
+                            )
+                            || compareBy === 'view'
+                        )
+                        && this.state.rxData.mode === 'singleButton'
+                        && this.state.rxData.countStates === 1
+                        && this.state.rxData.view === this.props.view
+                    )
+                    || (
+                        (
+                            (
+                                compareBy === 'default'
+                                && this.state.rxData.type === 'nav'
+                            )
+                            || compareBy === 'view'
+                        )
+                        && this.state.rxData.countStates > 1
+                        && this.state.rxData[`view${i}`] === this.props.view
+                    )
                 ) {
-                    return this.getStateData(index, true);
+                    data = this.getStateData(i);
+                    break;
                 }
-                return this.getStateData(index);
+            }
+        } else {
+            value = this.getValue(oid);
+            if (
+                (
+                    (
+                        this.state.rxData.type === 'switch'
+                        || this.state.rxData.type === 'button'
+                        || this.state.rxData.type === 'readonly'
+                    )
+                    && value === this.state.rxData[`value${index}`]
+                )
+                || (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)
+            ) {
+                data = this.getStateData(index, true);
+            } else {
+                data = this.getStateData(index);
             }
         }
 
-        return {
-            background: this.state.rxData.background,
-            icon: this.state.rxData.icon,
-            image: this.state.rxData.image,
-            contentColor: this.state.rxData.contentColor,
-            text: this.state.rxData.text,
-            textColor: this.state.rxData.textColor,
-            outerShadowColor: this.state.rxData.outerShadowColor,
-            innerShadowColor: this.state.rxData.innerShadowColor,
-            borderColor: this.state.rxData.borderColor,
-            html: this.state.rxData.html,
-            viewInWidget: this.state.rxData.viewInWidget,
-            contentBlinkInterval: this.state.rxData.contentBlinkInterval,
-        };
+        if (data === null) {
+            data = {
+                background: this.state.rxData.background,
+                icon: this.state.rxData.icon,
+                image: this.state.rxData.image,
+                contentColor: this.state.rxData.contentColor,
+                text: this.state.rxData.text,
+                textColor: this.state.rxData.textColor,
+                outerShadowColor: this.state.rxData.outerShadowColor,
+                innerShadowColor: this.state.rxData.innerShadowColor,
+                borderColor: this.state.rxData.borderColor,
+                html: this.state.rxData.html,
+                viewInWidget: this.state.rxData.viewInWidget,
+                contentBlinkInterval: this.state.rxData.contentBlinkInterval,
+            };
+        }
+        return data;
     }
 
     getStateData(i, useExtraTrueValues = false) {
