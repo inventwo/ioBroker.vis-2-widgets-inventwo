@@ -17,7 +17,7 @@ More info will follow.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.2 (2024-04-08)
 * Fixed issue editor crashes when changing "Comparison operator" or "Compare by" on multiple states.
 * Fixesd issue state settings not used if condition is true.
 

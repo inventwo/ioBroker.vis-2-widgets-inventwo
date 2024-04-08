@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "news": {
+      "0.1.2": {
+        "en": "Fixed issue editor crashes when changing \"Comparison operator\" or \"Compare by\" on multiple states.\nFixesd issue state settings not used if condition is true.",
+        "de": "Der Fixed-Editor stürzt beim Wechsel von \"Comparison Operator\" oder \"Compare by\" auf mehreren Zuständen ab.\nFeste Ausgabezustandseinstellungen, die nicht verwendet werden, wenn die Bedingung wahr ist.",
+        "ru": "Исправленный редактор проблем терпит крушение при изменении «оператора сравнения» или «Сравнить» на нескольких состояниях.\nИсправленные настройки состояния проблемы не используются, если условие верно.",
+        "pt": "O editor de edição corrigido trava ao alterar \"o operador da empresa\" ou \"Compare by\" em vários estados.\nConfigurações de estado de problema corrigidas não usadas se a condição for verdadeira.",
+        "nl": "Fixed issue editor crasht bij het veranderen van \"Comparison operator\" of \"Compare by\" op meerdere staten.\nFixesd issue status instellingen niet gebruikt als de conditie waar is.",
+        "fr": "L'éditeur de problèmes corrigé s'écrase en modifiant \"Comparison Operator\" ou \"Compare by\" sur plusieurs états.\nRéglage des paramètres d'état de problème non utilisés si la condition est vraie.",
+        "it": "L'editor di problemi fissi si blocca quando si cambia \"operatore di Comparison\" o \"Compare by\" su più stati.\nImpostazioni di stato del problema fisso non utilizzate se la condizione è vera.",
+        "es": "El editor de edición fijo se bloquea al cambiar \"operador de comparación\" o \"Comparar by\" en varios estados.\nConfiguración de estado de emisión fija no se utiliza si la condición es verdadera.",
+        "pl": "Poprawiony edytor wydania awarii przy zmianie \"Operator porównania\" lub \"Porównaj przez\" w wielu stanach.\nFixesd wydaje ustawienia stanu nie używane, jeśli warunek jest prawdziwy.",
+        "uk": "Виправлено помилку редактора виписки при зміні \"Компанія\" або \"Порівняти\" на декількох штатах.\nВиправлення параметрів стану виписки не використовуються, якщо стан є істинним.",
+        "zh-cn": "固定发行编辑器在多个状态上更改\"比较操作员\"或\"Compare by\"时崩溃.\n如果条件属实,则未使用已修复的状态设置 ."
+      },
       "0.1.1": {
         "en": "Fixed wrong default value for comparison operator",
         "de": "Fehlerbehafteter Standardwert für Vergleichsoperator",
@@ -80,19 +93,6 @@
         "pl": "Naprawianie błędów\nDodano nowy widget: Stół, nadal działa w toku\nUstawienia CSS podzielone na pojedyncze grupy",
         "uk": "Виправлення помилок\nДодано новий віджет: Таблиця, як і раніше працює в прогресі\nНалаштування CSS розподілені на окремі групи",
         "zh-cn": "错误修复\n添加新部件: 表格, 仍在进行中\nCSS 设置分为单组"
-      },
-      "0.0.3": {
-        "en": "Bug fix",
-        "de": "Fehlerbehebung",
-        "ru": "Задняя фиксация",
-        "pt": "Correção de bugs",
-        "nl": "Bugfix",
-        "fr": "Correction du bug",
-        "it": "Correzione di bug",
-        "es": "Corrección de errores",
-        "pl": "Naprawianie błędów",
-        "uk": "Виправлення помилок",
-        "zh-cn": "错误修复"
       }
     },
     "titleLang": {
