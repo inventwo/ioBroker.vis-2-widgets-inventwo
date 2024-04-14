@@ -47,6 +47,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                                 { value: 'nav', label: 'nav' },
                                 { value: 'readonly', label: 'read_only' },
                                 { value: 'viewInDialog', label: 'view_in_dialog' },
+                                { value: 'increaseDecreaseValue', label: 'increase_decrease_value' },
+                                // { value: 'sendHttp', label: 'send_http' },
                             ],
                             default: 'switch',
                             label: 'type',
@@ -96,7 +98,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'valueTrue',     // name in data structure
                             type: 'text',
                             label: 'value_true', // translated field label
-                            hidden: '((data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value") || data.mode == "separatedButtons"',
+                            hidden: '((data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value") || data.mode == "separatedButtons" || data.type == "sendHttp"',
                         },
                         {
                             name: 'dialogTitle',
@@ -112,17 +114,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             max: 200,
                             step: 10,
                             default: 110,
-                            label: 'button_width', // translated field label
-                            hidden: 'data.mode == "singleButton"',
-                        },
-                        {
-                            name: 'buttonHeight',     // name in data structure
-                            type: 'slider',
-                            min: 1,
-                            max: 200,
-                            step: 10,
-                            default: 110,
-                            label: 'button_width', // translated field label
+                            label: 'button_size', // translated field label
                             hidden: 'data.mode == "singleButton"',
                         },
                         {
@@ -1360,19 +1352,46 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         return eval(`${value1} ${operator} ${value2}`);
     }
 
+    // eslint-disable-next-line class-methods-use-this
+    compare(value1, value2, operator = '===') {
+        switch (operator) {
+            case '===':
+            case '==':
+                return value1 === value2;
+            case '<':
+                return value1 < value2;
+            case '>':
+                return value1 > value2;
+            case '<=':
+                return value1 <= value2;
+            case '>=':
+                return value1 >= value2;
+            case '!=':
+                return value1 !== value2;
+            default:
+                return false;
+        }
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    validOid(oid) {
+        return oid !== undefined && oid !== null && oid !== 'nothing_selected';
+    }
+
     getValueData(index = null) {
-        const oid = this.state.rxData.oid;
+        let oid = null;
         let value = null;
         let data = null;
 
         if (index === null) {
             for (let i = 1; i <= this.state.rxData.countStates; i++) {
-                const stateOid = this.state.rxData[`oid${i}`];
-                if (this.state.rxData.countStates > 1 && stateOid !== undefined && stateOid !== null) {
-                    value = this.getValue(stateOid);
-                } else {
-                    value = this.getValue(oid);
-                }
+                if (this.state.rxData.countStates > 1 && this.validOid(this.state.rxData[`oid${i}`])) {
+                    oid = this.state.rxData[`oid${i}`];
+                } else if (this.validOid(this.state.rxData.oid)) {
+                    oid = this.state.rxData.oid;
+                } else continue;
+
+                value = this.getValue(oid);
 
                 let compareBy = this.state.rxData[`compareBy${i}`];
                 if (compareBy === undefined || compareBy === null) {
@@ -1403,7 +1422,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             )
                             || compareBy === 'value'
                         )
-                        && this.eval(value, compareValue, comparisonOperator)
+                        && this.compare(value, compareValue, comparisonOperator)
                     )
                     || (
                         (
@@ -1434,6 +1453,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 }
             }
         } else {
+            oid = this.state.rxData.oid;
             value = this.getValue(oid);
             if (
                 (
@@ -1472,6 +1492,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     }
 
     getStateData(i, useExtraTrueValues = false) {
+        console.log('get state data');
         const data = {
             background: this.state.rxData[`background${i}`],
             icon: this.state.rxData[`icon${i}`],
@@ -1557,6 +1578,14 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 break;
             case 'viewInDialog':
                 this.setState({ dialogOpen: true });
+                break;
+            case 'increaseDecreaseValue':
+                // eslint-disable-next-line no-case-declarations
+                let value = this.getValue(oid);
+                value += this.convertValue(this.state.rxData.valueTrue);
+                this.props.context.setValue(oid, value);
+                break;
+            case 'sendHttp':
                 break;
         }
     }

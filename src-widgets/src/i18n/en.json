@@ -63,7 +63,7 @@
   "value_false": "Value false",
   "value_true": "Value true",
   "dialog_title": "Dialog title",
-  "button_width": "Button width",
+  "button_size": "Button size",
   "button_spacing": "Button spacing",
   "count_states": "Count states",
   "dialog_fullscreen": "Dialog fullscreen",
@@ -204,6 +204,7 @@
   "thumb_color_true": "Thumb color true",
   "text_and_content": "Text & Content",
   "condition": "Condition",
+  "increase_decrease_value": "Increase/decrease value",
 
   "tooltip_widget_type": "Specify the interaction behaviour",
   "tooltip_widget_mode": "Single button: One button with one ore more states, Separated buttons: Each state as a button (Can be used like the old radiobuttonlist widget)",

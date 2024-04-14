@@ -10,13 +10,43 @@
 
 ## About
 Adds switches, buttons, sliders and more as widgets for ioBroker VIS 2.0.
-More info will follow.
+
+## Content
+Various widgets for switching, navigating and more.
+
+![Vorschau Universal- & Multi-Widget](img/preview_universal_widget.png)
+
+Various content types
+
+![Vorschau Colorpicker](img/preview_content_types.png)
+
+Colorpicker
+
+![Vorschau Colorpicker](img/preview_colorpicker.png)
+
+Slider
+
+![Vorschau Colorpicker](img/preview_sliders.png)
+
+Switches
+
+![Vorschau Colorpicker](img/preview_switches.png)
+
+#### More will follow...
 
 ## Changelog
 <!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Fixed issue in widget state check. Also includes #12
+* Removed second unused field 'button width' (#10)
+* Added widget type Increase/Decrease value (#7)
+* Added more info to readme
+* Removed iobroker/adapter-core dependency
+* Added node 20 to test-and-release workflow
+
 ### 0.1.2 (2024-04-08)
 * Fixed issue editor crashes when changing "Comparison operator" or "Compare by" on multiple states.
 * Fixesd issue state settings not used if condition is true.
