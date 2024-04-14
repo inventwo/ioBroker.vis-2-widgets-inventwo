@@ -41,6 +41,7 @@ jobs:
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
           install-command: 'npm install'
           build: true
+          package-cache: false
 
       - name: Archive screenshots
         if: always()
@@ -66,7 +67,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
