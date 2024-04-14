@@ -39,6 +39,9 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Fixed issue in workflow
+
 ### 0.1.3 (2024-04-14)
 * Fixed issue in widget state check. Also includes #12
 * Removed second unused field 'button width' (#10)

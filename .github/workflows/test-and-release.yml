@@ -26,15 +26,20 @@ jobs:
   adapter-tests:
     if: contains(github.event.head_commit.message, '[skip ci]') == false
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [ 18.x, 20.x ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: ${{ matrix.node-version }}
+          os: ${{ matrix.os }}
 
       - name: Install Dependencies
         run: npm i
@@ -62,16 +67,21 @@ jobs:
       contains(github.event.head_commit.message, '[skip ci]') == false &&
       github.event_name == 'push' &&
       startsWith(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [ 18.x, 20.x ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: [18.x, 20.x]
+          node-version: ${{ matrix.node-version }}
+          os: ${{ matrix.os }}
 
       - name: Install Dependencies
         run: npm i
