@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "news": {
+      "0.1.4": {
+        "en": "Fixed issue in workflow",
+        "de": "Feste Ausgabe im Workflow",
+        "ru": "Исправленный вопрос в рабочем процессе",
+        "pt": "Problema corrigido no fluxo de trabalho",
+        "nl": "Vast probleem in workflow",
+        "fr": "Problème corrigé dans le flux de travail",
+        "it": "Emissione fissa nel flusso di lavoro",
+        "es": "Cuestión fija en el flujo de trabajo",
+        "pl": "Naprawiono problem w przepływie pracy",
+        "uk": "Виправлено проблему в робочому процесі",
+        "zh-cn": "工作流程中的固定问题"
+      },
       "0.1.3": {
         "en": "Fixed issue in widget state check. Also includes #12\nRemoved second unused field 'button width' (#10)\nAdded widget type Increase/Decrease value (#7)\nAdded more info to readme\nRemoved iobroker/adapter-core dependency\nAdded node 20 to test-and-release workflow",
         "de": "Behobenes Problem bei Widget State Check. enthält auch #12\nEntfernen des zweiten ungenutzten Feldes 'Tastenbreite' (#10)\nHinzugefügt Widget-Typ Erhöhen/Erhöhungswert (#7)\nWeitere Informationen zu readme\nEntfernung von iobroker/adapter-core Abhängigkeit\nHinzugefügt Knoten 20 zum Test-und-Release-Workflow",
@@ -69,19 +82,6 @@
         "zh-cn": "错误修复"
       },
       "0.0.6": {
-        "en": "Bug fix",
-        "de": "Fehlerbehebung",
-        "ru": "Задняя фиксация",
-        "pt": "Correção de bugs",
-        "nl": "Bugfix",
-        "fr": "Correction du bug",
-        "it": "Correzione di bug",
-        "es": "Corrección de errores",
-        "pl": "Naprawianie błędów",
-        "uk": "Виправлення помилок",
-        "zh-cn": "错误修复"
-      },
-      "0.0.5": {
         "en": "Bug fix",
         "de": "Fehlerbehebung",
         "ru": "Задняя фиксация",
