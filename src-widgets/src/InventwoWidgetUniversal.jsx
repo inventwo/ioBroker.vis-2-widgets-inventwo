@@ -24,6 +24,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         super(props);
         this.state.currentView = null;
         this.state.dialogOpen = false;
+        this.state.showFeedback = false;
     }
 
     static getWidgetInfo() {
@@ -48,7 +49,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                                 { value: 'readonly', label: 'read_only' },
                                 { value: 'viewInDialog', label: 'view_in_dialog' },
                                 { value: 'increaseDecreaseValue', label: 'increase_decrease_value' },
-                                // { value: 'sendHttp', label: 'send_http' },
+                                { value: 'http', label: 'send_http' },
                             ],
                             default: 'switch',
                             label: 'type',
@@ -62,43 +63,61 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                                 { value: 'separatedButtons', label: 'separated_buttons' },
                             ],
                             default: 'singleButton',
-                            label: 'mode', // translated field label
+                            label: 'mode',
                             tooltip: 'tooltip_widget_mode',
                         },
                         {
-                            name: 'direction',     // name in data structure
+                            name: 'direction',
                             type: 'select',
                             options: [
                                 { value: 'row', label: 'row' },
                                 { value: 'column', label: 'column' },
                             ],
                             default: 'row',
-                            label: 'direction', // translated field label
+                            label: 'direction',
                             hidden: 'data.mode == "singleButton"',
                         },
                         {
-                            name: 'oid',     // name in data structure
+                            name: 'oid',
                             type: 'id',
-                            label: 'oid', // translated field label,
+                            label: 'oid',
                             hidden: '(data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value"',
                         },
                         {
-                            name: 'view',     // name in data structure
+                            name: 'url',
+                            type: 'text',
+                            label: 'url',
+                            hidden: 'data.type != "http"',
+                        },
+                        {
+                            name: 'httpType',
+                            type: 'select',
+                            options: [
+                                { value: 'send', label: 'send_request' },
+                                { value: 'open', label: 'open_url' },
+                                { value: 'openNewTab', label: 'open_url_new_tab' },
+                            ],
+                            default: 'send',
+                            label: 'http_type',
+                            hidden: 'data.type != "http"',
+                        },
+                        {
+                            name: 'view',
                             type: 'views',
-                            label: 'view', // translated field label,
+                            label: 'view',
                             hidden: '(data.type != "nav" && data.type != "viewInDialog") || data.mode == "separatedButtons"',
                         },
                         {
-                            name: 'valueFalse',     // name in data structure
+                            name: 'valueFalse',
                             type: 'text',
-                            label: 'value_false', // translated field label
+                            label: 'value_false',
                             hidden: 'data.type != "switch" || data.mode == "separatedButtons"',
                         },
                         {
-                            name: 'valueTrue',     // name in data structure
+                            name: 'valueTrue',
                             type: 'text',
-                            label: 'value_true', // translated field label
-                            hidden: '((data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value") || data.mode == "separatedButtons" || data.type == "sendHttp"',
+                            label: 'value_true',
+                            hidden: '((data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value") || data.mode == "separatedButtons" || data.type == "http"',
                         },
                         {
                             name: 'dialogTitle',
@@ -106,25 +125,24 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             label: 'dialog_title',
                             hidden: 'data.type != "viewInDialog"',
                         },
-
                         {
-                            name: 'buttonSize',     // name in data structure
+                            name: 'buttonSize',
                             type: 'slider',
                             min: 1,
                             max: 200,
                             step: 10,
                             default: 110,
-                            label: 'button_size', // translated field label
+                            label: 'button_size',
                             hidden: 'data.mode == "singleButton"',
                         },
                         {
-                            name: 'btnSpacing',     // name in data structure
+                            name: 'btnSpacing',
                             type: 'slider',
                             min: 0,
                             max: 50,
                             step: 1,
                             default: 10,
-                            label: 'button_spacing', // translated field label
+                            label: 'button_spacing',
                             hidden: 'data.mode == "singleButton"',
                         },
                         {
@@ -172,7 +190,63 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 },
 
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_state_default', // group name
+                    name: 'vis_2_widgets_inventwo_attr_group_click_feedback',
+                    label: 'vis_2_widgets_inventwo_attr_group_click_feedback',
+                    fields: [
+                        {
+                            name: 'feedbackDuration',
+                            type: 'slider',
+                            min: 0,
+                            max: 5000,
+                            step: 100,
+                            default: 0,
+                            label: 'duration',
+                        },
+                        {
+                            type: 'delimiter',
+                        },
+                        {
+                            type: 'help',
+                            text: 'colors',
+                        },
+                        {
+                            name: 'contentColorFeedback',
+                            type: 'color',
+                            label: 'content_color',
+                            hidden: 'data.mode == "separatedButtons" || data.contentType != "icon"',
+                        },
+                        {
+                            name: 'backgroundFeedback',
+                            type: 'color',
+                            default: 'rgba(69, 86, 24, 1)',
+                            label: 'background',
+                        },
+                        {
+                            name: 'textColorFeedback',
+                            type: 'color',
+                            label: 'text_color',
+                        },
+                        {
+                            name: 'borderColorFeedback',
+                            type: 'color',
+                            label: 'border_color',
+                        },
+                        {
+                            name: 'outerShadowColorFeedback',
+                            type: 'color',
+                            label: 'outer_shadow_color',
+                            default: ' rgba(0, 0, 0, 1)',
+                        },
+                        {
+                            name: 'innerShadowColorFeedback',
+                            type: 'color',
+                            label: 'inner_shadow_color',
+                        },
+                    ],
+                },
+
+                {
+                    name: 'vis_2_widgets_inventwo_attr_group_state_default',
                     label: 'vis_2_widgets_inventwo_attr_group_state_default',
                     fields: [
                         {
@@ -180,21 +254,21 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             text: 'text_and_content',
                         },
                         {
-                            name: 'text',     // name in data structure
+                            name: 'text',
                             type: 'html',
-                            label: 'text', // translated field label
+                            label: 'text',
                             hidden: 'data.mode == "separatedButtons"',
                         },
                         {
-                            name: 'icon',     // name in data structure
+                            name: 'icon',
                             type: 'icon64',
-                            label: 'icon', // translated field label
+                            label: 'icon',
                             hidden: 'data.mode == "separatedButtons" || data.contentType != "icon"',
                         },
                         {
-                            name: 'image',     // name in data structure
+                            name: 'image',
                             type: 'image',
-                            label: 'image', // translated field label
+                            label: 'image',
                             hidden: 'data.mode == "separatedButtons" || data.contentType != "image"',
                         },
                         {
@@ -261,7 +335,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'countStates', // group name
+                    name: 'countStates',
                     indexFrom: 1,
                     indexTo: 'countStates',
                     label: 'vis_2_widgets_inventwo_attr_group_states',
@@ -1488,11 +1562,15 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 contentBlinkInterval: this.state.rxData.contentBlinkInterval,
             };
         }
+
+        if (this.state.showFeedback) {
+            data = this.replaceWithClickFeedbackData(data);
+        }
+
         return data;
     }
 
     getStateData(i, useExtraTrueValues = false) {
-        console.log('get state data');
         const data = {
             background: this.state.rxData[`background${i}`],
             icon: this.state.rxData[`icon${i}`],
@@ -1521,7 +1599,35 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             data.outerShadowColor = this.state.rxData[`outerShadowColorTrue${i}`];
             data.innerShadowColor = this.state.rxData[`innerShadowColorTrue${i}`];
         }
+
         return data;
+    }
+
+    replaceWithClickFeedbackData(data) {
+        if (this.validFieldValue(this.state.rxData.backgroundFeedback)) {
+            data.background = this.state.rxData.backgroundFeedback;
+        }
+        if (this.validFieldValue(this.state.rxData.contentColorFeedback)) {
+            data.contentColor = this.state.rxData.contentColorFeedback;
+        }
+        if (this.validFieldValue(this.state.rxData.textColorFeedback)) {
+            data.textColor = this.state.rxData.textColorFeedback;
+        }
+        if (this.validFieldValue(this.state.rxData.outerShadowColorFeedback)) {
+            data.outerShadowColor = this.state.rxData.outerShadowColorFeedback;
+        }
+        if (this.validFieldValue(this.state.rxData.innerShadowColorFeedback)) {
+            data.innerShadowColor = this.state.rxData.innerShadowColorFeedback;
+        }
+        if (this.validFieldValue(this.state.rxData.borderColorFeedback)) {
+            data.borderColor = this.state.rxData.borderColorFeedback;
+        }
+        return data;
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    validFieldValue(value) {
+        return value !== undefined && value !== null && value !== '';
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -1541,6 +1647,10 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
 
         const closestElementCheck = e.target.closest(`.inventwo-view-in-widget-wrapper, #${this.props.id}`);
         if (closestElementCheck.classList.contains('inventwo-view-in-widget-wrapper')) return;
+
+        if (this.state.rxData.type === 'readonly') return;
+
+        this.setState({ showFeedback: true });
 
         // eslint-disable-next-line default-case
         switch (this.state.rxData.type) {
@@ -1585,7 +1695,21 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 value += this.convertValue(this.state.rxData.valueTrue);
                 this.props.context.setValue(oid, value);
                 break;
-            case 'sendHttp':
+            case 'http':
+                // eslint-disable-next-line no-case-declarations
+                const httpType = this.state.rxData.httpType;
+                // eslint-disable-next-line no-case-declarations
+                const url = this.state.rxData.url;
+
+                if (httpType === 'send') {
+                    const http = new XMLHttpRequest();
+                    http.open('GET', url);
+                    http.send();
+                } else if (httpType === 'open') {
+                    window.open(url, '_self');
+                } else if (httpType === 'openNewTab') {
+                    window.open(url, '_blank');
+                }
                 break;
         }
     }
@@ -1593,6 +1717,21 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     renderWidgetBody(props) {
         super.renderWidgetBody(props);
         this.wrappedContent = true;
+
+        if (this.state.showFeedback) {
+            let feedbackDuration = this.state.rxData.feedbackDuration;
+            if (feedbackDuration === undefined) {
+                feedbackDuration = 0;
+            }
+            if (feedbackDuration > 0) {
+                setTimeout(() => {
+                    this.setState({ showFeedback: false });
+                }, feedbackDuration);
+            } else {
+                this.setState({ showFeedback: false });
+            }
+        }
+
         return this.buildWidgetBody();
     }
 

@@ -39,6 +39,10 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Added optional button click feedback options
+* Added widget type to send http requests and open urls
+
 ### 0.1.4 (2024-04-14)
 * Fixed issue in workflow
 

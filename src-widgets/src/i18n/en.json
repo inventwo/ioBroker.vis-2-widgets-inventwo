@@ -7,6 +7,7 @@
   "vis_2_widgets_inventwo_widget_slider": "Slider",
   "vis_2_widgets_inventwo_widget_switch": "Switch",
   "vis_2_widgets_inventwo_attr_group_css": "inventwo Widget Design",
+  "vis_2_widgets_inventwo_attr_group_click_feedback": "Click feedback",
   "vis_2_widgets_inventwo_attr_group_states": "State",
   "vis_2_widgets_inventwo_attr_group_state_default": "Default state",
   "vis_2_widgets_inventwo_attr_group_type_view_in_dialog": "Type - View in dialog",
@@ -205,6 +206,14 @@
   "text_and_content": "Text & Content",
   "condition": "Condition",
   "increase_decrease_value": "Increase/decrease value",
+  "send_http": "Send HTTP request / Open URL",
+  "url": "Url",
+  "send_request": "Send request",
+  "open_url": "Open url",
+  "open_url_new_tab": "Open url in new tab",
+  "http_type": "Http type",
+  "duration": "Duration",
+
 
   "tooltip_widget_type": "Specify the interaction behaviour",
   "tooltip_widget_mode": "Single button: One button with one ore more states, Separated buttons: Each state as a button (Can be used like the old radiobuttonlist widget)",
