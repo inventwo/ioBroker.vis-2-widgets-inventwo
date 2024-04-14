@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "news": {
+      "0.1.5": {
+        "en": "Added optional button click feedback options\nAdded widget type to send http requests and open urls",
+        "de": "Optionale Schaltfläche klicken Sie auf Feedback-Optionen\nHinzugefügt Widget-Typ, um http-Anfragen und offene URLs zu senden",
+        "ru": "Добавить опции обратной связи нажатия кнопки\nДобавить виджета для отправки запросов http и открытых URL",
+        "pt": "Adicionado opcional botão clique opções de feedback\nAdicionado tipo de widget para enviar solicitações http e abrir urls",
+        "nl": "Toegevoegd optionele knop klik feedback opties\nToegevoegd widgettype om http-verzoeken te versturen en urls te openen",
+        "fr": "Ajout du bouton optionnel cliquez sur les options de rétroaction\nAjout du type de widget pour envoyer les requêtes http et ouvrir les urls",
+        "it": "Aggiunta opzione pulsante clicca opzioni di feedback\nAggiunto tipo di widget per inviare http richieste e URL aperti",
+        "es": "Opciones de retroalimentación de botón opcional\nTipo de widget añadido para enviar solicitudes http y urls abiertos",
+        "pl": "Dodano opcjonalne kliknięcie przycisku opcji sprzężenia zwrotnego\nDodano typ widget do wysyłania zapytań http i otwartych url",
+        "uk": "Додано додаткові кнопки натисніть Параметри зворотного зв'язку\nДодано тип віджету для надсилання HTTP запитів та відкритих URL-адрес",
+        "zh-cn": "添加可选按钮点击反馈选项\n添加部件类型以发送 http 请求并打开 urls"
+      },
       "0.1.4": {
         "en": "Fixed issue in workflow",
         "de": "Feste Ausgabe im Workflow",
@@ -69,19 +82,6 @@
         "zh-cn": "添加新部件: 切换\n添加比较运算符和选项以检查通用部件中每个状态的值或视图\n添加到滑动部件中的步骤\n如果类型是按钮或只读, 固定问题状态不工作\n固定发行值设定为错误的数据类型"
       },
       "0.0.7": {
-        "en": "Bug fix",
-        "de": "Fehlerbehebung",
-        "ru": "Задняя фиксация",
-        "pt": "Correção de bugs",
-        "nl": "Bugfix",
-        "fr": "Correction du bug",
-        "it": "Correzione di bug",
-        "es": "Corrección de errores",
-        "pl": "Naprawianie błędów",
-        "uk": "Виправлення помилок",
-        "zh-cn": "错误修复"
-      },
-      "0.0.6": {
         "en": "Bug fix",
         "de": "Fehlerbehebung",
         "ru": "Задняя фиксация",
