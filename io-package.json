@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "news": {
+      "0.1.3": {
+        "en": "Fixed issue in widget state check. Also includes #12\nRemoved second unused field 'button width' (#10)\nAdded widget type Increase/Decrease value (#7)\nAdded more info to readme\nRemoved iobroker/adapter-core dependency\nAdded node 20 to test-and-release workflow",
+        "de": "Behobenes Problem bei Widget State Check. enthält auch #12\nEntfernen des zweiten ungenutzten Feldes 'Tastenbreite' (#10)\nHinzugefügt Widget-Typ Erhöhen/Erhöhungswert (#7)\nWeitere Informationen zu readme\nEntfernung von iobroker/adapter-core Abhängigkeit\nHinzugefügt Knoten 20 zum Test-und-Release-Workflow",
+        "ru": "Фиксированная проблема в проверке состояния виджета. Также включает #12\nУдалено второе неиспользуемое поле «ширина кнопки» (#10)\nДобавить виджета Увеличить/Снижать значение (#7)\nДобавить больше информации для чтения\nУдаленная зависимость от iobroker/adapter-core\nДобавленный узел 20 к тест-и-релизу рабочий поток",
+        "pt": "Corrigido problema na verificação do estado do widget. Também inclui #12\nRemovido segundo campo não utilizado \"largura do botão\" (#10)\nTipo de widget adicionado Aumentar / Diminuir valor (#7)\nAdicionado mais informações para readme\nRemovido iobroker/adapter-core dependência\nAdicionado nó 20 para test-and-release workflow",
+        "nl": "Fixed issue in widget state check. Bevat ook #12\nHet tweede ongebruikte veld 'knopbreedte' (#10) is verwijderd\nToevoegen widgettype Verhoog/Verhoog waarde (#7)\nMeer info toegevoegd aan readme\nVerwijderde iobroker/adapter-core afhankelijkheid\nNode 20 toegevoegd aan test-and-release workflow",
+        "fr": "Problème corrigé dans la vérification de l'état du widget. Comprend également #12\nSupprimé le deuxième champ inutilisé 'largeur du bouton' (#10)\nAjout du type de widget Augmentation/diminution de la valeur (#7)\nAjouté plus d'infos pour me lire\nSupprimé la dépendance iobroker/adaptateur-core\nAjout du nœud 20 au workflow de test-and-release",
+        "it": "Problema risolto in widget di stato check. Include anche #12\nRimosso secondo campo inutilizzato 'larghezza pulsante' (#10)\nAggiunto widget tipo Aumento / Diminuzione valore (#7)\nAggiunto più informazioni per readme\nRimozione della dipendenza iobroker/adapter-core\nAggiunto nodo 20 a prova-e-release flusso di lavoro",
+        "es": "Edición fija en control estatal de widget. También incluye #12\nRemovido segundo campo no utilizado 'anchura de botón' (#10)\nIncremento/Disminución del valor (#7)\nAñadido más información para leerme\nUnidad de iobroker/adapter-core\nNodo 20 añadido al flujo de trabajo de prueba y liberación",
+        "pl": "Naprawiono problem w kontroli stanu widget. Zawiera również # 12\nUsunięto drugie nieużywane pole 'szerokość przycisku' (# 10)\nDodano typ widgetu Zwiększ / Zmniejsz wartość (# 7)\nDodano więcej informacji do odczytu\nUsunięta zależność od iobrokera / adaptera\nDodano węzeł 20 do pracy testowej i zwalniającej",
+        "uk": "Виправлено проблему в перевірці стану віджету. Також входить #12\nВидалено другий невикористаний поле 'button ширина' (#10)\nДодано тип віджету Збільшення / значення для видалення (#7)\nДокладніші відомості про місто\nВидалення iobroker/adapter-core залежностей\nДодано вузол 20 для тестування та вивільнення робочого процесу",
+        "zh-cn": "部件状态检查中的固定发行 。 也包括12号\n删除第二个未使用的字段“ 按钮宽度 ” (# 10)\n添加部件类型 增加/ 减少值 (# 7)\n添加更多信息以读取\n消除雄性经纪人/适应核心依赖\n在测试和释放工作流程中添加了节点20"
+      },
       "0.1.2": {
         "en": "Fixed issue editor crashes when changing \"Comparison operator\" or \"Compare by\" on multiple states.\nFixesd issue state settings not used if condition is true.",
         "de": "Der Fixed-Editor stürzt beim Wechsel von \"Comparison Operator\" oder \"Compare by\" auf mehreren Zuständen ab.\nFeste Ausgabezustandseinstellungen, die nicht verwendet werden, wenn die Bedingung wahr ist.",
@@ -80,19 +93,6 @@
         "pl": "Naprawianie błędów",
         "uk": "Виправлення помилок",
         "zh-cn": "错误修复"
-      },
-      "0.0.4": {
-        "en": "Bug fix\nAdded new widget: Table, still work in progress\nCSS settings divided into single groups",
-        "de": "Fehlerbehebung\nNeues Widget hinzugefügt: Tabelle, noch in Arbeit\nCSS-Einstellungen in einzelne Gruppen unterteilt",
-        "ru": "Задняя фиксация\nДобавлен новый виджет: Таблица, все еще работа в процессе\nПараметры CSS, разделенные на отдельные группы",
-        "pt": "Correção de bugs\nAdicionado novo widget: Tabela, ainda trabalho em progresso\nConfigurações CSS divididas em grupos únicos",
-        "nl": "Bugfix\nNieuwe widget toegevoegd: Tabel, nog bezig\nCSS-instellingen verdeeld in groepen",
-        "fr": "Correction du bug\nAjout de nouveau widget: Table, toujours en cours\nParamètres CSS divisés en groupes uniques",
-        "it": "Correzione di bug\nAggiunto nuovo widget: Tabella, ancora lavoro in corso\nImpostazioni CSS divise in singoli gruppi",
-        "es": "Corrección de errores\nAñadido nuevo widget: Tabla, todavía trabajo en progreso\nAjustes CSS divididos en grupos individuales",
-        "pl": "Naprawianie błędów\nDodano nowy widget: Stół, nadal działa w toku\nUstawienia CSS podzielone na pojedyncze grupy",
-        "uk": "Виправлення помилок\nДодано новий віджет: Таблиця, як і раніше працює в прогресі\nНалаштування CSS розподілені на окремі групи",
-        "zh-cn": "错误修复\n添加新部件: 表格, 仍在进行中\nCSS 设置分为单组"
       }
     },
     "titleLang": {
