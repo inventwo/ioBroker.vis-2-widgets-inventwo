@@ -32,10 +32,7 @@ jobs:
         node-version: [ 18.x, 20.x ]
         os: [ ubuntu-latest, windows-latest ]
 
-    steps:
-      - name: Enforce IPv4 Connectivity
-        uses: ./.github/actions/force-ipv4
-  
+    steps:  
       - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
