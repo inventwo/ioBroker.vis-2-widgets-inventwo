@@ -42,7 +42,7 @@ jobs:
 
       - name: Install macos distutils
         if: matrix.os == 'macos-latest'
-        run: pip install setuptools
+        run: python3 --version
 
       - name: Install Dependencies
         run: npm i
