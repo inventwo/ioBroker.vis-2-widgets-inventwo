@@ -213,6 +213,10 @@
   "open_url_new_tab": "Open url in new tab",
   "http_type": "Http type",
   "duration": "Duration",
+  "dialog_close_on_click_outside": "Close on click outside",
+  "padding": "Padding",
+  "color": "Color",
+
 
 
   "tooltip_widget_type": "Specify the interaction behaviour",

@@ -81,7 +81,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'oid',
                             type: 'id',
                             label: 'oid',
-                            hidden: '(data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value"',
+                            // hidden: '(data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value"',
                         },
                         {
                             name: 'url',
@@ -117,13 +117,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'valueTrue',
                             type: 'text',
                             label: 'value_true',
-                            hidden: '((data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value") || data.mode == "separatedButtons" || data.type == "http"',
-                        },
-                        {
-                            name: 'dialogTitle',
-                            type: 'text',
-                            label: 'dialog_title',
-                            hidden: 'data.type != "viewInDialog"',
+                            hidden: 'data.mode == "separatedButtons" || data.type == "http"',
+                            // hidden: '((data.type == "nav" || data.type == "viewInDialog") && data.compareBy != "value") || data.mode == "separatedButtons" || data.type == "http"',
                         },
                         {
                             name: 'buttonSize',
@@ -167,6 +162,12 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             hidden: 'data.type != "viewInDialog"',
                         },
                         {
+                            name: 'dialogCloseOnClickOutside',
+                            type: 'checkbox',
+                            label: 'dialog_close_on_click_outside',
+                            hidden: 'data.type != "viewInDialog" || data.dialogFullscreen',
+                        },
+                        {
                             name: 'dialogWidth',
                             type: 'slider',
                             min: 1,
@@ -185,6 +186,119 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             default: 300,
                             label: 'dialog_height',
                             hidden: 'data.dialogFullscreen',
+                        },
+                        {
+                            name: 'dialogPadding',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 10,
+                            label: 'padding',
+                        },
+                        {
+                            name: 'dialogBackground',
+                            type: 'color',
+                            default: 'rgb(18, 18, 18)',
+                            label: 'background',
+                        },
+                        {
+                            type: 'delimiter',
+                        },
+                        {
+                            type: 'help',
+                            text: 'Title bar',
+                        },
+                        {
+                            name: 'dialogTitle',
+                            type: 'html',
+                            label: 'title',
+                        },
+                        {
+                            name: 'dialogTitleColor',
+                            type: 'color',
+                            default: 'rgb(255,255,255)',
+                            label: 'color',
+                        },
+                        {
+                            name: 'dialogTitleSize',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 20,
+                            label: 'size',
+                        },
+                        {
+                            type: 'delimiter',
+                        },
+                        {
+                            type: 'help',
+                            text: 'Close button',
+                        },
+                        {
+                            name: 'dialogCloseButtonBackground',
+                            type: 'color',
+                            default: 'rgba(255,255,255,0)',
+                            label: 'background',
+                        },
+                        {
+                            name: 'dialogCloseButtonColor',
+                            type: 'color',
+                            default: 'rgba(255,255,255,1)',
+                            label: 'color',
+                        },
+                        {
+                            name: 'dialogCloseButtonSize',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 14,
+                            label: 'size',
+                        },
+                        {
+                            type: 'delimiter',
+                        },
+                        {
+                            type: 'help',
+                            text: 'Border radius',
+                        },
+                        {
+                            name: 'dialogBorderRadiusTopLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 12,
+                            label: 'top_left',
+                        },
+                        {
+                            name: 'dialogBorderRadiusTopRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'top_right',
+                        },
+                        {
+                            name: 'dialogBorderRadiusBottomRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 12,
+                            label: 'bottom_right',
+                        },
+                        {
+                            name: 'dialogBorderRadiusBottomLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'bottom_left',
                         },
                     ],
                 },
@@ -235,7 +349,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'outerShadowColorFeedback',
                             type: 'color',
                             label: 'outer_shadow_color',
-                            default: ' rgba(0, 0, 0, 1)',
+                            default: 'rgba(0, 0, 0, 1)',
                         },
                         {
                             name: 'innerShadowColorFeedback',
@@ -325,7 +439,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'outerShadowColor',
                             type: 'color',
                             label: 'outer_shadow_color',
-                            default: ' rgba(0, 0, 0, 1)',
+                            default: 'rgba(0, 0, 0, 1)',
                         },
                         {
                             name: 'innerShadowColor',
@@ -488,13 +602,13 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                         {
                             name: 'background',
                             type: 'color',
-                            default: 'rgba(69, 86, 24, 1)',
+                            default: 'rgb(69,86,24)',
                             label: 'background',
                         },
                         {
                             name: 'backgroundTrue',
                             type: 'color',
-                            default: 'rgba(69, 86, 24, 1)',
+                            default: 'rgb(69,86,24)',
                             label: 'background_true',
                             hidden: 'data.mode == "singleButton"',
                         },
@@ -524,14 +638,14 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'outerShadowColor',
                             type: 'color',
                             label: 'outer_shadow_color',
-                            default: ' rgba(0, 0, 0, 1)',
+                            default: 'rgb(0,0,0)',
                         },
                         {
                             name: 'outerShadowColorTrue',
                             type: 'color',
                             label: 'outer_shadow_color_true',
                             hidden: 'data.mode == "singleButton"',
-                            default: ' rgba(0, 0, 0, 1)',
+                            default: 'rgb(0,0,0)',
                         },
                         {
                             name: 'innerShadowColor',
@@ -543,6 +657,22 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             type: 'color',
                             label: 'inner_shadow_color_true',
                             hidden: 'data.mode == "singleButton"',
+                        },
+                        {
+                            type: 'delimiter',
+                        },
+                        {
+                            type: 'help',
+                            text: 'content',
+                        },
+                        {
+                            name: 'contentSize',
+                            type: 'slider',
+                            min: 0,
+                            max: 100,
+                            step: 1,
+                            default: 0,
+                            label: 'content_size',
                         },
                     ],
                 },
@@ -826,7 +956,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                         {
                             name: 'contentSize',
                             type: 'slider',
-                            min: 1,
+                            min: 0,
                             max: 100,
                             step: 1,
                             default: 40,
@@ -1536,7 +1666,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                         || this.state.rxData.type === 'button'
                         || this.state.rxData.type === 'readonly'
                     )
-                    && value === this.state.rxData[`value${index}`]
+                    && value === this.convertValue(this.state.rxData[`value${index}`])
                 )
                 || (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)
             ) {
@@ -1560,6 +1690,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 html: this.state.rxData.html,
                 viewInWidget: this.state.rxData.viewInWidget,
                 contentBlinkInterval: this.state.rxData.contentBlinkInterval,
+                contentSize: this.state.rxData.contentSize,
             };
         }
 
@@ -1584,6 +1715,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             html: this.state.rxData[`html${i}`],
             viewInWidget: this.state.rxData[`viewInWidget${i}`],
             contentBlinkInterval: this.state.rxData[`contentBlinkInterval${i}`],
+            contentSize: this.state.rxData[`contentSize${i}`] > 0 ? this.state.rxData[`contentSize${i}`] : this.state.rxData.contentSize,
         };
 
         if (useExtraTrueValues) {
@@ -1718,6 +1850,10 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         super.renderWidgetBody(props);
         this.wrappedContent = true;
 
+        if (this.props.id === 'w000097') {
+            console.log(this.state.rxData);
+        }
+
         if (this.state.showFeedback) {
             let feedbackDuration = this.state.rxData.feedbackDuration;
             if (feedbackDuration === undefined) {
@@ -1771,17 +1907,44 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 fullScreen
                 sx={{
                     '& .MuiDialog-container': {
-                        '& .MuiPaper-root': {
+                        '& .MuiDialog-paper': {
                             maxWidth: !this.state.rxData.dialogFullscreen ? `${this.state.rxData.dialogWidth}px` : '100%',
                             maxHeight: !this.state.rxData.dialogFullscreen ? `${this.state.rxData.dialogHeight}px` : '100%',
+                            background: this.state.rxData.dialogBackground,
+                            borderRadius: `${this.state.rxData.dialogBorderRadiusTopLeft}px ${this.state.rxData.dialogBorderRadiusTopRight}px ${this.state.rxData.dialogBorderRadiusBottomRight}px ${this.state.rxData.dialogBorderRadiusBottomLeft}px`,
+                        },
+                        '.MuiDialogContent-root': {
+                            padding: `${this.state.rxData.dialogPadding}px`,
+                        },
+                        '.MuiDialogTitle-root': {
+                            padding: `${this.state.rxData.dialogPadding}px`,
+                            color: this.state.rxData.dialogTitleColor,
                         },
                     },
+                }}
+                onClose={(event, reason) => {
+                    if (reason && reason === 'backdropClick' && this.state.rxData.dialogCloseOnClickOutside) return;
+                    this.setState({ dialogOpen: false });
                 }}
             >
                 <DialogTitle className={this.props.classes.dialogTitle}>
                     <span>{this.state.rxData.dialogTitle}</span>
-                    <IconButton onClick={() => this.setState({ dialogOpen: false })}>
-                        <CloseIcon />
+                    <IconButton
+                        onClick={() => this.setState({ dialogOpen: false })}
+                        sx={{
+                            background: this.state.rxData.dialogCloseButtonBackground,
+                            color: this.state.rxData.dialogCloseButtonColor,
+                            '&:hover': {
+                                background: this.state.rxData.dialogCloseButtonBackground,
+                            },
+                        }}
+                    >
+                        <CloseIcon
+                            sx={{
+                                width: this.state.rxData.dialogCloseButtonSize,
+                                height: this.state.rxData.dialogCloseButtonSize,
+                            }}
+                        />
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
@@ -1817,9 +1980,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         return <Icon
             src={this.getValueData(i).icon}
             style={{
-                width: this.state.rxData.contentSize,
-                height: this.state.rxData.contentSize,
-                color: this.getValueData(i).contentColor,
+                width: this.getValueData(i).contentSize,
             }}
         ></Icon>;
     }
@@ -1832,9 +1993,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         return <Icon
             src={img}
             style={{
-                width: this.state.rxData.contentSize,
-                height: this.state.rxData.contentSize,
-                // color: this.getValueData(i).contentColor,
+                width: this.getValueData(i).contentSize,
             }}
         ></Icon>;
     }
@@ -1842,7 +2001,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     getContentHtml(i = null) {
         return <div
             style={{
-                fontSize: `${this.state.rxData.contentSize}px`,
+                fontSize: `${this.getValueData(i).contentSize}px`,
             }}
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: this.getValueData(i).html }}
