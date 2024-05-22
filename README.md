@@ -39,7 +39,7 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### 0.1.6 (2024-05-22)
+### **WORK IN PROGRESS**
 * Fixed missing object id if type is nav (#14)
 * Fixed image aspect ratio (#15)
 * Added options to customize dialog
