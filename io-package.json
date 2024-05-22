@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "news": {
+      "0.1.7": {
+        "en": "Fixed missing object id if type is nav (#14)\nFixed image aspect ratio (#15)\nAdded options to customize dialog",
+        "de": "Fixed fehlende object id, wenn Typ nav ist (#14)\nFeste Bild-Aspekt-Verhältnis (#15)\nOptionen hinzugefügt, um Dialog anpassen",
+        "ru": "Fixed missing object id if type is nav (#14)\nФиксированное соотношение сторон (#15)\nДобавленные параметры для настройки диалога",
+        "pt": "ID de objeto ausente fixo se o tipo é nav (#14)\nRelação de aspecto de imagem fixa (#15)\nOpções adicionadas para personalizar a caixa de diálogo",
+        "nl": "Vaste ontbrekende object id als het type navigatiesysteem is (#14)\nFixed image aspect ratio (#15)\nOpties om het dialoogvenster aan te passen",
+        "fr": "Correction de l'identifiant d'objet manquant si le type est nav (#14)\nRapport d'aspect d'image fixe (#15)\nAjout d'options pour personnaliser la boîte de dialogue",
+        "it": "Risolto oggetto mancante id se il tipo è nav (#14)\nRapporto di aspetto immagine fisso (#15)\nOpzioni aggiuntive per personalizzare la finestra di dialogo",
+        "es": "Objeto perdido fijo id si el tipo es nav (#14)\nRelación de aspecto de imagen fija (#15)\nOpciones adicionales para personalizar el diálogo",
+        "pl": "Naprawiono brak identyfikatora obiektu, jeśli typ jest nawigacją (# 14)\nStałe proporcje obrazu (# 15)\nDodano opcje dostosowania okna dialogowego",
+        "uk": "Виправлено відсутній об'єкт, якщо тип нав (#14)\nВиправлено співвідношення сторін зображення (#15)\nДодано параметри для налаштування діалогу",
+        "zh-cn": "如果类型为导航( # 14) , 则固定缺失对象 ID\n固定图像尺寸比(# 15)\n添加自定义对话框的选项"
+      },
       "0.1.5": {
         "en": "Added optional button click feedback options\nAdded widget type to send http requests and open urls",
         "de": "Optionale Schaltfläche klicken Sie auf Feedback-Optionen\nHinzugefügt Widget-Typ, um http-Anfragen und offene URLs zu senden",
