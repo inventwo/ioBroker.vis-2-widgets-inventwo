@@ -39,6 +39,10 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Fixed missing object id if type is nav (#14)
+* Fixed content color for icons not working (#22)
+
 ### 0.1.7 (2024-05-22)
 * Fixed missing object id if type is nav (#14)
 * Fixed image aspect ratio (#15)

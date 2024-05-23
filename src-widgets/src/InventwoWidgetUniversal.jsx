@@ -475,7 +475,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'oid',
                             type: 'id',
                             label: 'oid',
-                            hidden: 'data.type == "nav" || data["compareBy" + index] == "view" || data.mode == "separatedButtons"',
+                            hidden: '(data.type == "nav" && data["compareBy" + index] != "value") || data["compareBy" + index] == "view" || data.mode == "separatedButtons"',
                             tooltip: 'tooltip_state_oid',
                         },
                         {
@@ -497,13 +497,13 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                             name: 'value',     // name in data structure
                             type: 'text',
                             label: 'value', // translated field label
-                            hidden: 'data.type == "nav" || data["compareBy" + index] == "view"',
+                            hidden: '(data.type == "nav" && data["compareBy" + index] != "value") || data["compareBy" + index] == "view"',
                         },
                         {
                             name: 'view',     // name in data structure
                             type: 'views',
                             label: 'view', // translated field label,
-                            hidden: '(data.type != "nav" && data["compareBy" + index] != "view")',
+                            hidden: '(data.type != "nav" && data["compareBy" + index] != "view") || data["compareBy" + index] == "value"',
                         },
                         {
                             type: 'delimiter',
@@ -1981,6 +1981,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             src={this.getValueData(i).icon}
             style={{
                 width: this.getValueData(i).contentSize,
+                color: this.getValueData(i).contentColor,
             }}
         ></Icon>;
     }
