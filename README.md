@@ -39,7 +39,7 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.8 (2024-05-23)
 * Fixed missing object id if type is nav (#14)
 * Fixed content color for icons not working (#22)
 

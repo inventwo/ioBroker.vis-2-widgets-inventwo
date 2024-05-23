@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "news": {
+      "0.1.8": {
+        "en": "Fixed missing object id if type is nav (#14)\nFixed content color for icons not working (#22)",
+        "de": "Fixed fehlende object id, wenn Typ nav ist (#14)\nFeste Inhaltsfarbe für Icons, die nicht funktionieren (#22)",
+        "ru": "Fixed missing object id if type is nav (#14)\nФиксированный цвет контента для значков, не работающих (#22)",
+        "pt": "ID de objeto ausente fixo se o tipo é nav (#14)\nCor de conteúdo fixo para ícones que não funcionam (#22)",
+        "nl": "Vaste ontbrekende object id als het type navigatiesysteem is (#14)\nKleur van vaste inhoud voor pictogrammen die niet werken (#22)",
+        "fr": "Correction de l'identifiant d'objet manquant si le type est nav (#14)\nCouleur de contenu fixe pour les icônes ne fonctionnant pas (#22)",
+        "it": "Risolto oggetto mancante id se il tipo è nav (#14)\nColore del contenuto fisso per icone che non funzionano (#22)",
+        "es": "Objeto perdido fijo id si el tipo es nav (#14)\nColor de contenido fijo para iconos que no funcionan (#22)",
+        "pl": "Naprawiono brak identyfikatora obiektu, jeśli typ jest nawigacją (# 14)\nPoprawiony kolor zawartości dla ikon nie działa (# 22)",
+        "uk": "Виправлено відсутній об'єкт, якщо тип нав (#14)\nФіксований колір вмісту для ікон не працює (#22)",
+        "zh-cn": "如果类型为导航( # 14) , 则固定缺失对象 ID\n不工作的图标的固定内容颜色(# 22)"
+      },
       "0.1.7": {
         "en": "Fixed missing object id if type is nav (#14)\nFixed image aspect ratio (#15)\nAdded options to customize dialog",
         "de": "Fixed fehlende object id, wenn Typ nav ist (#14)\nFeste Bild-Aspekt-Verhältnis (#15)\nOptionen hinzugefügt, um Dialog anpassen",
@@ -80,19 +93,6 @@
         "pl": "Naprawiono błędną wartość domyślną dla operatora porównania",
         "uk": "Виправлено неправильне значення за замовчуванням для оператора порівняння",
         "zh-cn": "比较运算符的固定错误默认值"
-      },
-      "0.1.0": {
-        "en": "Added new widget: Switch\nAdded comparison operator and option to check for value or view for each state in universal widget\nAdded steps to slider widget\nFixed issue states not working if type is button or readonly\nFixed issue value is set with wrong data type",
-        "de": "Neues Widget hinzugefügt: Switch\nHinzugefügt Vergleichsoperator und Option, um nach Wert oder Ansicht für jeden Zustand im universellen Widget zu überprüfen\nSchritte zum Slider Widget hinzugefügt\nBehobene Ausgabezustände funktionieren nicht, wenn Typ Knopf oder Readonly ist\nFixer Ausgabewert wird mit falschem Datentyp eingestellt",
-        "ru": "Добавить новый виджет: Switch\nДобавлен оператор сравнения и опция проверить значение или вид для каждого состояния в универсальном виджете\nДобавленные шаги к слайдеру виджет\nИсправленный вопрос состояния не работает, если тип - кнопка или только чтение\nИсправленное значение вопроса установлено с неправильным типом данных",
-        "pt": "Adicionado novo widget: Interruptor\nAdicionado operador de comparação e opção para verificar o valor ou vista para cada estado em widget universal\nAdicionados passos para slider widget\nO problema fixo afirma não funcionar se o tipo é botão ou somente leitura\nO valor do problema fixo é definido com o tipo de dados errado",
-        "nl": "Nieuw widget toegevoegd: Schakelen\nToegevoegd vergelijkingsoperator en optie om te controleren op waarde of weergave voor elke staat in universele widget\nStappen toegevoegd aan schuifwidget\nFixed issue staat werkt niet als het type knop of alleen-lezen is\nVaste emissiewaarde is ingesteld met verkeerd gegevenstype",
-        "fr": "Ajout d'un nouveau widget : Switch\nAjout d'opérateur de comparaison et d'option pour vérifier la valeur ou la vue pour chaque état dans le widget universel\nAjout d'étapes au widget slider\nCorrection des états de problème ne fonctionnant pas si le type est bouton ou en lecture seule\nLa valeur d'émission fixe est définie avec un mauvais type de données",
-        "it": "Aggiunto nuovo widget: Switch\nAggiunto operatore di confronto e l'opzione di controllare per valore o vista per ogni stato in widget universale\nPassi aggiunti al widget cursore\nGli stati di problema fissi non funzionano se il tipo è pulsante o in sola lettura\nIl valore di emissione fisso viene impostato con il tipo di dati errato",
-        "es": "Añadido nuevo widget: Switch\nOperador de comparación añadido y opción para comprobar el valor o la vista de cada estado en el widget universal\nPasos adicionales para el widget deslizador\nNúmero fijo estados no funcionan si el tipo es botón o sólo lectura\nValor de emisión fijo se establece con el tipo de datos incorrecto",
-        "pl": "Dodano nowy widget: Switch\nDodano operatora porównania i możliwość sprawdzenia wartości lub widoku dla każdego stanu w uniwersalnym widget\nDodano kroki do widżetu suwaka\nStała emisja nie działa, jeśli typ jest przyciskiem lub tylko readonly\nStała wartość emisji jest ustawiona z niewłaściwym typem danych",
-        "uk": "Додано новий віджет: Switch\nДодано оператор порівняння і опція для перевірки значення або перегляду для кожного стану в універсальному віджеті\nДодано кроки до віджету слайдера\nВиправлено проблему не працює, якщо тип кнопка або зчитування\nВиправлена вартість номера встановлюється з неправильним типом даних",
-        "zh-cn": "添加新部件: 切换\n添加比较运算符和选项以检查通用部件中每个状态的值或视图\n添加到滑动部件中的步骤\n如果类型是按钮或只读, 固定问题状态不工作\n固定发行值设定为错误的数据类型"
       }
     },
     "titleLang": {
