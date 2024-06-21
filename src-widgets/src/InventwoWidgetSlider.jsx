@@ -281,6 +281,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
             ],
             visDefaultStyle: {
                 width: 110,
+                height: 50,
                 overflow: 'visible',
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-slider.png',
