@@ -245,6 +245,8 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
             ],
             visDefaultStyle: {
                 overflow: 'visible',
+                width: 50,
+                height: 38,
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-switch.png',
         };
