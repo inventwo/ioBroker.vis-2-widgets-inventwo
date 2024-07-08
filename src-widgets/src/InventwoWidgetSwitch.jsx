@@ -6,7 +6,6 @@ import {
 } from '@mui/material';
 
 import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
-import { styled } from '@mui/styles';
 
 class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
     constructor(props) {
@@ -362,16 +361,13 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
             },
         };
 
-        const CustomSwitch = styled(Switch)(() => (attributes));
-
         return <FormGroup>
             <FormControlLabel
-                control={
-                    <CustomSwitch
-                        onClick={() => this.onChange()}
-                        checked={isChecked}
-                    ></CustomSwitch>
-                }
+                control={<Switch
+                    sx={attributes}
+                    onClick={() => this.onChange()}
+                    checked={isChecked}
+                />}
                 label={isChecked ? this.state.rxData.textTrue : this.state.rxData.textFalse}
                 labelPlacement={this.state.rxData.textPosition}
             ></FormControlLabel>

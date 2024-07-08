@@ -1,12 +1,15 @@
 import React from 'react';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+// it is important to from '@mui/material' instead of '@mui/material/XXX' for federation
+import {
+    Table,
+    TableRow,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableBody,
+    Paper,
+} from '@mui/material';
 
 import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
 

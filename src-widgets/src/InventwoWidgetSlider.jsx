@@ -4,7 +4,6 @@ import {
 } from '@mui/material';
 
 import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
-import { styled } from '@mui/styles';
 
 class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
     constructor(props) {
@@ -408,14 +407,14 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                 backgroundColor: trackBarType === 'normal' ? this.state.rxData.sliderRailColor : trackBarType === 'inverted' ? this.state.rxData.sliderRailActiveColor : '', /// /color of the slider outside  teh area between thumbs
                 color: trackBarType === 'normal' ? this.state.rxData.sliderRailColor : trackBarType === 'inverted' ? this.state.rxData.sliderRailActiveColor : '',
                 border: 'none',
-                borderRadius: this.state.rxData.trackBorderRadius,
+                borderRadius: `${this.state.rxData.trackBorderRadius}px`,
                 boxShadow: `${this.state.rxData.trackShadowX}px ${this.state.rxData.trackShadowY}px ${this.state.rxData.trackShadowBlur}px ${this.state.rxData.trackShadowSize}px ${this.state.rxData.trackShadowColor}`,
             },
             '& .MuiSlider-track': {
                 backgroundColor: trackBarType === 'normal' ? this.state.rxData.sliderRailActiveColor : trackBarType === 'inverted' ? this.state.rxData.sliderRailColor : '',
                 color: trackBarType === 'normal' ? this.state.rxData.sliderRailActiveColor : trackBarType === 'inverted' ? this.state.rxData.sliderRailColor : '',
                 border: 'none',
-                borderRadius: this.state.rxData.trackBorderRadius,
+                borderRadius: `${this.state.rxData.trackBorderRadius}px`,
             },
             '& .MuiSlider-mark': {
                 color: this.state.rxData.sliderRailActiveColor,
@@ -431,9 +430,8 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
             sliderAttributes['& .MuiSlider-markLabel'].left = this.state.rxData.trackWidth + 20;
         }
 
-        const CustomSlider = styled(Slider)(() => (sliderAttributes));
-
-        return <CustomSlider
+        return <Slider
+            sx={sliderAttributes}
             onChangeCommitted={(e, val) => this.onChange(e, val)}
             min={this.state.rxData.minValue}
             max={this.state.rxData.maxValue}
@@ -443,7 +441,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
             track={this.state.rxData.trackBarType}
             orientation={this.state.rxData.orientation}
             marks={marks}
-        ></CustomSlider>;
+        />;
     }
 }
 
