@@ -31,9 +31,9 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         return {
             id: 'tplInventwoWidgetUniversal',
             visSet: 'vis-2-widgets-inventwo',
-            visSetLabel: 'vis_2_widgets_set_inventwo',
-            visWidgetLabel: 'vis_2_widgets_inventwo_widget_universal',
-            visName: 'vis_2_widgets_inventwo_widget_universal',
+            visSetLabel: 'set_label',
+            visWidgetLabel: 'widget_universal',
+            visName: 'widget_universal',
             visSetColor: 'rgba(69, 86, 24, 1)',
             visAttrs: [
                 {
@@ -151,8 +151,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 },
 
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_type_view_in_dialog',
-                    label: 'vis_2_widgets_inventwo_attr_group_type_view_in_dialog',
+                    name: 'attr_group_type_view_in_dialog',
+                    label: 'attr_group_type_view_in_dialog',
                     hidden: 'data.type != "viewInDialog"',
                     fields: [
                         {
@@ -302,10 +302,9 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                         },
                     ],
                 },
-
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_click_feedback',
-                    label: 'vis_2_widgets_inventwo_attr_group_click_feedback',
+                    name: 'attr_group_click_feedback',
+                    label: 'attr_group_click_feedback',
                     fields: [
                         {
                             name: 'feedbackDuration',
@@ -360,8 +359,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 },
 
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_state_default',
-                    label: 'vis_2_widgets_inventwo_attr_group_state_default',
+                    name: 'attr_group_state_default',
+                    label: 'attr_group_state_default',
                     fields: [
                         {
                             type: 'help',
@@ -452,7 +451,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     name: 'countStates',
                     indexFrom: 1,
                     indexTo: 'countStates',
-                    label: 'vis_2_widgets_inventwo_attr_group_states',
+                    label: 'attr_group_states',
                     fields: [
                         {
                             type: 'help',
@@ -678,8 +677,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 },
 
                 {
-                    name: 'vis_2_widgets_inventwo_attr_content_color_picker',
-                    label: 'vis_2_widgets_inventwo_attr_content_color_picker',
+                    name: 'attr_content_color_picker',
+                    label: 'attr_content_color_picker',
                     hidden: 'data.contentType != "colorPicker"',
                     fields: [
                         {
@@ -846,8 +845,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
 
                 // CSS Settings
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_text',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_text',
+                    name: 'attr_group_css_text',
+                    label: 'attr_group_css_text',
                     fields: [
                         {
                             name: 'textDecoration',
@@ -900,8 +899,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_content',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_content',
+                    name: 'attr_group_css_content',
+                    label: 'attr_group_css_content',
                     fields: [
                         {
                             name: 'contentType',
@@ -980,8 +979,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_alignment',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_alignment',
+                    name: 'attr_group_css_alignment',
+                    label: 'attr_group_css_alignment',
                     fields: [
                         {
                             name: 'flexDirection',     // name in data structure
@@ -1035,8 +1034,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_transparency',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_transparency',
+                    name: 'attr_group_css_transparency',
+                    label: 'attr_group_css_transparency',
                     fields: [
                         {
                             name: 'backgroundOpacity',
@@ -1059,8 +1058,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_spacing',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_spacing',
+                    name: 'attr_group_css_spacing',
+                    label: 'attr_group_css_spacing',
                     fields: [
                         {
                             name: 'paddingLeft',
@@ -1101,8 +1100,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_border_radius',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_border_radius',
+                    name: 'attr_group_css_border_radius',
+                    label: 'attr_group_css_border_radius',
                     fields: [
                         {
                             name: 'borderRadiusTopLeft',
@@ -1143,8 +1142,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_border',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_border',
+                    name: 'attr_group_css_border',
+                    label: 'attr_group_css_border',
                     fields: [
                         {
                             name: 'borderSizeTop',
@@ -1201,8 +1200,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_outer_shadow',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_outer_shadow',
+                    name: 'attr_group_css_outer_shadow',
+                    label: 'attr_group_css_outer_shadow',
                     fields: [
                         {
                             name: 'outerShadowX',
@@ -1243,8 +1242,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_inner_shadow',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_inner_shadow',
+                    name: 'attr_group_css_inner_shadow',
+                    label: 'attr_group_css_inner_shadow',
                     fields: [
                         {
                             name: 'innerShadowX',
@@ -1554,6 +1553,10 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         }
         // eslint-disable-next-line no-eval
         return eval(`${value1} ${operator} ${value2}`);
+    }
+
+    static getI18nPrefix() {
+        return 'vis_2_widgets_inventwo_';
     }
 
     // eslint-disable-next-line class-methods-use-this

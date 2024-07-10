@@ -18,8 +18,8 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
         return {
             id: 'tplInventwoWidgetTable',
             visSet: 'vis-2-widgets-inventwo',
-            visWidgetLabel: 'vis_2_widgets_inventwo_widget_table',
-            visName: 'vis_2_widgets_inventwo_widget_table',
+            visWidgetLabel: 'widget_table',
+            visName: 'widget_table',
             visAttrs: [
                 {
                     name: 'common',
@@ -57,7 +57,7 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                     name: 'countColumns',
                     indexFrom: 1,
                     indexTo: 'countColumns',
-                    label: 'vis_2_widgets_inventwo_attr_group_columns',
+                    label: 'attr_group_columns',
                     fields: [
                         {
                             name: 'columnKey',
@@ -133,6 +133,10 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
 
         // Update data
         this.propertiesUpdate();
+    }
+
+    static getI18nPrefix() {
+        return 'vis_2_widgets_inventwo_';
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.

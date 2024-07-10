@@ -5,13 +5,10 @@
     "dependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@craco/craco": "^7.1.0",
-        "@emotion/react": "^11.11.4",
-        "@emotion/styled": "^11.11.5",
         "@iobroker/adapter-react-v5": "^6.0.14",
         "@iobroker/vis-2-widgets-react-dev": "^2.0.1",
         "@jaames/iro": "^5.5.2",
         "@mui/icons-material": "^5.16.0",
-        "@mui/x-date-pickers": "^7.9.0",
         "craco-esbuild": "^0.6.1",
         "craco-module-federation": "^1.1.0",
         "eslint": "^8.57.0",
