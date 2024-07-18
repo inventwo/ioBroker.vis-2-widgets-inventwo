@@ -39,7 +39,7 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.11 (2024-07-18)
 * Fixed issues mentioned by eslint
 
 ### 0.1.10 (2024-07-18)

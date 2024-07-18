@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "news": {
+      "0.1.11": {
+        "en": "Fixed issues mentioned by eslint",
+        "de": "Behobene Probleme von eslint",
+        "ru": "Исправленные вопросы, упомянутые eslint",
+        "pt": "Questões fixas mencionadas por eslint",
+        "nl": "Vaste emissies genoemd door eslint",
+        "fr": "Problèmes corrigés mentionnés par eslint",
+        "it": "Questioni fisse menzionate da eslint",
+        "es": "Cuestiones fijas mencionadas por eslint",
+        "pl": "Poprawione kwestie wymienione przez eslint",
+        "uk": "Виправлені питання, зазначені еслінтом",
+        "zh-cn": "Eslint提到的固定问题"
+      },
       "0.1.10": {
         "en": "Removed styles libraries as they are not compatible with vis 2.0\nFixed compare by for widget type view in dialog (#24)\nFixed text color not working in slider and added other font styles (#25)\nFixed switch doesn't toggle without defining values (#28)",
         "de": "Entfernte Stile Bibliotheken, da sie nicht kompatibel mit vis 2.0 sind\nBehoben vergleichen mit der Widget-Typansicht im Dialog (#24)\nBehobene Textfarbe, die nicht im Slider funktioniert und andere Schriftarten hinzugefügt (#25)\nFester Schalter schaltet sich nicht, ohne Werte zu definieren (#28)",
@@ -80,19 +93,6 @@
         "pl": "Poprawiony edytor wydania awarii przy zmianie \"Operator porównania\" lub \"Porównaj przez\" w wielu stanach.\nFixesd wydaje ustawienia stanu nie używane, jeśli warunek jest prawdziwy.",
         "uk": "Виправлено помилку редактора виписки при зміні \"Компанія\" або \"Порівняти\" на декількох штатах.\nВиправлення параметрів стану виписки не використовуються, якщо стан є істинним.",
         "zh-cn": "固定发行编辑器在多个状态上更改\"比较操作员\"或\"Compare by\"时崩溃.\n如果条件属实,则未使用已修复的状态设置 ."
-      },
-      "0.1.1": {
-        "en": "Fixed wrong default value for comparison operator",
-        "de": "Fehlerbehafteter Standardwert für Vergleichsoperator",
-        "ru": "Исправлено неправильное значение по умолчанию для оператора сравнения",
-        "pt": "Valor padrão errado fixo para operador de comparação",
-        "nl": "Foute standaardwaarde voor vergelijkingsoperator",
-        "fr": "Valeur par défaut fixe pour l'opérateur de comparaison",
-        "it": "Valore predefinito sbagliato fisso per operatore di confronto",
-        "es": "Valor por defecto fijo para el operador de comparación",
-        "pl": "Naprawiono błędną wartość domyślną dla operatora porównania",
-        "uk": "Виправлено неправильне значення за замовчуванням для оператора порівняння",
-        "zh-cn": "比较运算符的固定错误默认值"
       }
     },
     "titleLang": {
