@@ -5,21 +5,33 @@ import {
     Switch,
 } from '@mui/material';
 
-import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
-import { styled } from '@mui/styles';
+import InventwoGeneric from './InventwoGeneric';
 
-class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
+class InventwoWidgetSwitch extends InventwoGeneric {
     constructor(props) {
         super(props);
-        this.state.sliderValue = 0;
+        const info = InventwoWidgetSwitch.getWidgetInfo();
+
+        this.trackAttrs = [];
+        info.visAttrs.find(group => group.name === 'attr_group_css_track').fields.forEach(field => {
+            if (field.name !== 'trackFromWidget') {
+                this.trackAttrs.push(field.name);
+            }
+        });
+        this.thumbAttrs = [];
+        info.visAttrs.find(group => group.name === 'attr_group_css_thumb').fields.forEach(field => {
+            if (field.name !== 'thumbFromWidget') {
+                this.thumbAttrs.push(field.name);
+            }
+        });
     }
 
     static getWidgetInfo() {
         return {
             id: 'tplInventwoWidgetSwitch',
             visSet: 'vis-2-widgets-inventwo',
-            visWidgetLabel: 'vis_2_widgets_inventwo_widget_switch',
-            visName: 'vis_2_widgets_inventwo_widget_switch',
+            visWidgetLabel: 'widget_switch',
+            visName: 'widget_switch',
             visAttrs: [
                 {
                     name: 'common',
@@ -63,19 +75,28 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_track',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_track',
+                    name: 'attr_group_css_track',
+                    label: 'attr_group_css_track',
                     fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'trackFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetSlider',
+                            all: true,
+                        },
                         {
                             name: 'trackColor',
                             type: 'color',
                             label: 'track_color',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             name: 'trackColorTrue',
                             type: 'color',
                             label: 'track_color_true',
                             default: 'rgb(143,164,85)',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             name: 'trackSize',
@@ -85,6 +106,7 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 12,
                             label: 'track_width',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             name: 'trackBorderRadius',
@@ -94,13 +116,16 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 100,
                             label: 'track_border_radius',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             type: 'delimiter',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             type: 'help',
                             text: 'track_shadow',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             name: 'trackShadowX',
@@ -110,6 +135,7 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'x_offset',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             name: 'trackShadowY',
@@ -119,6 +145,7 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'y_offset',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             name: 'trackShadowBlur',
@@ -128,6 +155,7 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'blur',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             name: 'trackShadowSize',
@@ -137,35 +165,47 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 1,
                             label: 'size',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             name: 'trackShadowColor',
                             type: 'color',
                             default: 'rgba(0, 0, 0, 1)',
                             label: 'shadow_color',
+                            hidden: '!!data.trackFromWidget',
                         },
                         {
                             name: 'trackShadowColorTrue',
                             type: 'color',
                             default: 'rgba(0, 0, 0, 1)',
                             label: 'shadow_color_true',
+                            hidden: '!!data.trackFromWidget',
                         },
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_thumb',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_thumb',
+                    name: 'attr_group_css_thumb',
+                    label: 'attr_group_css_thumb',
                     fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'thumbFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetSlider',
+                            all: true,
+                        },
                         {
                             name: 'thumbColor',
                             type: 'color',
                             label: 'thumb_color',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             name: 'thumbColorTrue',
                             type: 'color',
                             label: 'thumb_color_true',
                             default: 'rgb(69,86,24)',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             name: 'thumbSize',
@@ -175,6 +215,7 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 16,
                             label: 'thumbSize',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             name: 'thumbBorderRadius',
@@ -184,13 +225,16 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 100,
                             label: 'thumb_border_radius',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             type: 'delimiter',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             type: 'help',
                             text: 'thumb_shadow',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             name: 'thumbShadowX',
@@ -200,6 +244,7 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'x_offset',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             name: 'thumbShadowY',
@@ -209,6 +254,7 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'y_offset',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             name: 'thumbShadowBlur',
@@ -218,6 +264,7 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'blur',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             name: 'thumbShadowSize',
@@ -227,26 +274,29 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 1,
                             label: 'size',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             name: 'thumbShadowColor',
                             type: 'color',
                             default: 'rgba(0, 0, 0, 0.5)',
                             label: 'shadow_color',
+                            hidden: '!!data.thumbFromWidget',
                         },
                         {
                             name: 'thumbShadowColorTrue',
                             type: 'color',
                             default: 'rgba(0, 0, 0, 0.5)',
                             label: 'shadow_color_true',
+                            hidden: '!!data.thumbFromWidget',
                         },
                     ],
                 },
             ],
             visDefaultStyle: {
                 overflow: 'visible',
-                width: 50,
-                height: 38,
+                width: 70,
+                height: 40,
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-switch.png',
         };
@@ -293,13 +343,17 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
 
     }
 
+    static getI18nPrefix() {
+        return 'vis_2_widgets_inventwo_';
+    }
+
     onChange() {
         if (this.props.editMode) return;
         const oid = this.state.rxData.oid;
-        if (this.getValue(this.state.rxData.oid) === this.convertValue(this.state.rxData.valueTrue)) {
-            this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueFalse));
+        if (this.getValue(this.state.rxData.oid) === InventwoWidgetSwitch.convertValue(this.state.rxData.valueTrue, true)) {
+            this.props.context.setValue(oid, InventwoWidgetSwitch.convertValue(this.state.rxData.valueFalse, false));
         } else {
-            this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
+            this.props.context.setValue(oid, InventwoWidgetSwitch.convertValue(this.state.rxData.valueTrue, true));
         }
     }
 
@@ -310,12 +364,21 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
         return undefined;
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    convertValue(value) {
-        if (value === 'true') return true;
-        if (value === 'false') return false;
+    static convertValue(value, defaultValue) {
+        if (value === 'true') {
+            return true;
+        }
+        if (value === 'false') {
+            return false;
+        }
         // eslint-disable-next-line no-restricted-globals
-        if (!isNaN(value)) return parseFloat(value);
+        if (!isNaN(value)) {
+            return parseFloat(value);
+        }
+        if (value === undefined || value === null || value === '') {
+            return defaultValue;
+        }
+
         return value;
     }
 
@@ -324,60 +387,60 @@ class InventwoWidgetSwitch extends (window.visRxWidget || VisRxWidget) {
 
         const oid = this.state.rxData.oid;
         const value = this.getValue(oid);
-        const isChecked = value === this.convertValue(this.state.rxData.valueTrue);
+        const isChecked = value === InventwoWidgetSwitch.convertValue(this.state.rxData.valueTrue, true);
 
-        let thumbShadowColor = this.state.rxData.thumbShadowColor;
-        let trackShadowColor = this.state.rxData.trackShadowColor;
+        const trackStyle = this.getStyle('trackFromWidget', this.trackAttrs);
+        const thumbStyle = this.getStyle('thumbFromWidget', this.thumbAttrs);
+
+        let thumbShadowColor = thumbStyle.thumbShadowColor;
+        let trackShadowColor = trackStyle.trackShadowColor;
         if (isChecked) {
-            thumbShadowColor = this.state.rxData.thumbShadowColorTrue;
-            trackShadowColor = this.state.rxData.trackShadowColorTrue;
+            thumbShadowColor = thumbStyle.thumbShadowColorTrue;
+            trackShadowColor = trackStyle.trackShadowColorTrue;
         }
 
         const attributes = {
             '&.MuiSwitch-root': {
                 alignItems: 'center',
-                height: this.state.rxData.trackSize,
+                height: trackStyle.trackSize,
                 width: '34px',
                 boxSizing: 'content-box',
             },
             '& .MuiSwitch-switchBase': {
-                color: this.state.rxData.thumbColor,
+                color: thumbStyle.thumbColor,
                 top: 'unset',
             },
             '& .MuiSwitch-thumb': {
-                width: this.state.rxData.thumbSize,
-                height: this.state.rxData.thumbSize,
-                borderRadius: `${this.state.rxData.thumbBorderRadius}%`,
-                boxShadow: `${this.state.rxData.thumbShadowX}px ${this.state.rxData.thumbShadowY}px ${this.state.rxData.thumbShadowBlur}px ${this.state.rxData.thumbShadowSize}px ${thumbShadowColor}`,
+                width: thumbStyle.thumbSize,
+                height: thumbStyle.thumbSize,
+                borderRadius: `${thumbStyle.thumbBorderRadius}%`,
+                boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbShadowColor}`,
             },
             '& .Mui-checked': {
-                color: this.state.rxData.thumbColorTrue,
+                color: thumbStyle.thumbColorTrue,
             },
             '& .MuiSwitch-track': {
-                backgroundColor: this.state.rxData.trackColor,
+                backgroundColor: trackStyle.trackColor,
                 // eslint-disable-next-line no-mixed-operators
-                borderRadius: `${this.state.rxData.trackBorderRadius / 2 / 100 * this.state.rxData.trackSize}px`,
-                boxShadow: `${this.state.rxData.trackShadowX}px ${this.state.rxData.trackShadowY}px ${this.state.rxData.trackShadowBlur}px ${this.state.rxData.trackShadowSize}px ${trackShadowColor}`,
+                borderRadius: `${trackStyle.trackBorderRadius / 2 / 100 * trackStyle.trackSize}px`,
+                boxShadow: `${trackStyle.trackShadowX}px ${trackStyle.trackShadowY}px ${trackStyle.trackShadowBlur}px ${trackStyle.trackShadowSize}px ${trackShadowColor}`,
             },
             '& .Mui-checked + .MuiSwitch-track': {
-                backgroundColor: this.state.rxData.trackColorTrue,
+                backgroundColor: trackStyle.trackColorTrue,
             },
         };
 
-        const CustomSwitch = styled(Switch)(() => (attributes));
-
         return <FormGroup>
             <FormControlLabel
-                control={
-                    <CustomSwitch
-                        onClick={() => this.onChange()}
-                        checked={isChecked}
-                    ></CustomSwitch>
-                }
+                control={<Switch
+                    disabled={this.props.editMode}
+                    sx={attributes}
+                    onClick={() => this.onChange()}
+                    checked={isChecked}
+                />}
                 label={isChecked ? this.state.rxData.textTrue : this.state.rxData.textFalse}
                 labelPlacement={this.state.rxData.textPosition}
-            ></FormControlLabel>
-
+            />
         </FormGroup>;
     }
 }

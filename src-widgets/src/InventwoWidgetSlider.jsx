@@ -3,21 +3,39 @@ import {
     Slider,
 } from '@mui/material';
 
-import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
-import { styled } from '@mui/styles';
+import InventwoGeneric from './InventwoGeneric';
 
-class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
+class InventwoWidgetSlider extends InventwoGeneric {
     constructor(props) {
         super(props);
         this.state.sliderValue = 0;
+        this.trackAttrs = [];
+        const info = InventwoWidgetSlider.getWidgetInfo();
+        info.visAttrs.find(group => group.name === 'attr_group_css_slider_track').fields.forEach(field => {
+            if (field.name !== 'sliderTrackFromWidget') {
+                this.trackAttrs.push(field.name);
+            }
+        });
+
+        this.thumbAttrs = [];
+        info.visAttrs.find(group => group.name === 'attr_group_css_slider_slider_thumb').fields.forEach(field => {
+            if (field.name !== 'sliderThumbFromWidget') {
+                this.thumbAttrs.push(field.name);
+            }
+        });
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
+        this.setState({ sliderValue: this.getValue(this.state.rxData.oid) });
     }
 
     static getWidgetInfo() {
         return {
             id: 'tplInventwoWidgetSlider',
             visSet: 'vis-2-widgets-inventwo',
-            visWidgetLabel: 'vis_2_widgets_inventwo_widget_slider',
-            visName: 'vis_2_widgets_inventwo_widget_slider',
+            visWidgetLabel: 'widget_slider',
+            visName: 'widget_slider',
             visAttrs: [
                 {
                     name: 'common',
@@ -26,6 +44,28 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             name: 'oid',
                             type: 'id',
                             label: 'oid',
+                            onChange: async (field, data, changeData, socket) => {
+                                if (data[field.name] && data[field.name] !== 'nothing_selected') {
+                                    const object = await socket.getObject(data[field.name]);
+                                    if (object?.common) {
+                                        let changed = false;
+
+                                        if (object.common.min !== undefined && object.common.min !== data.max_value) {
+                                            data.max_value = object.common.min;
+                                            changed = true;
+                                        }
+                                        if (object.common.max !== undefined && object.common.max !== data.min_value) {
+                                            data.min_value = object.common.max;
+                                            changed = true;
+                                        }
+                                        if (object.common.step !== undefined && object.common.step !== data.step) {
+                                            data.step = object.common.step;
+                                            changed = true;
+                                        }
+                                        changed && changeData(data);
+                                    }
+                                }
+                            },
                         },
                         {
                             name: 'minValue',
@@ -103,20 +143,29 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                 },
 
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_slider_track',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_slider_track',
+                    name: 'attr_group_css_slider_track',
+                    label: 'attr_group_css_slider_track',
                     fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'sliderTrackFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetSlider',
+                            all: true,
+                        },
                         {
                             name: 'sliderRailColor',
                             type: 'color',
                             default: 'rgb(110,110,110)',
                             label: 'slider_rail_color',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             name: 'sliderRailActiveColor',
                             type: 'color',
                             default: 'rgb(94,107,63)',
                             label: 'slider_rail_active_color',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             name: 'trackBarType',
@@ -128,6 +177,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             ],
                             default: 'normal',
                             label: 'track_bar_type',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             name: 'trackWidth',
@@ -137,6 +187,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 10,
                             label: 'track_width',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             name: 'trackBorderRadius',
@@ -146,13 +197,16 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 100,
                             label: 'track_border_radius',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             type: 'delimiter',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             type: 'help',
                             text: 'track_shadow',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             name: 'trackShadowX',
@@ -162,6 +216,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'x_offset',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             name: 'trackShadowY',
@@ -171,6 +226,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'y_offset',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             name: 'trackShadowBlur',
@@ -180,6 +236,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'blur',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             name: 'trackShadowSize',
@@ -189,24 +246,34 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 1,
                             label: 'size',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
                             name: 'trackShadowColor',
                             type: 'color',
                             default: 'rgba(0, 0, 0, 1)',
                             label: 'shadow_color',
+                            hidden: '!!data.sliderTrackFromWidget',
                         },
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_slider_slider_thumb',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_slider_slider_thumb',
+                    name: 'attr_group_css_slider_slider_thumb',
+                    label: 'attr_group_css_slider_slider_thumb',
                     fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'sliderThumbFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetSlider',
+                            all: true,
+                        },
                         {
                             name: 'sliderThumbColor',
                             type: 'color',
                             default: 'rgba(69, 86, 24, 1)',
                             label: 'slider_thumb_color',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                         {
                             name: 'thumbSize',
@@ -216,6 +283,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 16,
                             label: 'thumbSize',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                         {
                             name: 'thumbBorderRadius',
@@ -225,13 +293,16 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 100,
                             label: 'thumb_border_radius',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                         {
                             type: 'delimiter',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                         {
                             type: 'help',
                             text: 'thumb_shadow',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                         {
                             name: 'thumbShadowX',
@@ -241,6 +312,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'x_offset',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                         {
                             name: 'thumbShadowY',
@@ -250,6 +322,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'y_offset',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                         {
                             name: 'thumbShadowBlur',
@@ -259,6 +332,7 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 2,
                             label: 'blur',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                         {
                             name: 'thumbShadowSize',
@@ -268,42 +342,36 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
                             step: 1,
                             default: 1,
                             label: 'size',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                         {
                             name: 'thumbShadowColor',
                             type: 'color',
                             default: 'rgba(0, 0, 0, 0.5)',
                             label: 'shadow_color',
+                            hidden: '!!data.sliderThumbFromWidget',
                         },
                     ],
                 },
 
             ],
             visDefaultStyle: {
-                width: 110,
-                height: 50,
+                width: 150,
                 overflow: 'visible',
+                height: 40,
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-slider.png',
         };
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    propertiesUpdate() {
-        // Widget has 3 important states
-        // 1. this.state.values - contains all state values, that are used in widget (automatically collected from widget info).
-        //                        So you can use `this.state.values[this.state.rxData.oid + '.val']` to get value of state with id this.state.rxData.oid
-        // 2. this.state.rxData - contains all widget data with replaced bindings. E.g. if this.state.data.type is `{system.adapter.admin.0.alive}`,
-        //                        then this.state.rxData.type will have state value of `system.adapter.admin.0.alive`
-        // 3. this.state.rxStyle - contains all widget styles with replaced bindings. E.g. if this.state.styles.width is `{javascript.0.width}px`,
-        //                        then this.state.rxData.type will have state value of `javascript.0.width` + 'px
+    static getI18nPrefix() {
+        return 'vis_2_widgets_inventwo_';
     }
 
-    componentDidMount() {
-        super.componentDidMount();
-
-        // Update data
-        this.propertiesUpdate();
+    onStateUpdated(id, state) {
+        if (id === this.state.rxData.oid && state && state.val !== this.state.sliderValue) {
+            this.setState({ sliderValue: state.val });
+        }
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
@@ -312,42 +380,8 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
         return InventwoWidgetSlider.getWidgetInfo();
     }
 
-    // This function is called every time when rxData is changed
-    onRxDataChanged() {
-        this.propertiesUpdate();
-    }
-
-    // This function is called every time when rxStyle is changed
-    // eslint-disable-next-line class-methods-use-this
-    onRxStyleChanged() {
-
-    }
-
-    // This function is called every time when some Object State updated, but all changes lands into this.state.values too
-    // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    onStateUpdated(id, state) {
-
-    }
-
-    onChange(e, value) {
-        if (this.props.editMode) return;
-        const oid = this.state.rxData.oid;
-        this.props.context.setValue(oid, parseFloat(value));
-    }
-
-    getValue(oid) {
-        if (oid !== undefined && oid !== '' && oid !== 'nothing_selected') {
-            return this.state.values[`${oid}.val`];
-        }
-        return undefined;
-    }
-
     renderWidgetBody(props) {
         super.renderWidgetBody(props);
-
-        const oid = this.state.rxData.oid;
-        const value = this.getValue(oid);
-        const trackBarType = this.state.rxData.trackBarType;
 
         const minValue = parseFloat(this.state.rxData.minValue);
         const maxValue = parseFloat(this.state.rxData.maxValue);
@@ -392,34 +426,39 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
             }
         }
 
+        const trackStyle = this.getStyle('sliderTrackFromWidget', this.trackAttrs);
+        const thumbStyle = this.getStyle('sliderThumbFromWidget', this.thumbAttrs);
+
+        const trackBarType = trackStyle.trackBarType;
+
         const sliderAttributes = {
-            height: this.state.rxData.orientation === 'horizontal' ? this.state.rxData.trackWidth : '100%',
-            width: this.state.rxData.orientation !== 'horizontal' ? this.state.rxData.trackWidth : '100%',
+            height: this.state.rxData.orientation === 'horizontal' ? trackStyle.trackWidth : '100%',
+            width: this.state.rxData.orientation !== 'horizontal' ? trackStyle.trackWidth : '100%',
             '& .MuiSlider-thumb': {
-                backgroundColor: this.state.rxData.sliderThumbColor, // color of thumbs
-                width: this.state.rxData.thumbSize,
-                height: this.state.rxData.thumbSize,
-                borderRadius: `${this.state.rxData.thumbBorderRadius}%`,
+                backgroundColor: thumbStyle.sliderThumbColor, // color of thumbs
+                width: thumbStyle.thumbSize,
+                height: thumbStyle.thumbSize,
+                borderRadius: `${thumbStyle.thumbBorderRadius}%`,
                 // marginLeft: `-${thumbOffset}px`,
                 '&:before': {
-                    boxShadow: `${this.state.rxData.thumbShadowX}px ${this.state.rxData.thumbShadowY}px ${this.state.rxData.thumbShadowBlur}px ${this.state.rxData.thumbShadowSize}px ${this.state.rxData.thumbShadowColor}`,
+                    boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbStyle.thumbShadowColor}`,
                 },
             },
             '& .MuiSlider-rail': {
-                backgroundColor: trackBarType === 'normal' ? this.state.rxData.sliderRailColor : trackBarType === 'inverted' ? this.state.rxData.sliderRailActiveColor : '', /// /color of the slider outside  teh area between thumbs
-                color: trackBarType === 'normal' ? this.state.rxData.sliderRailColor : trackBarType === 'inverted' ? this.state.rxData.sliderRailActiveColor : '',
+                backgroundColor: trackBarType === 'normal' ? trackStyle.sliderRailColor : trackBarType === 'inverted' ? trackStyle.sliderRailActiveColor : '', /// /color of the slider outside  teh area between thumbs
+                color: trackBarType === 'normal' ? trackStyle.sliderRailColor : trackBarType === 'inverted' ? trackStyle.sliderRailActiveColor : '',
                 border: 'none',
-                borderRadius: this.state.rxData.trackBorderRadius,
-                boxShadow: `${this.state.rxData.trackShadowX}px ${this.state.rxData.trackShadowY}px ${this.state.rxData.trackShadowBlur}px ${this.state.rxData.trackShadowSize}px ${this.state.rxData.trackShadowColor}`,
+                borderRadius: `${trackStyle.trackBorderRadius}px`,
+                boxShadow: `${trackStyle.trackShadowX}px ${this.state.rxData.trackShadowY}px ${trackStyle.trackShadowBlur}px ${trackStyle.trackShadowSize}px ${trackStyle.trackShadowColor}`,
             },
             '& .MuiSlider-track': {
-                backgroundColor: trackBarType === 'normal' ? this.state.rxData.sliderRailActiveColor : trackBarType === 'inverted' ? this.state.rxData.sliderRailColor : '',
-                color: trackBarType === 'normal' ? this.state.rxData.sliderRailActiveColor : trackBarType === 'inverted' ? this.state.rxData.sliderRailColor : '',
+                backgroundColor: trackBarType === 'normal' ? this.state.rxData.sliderRailActiveColor : trackBarType === 'inverted' ? trackStyle.sliderRailColor : '',
+                color: trackBarType === 'normal' ? this.state.rxData.sliderRailActiveColor : trackBarType === 'inverted' ? trackStyle.sliderRailColor : '',
                 border: 'none',
-                borderRadius: this.state.rxData.trackBorderRadius,
+                borderRadius: `${trackStyle.trackBorderRadius}px`,
             },
             '& .MuiSlider-mark': {
-                color: this.state.rxData.sliderRailActiveColor,
+                color: trackStyle.sliderRailActiveColor,
             },
             '& .MuiSlider-markLabel': {
                 fontSize: this.state.rxStyle['font-size'],
@@ -427,24 +466,27 @@ class InventwoWidgetSlider extends (window.visRxWidget || VisRxWidget) {
         };
 
         if (this.state.rxData.orientation === 'horizontal') {
-            sliderAttributes['& .MuiSlider-markLabel'].top = this.state.rxData.trackWidth + 20;
+            sliderAttributes['& .MuiSlider-markLabel'].top = trackStyle.trackWidth + 20;
         } else {
-            sliderAttributes['& .MuiSlider-markLabel'].left = this.state.rxData.trackWidth + 20;
+            sliderAttributes['& .MuiSlider-markLabel'].left = trackStyle.trackWidth + 20;
         }
 
-        const CustomSlider = styled(Slider)(() => (sliderAttributes));
-
-        return <CustomSlider
-            onChangeCommitted={(e, val) => this.onChange(e, val)}
+        return <Slider
+            disabled={this.props.editMode}
+            sx={sliderAttributes}
+            onChange={(e, val) => this.setState({ sliderValue: val })}
+            onChangeCommitted={(e, val) =>
+                this.setState({ sliderValue: val }, () =>
+                    this.onChange(e, val))}
             min={this.state.rxData.minValue}
             max={this.state.rxData.maxValue}
             step={this.state.rxData.step}
-            defaultValue={value}
+            value={this.state.sliderValue || 0}
             valueLabelDisplay="auto"
-            track={this.state.rxData.trackBarType}
+            track={trackStyle.trackBarType}
             orientation={this.state.rxData.orientation}
             marks={marks}
-        ></CustomSlider>;
+        />;
     }
 }
 

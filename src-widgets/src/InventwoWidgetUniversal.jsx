@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-    Box, Card, CardContent, Dialog, DialogContent, DialogTitle, IconButton,
+    Card, CardContent, Dialog,
+    DialogContent, DialogTitle, IconButton,
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
-import { withStyles } from '@mui/styles';
 
 import { Icon } from '@iobroker/adapter-react-v5';
 import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
@@ -11,13 +11,13 @@ import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
 import iro from './lib/iro.min';
 import './assets/inventwo.css';
 
-const styles = () => ({
+const styles = {
     dialogTitle: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-});
+};
 
 class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     constructor(props) {
@@ -31,9 +31,9 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         return {
             id: 'tplInventwoWidgetUniversal',
             visSet: 'vis-2-widgets-inventwo',
-            visSetLabel: 'vis_2_widgets_set_inventwo',
-            visWidgetLabel: 'vis_2_widgets_inventwo_widget_universal',
-            visName: 'vis_2_widgets_inventwo_widget_universal',
+            visSetLabel: 'set_label',
+            visWidgetLabel: 'widget_universal',
+            visName: 'widget_universal',
             visSetColor: 'rgba(69, 86, 24, 1)',
             visAttrs: [
                 {
@@ -151,8 +151,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 },
 
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_type_view_in_dialog',
-                    label: 'vis_2_widgets_inventwo_attr_group_type_view_in_dialog',
+                    name: 'attr_group_type_view_in_dialog',
+                    label: 'attr_group_type_view_in_dialog',
                     hidden: 'data.type != "viewInDialog"',
                     fields: [
                         {
@@ -302,10 +302,9 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                         },
                     ],
                 },
-
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_click_feedback',
-                    label: 'vis_2_widgets_inventwo_attr_group_click_feedback',
+                    name: 'attr_group_click_feedback',
+                    label: 'attr_group_click_feedback',
                     fields: [
                         {
                             name: 'feedbackDuration',
@@ -360,8 +359,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 },
 
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_state_default',
-                    label: 'vis_2_widgets_inventwo_attr_group_state_default',
+                    name: 'attr_group_state_default',
+                    label: 'attr_group_state_default',
                     fields: [
                         {
                             type: 'help',
@@ -452,7 +451,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     name: 'countStates',
                     indexFrom: 1,
                     indexTo: 'countStates',
-                    label: 'vis_2_widgets_inventwo_attr_group_states',
+                    label: 'attr_group_states',
                     fields: [
                         {
                             type: 'help',
@@ -678,8 +677,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 },
 
                 {
-                    name: 'vis_2_widgets_inventwo_attr_content_color_picker',
-                    label: 'vis_2_widgets_inventwo_attr_content_color_picker',
+                    name: 'attr_content_color_picker',
+                    label: 'attr_content_color_picker',
                     hidden: 'data.contentType != "colorPicker"',
                     fields: [
                         {
@@ -846,8 +845,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
 
                 // CSS Settings
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_text',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_text',
+                    name: 'attr_group_css_text',
+                    label: 'attr_group_css_text',
                     fields: [
                         {
                             name: 'textDecoration',
@@ -900,8 +899,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_content',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_content',
+                    name: 'attr_group_css_content',
+                    label: 'attr_group_css_content',
                     fields: [
                         {
                             name: 'contentType',
@@ -980,8 +979,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_alignment',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_alignment',
+                    name: 'attr_group_css_alignment',
+                    label: 'attr_group_css_alignment',
                     fields: [
                         {
                             name: 'flexDirection',     // name in data structure
@@ -1035,8 +1034,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_transparency',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_transparency',
+                    name: 'attr_group_css_transparency',
+                    label: 'attr_group_css_transparency',
                     fields: [
                         {
                             name: 'backgroundOpacity',
@@ -1059,8 +1058,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_spacing',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_spacing',
+                    name: 'attr_group_css_spacing',
+                    label: 'attr_group_css_spacing',
                     fields: [
                         {
                             name: 'paddingLeft',
@@ -1101,8 +1100,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_border_radius',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_border_radius',
+                    name: 'attr_group_css_border_radius',
+                    label: 'attr_group_css_border_radius',
                     fields: [
                         {
                             name: 'borderRadiusTopLeft',
@@ -1143,8 +1142,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_border',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_border',
+                    name: 'attr_group_css_border',
+                    label: 'attr_group_css_border',
                     fields: [
                         {
                             name: 'borderSizeTop',
@@ -1201,8 +1200,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_outer_shadow',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_outer_shadow',
+                    name: 'attr_group_css_outer_shadow',
+                    label: 'attr_group_css_outer_shadow',
                     fields: [
                         {
                             name: 'outerShadowX',
@@ -1243,8 +1242,8 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
                 {
-                    name: 'vis_2_widgets_inventwo_attr_group_css_inner_shadow',
-                    label: 'vis_2_widgets_inventwo_attr_group_css_inner_shadow',
+                    name: 'attr_group_css_inner_shadow',
+                    label: 'attr_group_css_inner_shadow',
                     fields: [
                         {
                             name: 'innerShadowX',
@@ -1554,6 +1553,10 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         }
         // eslint-disable-next-line no-eval
         return eval(`${value1} ${operator} ${value2}`);
+    }
+
+    static getI18nPrefix() {
+        return 'vis_2_widgets_inventwo_';
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -1883,25 +1886,25 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 content.push(this.getSingleCard(i));
             }
 
-            widgetContent.push(<Box
+            widgetContent.push(<div
                 key="cardWrapper"
-                sx={{
+                style={{
                     display: 'flex',
                     height: '100%',
                     overflow: 'auto',
                     gap: `${this.state.rxData.btnSpacing}px`,
                     flexDirection: this.state.rxData.direction,
-                    padding: '10px',
-                    margin: '-10px',
+                    padding: 10,
+                    margin: -10,
                 }}
             >
                 {content}
-            </Box>);
+            </div>);
         }
 
         if (this.state.rxData.type === 'viewInDialog') {
             widgetContent.push(<Dialog
-                classes="inventwo-dialog"
+                className="inventwo-dialog"
                 key="dialog"
                 open={this.state.dialogOpen}
                 fullScreen
@@ -1927,7 +1930,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     this.setState({ dialogOpen: false });
                 }}
             >
-                <DialogTitle className={this.props.classes.dialogTitle}>
+                <DialogTitle style={styles.dialogTitle}>
                     <span>{this.state.rxData.dialogTitle}</span>
                     <IconButton
                         onClick={() => this.setState({ dialogOpen: false })}
@@ -1953,21 +1956,22 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             </Dialog>);
         }
 
-        return <div style={{
-            overflow: 'visible',
-            height: '100%',
-            width: '100%',
-            fontSize: this.state.rxStyle['font-size'],
-            color: this.state.rxStyle.color,
-            textShadow: this.state.rxStyle['text-shadow'],
-            fontFamily: this.state.rxStyle['font-family'],
-            fontStyle: this.state.rxStyle['font-style'],
-            fontVariant: this.state.rxStyle['font-variant'],
-            fontWeight: this.state.rxStyle['font-weight'],
-            lineHeight: this.state.rxStyle['line-height'],
-            letterSpacing: this.state.rxStyle['letter-spacing'],
-            wordSpacing: this.state.rxStyle['word-spacing'],
-        }}
+        return <div
+            style={{
+                overflow: 'visible',
+                height: '100%',
+                width: '100%',
+                fontSize: this.state.rxStyle['font-size'],
+                color: this.state.rxStyle.color,
+                textShadow: this.state.rxStyle['text-shadow'],
+                fontFamily: this.state.rxStyle['font-family'],
+                fontStyle: this.state.rxStyle['font-style'],
+                fontVariant: this.state.rxStyle['font-variant'],
+                fontWeight: this.state.rxStyle['font-weight'],
+                lineHeight: this.state.rxStyle['line-height'],
+                letterSpacing: this.state.rxStyle['letter-spacing'],
+                wordSpacing: this.state.rxStyle['word-spacing'],
+            }}
         >
             {widgetContent}
         </div>;
@@ -1996,7 +2000,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             style={{
                 width: this.getValueData(i).contentSize,
             }}
-        ></Icon>;
+        />;
     }
 
     getContentHtml(i = null) {
@@ -2006,7 +2010,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             }}
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: this.getValueData(i).html }}
-        ></div>;
+        />;
     }
 
     getContentViewInWidget(i = null) {
@@ -2091,7 +2095,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         >
             <Card
                 className="vis_rx_widget_card"
-                sx={{
+                style={{
                     background: valueData.background,
                     borderRadius: `${this.state.rxData.borderRadiusTopLeft}px ${this.state.rxData.borderRadiusTopRight}px ${this.state.rxData.borderRadiusBottomRight}px ${this.state.rxData.borderRadiusBottomLeft}px`,
                     boxShadow: shadow,
@@ -2105,9 +2109,9 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                     borderRightWidth: `${this.state.rxData.borderSizeRight}px`,
                     borderStyle: this.state.rxData.borderStyle,
                 }}
-            ></Card>
+            />
             <Card
-                sx={{
+                style={{
                     cursor: this.state.rxData.type !== 'readonly' ? 'pointer' : '',
                     background: 'transparent',
                     borderRadius: `${this.state.rxData.borderRadiusTopLeft}px ${this.state.rxData.borderRadiusTopRight}px ${this.state.rxData.borderRadiusBottomRight}px ${this.state.rxData.borderRadiusBottomLeft}px`,
@@ -2120,19 +2124,16 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 onClick={e => this.onClick(i, e)}
             >
                 <CardContent
-                    sx={{
+                    style={{
+                        padding: `${this.state.rxData.paddingTop}px ${this.state.rxData.paddingRight}px ${this.state.rxData.paddingBottom}px ${this.state.rxData.paddingLeft}px`,
                         boxSizing: 'border-box',
                         width: '100%',
                         height: '100%',
-                    }}
-                    style={{
-                        padding: `${this.state.rxData.paddingTop}px ${this.state.rxData.paddingRight}px ${this.state.rxData.paddingBottom}px ${this.state.rxData.paddingLeft}px`,
                     }}
                 >
                     {content}
                 </CardContent>
             </Card>
-
         </div>;
     }
 
@@ -2160,7 +2161,6 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
             >
                 {content}
             </div>
-
             <div
                 style={{
                     textAlign: this.state.rxData.flexDirection === 'column' ? this.state.rxData.textAlign : '',
@@ -2171,11 +2171,11 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                 }}
                 // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{ __html: this.getValueData(i).text }}
-            ></div>
+            />
         </div>;
 
         return this.buildCard(i, cardContent);
     }
 }
 
-export default withStyles(styles)(InventwoWidgetUniversal);
+export default InventwoWidgetUniversal;
