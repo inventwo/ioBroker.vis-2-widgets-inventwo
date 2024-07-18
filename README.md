@@ -39,7 +39,7 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.10 (2024-07-18)
 * Removed styles libraries as they are not compatible with vis 2.0
 * Fixed compare by for widget type view in dialog (#24)
 * Fixed text color not working in slider and added other font styles (#25)

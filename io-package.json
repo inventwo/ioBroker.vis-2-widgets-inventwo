@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "news": {
+      "0.1.10": {
+        "en": "Removed styles libraries as they are not compatible with vis 2.0\nFixed compare by for widget type view in dialog (#24)\nFixed text color not working in slider and added other font styles (#25)\nFixed switch doesn't toggle without defining values (#28)",
+        "de": "Entfernte Stile Bibliotheken, da sie nicht kompatibel mit vis 2.0 sind\nBehoben vergleichen mit der Widget-Typansicht im Dialog (#24)\nBehobene Textfarbe, die nicht im Slider funktioniert und andere Schriftarten hinzugefügt (#25)\nFester Schalter schaltet sich nicht, ohne Werte zu definieren (#28)",
+        "ru": "Удаленные библиотеки стилей, поскольку они не совместимы с vis 2.0\nИсправленное сравнение для просмотра виджета в диалоге (#24)\nИсправленный цвет текста не работает в слайдере и добавил другие стили шрифта (#25)\nФиксированный переключатель не переключается без определения значений (#28)",
+        "pt": "Bibliotecas de estilos removidos como eles não são compatíveis com vis 2.0\nCorrigido comparar por tipo de widget vista na caixa de diálogo (#24)\nCor de texto fixo não funciona no controle deslizante e adicionou outros estilos de fonte (#25)\nInterruptor fixo não alterna sem definir valores (#28)",
+        "nl": "Verwijderde stijlen bibliotheken omdat ze niet compatibel zijn met vis 2.0\nVaste vergelijking door voor widgettypeweergave in dialoog (#24)\nVaste tekstkleur werkt niet in schuifregelaar en voegde andere lettertypestijlen toe (#25)\nVaste schakelaar schakelt niet aan zonder waarden te definiëren (#28)",
+        "fr": "Librairies de styles supprimées car elles ne sont pas compatibles avec vis 2.0\nCorrigé comparer par pour la vue de type widget dans la boîte de dialogue (#24)\nCouleur du texte fixe ne fonctionnant pas dans le curseur et ajouté d'autres styles de police (#25)\nLe commutateur fixe ne bascule pas sans définir des valeurs (#28)",
+        "it": "Librerie di stili rimossi in quanto non compatibili con vis 2.0\nFisso confrontare per widget tipo di visualizzazione in dialogo (#24)\nColore di testo fisso non funzionante in cursore e aggiunto altri stili di carattere (#25)\nL'interruttore fisso non si attiva senza definire i valori (#28)",
+        "es": "Bibliotecas de estilos eliminados ya que no son compatibles con vis 2.0\nComparación fija por widget tipo de vista en diálogo (#24)\nColor de texto fijo que no funciona en slider y añade otros estilos de fuente (#25)\nEl interruptor fijo no se mueve sin definir valores (#28)",
+        "pl": "Usunięte biblioteki stylów, ponieważ nie są kompatybilne z vis 2.0\nNaprawiono porównanie dla widoku typu widget w oknie dialogowym (# 24)\nPoprawiony kolor tekstu nie działa w suwaku i dodał inne style czcionek (# 25)\nNaprawiony przełącznik nie przełącza się bez zdefiniowania wartości (# 28)",
+        "uk": "Вилучені бібліотеки стилів, як вони не сумісні з vis 2.0\nВиправлено порівняння за типом віджету у діалоговому вікні (#24)\nВиправлено текстовий колір не працює в слайдері і додано інші стилі шрифту (#25)\nВиправлений перемикач не працює без визначення значень (#28)",
+        "zh-cn": "删除样式库, 因为它们与 2.0 不兼容\n对话框中部件类型视图的固定比较 (# 24)\n固定文本颜色不能在滑动器中工作并添加其他字体样式(# 25)\n固定开关不会不定义值而切换(# 28)"
+      },
       "0.1.9": {
         "en": "Fixed missing object id if type is nav (#14)\nFixed content color for icons not working (#22)",
         "de": "Fixed fehlende object id, wenn Typ nav ist (#14)\nFeste Inhaltsfarbe für Icons, die nicht funktionieren (#22)",
