@@ -9,20 +9,6 @@ class InventwoWidgetSlider extends InventwoGeneric {
     constructor(props) {
         super(props);
         this.state.sliderValue = 0;
-        this.trackAttrs = [];
-        const info = InventwoWidgetSlider.getWidgetInfo();
-        info.visAttrs.find(group => group.name === 'attr_group_css_slider_track').fields.forEach(field => {
-            if (field.name !== 'sliderTrackFromWidget') {
-                this.trackAttrs.push(field.name);
-            }
-        });
-
-        this.thumbAttrs = [];
-        info.visAttrs.find(group => group.name === 'attr_group_css_slider_slider_thumb').fields.forEach(field => {
-            if (field.name !== 'sliderThumbFromWidget') {
-                this.thumbAttrs.push(field.name);
-            }
-        });
     }
 
     componentDidMount() {
@@ -426,8 +412,8 @@ class InventwoWidgetSlider extends InventwoGeneric {
             }
         }
 
-        const trackStyle = this.getStyle('sliderTrackFromWidget', this.trackAttrs);
-        const thumbStyle = this.getStyle('sliderThumbFromWidget', this.thumbAttrs);
+        const trackStyle = this.getStyle('sliderTrackFromWidget', this.groupAttrs.attr_group_css_slider_track);
+        const thumbStyle = this.getStyle('sliderThumbFromWidget', this.groupAttrs.attr_group_css_slider_slider_thumb);
 
         const trackBarType = trackStyle.trackBarType;
 
@@ -462,6 +448,15 @@ class InventwoWidgetSlider extends InventwoGeneric {
             },
             '& .MuiSlider-markLabel': {
                 fontSize: this.state.rxStyle['font-size'],
+                color: this.state.rxStyle.color,
+                textShadow: this.state.rxStyle['text-shadow'],
+                fontFamily: this.state.rxStyle['font-family'],
+                fontStyle: this.state.rxStyle['font-style'],
+                fontVariant: this.state.rxStyle['font-variant'],
+                fontWeight: this.state.rxStyle['font-weight'],
+                lineHeight: this.state.rxStyle['line-height'],
+                letterSpacing: this.state.rxStyle['letter-spacing'],
+                wordSpacing: this.state.rxStyle['word-spacing'],
             },
         };
 

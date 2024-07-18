@@ -41,6 +41,9 @@ Switches
 -->
 ### **WORK IN PROGRESS**
 * Removed styles libraries as they are not compatible with vis 2.0
+* Fixed compare by for widget type view in dialog (#24)
+* Fixed text color not working in slider and added other font styles (#25)
+* Fixed switch doesn't toggle without defining values (#28)
 
 ### 0.1.9 (2024-05-24)
 * Fixed missing object id if a type is nav (#14)

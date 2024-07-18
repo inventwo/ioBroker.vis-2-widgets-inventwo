@@ -10,6 +10,7 @@ import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
 
 import iro from './lib/iro.min';
 import './assets/inventwo.css';
+import InventwoGeneric from "./InventwoGeneric";
 
 const styles = {
     dialogTitle: {
@@ -19,7 +20,7 @@ const styles = {
     },
 };
 
-class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
+class InventwoWidgetUniversal extends InventwoGeneric {
     constructor(props) {
         super(props);
         this.state.currentView = null;
@@ -1534,13 +1535,6 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
 
     }
 
-    getValue(oid) {
-        if (oid !== undefined && oid !== '' && oid !== 'nothing_selected') {
-            return this.state.values[`${oid}.val`];
-        }
-        return undefined;
-    }
-
     // eslint-disable-next-line class-methods-use-this
     eval(value1, value2, operator = '===') {
         // eslint-disable-next-line no-restricted-globals
@@ -1592,7 +1586,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
 
         if (index === null) {
             for (let i = 1; i <= this.state.rxData.countStates; i++) {
-                if (this.state.rxData.countStates > 1 && this.validOid(this.state.rxData[`oid${i}`])) {
+                if (this.validOid(this.state.rxData[`oid${i}`])) {
                     oid = this.state.rxData[`oid${i}`];
                 } else if (this.validOid(this.state.rxData.oid)) {
                     oid = this.state.rxData.oid;
@@ -1621,11 +1615,7 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
                         (
                             (
                                 compareBy === 'default'
-                                && (
-                                    this.state.rxData.type === 'switch'
-                                    || this.state.rxData.type === 'button'
-                                    || this.state.rxData.type === 'readonly'
-                                )
+                                && this.state.rxData.type !== 'nav'
                             )
                             || compareBy === 'value'
                         )
@@ -1760,20 +1750,6 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
         return data;
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    validFieldValue(value) {
-        return value !== undefined && value !== null && value !== '';
-    }
-
-    // eslint-disable-next-line class-methods-use-this
-    convertValue(value) {
-        if (value === 'true') return true;
-        if (value === 'false') return false;
-        // eslint-disable-next-line no-restricted-globals
-        if (!isNaN(value)) return parseFloat(value);
-        return value;
-    }
-
     onClick(index = null, e = null) {
         if (this.props.editMode) return;
         if (e.target.closest('.IroColorPicker') !== null) return;
@@ -1852,10 +1828,6 @@ class InventwoWidgetUniversal extends (window.visRxWidget || VisRxWidget) {
     renderWidgetBody(props) {
         super.renderWidgetBody(props);
         this.wrappedContent = true;
-
-        if (this.props.id === 'w000097') {
-            console.log(this.state.rxData);
-        }
 
         if (this.state.showFeedback) {
             let feedbackDuration = this.state.rxData.feedbackDuration;

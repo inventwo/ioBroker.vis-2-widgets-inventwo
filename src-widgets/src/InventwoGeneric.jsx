@@ -5,6 +5,24 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
         return 'vis_2_widgets_inventwo_';
     }
 
+    constructor(props) {
+        super(props);
+
+        this.groupAttrs = [];
+        const info = this.getWidgetInfo();
+        info.visAttrs.forEach(group => {
+            group.fields.forEach(field => {
+                if (field.name === undefined) return;
+                if (!field.name.endsWith('FromWidget')) {
+                    if (this.groupAttrs[group.name] === undefined) {
+                        this.groupAttrs[group.name] = [];
+                    }
+                    this.groupAttrs[group.name].push(field.name);
+                }
+            });
+        });
+    }
+
     onChange(e, value) {
         if (this.props.editMode) {
             return;
@@ -54,6 +72,20 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
         }
 
         return trackStyle;
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    convertValue(value) {
+        if (value === 'true') return true;
+        if (value === 'false') return false;
+        // eslint-disable-next-line no-restricted-globals
+        if (!isNaN(value)) return parseFloat(value);
+        return value;
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    validFieldValue(value) {
+        return value !== undefined && value !== null && value !== '';
     }
 }
 

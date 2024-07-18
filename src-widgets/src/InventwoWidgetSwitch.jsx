@@ -8,23 +8,6 @@ import {
 import InventwoGeneric from './InventwoGeneric';
 
 class InventwoWidgetSwitch extends InventwoGeneric {
-    constructor(props) {
-        super(props);
-        const info = InventwoWidgetSwitch.getWidgetInfo();
-
-        this.trackAttrs = [];
-        info.visAttrs.find(group => group.name === 'attr_group_css_track').fields.forEach(field => {
-            if (field.name !== 'trackFromWidget') {
-                this.trackAttrs.push(field.name);
-            }
-        });
-        this.thumbAttrs = [];
-        info.visAttrs.find(group => group.name === 'attr_group_css_thumb').fields.forEach(field => {
-            if (field.name !== 'thumbFromWidget') {
-                this.thumbAttrs.push(field.name);
-            }
-        });
-    }
 
     static getWidgetInfo() {
         return {
@@ -82,7 +65,7 @@ class InventwoWidgetSwitch extends InventwoGeneric {
                             label: 'from_widget',
                             name: 'trackFromWidget',
                             type: 'widget',
-                            tpl: 'tplInventwoWidgetSlider',
+                            tpl: 'tplInventwoWidgetSwitch',
                             all: true,
                         },
                         {
@@ -191,7 +174,7 @@ class InventwoWidgetSwitch extends InventwoGeneric {
                             label: 'from_widget',
                             name: 'thumbFromWidget',
                             type: 'widget',
-                            tpl: 'tplInventwoWidgetSlider',
+                            tpl: 'tplInventwoWidgetSwitch',
                             all: true,
                         },
                         {
@@ -389,8 +372,8 @@ class InventwoWidgetSwitch extends InventwoGeneric {
         const value = this.getValue(oid);
         const isChecked = value === InventwoWidgetSwitch.convertValue(this.state.rxData.valueTrue, true);
 
-        const trackStyle = this.getStyle('trackFromWidget', this.trackAttrs);
-        const thumbStyle = this.getStyle('thumbFromWidget', this.thumbAttrs);
+        const trackStyle = this.getStyle('trackFromWidget', this.groupAttrs.attr_group_css_track);
+        const thumbStyle = this.getStyle('thumbFromWidget', this.groupAttrs.attr_group_css_thumb);
 
         let thumbShadowColor = thumbStyle.thumbShadowColor;
         let trackShadowColor = trackStyle.trackShadowColor;
@@ -416,7 +399,7 @@ class InventwoWidgetSwitch extends InventwoGeneric {
                 borderRadius: `${thumbStyle.thumbBorderRadius}%`,
                 boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbShadowColor}`,
             },
-            '& .Mui-checked': {
+            '& .Mui-checked .MuiSwitch-thumb': {
                 color: thumbStyle.thumbColorTrue,
             },
             '& .MuiSwitch-track': {
