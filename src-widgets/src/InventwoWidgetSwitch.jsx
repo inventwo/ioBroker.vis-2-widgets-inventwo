@@ -8,7 +8,6 @@ import {
 import InventwoGeneric from './InventwoGeneric';
 
 class InventwoWidgetSwitch extends InventwoGeneric {
-
     static getWidgetInfo() {
         return {
             id: 'tplInventwoWidgetSwitch',

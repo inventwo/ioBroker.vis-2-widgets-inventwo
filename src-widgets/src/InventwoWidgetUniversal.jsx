@@ -6,11 +6,10 @@ import {
 import { Close as CloseIcon } from '@mui/icons-material';
 
 import { Icon } from '@iobroker/adapter-react-v5';
-import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
 
 import iro from './lib/iro.min';
 import './assets/inventwo.css';
-import InventwoGeneric from "./InventwoGeneric";
+import InventwoGeneric from './InventwoGeneric';
 
 const styles = {
     dialogTitle: {
