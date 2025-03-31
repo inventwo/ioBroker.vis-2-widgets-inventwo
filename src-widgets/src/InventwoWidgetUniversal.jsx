@@ -7,7 +7,9 @@ import { Close as CloseIcon } from '@mui/icons-material';
 
 import { Icon } from '@iobroker/adapter-react-v5';
 
+import { hexToCSSFilter } from 'hex-to-css-filter';
 import iro from './lib/iro.min';
+
 import './assets/inventwo.css';
 import InventwoGeneric from './InventwoGeneric';
 
@@ -417,7 +419,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             name: 'contentColor',
                             type: 'color',
                             label: 'content_color',
-                            hidden: 'data.mode == "separatedButtons" || data.contentType != "icon"',
+                            hidden: 'data.mode == "separatedButtons" || (data.contentType != "icon" && data.contentType != "image")',
                         },
                         {
                             name: 'background',
@@ -590,7 +592,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             name: 'contentColor',     // name in data structure
                             type: 'color',
                             label: 'content_color', // translated field label,
-                            hidden: 'data.contentType != "icon"',
+                            hidden: 'data.contentType != "icon" && data.contentType != "image"',
                         },
                         {
                             name: 'contentColorTrue',     // name in data structure
@@ -1406,25 +1408,25 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 // eslint-disable-next-line default-case
                 switch (colorModel) {
                     case 'hex':
-                        this.props.context.setValue(this.state.rxData.colorPickerOid, color.hexString);
+                        if (this.state.rxData.colorPickerOid) this.props.context.setValue(this.state.rxData.colorPickerOid, color.hexString);
                         break;
                     case 'hex8':
-                        this.props.context.setValue(this.state.rxData.colorPickerOid, color.hex8String);
+                        if (this.state.rxData.colorPickerOid) this.props.context.setValue(this.state.rxData.colorPickerOid, color.hex8String);
                         break;
                     case 'rgb':
-                        this.props.context.setValue(this.state.rxData.colorPickerOid1, color.rgb.r);
-                        this.props.context.setValue(this.state.rxData.colorPickerOid2, color.rgb.g);
-                        this.props.context.setValue(this.state.rxData.colorPickerOid3, color.rgb.b);
+                        if (this.state.rxData.colorPickerOid1) this.props.context.setValue(this.state.rxData.colorPickerOid1, color.rgb.r);
+                        if (this.state.rxData.colorPickerOid2) this.props.context.setValue(this.state.rxData.colorPickerOid2, color.rgb.g);
+                        if (this.state.rxData.colorPickerOid3) this.props.context.setValue(this.state.rxData.colorPickerOid3, color.rgb.b);
                         break;
                     case 'hsl':
-                        this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsl.h);
-                        this.props.context.setValue(this.state.rxData.colorPickerOid2, color.hsl.s);
-                        this.props.context.setValue(this.state.rxData.colorPickerOid3, color.hsl.l);
+                        if (this.state.rxData.colorPickerOid1) this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsl.h);
+                        if (this.state.rxData.colorPickerOid2) this.props.context.setValue(this.state.rxData.colorPickerOid2, color.hsl.s);
+                        if (this.state.rxData.colorPickerOid3) this.props.context.setValue(this.state.rxData.colorPickerOid3, color.hsl.l);
                         break;
                     case 'hsv':
-                        this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsv.h);
-                        this.props.context.setValue(this.state.rxData.colorPickerOid2, color.hsv.s);
-                        this.props.context.setValue(this.state.rxData.colorPickerOid3, color.hsv.v);
+                        if (this.state.rxData.colorPickerOid1) this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsv.h);
+                        if (this.state.rxData.colorPickerOid2) this.props.context.setValue(this.state.rxData.colorPickerOid2, color.hsv.s);
+                        if (this.state.rxData.colorPickerOid3) this.props.context.setValue(this.state.rxData.colorPickerOid3, color.hsv.v);
                         break;
                 }
             });
@@ -1435,22 +1437,22 @@ class InventwoWidgetUniversal extends InventwoGeneric {
 
     async setColorPickerColor() {
         const colorModel = this.state.rxData.colorPickerColorModel;
-        const color = (await this.props.context.socket.getState(this.state.rxData.colorPickerOid)).val;
-        const color1 = (await this.props.context.socket.getState(this.state.rxData.colorPickerOid1)).val;
-        const color2 = (await this.props.context.socket.getState(this.state.rxData.colorPickerOid2)).val;
-        const color3 = (await this.props.context.socket.getState(this.state.rxData.colorPickerOid3)).val;
+        const color = this.state.rxData.colorPickerOid ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid)).val : undefined;
+        const color1 = this.state.rxData.colorPickerOid1 ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid1)).val : undefined;
+        const color2 = this.state.rxData.colorPickerOid2 ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid2)).val : undefined;
+        const color3 = this.state.rxData.colorPickerOid3 ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid3)).val : undefined;
 
         // eslint-disable-next-line default-case
         switch (colorModel) {
             case 'hex':
-                if ((/^#([A-Fa-f0-9]{3}$)|([A-Fa-f0-9]{6}$)/.test(color))) {
+                if (color && (/^#([A-Fa-f0-9]{3}$)|([A-Fa-f0-9]{6}$)/.test(color))) {
                     this.state.colorPicker.color.hexString = color;
                 } else {
                     this.state.colorPicker.color.hexString = '#ffffff';
                 }
                 break;
             case 'hex8':
-                if ((/^#([A-Fa-f0-9]{8}$)/.test(color))) {
+                if (color && (/^#([A-Fa-f0-9]{8}$)/.test(color))) {
                     this.state.colorPicker.color.hex8String = color;
                 } else {
                     this.state.colorPicker.color.hexString = '#ffffffff';
@@ -1531,7 +1533,18 @@ class InventwoWidgetUniversal extends InventwoGeneric {
     // This function is called every time when some Object State updated, but all changes lands into this.state.values too
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
     onStateUpdated(id, state) {
+        if (this.state.rxData.type === 'viewInDialog' && id === this.state.rxData.oid) {
+            console.log(id, state, this.props.id);
 
+            const val = this.convertValue(this.state.rxData.valueTrue);
+            console.log(val, state.val);
+
+            if (val === state.val) {
+                this.setState({ dialogOpen: true });
+            } else {
+                this.setState({ dialogOpen: false });
+            }
+        }
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -1798,6 +1811,9 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 break;
             case 'viewInDialog':
                 this.setState({ dialogOpen: true });
+                if (oid) {
+                    this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
+                }
                 break;
             case 'increaseDecreaseValue':
                 // eslint-disable-next-line no-case-declarations
@@ -1882,22 +1898,27 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 sx={{
                     '& .MuiDialog-container': {
                         '& .MuiDialog-paper': {
-                            maxWidth: !this.state.rxData.dialogFullscreen ? `${this.state.rxData.dialogWidth}px` : '100%',
-                            maxHeight: !this.state.rxData.dialogFullscreen ? `${this.state.rxData.dialogHeight}px` : '100%',
+                            maxWidth: !this.state.rxData.dialogFullscreen ? `${this.state.rxData.dialogWidth + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}` : '100%',
+                            maxHeight: !this.state.rxData.dialogFullscreen ? `${this.state.rxData.dialogHeight + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}` : '100%',
                             background: this.state.rxData.dialogBackground,
-                            borderRadius: `${this.state.rxData.dialogBorderRadiusTopLeft}px ${this.state.rxData.dialogBorderRadiusTopRight}px ${this.state.rxData.dialogBorderRadiusBottomRight}px ${this.state.rxData.dialogBorderRadiusBottomLeft}px`,
+                            borderRadius: `
+                                ${this.state.rxData.dialogBorderRadiusTopLeft}px 
+                                ${this.state.rxData.dialogBorderRadiusTopRight}px 
+                                ${this.state.rxData.dialogBorderRadiusBottomRight}px 
+                                ${this.state.rxData.dialogBorderRadiusBottomLeft}px
+                            `,
                         },
                         '.MuiDialogContent-root': {
-                            padding: `${this.state.rxData.dialogPadding}px`,
+                            padding: `${this.state.rxData.dialogPadding + (!Number.isNaN(Number(this.state.rxData.dialogPadding)) ? 'px' : '')}`,
                         },
                         '.MuiDialogTitle-root': {
-                            padding: `${this.state.rxData.dialogPadding}px`,
+                            padding: `${this.state.rxData.dialogPadding + (!Number.isNaN(Number(this.state.rxData.dialogPadding)) ? 'px' : '')}`,
                             color: this.state.rxData.dialogTitleColor,
                         },
                     },
                 }}
                 onClose={(event, reason) => {
-                    if (reason && reason === 'backdropClick' && this.state.rxData.dialogCloseOnClickOutside) return;
+                    if (reason && reason === 'backdropClick' && !this.state.rxData.dialogCloseOnClickOutside) return;
                     this.setState({ dialogOpen: false });
                 }}
             >
@@ -1966,10 +1987,18 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         if (img === null) {
             return '';
         }
+
+        const hex = this.convertRgbToHex(this.getValueData(i).contentColor);
+        let filter = null;
+        if (hex) {
+            filter = hexToCSSFilter(hex);
+        }
+
         return <Icon
             src={img}
             style={{
                 width: this.getValueData(i).contentSize,
+                filter: filter ? filter.filter : '',
             }}
         />;
     }

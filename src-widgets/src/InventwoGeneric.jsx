@@ -87,6 +87,23 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
     validFieldValue(value) {
         return value !== undefined && value !== null && value !== '';
     }
+
+    // eslint-disable-next-line class-methods-use-this
+    convertRgbToHex(colorStr) {
+        if (!colorStr) return null;
+        const rgbaValues = colorStr.match(/(\d+),(\d+),(\d+),(\d+)/);
+        if (!rgbaValues) {
+            return null;
+        }
+        const [red, green, blue] = rgbaValues.slice(1, 5).map(parseFloat);
+
+        function componentToHex(c) {
+            const hex = c.toString(16);
+            return hex.length === 1 ? `0${hex}` : hex;
+        }
+
+        return `#${componentToHex(red)}${componentToHex(green)}${componentToHex(blue)}`;
+    }
 }
 
 export default InventwoGeneric;

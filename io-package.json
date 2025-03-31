@@ -16,19 +16,6 @@
         "uk": "Виправлені питання, зазначені еслінтом",
         "zh-cn": "Eslint提到的固定问题"
       },
-      "0.1.10": {
-        "en": "Removed styles libraries as they are not compatible with vis 2.0\nFixed compare by for widget type view in dialog (#24)\nFixed text color not working in slider and added other font styles (#25)\nFixed switch doesn't toggle without defining values (#28)",
-        "de": "Entfernte Stile Bibliotheken, da sie nicht kompatibel mit vis 2.0 sind\nBehoben vergleichen mit der Widget-Typansicht im Dialog (#24)\nBehobene Textfarbe, die nicht im Slider funktioniert und andere Schriftarten hinzugefügt (#25)\nFester Schalter schaltet sich nicht, ohne Werte zu definieren (#28)",
-        "ru": "Удаленные библиотеки стилей, поскольку они не совместимы с vis 2.0\nИсправленное сравнение для просмотра виджета в диалоге (#24)\nИсправленный цвет текста не работает в слайдере и добавил другие стили шрифта (#25)\nФиксированный переключатель не переключается без определения значений (#28)",
-        "pt": "Bibliotecas de estilos removidos como eles não são compatíveis com vis 2.0\nCorrigido comparar por tipo de widget vista na caixa de diálogo (#24)\nCor de texto fixo não funciona no controle deslizante e adicionou outros estilos de fonte (#25)\nInterruptor fixo não alterna sem definir valores (#28)",
-        "nl": "Verwijderde stijlen bibliotheken omdat ze niet compatibel zijn met vis 2.0\nVaste vergelijking door voor widgettypeweergave in dialoog (#24)\nVaste tekstkleur werkt niet in schuifregelaar en voegde andere lettertypestijlen toe (#25)\nVaste schakelaar schakelt niet aan zonder waarden te definiëren (#28)",
-        "fr": "Librairies de styles supprimées car elles ne sont pas compatibles avec vis 2.0\nCorrigé comparer par pour la vue de type widget dans la boîte de dialogue (#24)\nCouleur du texte fixe ne fonctionnant pas dans le curseur et ajouté d'autres styles de police (#25)\nLe commutateur fixe ne bascule pas sans définir des valeurs (#28)",
-        "it": "Librerie di stili rimossi in quanto non compatibili con vis 2.0\nFisso confrontare per widget tipo di visualizzazione in dialogo (#24)\nColore di testo fisso non funzionante in cursore e aggiunto altri stili di carattere (#25)\nL'interruttore fisso non si attiva senza definire i valori (#28)",
-        "es": "Bibliotecas de estilos eliminados ya que no son compatibles con vis 2.0\nComparación fija por widget tipo de vista en diálogo (#24)\nColor de texto fijo que no funciona en slider y añade otros estilos de fuente (#25)\nEl interruptor fijo no se mueve sin definir valores (#28)",
-        "pl": "Usunięte biblioteki stylów, ponieważ nie są kompatybilne z vis 2.0\nNaprawiono porównanie dla widoku typu widget w oknie dialogowym (# 24)\nPoprawiony kolor tekstu nie działa w suwaku i dodał inne style czcionek (# 25)\nNaprawiony przełącznik nie przełącza się bez zdefiniowania wartości (# 28)",
-        "uk": "Вилучені бібліотеки стилів, як вони не сумісні з vis 2.0\nВиправлено порівняння за типом віджету у діалоговому вікні (#24)\nВиправлено текстовий колір не працює в слайдері і додано інші стилі шрифту (#25)\nВиправлений перемикач не працює без визначення значень (#28)",
-        "zh-cn": "删除样式库, 因为它们与 2.0 不兼容\n对话框中部件类型视图的固定比较 (# 24)\n固定文本颜色不能在滑动器中工作并添加其他字体样式(# 25)\n固定开关不会不定义值而切换(# 28)"
-      },
       "0.1.9": {
         "en": "Fixed missing object id if type is nav (#14)\nFixed content color for icons not working (#22)",
         "de": "Fixed fehlende object id, wenn Typ nav ist (#14)\nFeste Inhaltsfarbe für Icons, die nicht funktionieren (#22)",
@@ -54,32 +41,6 @@
         "pl": "Dodano opcjonalne kliknięcie przycisku opcji sprzężenia zwrotnego\nDodano typ widget do wysyłania zapytań http i otwartych url",
         "uk": "Додано додаткові кнопки натисніть Параметри зворотного зв'язку\nДодано тип віджету для надсилання HTTP запитів та відкритих URL-адрес",
         "zh-cn": "添加可选按钮点击反馈选项\n添加部件类型以发送 http 请求并打开 urls"
-      },
-      "0.1.4": {
-        "en": "Fixed issue in workflow",
-        "de": "Feste Ausgabe im Workflow",
-        "ru": "Исправленный вопрос в рабочем процессе",
-        "pt": "Problema corrigido no fluxo de trabalho",
-        "nl": "Vast probleem in workflow",
-        "fr": "Problème corrigé dans le flux de travail",
-        "it": "Emissione fissa nel flusso di lavoro",
-        "es": "Cuestión fija en el flujo de trabajo",
-        "pl": "Naprawiono problem w przepływie pracy",
-        "uk": "Виправлено проблему в робочому процесі",
-        "zh-cn": "工作流程中的固定问题"
-      },
-      "0.1.3": {
-        "en": "Fixed issue in widget state check. Also includes #12\nRemoved second unused field 'button width' (#10)\nAdded widget type Increase/Decrease value (#7)\nAdded more info to readme\nRemoved iobroker/adapter-core dependency\nAdded node 20 to test-and-release workflow",
-        "de": "Behobenes Problem bei Widget State Check. enthält auch #12\nEntfernen des zweiten ungenutzten Feldes 'Tastenbreite' (#10)\nHinzugefügt Widget-Typ Erhöhen/Erhöhungswert (#7)\nWeitere Informationen zu readme\nEntfernung von iobroker/adapter-core Abhängigkeit\nHinzugefügt Knoten 20 zum Test-und-Release-Workflow",
-        "ru": "Фиксированная проблема в проверке состояния виджета. Также включает #12\nУдалено второе неиспользуемое поле «ширина кнопки» (#10)\nДобавить виджета Увеличить/Снижать значение (#7)\nДобавить больше информации для чтения\nУдаленная зависимость от iobroker/adapter-core\nДобавленный узел 20 к тест-и-релизу рабочий поток",
-        "pt": "Corrigido problema na verificação do estado do widget. Também inclui #12\nRemovido segundo campo não utilizado \"largura do botão\" (#10)\nTipo de widget adicionado Aumentar / Diminuir valor (#7)\nAdicionado mais informações para readme\nRemovido iobroker/adapter-core dependência\nAdicionado nó 20 para test-and-release workflow",
-        "nl": "Fixed issue in widget state check. Bevat ook #12\nHet tweede ongebruikte veld 'knopbreedte' (#10) is verwijderd\nToevoegen widgettype Verhoog/Verhoog waarde (#7)\nMeer info toegevoegd aan readme\nVerwijderde iobroker/adapter-core afhankelijkheid\nNode 20 toegevoegd aan test-and-release workflow",
-        "fr": "Problème corrigé dans la vérification de l'état du widget. Comprend également #12\nSupprimé le deuxième champ inutilisé 'largeur du bouton' (#10)\nAjout du type de widget Augmentation/diminution de la valeur (#7)\nAjouté plus d'infos pour me lire\nSupprimé la dépendance iobroker/adaptateur-core\nAjout du nœud 20 au workflow de test-and-release",
-        "it": "Problema risolto in widget di stato check. Include anche #12\nRimosso secondo campo inutilizzato 'larghezza pulsante' (#10)\nAggiunto widget tipo Aumento / Diminuzione valore (#7)\nAggiunto più informazioni per readme\nRimozione della dipendenza iobroker/adapter-core\nAggiunto nodo 20 a prova-e-release flusso di lavoro",
-        "es": "Edición fija en control estatal de widget. También incluye #12\nRemovido segundo campo no utilizado 'anchura de botón' (#10)\nIncremento/Disminución del valor (#7)\nAñadido más información para leerme\nUnidad de iobroker/adapter-core\nNodo 20 añadido al flujo de trabajo de prueba y liberación",
-        "pl": "Naprawiono problem w kontroli stanu widget. Zawiera również # 12\nUsunięto drugie nieużywane pole 'szerokość przycisku' (# 10)\nDodano typ widgetu Zwiększ / Zmniejsz wartość (# 7)\nDodano więcej informacji do odczytu\nUsunięta zależność od iobrokera / adaptera\nDodano węzeł 20 do pracy testowej i zwalniającej",
-        "uk": "Виправлено проблему в перевірці стану віджету. Також входить #12\nВидалено другий невикористаний поле 'button ширина' (#10)\nДодано тип віджету Збільшення / значення для видалення (#7)\nДокладніші відомості про місто\nВидалення iobroker/adapter-core залежностей\nДодано вузол 20 для тестування та вивільнення робочого процесу",
-        "zh-cn": "部件状态检查中的固定发行 。 也包括12号\n删除第二个未使用的字段“ 按钮宽度 ” (# 10)\n添加部件类型 增加/ 减少值 (# 7)\n添加更多信息以读取\n消除雄性经纪人/适应核心依赖\n在测试和释放工作流程中添加了节点20"
       },
       "0.1.2": {
         "en": "Fixed issue editor crashes when changing \"Comparison operator\" or \"Compare by\" on multiple states.\nFixesd issue state settings not used if condition is true.",
@@ -135,7 +96,6 @@
     "loglevel": "info",
     "mode": "none",
     "singleton": true,
-    "noConfig": true,
     "adminUI": {
       "config": "none"
     },

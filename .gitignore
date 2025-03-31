@@ -1,7 +1,6 @@
 /.idea
 node_modules
 src-widgets/node_modules
-package-lock.json
 src-widgets/package-lock.json
 src-widgets/build
 widgets
