@@ -31,7 +31,7 @@ jobs:
       matrix:
         node-version: [ 18.x, 20.x, 22.x ]
         # temp removed windows and mac because issues with python
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest ]
 
     steps:  
       - uses: actions/checkout@v4
