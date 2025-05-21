@@ -27,7 +27,7 @@
     "eslint": "^9.25.1",
     "gulp": "^5.0.0",
     "mocha": "^11.1.0",
-    "typescript": "^5.8.2",
+    "typescript": "^5.8.3",
     "@iobroker/vis-2-widgets-testing": "^1.0.5"
   },
   "main": "widgets/vis-2-widgets-inventwo/customWidgets.js",
