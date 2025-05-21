@@ -27,6 +27,8 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         this.state.currentView = null;
         this.state.dialogOpen = false;
         this.state.showFeedback = false;
+        this.state.isMounted = false;
+        this.state.svgRef = React.createRef();
     }
 
     static getWidgetInfo() {
@@ -209,7 +211,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'Title bar',
+                            text: 'vis_2_widgets_inventwo_titlebar',
                         },
                         {
                             name: 'dialogTitle',
@@ -236,7 +238,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'Close button',
+                            text: 'vis_2_widgets_inventwo_close_button',
                         },
                         {
                             name: 'dialogCloseButtonBackground',
@@ -264,7 +266,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'Border radius',
+                            text: 'vis_2_widgets_inventwo_border_radius',
                         },
                         {
                             name: 'dialogBorderRadiusTopLeft',
@@ -322,7 +324,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'colors',
+                            text: 'vis_2_widgets_inventwo_colors',
                         },
                         {
                             name: 'contentColorFeedback',
@@ -366,7 +368,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     fields: [
                         {
                             type: 'help',
-                            text: 'text_and_content',
+                            text: 'vis_2_widgets_inventwo_text_and_content',
                         },
                         {
                             name: 'text',
@@ -413,7 +415,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
 
                         {
                             type: 'help',
-                            text: 'colors',
+                            text: 'vis_2_widgets_inventwo_colors',
                         },
                         {
                             name: 'contentColor',
@@ -457,7 +459,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     fields: [
                         {
                             type: 'help',
-                            text: 'condition',
+                            text: 'vis_2_widgets_inventwo_condition',
                         },
                         {
                             name: 'compareBy',
@@ -511,7 +513,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'text_and_content',
+                            text: 'vis_2_widgets_inventwo_text_and_content',
                         },
                         {
                             name: 'text',     // name in data structure
@@ -586,7 +588,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'colors',
+                            text: 'vis_2_widgets_inventwo_colors',
                         },
                         {
                             name: 'contentColor',     // name in data structure
@@ -664,7 +666,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'content',
+                            text: 'vis_2_widgets_inventwo_content',
                         },
                         {
                             name: 'contentSize',
@@ -723,7 +725,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'layout_size',
+                            text: 'vis_2_widgets_inventwo_layout_size',
                         },
                         {
                             name: 'colorPickerWidth',
@@ -787,7 +789,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'components',
+                            text: 'vis_2_widgets_inventwo_components',
                         },
                         {
                             name: 'colorPickerShowWheel',
@@ -1511,6 +1513,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
 
         // Update data
         this.propertiesUpdate();
+
+        // Adding delay to prevent dialog is opened on page load or view change, when object id value matches
+        setTimeout(() => {
+            this.state.isMounted = true;
+        }, 500);
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
@@ -1533,16 +1540,14 @@ class InventwoWidgetUniversal extends InventwoGeneric {
     // This function is called every time when some Object State updated, but all changes lands into this.state.values too
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
     onStateUpdated(id, state) {
-        if (this.state.rxData.type === 'viewInDialog' && id === this.state.rxData.oid) {
-            console.log(id, state, this.props.id);
-
+        if (this.state.rxData.type === 'viewInDialog' && id === this.state.rxData.oid && !this.props.editMode) {
             const val = this.convertValue(this.state.rxData.valueTrue);
-            console.log(val, state.val);
-
-            if (val === state.val) {
-                this.setState({ dialogOpen: true });
-            } else {
-                this.setState({ dialogOpen: false });
+            if (this.state.isMounted) {
+                if (val === state.val) {
+                    this.setState({ dialogOpen: true });
+                } else {
+                    this.setState({ dialogOpen: false });
+                }
             }
         }
     }

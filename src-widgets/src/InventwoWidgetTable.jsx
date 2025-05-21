@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { styled } from '@mui/material/styles';
 // it is important to from '@mui/material' instead of '@mui/material/XXX' for federation
 import {
     Table,
@@ -10,6 +11,9 @@ import {
     TableBody,
     Paper,
 } from '@mui/material';
+
+import { tableCellClasses } from '@mui/material/TableCell';
+import { tableRowClasses } from '@mui/material/TableRow';
 
 import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
 
@@ -50,6 +54,12 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                             default: true,
                             label: 'show_head',
                         },
+                        {
+                            name: 'dense',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'dense',
+                        },
                     ],
                 },
 
@@ -89,6 +99,11 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                             label: 'suffix',
                         },
                         {
+                            name: 'columnPlaceholder',
+                            type: 'text',
+                            label: 'placeholder',
+                        },
+                        {
                             name: 'columnTitleAlign',
                             type: 'select',
                             options: [
@@ -109,6 +124,84 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                             ],
                             default: 'left',
                             label: 'content_align',
+                        },
+                        {
+                            name: 'columnValueFormat',
+                            type: 'select',
+                            options: [
+                                { value: 'text', label: 'Text' },
+                                { value: 'number', label: 'Number' },
+                                { value: 'datetime', label: 'datetime' },
+                            ],
+                            default: 'text',
+                            label: 'format',
+                        },
+                        {
+                            name: 'columnNumberDecimals',
+                            type: 'number',
+                            label: 'decimals',
+                            default: 0,
+                            hidden: 'data["columnValueFormat" + index] != "number"',
+                        },
+
+                        {
+                            name: 'columnDatetimeFormat',
+                            type: 'select',
+                            options: [
+                                { value: 'datetime', label: 'Datetime' },
+                                { value: 'date', label: 'Date' },
+                                { value: 'time', label: 'Time' },
+                            ],
+                            default: 'datetime',
+                            label: 'datetime_format',
+                            hidden: 'data["columnValueFormat" + index] != "datetime"',
+                        },
+                    ],
+                },
+                {
+                    name: 'attr_content_css_table',
+                    label: 'attr_content_css_table',
+                    fields: [
+                        {
+                            type: 'help',
+                            text: 'colors',
+                        },
+                        {
+                            name: 'backgroundHeader',
+                            type: 'color',
+                            label: 'background_header',
+                        },
+                        {
+                            name: 'backgroundOddRow',
+                            type: 'color',
+                            label: 'background_odd_row',
+                        },
+                        {
+                            name: 'backgroundEvenRow',
+                            type: 'color',
+                            label: 'background_even_row',
+                        },
+                        {
+                            type: 'help',
+                            text: 'heights',
+                        },
+                        {
+                            name: 'headerHeight',
+                            type: 'slider',
+                            min: 0,
+                            max: 100,
+                            step: 1,
+                            default: 50,
+                            label: 'header_height',
+                        },
+                        {
+                            name: 'columnHeight',
+                            type: 'slider',
+                            min: 0,
+                            max: 100,
+                            step: 1,
+                            default: 50,
+                            label: 'column_height',
                         },
                     ],
                 },
@@ -191,13 +284,48 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
         const headers = [];
         const rows = [];
 
+        const StyledTableHeaderRow = styled(TableRow)(() => ({
+            [`&.${tableRowClasses.root}`]: {
+                height: this.state.rxData.headerHeight + (!Number.isNaN(Number(this.state.rxData.headerHeight)) ? 'px' : ''),
+            },
+        }));
+
+        const StyledTableHeaderCell = styled(TableCell)(() => ({
+            [`&.${tableCellClasses.head}`]: {
+                backgroundColor: this.state.rxData.backgroundHeader,
+            },
+            [`&.${tableCellClasses.root}`]: {
+                paddingTop: 0,
+                paddingBottom: 0,
+            },
+        }));
+
+        const StyledTableCell = styled(TableCell)(() => ({
+            [`&.${tableCellClasses.root}`]: {
+                paddingTop: 0,
+                paddingBottom: 0,
+            },
+        }));
+
+        const StyledTableRow = styled(TableRow)(() => ({
+            '&:nth-of-type(odd)': {
+                backgroundColor: this.state.rxData.backgroundOddRow,
+            },
+            '&:nth-of-type(even)': {
+                backgroundColor: this.state.rxData.backgroundEvenRow,
+            },
+            [`&.${tableRowClasses.root}`]: {
+                height: this.state.rxData.columnHeight + (!Number.isNaN(Number(this.state.rxData.columnHeight)) ? 'px' : ''),
+            },
+        }));
+
         if (json.length > 0) {
             const countColumns = this.state.rxData.countColumns;
             if (countColumns === 0) {
                 Object.keys(json[0]).forEach((h, index) => {
-                    headers.push(<TableCell key={index}>
+                    headers.push(<StyledTableHeaderCell key={index}>
                         {h}
-                    </TableCell>);
+                    </StyledTableHeaderCell>);
                 });
             } else {
                 for (let i = 1; i <= this.state.rxData.countColumns; i++) {
@@ -206,15 +334,18 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                     if (columnTitle === null) {
                         columnTitle = Object.keys(json[0])[i - 1];
                     }
-                    headers.push(<TableCell
+                    const styles = {
+                        textAlign: this.state.rxData[`columnTitleAlign${i}`],
+                    };
+                    if (this.state.rxData[`columnWidth${i}`]) {
+                        styles.width = `${this.state.rxData[`columnWidth${i}`]}${(!Number.isNaN(Number(this.state.rxData[`columnWidth${i}`])) ? 'px' : '')}`;
+                    }
+                    headers.push(<StyledTableHeaderCell
                         key={i}
-                        style={{
-                            width: `${this.state.rxData[`columnWidth${i}`]}px`,
-                            textAlign: this.state.rxData[`columnTitleAlign${i}`],
-                        }}
+                        style={styles}
                     >
                         {columnTitle}
-                    </TableCell>);
+                    </StyledTableHeaderCell>);
                 }
             }
 
@@ -231,44 +362,69 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
 
                 if (countColumns === 0) {
                     Object.values(r).forEach((v, indexCol) => {
-                        columns.push(<TableCell key={`${index}_${indexCol}`}>{v}</TableCell>);
+                        columns.push(<StyledTableCell key={`${index}_${indexCol}`}>{v}</StyledTableCell>);
                     });
                 } else {
                     for (let i = 1; i <= this.state.rxData.countColumns; i++) {
                         let columnKey = this.state.rxData[`columnKey${i}`];
                         const columnPrefix = this.state.rxData[`columnPrefix${i}`];
                         const columnSuffix = this.state.rxData[`columnSuffix${i}`];
+                        const columnPlaceholder = this.state.rxData[`columnPlaceholder${i}`];
+                        const columnFormat = this.state.rxData[`columnValueFormat${i}`];
                         if (columnKey === null) {
                             columnKey = Object.keys(json[0])[i - 1];
                         }
-                        columns.push(<TableCell
+                        let columnValue = r[columnKey];
+                        if ((columnValue === null || columnValue === '') && columnPlaceholder) {
+                            columnValue = columnPlaceholder;
+                        } else if (columnFormat === 'number') {
+                            // columnValue = parseFloat(columnValue).toFixed(this.state.rxData[`columnNumberDecimals${i}`] ?? 0);
+                            const formatter = new Intl.NumberFormat(navigator.language, {
+                                minimumFractionDigits: this.state.rxData[`columnNumberDecimals${i}`] ?? 0,
+                                maximumFractionDigits: this.state.rxData[`columnNumberDecimals${i}`] ?? 0,
+                            });
+                            columnValue = formatter.format(columnValue);
+                        } else if (columnFormat === 'datetime') {
+                            if (columnValue) {
+                                const datetimeFormat = this.state.rxData[`columnDatetimeFormat${i}`];
+                                if (datetimeFormat === 'datetime') {
+                                    columnValue = new Date(columnValue).toLocaleString();
+                                } else if (datetimeFormat === 'date') {
+                                    columnValue = new Date(columnValue).toLocaleDateString();
+                                } else if (datetimeFormat === 'time') {
+                                    columnValue = new Date(columnValue).toLocaleTimeString();
+                                }
+                            }
+                        }
+
+                        columns.push(<StyledTableCell
                             key={`${index}_${i}`}
                             style={{
                                 textAlign: this.state.rxData[`columnContentAlign${i}`],
                             }}
                         >
                             {columnPrefix}
-                            {r[columnKey]}
+                            {columnValue}
                             {columnSuffix}
-                        </TableCell>);
+                        </StyledTableCell>);
                     }
                 }
 
-                rows.push(<TableRow
+                rows.push(<StyledTableRow
                     key={index}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                     {columns}
-                </TableRow>);
+                </StyledTableRow>);
             }
         }
 
         return <TableContainer component={Paper} style={{ height: '100%' }}>
-            <Table>
+            <Table size={this.state.rxData.dense ? 'small' : ''}>
                 <TableHead>
-                    <TableRow>
+                    <StyledTableHeaderRow>
                         {this.state.rxData.showHead ? headers : null}
-                    </TableRow>
+                    </StyledTableHeaderRow>
                 </TableHead>
                 <TableBody>
                     {rows}

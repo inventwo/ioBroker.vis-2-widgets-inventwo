@@ -39,6 +39,10 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Fixed dialog is opened on page load and view change
+* New widget: Table
+
 ### 0.1.12 (2025-03-31)
 * Fixed view in dialog is not triggered on state change and state value is not set when opened (#30)
 * Added function to color images (#38)
