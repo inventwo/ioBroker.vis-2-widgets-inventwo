@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.1.12",
+    "version": "0.2.0",
     "news": {
+      "0.2.0": {
+        "en": "Fixed dialog is opened on page load and view change\nNew widget: Table",
+        "de": "Feste Dialog wird auf Seite laden und Ansicht ändern geöffnet\nNeues Widget: Tabelle",
+        "ru": "Фиксированный диалог открывается при загрузке страницы и изменении просмотра\nНовый виджет: стол",
+        "pt": "A caixa de diálogo fixa é aberta na página carregar e visualizar a mudança\nNovo widget: Tabela",
+        "nl": "Vast dialoogvenster wordt geopend op pagina laden en weergave wijzigen\nNieuw widget: Tabel",
+        "fr": "La boîte de dialogue fixe est ouverte lors du chargement et de la visualisation de la page\nNouveau widget : Table",
+        "it": "La finestra di dialogo fissa è aperta sul carico della pagina e la modifica della vista\nNuovo widget: Table",
+        "es": "Diálogo fijo se abre en la carga de página y el cambio de vista\nNuevo widget: Tabla",
+        "pl": "Stałe okno dialogowe jest otwierane przy obciążeniu strony i zmianie widoku\nNowy widget: Tabela",
+        "uk": "Виправлено діалогове вікно відкривається на завантаження сторінок та зміни перегляду\nНовий віджет: Стіл",
+        "zh-cn": "固定对话框在页面加载和视图更改时打开\n新部件: 表格"
+      },
       "0.1.12": {
         "en": "Fixed view in dialog is not triggered on state change and state value is not set when opened (#30)\nAdded function to color images (#38)\nAllow custom size for dialog by using binding (#39)\nFix dialog \"close on click from outside\" checkbox was inverted (#42)",
         "de": "Feste Ansicht im Dialog wird bei geöffnetem Zustandswechsel nicht ausgelöst und Zustandswert nicht gesetzt (#30)\nFunktion zu Farbbildern hinzugefügt (#38)\nErlauben Sie benutzerdefinierte Größe für Dialog mit Bindung (#39)\nFix Dialog \"Klick von außen schließen\" Checkbox wurde invertiert (#42)",
