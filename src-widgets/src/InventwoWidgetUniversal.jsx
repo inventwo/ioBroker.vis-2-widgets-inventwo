@@ -2076,11 +2076,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
     buildCard(i, content) {
         const valueData = this.getValueData(i);
         let shadow = '';
-        if (valueData.outerShadowColor !== undefined && valueData.outerShadowColor !== null) {
+        if (valueData.outerShadowColor) {
             shadow += `${this.state.rxData.outerShadowX}px ${this.state.rxData.outerShadowY}px ${this.state.rxData.outerShadowBlur}px ${this.state.rxData.outerShadowSize}px ${valueData.outerShadowColor}`;
         }
 
-        if (valueData.innerShadowColor !== undefined && valueData.innerShadowColor !== null) {
+        if (valueData.innerShadowColor) {
             if (shadow !== '') {
                 shadow += ', ';
             }

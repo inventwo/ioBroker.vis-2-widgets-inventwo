@@ -36,7 +36,7 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                         {
                             name: 'countColumns',
                             type: 'number',
-                            default: 1,
+                            default: 0,
                             label: 'count_columns',
                             hidden: 'data.countColumns > 0',
                         },
@@ -53,12 +53,6 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                             type: 'checkbox',
                             default: true,
                             label: 'show_head',
-                        },
-                        {
-                            name: 'dense',
-                            type: 'checkbox',
-                            default: false,
-                            label: 'dense',
                         },
                     ],
                 },
@@ -206,7 +200,7 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                     ],
                 },
             ],
-            visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-demo.png',
+            visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-table.png',
         };
     }
 
@@ -371,7 +365,7 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                         const columnSuffix = this.state.rxData[`columnSuffix${i}`];
                         const columnPlaceholder = this.state.rxData[`columnPlaceholder${i}`];
                         const columnFormat = this.state.rxData[`columnValueFormat${i}`];
-                        if (columnKey === null) {
+                        if (!columnKey) {
                             columnKey = Object.keys(json[0])[i - 1];
                         }
                         let columnValue = r[columnKey];
@@ -420,12 +414,14 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
         }
 
         return <TableContainer component={Paper} style={{ height: '100%' }}>
-            <Table size={this.state.rxData.dense ? 'small' : ''}>
-                <TableHead>
-                    <StyledTableHeaderRow>
-                        {this.state.rxData.showHead ? headers : null}
-                    </StyledTableHeaderRow>
-                </TableHead>
+            <Table>
+                {this.state.rxData.showHead && (
+                    <TableHead>
+                        <StyledTableHeaderRow>
+                            {headers}
+                        </StyledTableHeaderRow>
+                    </TableHead>
+                )}
                 <TableBody>
                     {rows}
                 </TableBody>

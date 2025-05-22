@@ -125,7 +125,8 @@
         "components": [
           "InventwoWidgetUniversal",
           "InventwoWidgetSlider",
-          "InventwoWidgetSwitch"
+          "InventwoWidgetSwitch",
+          "InventwoWidgetTable"
         ]
       }
     },
