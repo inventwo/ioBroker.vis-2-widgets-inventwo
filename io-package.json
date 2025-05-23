@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "news": {
+      "0.2.1": {
+        "en": "Fixed build issue",
+        "de": "Fixed Build Problem",
+        "ru": "Проблема фиксированного строительства",
+        "pt": "Problema de compilação fixo",
+        "nl": "Probleem met vaste bouw",
+        "fr": "Problème de construction fixe",
+        "it": "Problema di costruzione fisso",
+        "es": "Cuestiones de construcción fijas",
+        "pl": "Emisja stałych budynków",
+        "uk": "Виправлено проблему побудови",
+        "zh-cn": "固定建筑问题"
+      },
       "0.2.0": {
         "en": "Fixed dialog is opened on page load and view change\nNew widget: Table",
         "de": "Feste Dialog wird auf Seite laden und Ansicht ändern geöffnet\nNeues Widget: Tabelle",
