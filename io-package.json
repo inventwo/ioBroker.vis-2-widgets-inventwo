@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "news": {
+      "0.2.2": {
+        "en": "Fixed build issue",
+        "de": "Fixed Build Problem",
+        "ru": "Проблема фиксированного строительства",
+        "pt": "Problema de compilação fixo",
+        "nl": "Probleem met vaste bouw",
+        "fr": "Problème de construction fixe",
+        "it": "Problema di costruzione fisso",
+        "es": "Cuestiones de construcción fijas",
+        "pl": "Emisja stałych budynków",
+        "uk": "Виправлено проблему побудови",
+        "zh-cn": "固定建筑问题"
+      },
       "0.2.1": {
         "en": "Fixed build issue",
         "de": "Fixed Build Problem",
@@ -80,19 +93,6 @@
         "pl": "Dodano opcjonalne kliknięcie przycisku opcji sprzężenia zwrotnego\nDodano typ widget do wysyłania zapytań http i otwartych url",
         "uk": "Додано додаткові кнопки натисніть Параметри зворотного зв'язку\nДодано тип віджету для надсилання HTTP запитів та відкритих URL-адрес",
         "zh-cn": "添加可选按钮点击反馈选项\n添加部件类型以发送 http 请求并打开 urls"
-      },
-      "0.1.2": {
-        "en": "Fixed issue editor crashes when changing \"Comparison operator\" or \"Compare by\" on multiple states.\nFixesd issue state settings not used if condition is true.",
-        "de": "Der Fixed-Editor stürzt beim Wechsel von \"Comparison Operator\" oder \"Compare by\" auf mehreren Zuständen ab.\nFeste Ausgabezustandseinstellungen, die nicht verwendet werden, wenn die Bedingung wahr ist.",
-        "ru": "Исправленный редактор проблем терпит крушение при изменении «оператора сравнения» или «Сравнить» на нескольких состояниях.\nИсправленные настройки состояния проблемы не используются, если условие верно.",
-        "pt": "O editor de edição corrigido trava ao alterar \"o operador da empresa\" ou \"Compare by\" em vários estados.\nConfigurações de estado de problema corrigidas não usadas se a condição for verdadeira.",
-        "nl": "Fixed issue editor crasht bij het veranderen van \"Comparison operator\" of \"Compare by\" op meerdere staten.\nFixesd issue status instellingen niet gebruikt als de conditie waar is.",
-        "fr": "L'éditeur de problèmes corrigé s'écrase en modifiant \"Comparison Operator\" ou \"Compare by\" sur plusieurs états.\nRéglage des paramètres d'état de problème non utilisés si la condition est vraie.",
-        "it": "L'editor di problemi fissi si blocca quando si cambia \"operatore di Comparison\" o \"Compare by\" su più stati.\nImpostazioni di stato del problema fisso non utilizzate se la condizione è vera.",
-        "es": "El editor de edición fijo se bloquea al cambiar \"operador de comparación\" o \"Comparar by\" en varios estados.\nConfiguración de estado de emisión fija no se utiliza si la condición es verdadera.",
-        "pl": "Poprawiony edytor wydania awarii przy zmianie \"Operator porównania\" lub \"Porównaj przez\" w wielu stanach.\nFixesd wydaje ustawienia stanu nie używane, jeśli warunek jest prawdziwy.",
-        "uk": "Виправлено помилку редактора виписки при зміні \"Компанія\" або \"Порівняти\" на декількох штатах.\nВиправлення параметрів стану виписки не використовуються, якщо стан є істинним.",
-        "zh-cn": "固定发行编辑器在多个状态上更改\"比较操作员\"或\"Compare by\"时崩溃.\n如果条件属实,则未使用已修复的状态设置 ."
       }
     },
     "titleLang": {
