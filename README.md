@@ -39,6 +39,9 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Fixed build issue
+
 ### 0.2.1 (2025-05-23)
 * Fixed build issue
 
