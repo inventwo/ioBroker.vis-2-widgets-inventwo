@@ -39,7 +39,7 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.3.0 (2025-07-08)
 * Added new widget: Checkbox
 * Fixed issue with table widget and object values (#77)
 * Fixed translated text (#79)

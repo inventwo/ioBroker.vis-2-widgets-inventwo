@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.2.2",
+    "version": "0.3.0",
     "news": {
+      "0.3.0": {
+        "en": "Added new widget: Checkbox\nFixed issue with table widget and object values (#77)\nFixed translated text (#79)",
+        "de": "Neues Widget hinzugefügt: Checkbox\nProblem behoben mit Tabellen-Widget und Objektwerten (#77)\nText behoben (#79)",
+        "ru": "Добавлен новый виджет: Checkbox\nФиксированная проблема с виджетом таблицы и значениями объектов (#77)\nПереведенный текст (#79)",
+        "pt": "Adicionado novo elemento: caixa de seleção\nProblema corrigido com os valores do widget e objeto da tabela (#77)\nTexto traduzido corrigido (# 79)",
+        "nl": "Nieuw widget toegevoegd: selectievakje\nVast probleem met tabelwidget- en objectwaarden (#77)\nVaste vertaalde tekst (#79)",
+        "fr": "Ajout d'un nouveau widget: Checkbox\nProblème corrigé avec widget de table et valeurs objet (#77)\nTexte traduit corrigé (#79)",
+        "it": "Aggiunto nuovo widget: Checkbox\nProblema fisso con widget di tabella e valori oggetti (#77)\nTesto tradotto fisso (#79)",
+        "es": "Añadido nuevo widget: caja de verificación\nEdición fija con widget de mesa y valores de objeto (#77)\nTexto traducido fijo (#79)",
+        "pl": "Dodano nowy widget: Checkbox\nNaprawiono problem z widżetem tabeli i wartościami obiektu (# 77)\nNaprawiono przetłumaczony tekst (# 79)",
+        "uk": "Додано новий віджет: Checkbox\nВиправлено проблему з значеннями таблиці віджетів та об'єктів (#77)\nВиправлено перекладений текст (#79)",
+        "zh-cn": "添加新部件: 复选框\n表格部件和对象值的固定问题 (# 77)\n固定翻译文本 (# 79)"
+      },
       "0.2.2": {
         "en": "Fixed build issue",
         "de": "Fixed Build Problem",
@@ -80,19 +93,6 @@
         "pl": "Naprawiono brak identyfikatora obiektu, jeśli typ jest nawigacją (# 14)\nPoprawiony kolor zawartości dla ikon nie działa (# 22)",
         "uk": "Виправлено відсутній об'єкт, якщо тип нав (#14)\nФіксований колір вмісту для ікон не працює (#22)",
         "zh-cn": "如果类型为导航( # 14) , 则固定缺失对象 ID\n不工作的图标的固定内容颜色(# 22)"
-      },
-      "0.1.5": {
-        "en": "Added optional button click feedback options\nAdded widget type to send http requests and open urls",
-        "de": "Optionale Schaltfläche klicken Sie auf Feedback-Optionen\nHinzugefügt Widget-Typ, um http-Anfragen und offene URLs zu senden",
-        "ru": "Добавить опции обратной связи нажатия кнопки\nДобавить виджета для отправки запросов http и открытых URL",
-        "pt": "Adicionado opcional botão clique opções de feedback\nAdicionado tipo de widget para enviar solicitações http e abrir urls",
-        "nl": "Toegevoegd optionele knop klik feedback opties\nToegevoegd widgettype om http-verzoeken te versturen en urls te openen",
-        "fr": "Ajout du bouton optionnel cliquez sur les options de rétroaction\nAjout du type de widget pour envoyer les requêtes http et ouvrir les urls",
-        "it": "Aggiunta opzione pulsante clicca opzioni di feedback\nAggiunto tipo di widget per inviare http richieste e URL aperti",
-        "es": "Opciones de retroalimentación de botón opcional\nTipo de widget añadido para enviar solicitudes http y urls abiertos",
-        "pl": "Dodano opcjonalne kliknięcie przycisku opcji sprzężenia zwrotnego\nDodano typ widget do wysyłania zapytań http i otwartych url",
-        "uk": "Додано додаткові кнопки натисніть Параметри зворотного зв'язку\nДодано тип віджету для надсилання HTTP запитів та відкритих URL-адрес",
-        "zh-cn": "添加可选按钮点击反馈选项\n添加部件类型以发送 http 请求并打开 urls"
       }
     },
     "titleLang": {
