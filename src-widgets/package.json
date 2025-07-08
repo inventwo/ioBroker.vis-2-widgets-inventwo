@@ -27,8 +27,8 @@
         "vite-tsconfig-paths": "^5.1.4"
     },
     "scripts": {
-        "start": "set PORT=4173 && craco start",
-        "lint": "eslint --fix --ext .js,.jsx src",
+        "start": "vite --port 4173",
+        "lint": "eslint -c eslint.config.mjs",
         "build": "tsc && vite build",
         "i18n": "node node_modules/@iobroker/vis-2-widgets-react-dev/searchI18n vis-2-widgets-react-template",
         "update-browsers": "npx browserslist@latest --update-db",
