@@ -24,11 +24,7 @@
     "@iobroker/build-tools": "^2.0.15",
     "@iobroker/eslint-config": "^2.0.2",
     "@iobroker/vis-2-widgets-react-dev": "^4.0.4",
-    "@iobroker/vis-2-widgets-testing": "^1.0.6",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^22.15.29",
-    "mocha": "^11.5.0",
-    "typescript": "^5.8.3"
+    "@iobroker/vis-2-widgets-testing": "^1.0.6"
   },
   "main": "widgets/vis-2-widgets-inventwo/customWidgets.js",
   "files": [
@@ -39,7 +35,6 @@
   ],
   "scripts": {
     "prepublishOnly": "npm run build",
-    "lint": "eslint src-widgets/src/*.jsx",
     "build": "npm run build-jsv",
     "build-jsv": "node tasks --javascript-vite",
     "test": "mocha ./test/*.test.js",
