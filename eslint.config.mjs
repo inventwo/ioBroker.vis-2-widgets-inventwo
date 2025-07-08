@@ -1,28 +1,28 @@
-import config from "@iobroker/eslint-config";
+import config, { reactConfig } from "@iobroker/eslint-config";
 
 export default [
   ...config,
+  ...reactConfig,
   {
     languageOptions: {
       parserOptions: {
         projectService: {
-          allowDefaultProject: ["*.mjs"],
+          allowDefaultProject: ["*.js", "*.mjs"],
         },
         tsconfigRootDir: import.meta.dirname,
-        project: "./tsconfig.json",
       },
     },
   },
   {
     ignores: [
-      "src-admin/**/*",
-      "admin/**/*",
-      "node_modules/**/*",
-      "test/**/*",
-      "build/**/*",
-      "tasks.js",
-      "tmp/**/*",
-      ".**/*",
+      "build/",
+      "node_modules/",
+      ".__mf__temp/",
+      "vite.config.*",
+      "vite-env.d.ts",
+      "public/",
+      "src/Components/blockly-plugins/**/*",
+      "src/Components/BlocklyEditorTS.tsx",
     ],
   },
   {
