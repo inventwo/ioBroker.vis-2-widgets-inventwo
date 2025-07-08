@@ -12,7 +12,7 @@
         "@vitejs/plugin-react": "^4.4.1",
         "@iobroker/vis-2-widgets-react-dev": "^4.0.4",
         "@jaames/iro": "^5.5.2",
-        "@mui/icons-material": "^6.4.6",
+        "@mui/icons-material": "^7.1.0",
         "@mui/material": "^6.4.6",
         "hex-to-css-filter": "^6.0.0",
         "react": "^18.3.1",
