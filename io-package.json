@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "news": {
+      "0.3.1": {
+        "en": "Change build to vite",
+        "de": "Umbau auf Vite",
+        "ru": "Изменить сборку для vite",
+        "pt": "Mudar a compilação para vite",
+        "nl": "Bouwen wijzigen naar vite",
+        "fr": "Changer la construction en rite",
+        "it": "Cambiare la costruzione per vite",
+        "es": "Cambio de construcción para vite",
+        "pl": "Zmień budowę do vite",
+        "uk": "Зміна побудови віта",
+        "zh-cn": "更改构建为 vite"
+      },
       "0.3.0": {
         "en": "Added new widget: Checkbox\nFixed issue with table widget and object values (#77)\nFixed translated text (#79)",
         "de": "Neues Widget hinzugefügt: Checkbox\nProblem behoben mit Tabellen-Widget und Objektwerten (#77)\nText behoben (#79)",
@@ -80,19 +93,6 @@
         "pl": "Poprawione kwestie wymienione przez eslint",
         "uk": "Виправлені питання, зазначені еслінтом",
         "zh-cn": "Eslint提到的固定问题"
-      },
-      "0.1.9": {
-        "en": "Fixed missing object id if type is nav (#14)\nFixed content color for icons not working (#22)",
-        "de": "Fixed fehlende object id, wenn Typ nav ist (#14)\nFeste Inhaltsfarbe für Icons, die nicht funktionieren (#22)",
-        "ru": "Fixed missing object id if type is nav (#14)\nФиксированный цвет контента для значков, не работающих (#22)",
-        "pt": "ID de objeto ausente fixo se o tipo é nav (#14)\nCor de conteúdo fixo para ícones que não funcionam (#22)",
-        "nl": "Vaste ontbrekende object id als het type navigatiesysteem is (#14)\nKleur van vaste inhoud voor pictogrammen die niet werken (#22)",
-        "fr": "Correction de l'identifiant d'objet manquant si le type est nav (#14)\nCouleur de contenu fixe pour les icônes ne fonctionnant pas (#22)",
-        "it": "Risolto oggetto mancante id se il tipo è nav (#14)\nColore del contenuto fisso per icone che non funzionano (#22)",
-        "es": "Objeto perdido fijo id si el tipo es nav (#14)\nColor de contenido fijo para iconos que no funcionan (#22)",
-        "pl": "Naprawiono brak identyfikatora obiektu, jeśli typ jest nawigacją (# 14)\nPoprawiony kolor zawartości dla ikon nie działa (# 22)",
-        "uk": "Виправлено відсутній об'єкт, якщо тип нав (#14)\nФіксований колір вмісту для ікон не працює (#22)",
-        "zh-cn": "如果类型为导航( # 14) , 则固定缺失对象 ID\n不工作的图标的固定内容颜色(# 22)"
       }
     },
     "titleLang": {
