@@ -249,5 +249,16 @@
     "Datetime": "Datetime",
     "Date": "Data",
     "Time": "Czas",
-    "datetime_format": "Format Datetime"
+    "datetime_format": "Format Datetime",
+    "widget_checkbox": "Pole wyboru",
+    "thumb_shadow": "Cień kciuki",
+    "track_shadow": "Śledź Shadow",
+    "steps": "Kroki",
+    "heights": "Wzgórza",
+    "button_hold_value": "Trzymaj wartość",
+    "tooltip_button_hold_value": "Ustaw wartość na naciśnięciu i resetuje na poprzednią wartość w wydaniu",
+    "attr_group_css_style": "Inventwo CSS - styl",
+    "box_color": "Kolor pudełka",
+    "box_color_active": "Kolor pudełka aktywny",
+    "box_size": "Rozmiar pudełka"
 }

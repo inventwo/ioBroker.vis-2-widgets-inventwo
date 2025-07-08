@@ -249,5 +249,16 @@
     "Datetime": "DateTime",
     "Date": "Date",
     "Time": "Temps",
-    "datetime_format": "Format DateTime"
+    "datetime_format": "Format DateTime",
+    "widget_checkbox": "Cocher",
+    "thumb_shadow": "Ombre de pouce",
+    "track_shadow": "Ombre de piste",
+    "steps": "Mesures",
+    "heights": "Hauteur",
+    "button_hold_value": "Maintenir la valeur",
+    "tooltip_button_hold_value": "Définir la valeur sur la presse et les réinitialités à la valeur précédente lors de la version",
+    "attr_group_css_style": "inventwo css - style",
+    "box_color": "Couleur de la boîte",
+    "box_color_active": "Couleur de boîte active",
+    "box_size": "Tailles"
 }

@@ -249,5 +249,16 @@
     "Datetime": "DateTime",
     "Date": "Дата",
     "Time": "Время",
-    "datetime_format": "DateTime Format"
+    "datetime_format": "DateTime Format",
+    "widget_checkbox": "Флажок",
+    "thumb_shadow": "Большой тень",
+    "track_shadow": "Отслеживать тень",
+    "steps": "Шаги",
+    "heights": "Высота",
+    "button_hold_value": "Удерживать стоимость",
+    "tooltip_button_hold_value": "Установите значение на нажмите и сбрасывается до предыдущего значения при выпуске",
+    "attr_group_css_style": "Inventwo CSS - стиль",
+    "box_color": "Цвет коробки",
+    "box_color_active": "Цвет коробки активен",
+    "box_size": "Размер коробки"
 }

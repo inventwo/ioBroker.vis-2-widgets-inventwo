@@ -15,9 +15,9 @@ import {
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
 
-import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
+import InventwoGeneric from './InventwoGeneric';
 
-class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
+class InventwoWidgetTable extends InventwoGeneric {
     static getWidgetInfo() {
         return {
             id: 'tplInventwoWidgetTable',
@@ -158,7 +158,7 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                     fields: [
                         {
                             type: 'help',
-                            text: 'colors',
+                            text: 'vis_2_widgets_inventwo_colors',
                         },
                         {
                             name: 'backgroundHeader',
@@ -177,7 +177,7 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                         },
                         {
                             type: 'help',
-                            text: 'heights',
+                            text: 'vis_2_widgets_inventwo_heights',
                         },
                         {
                             name: 'headerHeight',
@@ -247,13 +247,6 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
     onStateUpdated(id, state) {
 
-    }
-
-    getValue(oid) {
-        if (oid !== undefined && oid !== '' && oid !== 'nothing_selected') {
-            return this.state.values[`${oid}.val`];
-        }
-        return undefined;
     }
 
     renderWidgetBody(props) {
@@ -356,6 +349,9 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
 
                 if (countColumns === 0) {
                     Object.values(r).forEach((v, indexCol) => {
+                        if(typeof v === 'object' && v !== null) {
+                            v = JSON.stringify(v);
+                        }
                         columns.push(<StyledTableCell key={`${index}_${indexCol}`}>{v}</StyledTableCell>);
                     });
                 } else {
@@ -389,6 +385,10 @@ class InventwoWidgetTable extends (window.visRxWidget || VisRxWidget) {
                                     columnValue = new Date(columnValue).toLocaleTimeString();
                                 }
                             }
+                        }
+
+                        if(typeof columnValue === 'object' && columnValue !== null) {
+                            columnValue = JSON.stringify(columnValue);
                         }
 
                         columns.push(<StyledTableCell

@@ -249,5 +249,16 @@
     "Datetime": "Додаток",
     "Date": "Дата",
     "Time": "Час",
-    "datetime_format": "Формат DateTime"
+    "datetime_format": "Формат DateTime",
+    "widget_checkbox": "Прапорець",
+    "thumb_shadow": "Тінь пальців",
+    "track_shadow": "Тінь доріжки",
+    "steps": "Кроки",
+    "heights": "Висота",
+    "button_hold_value": "Значення",
+    "tooltip_button_hold_value": "Встановіть значення на натисканні та скидається на попереднє значення на випуску",
+    "attr_group_css_style": "винахід CSS - стиль",
+    "box_color": "Коробний колір коробки",
+    "box_color_active": "Кольоровий колір активний",
+    "box_size": "Розмір коробки"
 }

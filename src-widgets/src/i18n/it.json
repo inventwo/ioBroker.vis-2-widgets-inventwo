@@ -249,5 +249,16 @@
     "Datetime": "DateTime",
     "Date": "Data",
     "Time": "Tempo",
-    "datetime_format": "Formato DateTime"
+    "datetime_format": "Formato DateTime",
+    "widget_checkbox": "Casella di controllo",
+    "thumb_shadow": "Ombra del pollice",
+    "track_shadow": "Traccia ombra",
+    "steps": "Passi",
+    "heights": "Altezze",
+    "button_hold_value": "Tenere valore",
+    "tooltip_button_hold_value": "Imposta il valore su pressione e ripristina il valore precedente al momento del rilascio",
+    "attr_group_css_style": "Inventwo CSS - Stile",
+    "box_color": "Colore della scatola",
+    "box_color_active": "Colore della scatola attivo",
+    "box_size": "Dimensione della scatola"
 }

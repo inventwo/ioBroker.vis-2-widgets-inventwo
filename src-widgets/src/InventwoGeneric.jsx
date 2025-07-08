@@ -104,6 +104,23 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
 
         return `#${componentToHex(red)}${componentToHex(green)}${componentToHex(blue)}`;
     }
+
+    isInteractionAllowed(e = null) {
+        if (this.props.editMode) return false;
+        if (e && e.target.closest('.IroColorPicker') !== null) return false;
+
+        const closestElementCheck = e.target.closest(`.inventwo-view-in-widget-wrapper, #${this.props.id}`);
+        if (closestElementCheck.classList.contains('inventwo-view-in-widget-wrapper')) return false;
+
+        if (this.state.rxData.type === 'readonly') return false;
+
+        return true;
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    validOid(oid) {
+        return oid !== undefined && oid !== null && oid !== 'nothing_selected';
+    }
 }
 
 export default InventwoGeneric;

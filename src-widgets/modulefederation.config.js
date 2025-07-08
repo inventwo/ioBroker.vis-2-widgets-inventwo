@@ -6,6 +6,7 @@ module.exports = makeFederation(
         './InventwoWidgetUniversal': './src/InventwoWidgetUniversal',
         './InventwoWidgetSlider': './src/InventwoWidgetSlider',
         './InventwoWidgetSwitch': './src/InventwoWidgetSwitch',
+        './InventwoWidgetCheckbox': './src/InventwoWidgetCheckbox',
         './InventwoWidgetTable': './src/InventwoWidgetTable',
         './translations': './src/translations',
     },

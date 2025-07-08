@@ -106,7 +106,7 @@ class InventwoWidgetSwitch extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'track_shadow',
+                            text: 'vis_2_widgets_inventwo_track_shadow',
                             hidden: '!!data.trackFromWidget',
                         },
                         {
@@ -215,7 +215,7 @@ class InventwoWidgetSwitch extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'thumb_shadow',
+                            text: 'vis_2_widgets_inventwo_thumb_shadow',
                             hidden: '!!data.thumbFromWidget',
                         },
                         {
@@ -415,7 +415,6 @@ class InventwoWidgetSwitch extends InventwoGeneric {
         return <FormGroup>
             <FormControlLabel
                 control={<Switch
-                    disabled={this.props.editMode}
                     sx={attributes}
                     onClick={() => this.onChange()}
                     checked={isChecked}

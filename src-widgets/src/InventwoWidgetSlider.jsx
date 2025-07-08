@@ -92,7 +92,7 @@ class InventwoWidgetSlider extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'steps',
+                            text: 'vis_2_widgets_inventwo_steps',
                         },
                         {
                             name: 'showSteps',
@@ -191,7 +191,7 @@ class InventwoWidgetSlider extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'track_shadow',
+                            text: 'vis_2_widgets_inventwo_track_shadow',
                             hidden: '!!data.sliderTrackFromWidget',
                         },
                         {
@@ -287,7 +287,7 @@ class InventwoWidgetSlider extends InventwoGeneric {
                         },
                         {
                             type: 'help',
-                            text: 'thumb_shadow',
+                            text: 'vis_2_widgets_inventwo_thumb_shadow',
                             hidden: '!!data.sliderThumbFromWidget',
                         },
                         {

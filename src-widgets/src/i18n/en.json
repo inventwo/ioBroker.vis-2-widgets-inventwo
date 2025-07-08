@@ -249,5 +249,17 @@
   "Datetime": "Datetime",
   "Date": "Date",
   "Time": "Time",
-  "datetime_format": "Datetime format"
+  "datetime_format": "Datetime format",
+  "widget_checkbox": "Checkbox",
+  "thumb_shadow": "Thumb shadow",
+  "track_shadow": "Track shadow",
+  "steps": "Steps",
+  "heights": "Heights",
+  "button_hold_value": "Hold value",
+  "tooltip_button_hold_value": "Set value on press and resets to previous value on release",
+  "attr_group_css_style": "inventwo CSS - Style",
+  "box_color": "Box color",
+  "box_color_active": "Box color active",
+  "box_size": "Box size"
+
 }

@@ -249,5 +249,16 @@
     "Datetime": "Datetime",
     "Date": "Datum",
     "Time": "Tijd",
-    "datetime_format": "DateTime -formaat"
+    "datetime_format": "DateTime -formaat",
+    "widget_checkbox": "Selectievakje",
+    "thumb_shadow": "Duimschaduw",
+    "track_shadow": "Track Shadow",
+    "steps": "Stappen",
+    "heights": "Hoogtes",
+    "button_hold_value": "Waarde houden",
+    "tooltip_button_hold_value": "Stel de waarde in op druk en reset op de vorige waarde bij release",
+    "attr_group_css_style": "InventWo CSS - Stijl",
+    "box_color": "Dooskleur",
+    "box_color_active": "Dooskleur actief",
+    "box_size": "Boxmaat"
 }

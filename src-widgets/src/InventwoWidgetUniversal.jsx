@@ -29,6 +29,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         this.state.showFeedback = false;
         this.state.isMounted = false;
         this.state.svgRef = React.createRef();
+        this.state.previousOidValue = null;
     }
 
     static getWidgetInfo() {
@@ -150,6 +151,14 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             default: 1,
                             label: 'count_states',
                             hidden: 'data.countStates > 0',
+                        },
+                        {
+                            name: 'buttonHoldValue',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'button_hold_value',
+                            tooltip: 'tooltip_button_hold_value',
+                            hidden: 'data.type != "button"'
                         },
                     ],
                 },
@@ -311,6 +320,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_click_feedback',
                     fields: [
                         {
+                            label: 'from_widget',
+                            name: 'clickFeedbackFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'feedbackDuration',
                             type: 'slider',
                             min: 0,
@@ -318,6 +334,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 100,
                             default: 0,
                             label: 'duration',
+                            hidden: '!!data.clickFeedbackFromWidget'
                         },
                         {
                             type: 'delimiter',
@@ -325,39 +342,45 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         {
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_colors',
+                            hidden: '!!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'contentColorFeedback',
                             type: 'color',
                             label: 'content_color',
-                            hidden: 'data.mode == "separatedButtons" || data.contentType != "icon"',
+                            hidden: '!!data.clickFeedbackFromWidget || data.mode == "separatedButtons" || data.contentType != "icon"',
                         },
                         {
                             name: 'backgroundFeedback',
                             type: 'color',
                             default: 'rgba(69, 86, 24, 1)',
                             label: 'background',
+                            hidden: '!!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'textColorFeedback',
                             type: 'color',
                             label: 'text_color',
+                            hidden: '!!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'borderColorFeedback',
                             type: 'color',
                             label: 'border_color',
+                            hidden: '!!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'outerShadowColorFeedback',
                             type: 'color',
                             label: 'outer_shadow_color',
                             default: 'rgba(0, 0, 0, 1)',
+                            hidden: '!!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'innerShadowColorFeedback',
                             type: 'color',
                             label: 'inner_shadow_color',
+                            hidden: '!!data.clickFeedbackFromWidget'
                         },
                     ],
                 },
@@ -418,36 +441,48 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             text: 'vis_2_widgets_inventwo_colors',
                         },
                         {
+                            label: 'from_widget',
+                            name: 'defaultColorsStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'contentColor',
                             type: 'color',
                             label: 'content_color',
-                            hidden: 'data.mode == "separatedButtons" || (data.contentType != "icon" && data.contentType != "image")',
+                            hidden: '!!data.defaultColorsStyleFromWidget || data.mode == "separatedButtons" || (data.contentType != "icon" && data.contentType != "image")',
                         },
                         {
                             name: 'background',
                             type: 'color',
                             label: 'background',
+                            hidden: '!!data.defaultColorsStyleFromWidget'
                         },
                         {
                             name: 'textColor',
                             type: 'color',
                             label: 'text_color',
+                            hidden: '!!data.defaultColorsStyleFromWidget'
                         },
                         {
                             name: 'borderColor',
                             type: 'color',
                             label: 'border_color',
+                            hidden: '!!data.defaultColorsStyleFromWidget'
                         },
                         {
                             name: 'outerShadowColor',
                             type: 'color',
                             label: 'outer_shadow_color',
                             default: 'rgba(0, 0, 0, 1)',
+                            hidden: '!!data.defaultColorsStyleFromWidget'
                         },
                         {
                             name: 'innerShadowColor',
                             type: 'color',
                             label: 'inner_shadow_color',
+                            hidden: '!!data.defaultColorsStyleFromWidget'
                         },
                     ],
                 },
@@ -853,6 +888,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_css_text',
                     fields: [
                         {
+                            label: 'from_widget',
+                            name: 'textStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'textDecoration',
                             type: 'select',
                             options: [
@@ -863,6 +905,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'none',
                             label: 'text_decoration',
+                            hidden: '!!data.textStyleFromWidget'
                         },
                         {
                             name: 'textMarginTop',
@@ -872,6 +915,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_top',
+                            hidden: '!!data.textStyleFromWidget'
                         },
                         {
                             name: 'textMarginBottom',
@@ -881,6 +925,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_bottom',
+                            hidden: '!!data.textStyleFromWidget'
                         },
                         {
                             name: 'textMarginLeft',
@@ -890,6 +935,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_left',
+                            hidden: '!!data.textStyleFromWidget'
                         },
                         {
                             name: 'textMarginRight',
@@ -899,6 +945,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_right',
+                            hidden: '!!data.textStyleFromWidget'
                         },
                     ],
                 },
@@ -906,6 +953,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     name: 'attr_group_css_content',
                     label: 'attr_group_css_content',
                     fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'contentStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
                         {
                             name: 'contentType',
                             type: 'select',
@@ -928,6 +982,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_top',
+                            hidden: '!!data.contentStyleFromWidget'
                         },
                         {
                             name: 'contentMarginBottom',
@@ -937,6 +992,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_bottom',
+                            hidden: '!!data.contentStyleFromWidget'
                         },
                         {
                             name: 'contentMarginLeft',
@@ -946,6 +1002,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_left',
+                            hidden: '!!data.contentStyleFromWidget'
                         },
                         {
                             name: 'contentMarginRight',
@@ -955,6 +1012,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_right',
+                            hidden: '!!data.contentStyleFromWidget'
                         },
                         {
                             name: 'contentSize',
@@ -964,6 +1022,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 40,
                             label: 'content_size',
+                            hidden: '!!data.contentStyleFromWidget'
                         },
                         {
                             name: 'contentRotation',
@@ -973,12 +1032,14 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'rotation',
+                            hidden: '!!data.contentStyleFromWidget'
                         },
                         {
                             name: 'contentMirror',
                             type: 'checkbox',
                             default: false,
                             label: 'mirror',
+                            hidden: '!!data.contentStyleFromWidget'
                         },
                     ],
                 },
@@ -986,6 +1047,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     name: 'attr_group_css_alignment',
                     label: 'attr_group_css_alignment',
                     fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'alignmentStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
                         {
                             name: 'flexDirection',     // name in data structure
                             type: 'select',
@@ -995,6 +1063,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'column',
                             label: 'direction', // translated field label
+                            hidden: '!!data.alignmentStyleFromWidget'
                         },
                         {
                             name: 'alignItems',     // name in data structure
@@ -1007,6 +1076,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'space-between',
                             label: 'alignment', // translated field label
+                            hidden: '!!data.alignmentStyleFromWidget'
                         },
                         {
                             name: 'textAlign',     // name in data structure
@@ -1018,6 +1088,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'start',
                             label: 'text_align', // translated field label
+                            hidden: '!!data.alignmentStyleFromWidget'
                         },
                         {
                             name: 'contentAlign',     // name in data structure
@@ -1029,11 +1100,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'center',
                             label: 'content_align', // translated field label
+                            hidden: '!!data.alignmentStyleFromWidget'
                         },
                         {
                             name: 'invertOrder',     // name in data structure
                             type: 'checkbox',
                             label: 'invert_order', // translated field label
+                            hidden: '!!data.alignmentStyleFromWidget'
                         },
                     ],
                 },
@@ -1042,6 +1115,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_css_transparency',
                     fields: [
                         {
+                            label: 'from_widget',
+                            name: 'transparencyStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'backgroundOpacity',
                             type: 'slider',
                             min: 0,
@@ -1049,6 +1129,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 0.1,
                             default: 1,
                             label: 'background_opacity',
+                            hidden: '!!data.transparencyStyleFromWidget'
                         },
                         {
                             name: 'contentOpacity',
@@ -1058,6 +1139,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 0.1,
                             default: 1,
                             label: 'content_opacity',
+                            hidden: '!!data.transparencyStyleFromWidget'
                         },
                     ],
                 },
@@ -1066,6 +1148,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_css_spacing',
                     fields: [
                         {
+                            label: 'from_widget',
+                            name: 'spacingStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'paddingLeft',
                             type: 'slider',
                             min: 0,
@@ -1073,6 +1162,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 10,
                             label: 'padding_left',
+                            hidden: '!!data.spacingStyleFromWidget'
                         },
                         {
                             name: 'paddingRight',
@@ -1082,6 +1172,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 10,
                             label: 'padding_right',
+                            hidden: '!!data.spacingStyleFromWidget'
                         },
                         {
                             name: 'paddingTop',
@@ -1091,6 +1182,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 10,
                             label: 'padding_top',
+                            hidden: '!!data.spacingStyleFromWidget'
                         },
                         {
                             name: 'paddingBottom',
@@ -1100,6 +1192,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 10,
                             label: 'padding_bottom',
+                            hidden: '!!data.spacingStyleFromWidget'
                         },
                     ],
                 },
@@ -1108,6 +1201,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_css_border_radius',
                     fields: [
                         {
+                            label: 'from_widget',
+                            name: 'borderRadiusStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'borderRadiusTopLeft',
                             type: 'slider',
                             min: 0,
@@ -1115,6 +1215,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 12,
                             label: 'top_left',
+                            hidden: '!!data.borderRadiusStyleFromWidget'
                         },
                         {
                             name: 'borderRadiusTopRight',
@@ -1124,6 +1225,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'top_right',
+                            hidden: '!!data.borderRadiusStyleFromWidget'
                         },
                         {
                             name: 'borderRadiusBottomRight',
@@ -1133,6 +1235,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 12,
                             label: 'bottom_right',
+                            hidden: '!!data.borderRadiusStyleFromWidget'
                         },
                         {
                             name: 'borderRadiusBottomLeft',
@@ -1142,6 +1245,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'bottom_left',
+                            hidden: '!!data.borderRadiusStyleFromWidget'
                         },
                     ],
                 },
@@ -1150,6 +1254,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_css_border',
                     fields: [
                         {
+                            label: 'from_widget',
+                            name: 'borderStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'borderSizeTop',
                             type: 'slider',
                             min: 0,
@@ -1157,6 +1268,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_top',
+                            hidden: '!!data.borderStyleFromWidget'
                         },
                         {
                             name: 'borderSizeBottom',
@@ -1166,6 +1278,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_bottom',
+                            hidden: '!!data.borderStyleFromWidget'
                         },
                         {
                             name: 'borderSizeLeft',
@@ -1175,6 +1288,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_left',
+                            hidden: '!!data.borderStyleFromWidget'
                         },
                         {
                             name: 'borderSizeRight',
@@ -1184,6 +1298,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_right',
+                            hidden: '!!data.borderStyleFromWidget'
                         },
                         {
                             name: 'borderStyle',
@@ -1200,6 +1315,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'none',
                             label: 'border_style',
+                            hidden: '!!data.borderStyleFromWidget'
                         },
                     ],
                 },
@@ -1208,6 +1324,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_css_outer_shadow',
                     fields: [
                         {
+                            label: 'from_widget',
+                            name: 'outerShadowStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'outerShadowX',
                             type: 'slider',
                             min: 0,
@@ -1215,6 +1338,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 2,
                             label: 'x_offset',
+                            hidden: '!!data.outerShadowStyleFromWidget'
                         },
                         {
                             name: 'outerShadowY',
@@ -1224,6 +1348,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 2,
                             label: 'y_offset',
+                            hidden: '!!data.outerShadowStyleFromWidget'
                         },
                         {
                             name: 'outerShadowBlur',
@@ -1233,6 +1358,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 2,
                             label: 'blur',
+                            hidden: '!!data.outerShadowStyleFromWidget'
                         },
                         {
                             name: 'outerShadowSize',
@@ -1242,6 +1368,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 1,
                             label: 'size',
+                            hidden: '!!data.outerShadowStyleFromWidget'
                         },
                     ],
                 },
@@ -1250,6 +1377,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_css_inner_shadow',
                     fields: [
                         {
+                            label: 'from_widget',
+                            name: 'innerShadowStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'innerShadowX',
                             type: 'slider',
                             min: 0,
@@ -1257,6 +1391,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'x_offset',
+                            hidden: '!!data.innerShadowStyleFromWidget'
                         },
                         {
                             name: 'innerShadowY',
@@ -1266,6 +1401,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'y_offset',
+                            hidden: '!!data.innerShadowStyleFromWidget'
                         },
                         {
                             name: 'innerShadowBlur',
@@ -1275,6 +1411,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'blur',
+                            hidden: '!!data.innerShadowStyleFromWidget'
                         },
                         {
                             name: 'innerShadowSize',
@@ -1284,6 +1421,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size',
+                            hidden: '!!data.innerShadowStyleFromWidget'
                         },
                     ],
                 },
@@ -1591,11 +1729,6 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         }
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    validOid(oid) {
-        return oid !== undefined && oid !== null && oid !== 'nothing_selected';
-    }
-
     getValueData(index = null) {
         let oid = null;
         let value = null;
@@ -1687,21 +1820,48 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         }
 
         if (data === null) {
+
+            const defaultColorsStyle = this.getStyle('defaultColorsStyleFromWidget', this.groupAttrs.attr_group_state_default)
+
             data = {
-                background: this.state.rxData.background,
+                background: defaultColorsStyle.background,
                 icon: this.state.rxData.icon,
                 image: this.state.rxData.image,
-                contentColor: this.state.rxData.contentColor,
+                contentColor: defaultColorsStyle.contentColor,
                 text: this.state.rxData.text,
-                textColor: this.state.rxData.textColor,
-                outerShadowColor: this.state.rxData.outerShadowColor,
-                innerShadowColor: this.state.rxData.innerShadowColor,
-                borderColor: this.state.rxData.borderColor,
+                textColor: defaultColorsStyle.textColor,
+                outerShadowColor: defaultColorsStyle.outerShadowColor,
+                innerShadowColor: defaultColorsStyle.innerShadowColor,
+                borderColor: defaultColorsStyle.borderColor,
                 html: this.state.rxData.html,
                 viewInWidget: this.state.rxData.viewInWidget,
                 contentBlinkInterval: this.state.rxData.contentBlinkInterval,
                 contentSize: this.state.rxData.contentSize,
             };
+        }
+
+        const textStyle = this.getStyle('textStyleFromWidget', this.groupAttrs.attr_group_css_text)
+        const contentStyle = this.getStyle('contentStyleFromWidget', this.groupAttrs.attr_group_css_content)
+        const alignmentStyle = this.getStyle('alignmentStyleFromWidget', this.groupAttrs.attr_group_css_alignment)
+        const transparencyStyle = this.getStyle('transparencyStyleFromWidget', this.groupAttrs.attr_group_css_transparency)
+        const spacingStyle = this.getStyle('spacingStyleFromWidget', this.groupAttrs.attr_group_css_spacing)
+        const borderRadiusStyle = this.getStyle('borderRadiusStyleFromWidget', this.groupAttrs.attr_group_css_border_radius)
+        const borderStyle = this.getStyle('borderStyleFromWidget', this.groupAttrs.attr_group_css_border)
+        const outerShadowStyle = this.getStyle('outerShadowStyleFromWidget', this.groupAttrs.attr_group_css_outer_shadow)
+        const innerShadowStyle = this.getStyle('innerShadowStyleFromWidget', this.groupAttrs.attr_group_css_inner_shadow)
+        const clickFeedback = this.getStyle('clickFeedbackFromWidget', this.groupAttrs.attr_group_click_feedback)
+
+        data.styles = {
+            ...textStyle,
+            ...contentStyle,
+            ...alignmentStyle,
+            ...transparencyStyle,
+            ...spacingStyle,
+            ...borderRadiusStyle,
+            ...borderStyle,
+            ...outerShadowStyle,
+            ...innerShadowStyle,
+            ...clickFeedback
         }
 
         if (this.state.showFeedback) {
@@ -1746,37 +1906,33 @@ class InventwoWidgetUniversal extends InventwoGeneric {
     }
 
     replaceWithClickFeedbackData(data) {
-        if (this.validFieldValue(this.state.rxData.backgroundFeedback)) {
-            data.background = this.state.rxData.backgroundFeedback;
+        if (this.validFieldValue(data.styles.backgroundFeedback)) {
+            data.background = data.styles.backgroundFeedback;
         }
-        if (this.validFieldValue(this.state.rxData.contentColorFeedback)) {
-            data.contentColor = this.state.rxData.contentColorFeedback;
+        if (this.validFieldValue(data.styles.contentColorFeedback)) {
+            data.contentColor = data.styles.contentColorFeedback;
         }
-        if (this.validFieldValue(this.state.rxData.textColorFeedback)) {
-            data.textColor = this.state.rxData.textColorFeedback;
+        if (this.validFieldValue(data.styles.textColorFeedback)) {
+            data.textColor = data.styles.textColorFeedback;
         }
-        if (this.validFieldValue(this.state.rxData.outerShadowColorFeedback)) {
-            data.outerShadowColor = this.state.rxData.outerShadowColorFeedback;
+        if (this.validFieldValue(data.styles.outerShadowColorFeedback)) {
+            data.outerShadowColor = data.styles.outerShadowColorFeedback;
         }
-        if (this.validFieldValue(this.state.rxData.innerShadowColorFeedback)) {
-            data.innerShadowColor = this.state.rxData.innerShadowColorFeedback;
+        if (this.validFieldValue(data.styles.innerShadowColorFeedback)) {
+            data.innerShadowColor = data.styles.innerShadowColorFeedback;
         }
-        if (this.validFieldValue(this.state.rxData.borderColorFeedback)) {
-            data.borderColor = this.state.rxData.borderColorFeedback;
+        if (this.validFieldValue(data.styles.borderColorFeedback)) {
+            data.borderColor = data.styles.borderColorFeedback;
         }
         return data;
     }
 
     onClick(index = null, e = null) {
-        if (this.props.editMode) return;
-        if (e.target.closest('.IroColorPicker') !== null) return;
+        if (!this.isInteractionAllowed(e)) return;
+
+        console.log("on click")
 
         const oid = this.state.rxData.oid;
-
-        const closestElementCheck = e.target.closest(`.inventwo-view-in-widget-wrapper, #${this.props.id}`);
-        if (closestElementCheck.classList.contains('inventwo-view-in-widget-wrapper')) return;
-
-        if (this.state.rxData.type === 'readonly') return;
 
         this.setState({ showFeedback: true });
 
@@ -1795,11 +1951,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 }
                 break;
             case 'button':
-                if (this.state.rxData.mode === 'singleButton') {
-                    this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
-                } else {
-                    this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
-                }
+                if (this.state.rxData.buttonHoldValue) break;
+
+                const val = this.state.rxData.mode === 'singleButton'
+                    ? this.state.rxData.valueTrue : this.state.rxData[`value${index}`];
+
+                this.props.context.setValue(oid, this.convertValue(val));
+
                 break;
             case 'nav':
                 // eslint-disable-next-line no-case-declarations
@@ -1845,12 +2003,55 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         }
     }
 
+    onBtnMouseDown(index = null, e = null) {
+        if (!this.isInteractionAllowed(e)) return;
+        console.log("on down")
+
+        const oid = this.state.rxData.oid;
+
+        // eslint-disable-next-line default-case
+        switch (this.state.rxData.type) {
+            case 'button':
+                if (!this.state.rxData.buttonHoldValue) break;
+
+                const val = this.state.rxData.mode === 'singleButton'
+                    ? this.state.rxData.valueTrue : this.state.rxData[`value${index}`];
+
+                this.state.previousOidValue = this.getValue(oid);
+
+                this.props.context.setValue(oid, this.convertValue(val));
+
+                break;
+        }
+    }
+
+    onBtnMouseUp(index = null, e = null) {
+        if (!this.isInteractionAllowed(e)) return;
+
+        console.log("on up")
+
+        const oid = this.state.rxData.oid;
+
+        // eslint-disable-next-line default-case
+        switch (this.state.rxData.type) {
+            case 'button':
+                if (!this.state.rxData.buttonHoldValue) break;
+
+                this.props.context.setValue(oid, this.state.previousOidValue);
+
+                break;
+        }
+    }
+
     renderWidgetBody(props) {
         super.renderWidgetBody(props);
         this.wrappedContent = true;
 
         if (this.state.showFeedback) {
-            let feedbackDuration = this.state.rxData.feedbackDuration;
+
+            const clickFeedback = this.getStyle('clickFeedbackFromWidget', this.groupAttrs.attr_group_click_feedback)
+
+            let feedbackDuration = clickFeedback.feedbackDuration;
             if (feedbackDuration === undefined) {
                 feedbackDuration = 0;
             }
@@ -1871,7 +2072,6 @@ class InventwoWidgetUniversal extends InventwoGeneric {
 
         if (this.state.rxData.mode === 'singleButton') {
             widgetContent.push(this.getSingleCard());
-            // return super.wrapContent(this.getSingleCard(), null, {background: 'transparent' }, {background: 'transparent'});
         } else {
             const content = [];
             for (let i = 1; i <= this.state.rxData.countStates; i++) {
@@ -1974,26 +2174,26 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         </div>;
     }
 
-    getContentIcon(i = null) {
-        if (this.getValueData(i).icon === null) {
+    getContentIcon(valueData) {
+        if (valueData.icon === null) {
             return '';
         }
         return <Icon
-            src={this.getValueData(i).icon}
+            src={valueData.icon}
             style={{
-                width: this.getValueData(i).contentSize,
-                color: this.getValueData(i).contentColor,
+                width: valueData.contentSize,
+                color: valueData.contentColor,
             }}
         ></Icon>;
     }
 
-    getContentImage(i = null) {
-        const img = this.getValueData(i).image;
+    getContentImage(valueData) {
+        const img = valueData.image;
         if (img === null) {
             return '';
         }
 
-        const hex = this.convertRgbToHex(this.getValueData(i).contentColor);
+        const hex = this.convertRgbToHex(valueData.contentColor);
         let filter = null;
         if (hex) {
             filter = hexToCSSFilter(hex);
@@ -2002,24 +2202,24 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         return <Icon
             src={img}
             style={{
-                width: this.getValueData(i).contentSize,
+                width: valueData.contentSize,
                 filter: filter ? filter.filter : '',
             }}
         />;
     }
 
-    getContentHtml(i = null) {
+    getContentHtml(valueData) {
         return <div
             style={{
-                fontSize: `${this.getValueData(i).contentSize}px`,
+                fontSize: `${valueData.contentSize}px`,
             }}
             // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: this.getValueData(i).html }}
+            dangerouslySetInnerHTML={{ __html: valueData.html }}
         />;
     }
 
-    getContentViewInWidget(i = null) {
-        const view = this.getValueData(i).viewInWidget;
+    getContentViewInWidget(valueData) {
+        const view = valueData.viewInWidget;
         return this.buildViewInWidget(view);
     }
 
@@ -2042,20 +2242,20 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         </div>;
     }
 
-    getCardContent(i = null) {
+    getCardContent(valueData) {
         let c;
         switch (this.state.rxData.contentType) {
             case 'icon':
-                c = this.getContentIcon(i);
+                c = this.getContentIcon(valueData);
                 break;
             case 'image':
-                c = this.getContentImage(i);
+                c = this.getContentImage(valueData);
                 break;
             case 'html':
-                c = this.getContentHtml(i);
+                c = this.getContentHtml(valueData);
                 break;
             case 'viewInWidget':
-                c = this.getContentViewInWidget(i);
+                c = this.getContentViewInWidget(valueData);
                 break;
             default:
                 c = '';
@@ -2065,26 +2265,25 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             style={{
                 height: '100%',
                 width: this.state.rxData.contentType === 'viewInWidget' ? '100%' : '',
-                transform: `rotateZ(${this.state.rxData.contentRotation}deg)`,
-                animation: this.getValueData(i).contentBlinkInterval > 0 ? `blink ${this.getValueData(i).contentBlinkInterval / 1000}s infinite` : '',
+                transform: `rotateZ(${valueData.styles.contentRotation}deg)`,
+                animation: valueData.contentBlinkInterval > 0 ? `blink ${valueData.contentBlinkInterval / 1000}s infinite` : '',
             }}
         >
             {c}
         </div>;
     }
 
-    buildCard(i, content) {
-        const valueData = this.getValueData(i);
+    buildCard(valueData, i, content) {
         let shadow = '';
         if (valueData.outerShadowColor) {
-            shadow += `${this.state.rxData.outerShadowX}px ${this.state.rxData.outerShadowY}px ${this.state.rxData.outerShadowBlur}px ${this.state.rxData.outerShadowSize}px ${valueData.outerShadowColor}`;
+            shadow += `${valueData.styles.outerShadowX}px ${valueData.styles.outerShadowY}px ${valueData.styles.outerShadowBlur}px ${valueData.styles.outerShadowSize}px ${valueData.outerShadowColor}`;
         }
 
         if (valueData.innerShadowColor) {
             if (shadow !== '') {
                 shadow += ', ';
             }
-            shadow += `inset ${this.state.rxData.innerShadowX}px ${this.state.rxData.innerShadowY}px ${this.state.rxData.innerShadowBlur}px ${this.state.rxData.innerShadowSize}px ${valueData.innerShadowColor}`;
+            shadow += `inset ${valueData.styles.innerShadowX}px ${valueData.styles.innerShadowY}px ${valueData.styles.innerShadowBlur}px ${valueData.styles.innerShadowSize}px ${valueData.innerShadowColor}`;
         }
 
         return <div
@@ -2094,43 +2293,45 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 height: i === null ? '100%' : '',
                 flex: i !== null ? `0 0 ${this.state.rxData.buttonSize}px` : '',
                 position: 'relative',
-                border: this.state.rxData.borderRadiusTopLeft,
-                borderRadius: `${this.state.rxData.borderRadiusTopLeft}px ${this.state.rxData.borderRadiusTopRight}px ${this.state.rxData.borderRadiusBottomRight}px ${this.state.rxData.borderRadiusBottomLeft}px`,
+                border: valueData.styles.borderRadiusTopLeft,
+                borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
             }}
         >
             <Card
                 className="vis_rx_widget_card"
                 style={{
                     background: valueData.background,
-                    borderRadius: `${this.state.rxData.borderRadiusTopLeft}px ${this.state.rxData.borderRadiusTopRight}px ${this.state.rxData.borderRadiusBottomRight}px ${this.state.rxData.borderRadiusBottomLeft}px`,
+                    borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
                     boxShadow: shadow,
-                    opacity: this.state.rxData.backgroundOpacity,
+                    opacity: valueData.styles.backgroundOpacity,
                     position: 'absolute',
                     inset: 0,
                     borderColor: valueData.borderColor,
-                    borderTopWidth: `${this.state.rxData.borderSizeTop}px`,
-                    borderBottomWidth: `${this.state.rxData.borderSizeBottom}px`,
-                    borderLeftWidth: `${this.state.rxData.borderSizeLeft}px`,
-                    borderRightWidth: `${this.state.rxData.borderSizeRight}px`,
-                    borderStyle: this.state.rxData.borderStyle,
+                    borderTopWidth: `${valueData.styles.borderSizeTop}px`,
+                    borderBottomWidth: `${valueData.styles.borderSizeBottom}px`,
+                    borderLeftWidth: `${valueData.styles.borderSizeLeft}px`,
+                    borderRightWidth: `${valueData.styles.borderSizeRight}px`,
+                    borderStyle: valueData.styles.borderStyle,
                 }}
             />
             <Card
                 style={{
                     cursor: this.state.rxData.type !== 'readonly' ? 'pointer' : '',
                     background: 'transparent',
-                    borderRadius: `${this.state.rxData.borderRadiusTopLeft}px ${this.state.rxData.borderRadiusTopRight}px ${this.state.rxData.borderRadiusBottomRight}px ${this.state.rxData.borderRadiusBottomLeft}px`,
-                    opacity: this.state.rxData.contentOpacity,
+                    borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+                    opacity: valueData.styles.contentOpacity,
                     position: 'absolute',
                     inset: 0,
                     color: 'unset',
                     boxShadow: 'none',
                 }}
                 onClick={e => this.onClick(i, e)}
+                onMouseDown={e => this.onBtnMouseDown(i, e)}
+                onMouseUp={e => this.onBtnMouseUp(i, e)}
             >
                 <CardContent
                     style={{
-                        padding: `${this.state.rxData.paddingTop}px ${this.state.rxData.paddingRight}px ${this.state.rxData.paddingBottom}px ${this.state.rxData.paddingLeft}px`,
+                        padding: `${valueData.styles.paddingTop}px ${valueData.styles.paddingRight}px ${valueData.styles.paddingBottom}px ${valueData.styles.paddingLeft}px`,
                         boxSizing: 'border-box',
                         width: '100%',
                         height: '100%',
@@ -2143,43 +2344,46 @@ class InventwoWidgetUniversal extends InventwoGeneric {
     }
 
     getSingleCard(i = null) {
-        const content = this.getCardContent(i);
+        const valueData = this.getValueData(i);
+
+        const content = this.getCardContent(valueData);
+
         const cardContent = <div
             style={{
                 height: '100%',
                 width: '100%',
                 display: 'flex',
-                flexDirection: this.state.rxData.flexDirection + (this.state.rxData.invertOrder ? '-reverse' : ''),
-                justifyContent: this.state.rxData.invertOrder && this.state.rxData.alignItems === 'flex-start' ? 'flex-end' : (this.state.rxData.invertOrder && this.state.rxData.alignItems === 'flex-end' ? 'flex-start' : this.state.rxData.alignItems),
+                flexDirection: valueData.styles.flexDirection + (valueData.styles.invertOrder ? '-reverse' : ''),
+                justifyContent: valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-start' ? 'flex-end' : (valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-end' ? 'flex-start' : valueData.styles.alignItems),
             }}
         >
             <div
                 style={{
                     display: 'flex',
-                    justifyContent: this.state.rxData.flexDirection === 'column' ? this.state.rxData.contentAlign : '',
-                    alignSelf: this.state.rxData.flexDirection === 'row' ? this.state.rxData.contentAlign : '',
-                    transform: `scaleX(${this.state.rxData.contentMirror ? -1 : 1})`,
+                    justifyContent: valueData.styles.flexDirection === 'column' ? valueData.styles.contentAlign : '',
+                    alignSelf: valueData.styles.flexDirection === 'row' ? valueData.styles.contentAlign : '',
+                    transform: `scaleX(${valueData.styles.contentMirror ? -1 : 1})`,
                     height: this.state.rxData.contentType === 'viewInWidget' ? '100%' : '',
                     overflow: 'hidden',
-                    margin: `${this.state.rxData.contentMarginTop}px ${this.state.rxData.contentMarginRight}px ${this.state.rxData.contentMarginBottom}px ${this.state.rxData.contentMarginLeft}px`,
+                    margin: `${valueData.styles.contentMarginTop}px ${valueData.styles.contentMarginRight}px ${valueData.styles.contentMarginBottom}px ${valueData.styles.contentMarginLeft}px`,
                 }}
             >
                 {content}
             </div>
             <div
                 style={{
-                    textAlign: this.state.rxData.flexDirection === 'column' ? this.state.rxData.textAlign : '',
-                    alignSelf: this.state.rxData.flexDirection === 'row' ? this.state.rxData.textAlign : '',
-                    textDecoration: this.state.rxData.textDecoration,
-                    color: this.getValueData(i).textColor,
-                    margin: `${this.state.rxData.textMarginTop}px ${this.state.rxData.textMarginRight}px ${this.state.rxData.textMarginBottom}px ${this.state.rxData.textMarginLeft}px`,
+                    textAlign: valueData.styles.flexDirection === 'column' ? valueData.styles.textAlign : '',
+                    alignSelf: valueData.styles.flexDirection === 'row' ? valueData.styles.textAlign : '',
+                    textDecoration: valueData.styles.textDecoration,
+                    color: valueData.textColor,
+                    margin: `${valueData.styles.textMarginTop}px ${valueData.styles.textMarginRight}px ${valueData.styles.textMarginBottom}px ${valueData.styles.textMarginLeft}px`,
                 }}
                 // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{ __html: this.getValueData(i).text }}
+                dangerouslySetInnerHTML={{ __html: valueData.text }}
             />
         </div>;
 
-        return this.buildCard(i, cardContent);
+        return this.buildCard(valueData, i, cardContent);
     }
 }
 

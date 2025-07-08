@@ -152,6 +152,7 @@
           "InventwoWidgetUniversal",
           "InventwoWidgetSlider",
           "InventwoWidgetSwitch",
+          "InventwoWidgetCheckbox",
           "InventwoWidgetTable"
         ]
       }

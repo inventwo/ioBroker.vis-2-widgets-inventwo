@@ -228,7 +228,7 @@
     "attr_content_css_table": "inventwo CSS - Tabelle",
     "background_header": "Hintergrundkopfzeile",
     "background_odd_row": "Hintergrund ungerade Zeile",
-    "background_even_row": "Hintergrund sogarreihe",
+    "background_even_row": "Hintergrund gerade Zeile",
     "header_height": "Headerhöhe",
     "column_height": "Säulenhöhe",
     "round": "Rund",
@@ -249,5 +249,16 @@
     "Datetime": "Datum/Uhrzeit",
     "Date": "Datum",
     "Time": "Zeit",
-    "datetime_format": "Datum/Uhrzeit Format"
+    "datetime_format": "Datum/Uhrzeit Format",
+    "widget_checkbox": "Checkbox",
+    "thumb_shadow": "Regler Schatten",
+    "track_shadow": "Spurleiste Schatten",
+    "steps": "Schritte",
+    "heights": "Höhen",
+    "button_hold_value": "Wert halten",
+    "tooltip_button_hold_value": "Setzt den Wert solange gedrückt wird",
+    "attr_group_css_style": "inventwo CSS - Stil",
+    "box_color": "Boxfarbe",
+    "box_color_active": "Boxfarbe aktiv",
+    "box_size": "Boxgröße"
 }

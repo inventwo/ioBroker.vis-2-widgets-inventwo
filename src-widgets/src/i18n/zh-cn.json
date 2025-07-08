@@ -249,5 +249,16 @@
     "Datetime": "DateTime",
     "Date": "日期",
     "Time": "时间",
-    "datetime_format": "DateTime格式"
+    "datetime_format": "DateTime格式",
+    "widget_checkbox": "复选框",
+    "thumb_shadow": "拇指阴影",
+    "track_shadow": "轨道阴影",
+    "steps": "步骤",
+    "heights": "高度",
+    "button_hold_value": "保持价值",
+    "tooltip_button_hold_value": "将按下设置值并重置为版本的先前值",
+    "attr_group_css_style": "Inventwo CSS-风格",
+    "box_color": "盒子颜色",
+    "box_color_active": "盒子颜色活跃",
+    "box_size": "盒子大小"
 }

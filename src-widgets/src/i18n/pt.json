@@ -249,5 +249,16 @@
     "Datetime": "DateTime",
     "Date": "Data",
     "Time": "Tempo",
-    "datetime_format": "Formato DateTime"
+    "datetime_format": "Formato DateTime",
+    "widget_checkbox": "Caixa de seleção",
+    "thumb_shadow": "Sombra do polegar",
+    "track_shadow": "Track Shadow",
+    "steps": "Passos",
+    "heights": "Alturas",
+    "button_hold_value": "Manter valor",
+    "tooltip_button_hold_value": "Defina o valor na imprensa e redefine como valor anterior na liberação",
+    "attr_group_css_style": "Inventwo CSS - estilo",
+    "box_color": "Cor da caixa",
+    "box_color_active": "Cor da caixa ativa",
+    "box_size": "Tamanho da caixa"
 }

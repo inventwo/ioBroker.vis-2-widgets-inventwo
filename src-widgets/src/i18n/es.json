@@ -249,5 +249,16 @@
     "Datetime": "De fecha y hora",
     "Date": "Fecha",
     "Time": "Tiempo",
-    "datetime_format": "Formato de fecha y hora"
+    "datetime_format": "Formato de fecha y hora",
+    "widget_checkbox": "Caja",
+    "thumb_shadow": "Sombra del pulgar",
+    "track_shadow": "Sombra de pista",
+    "steps": "Pasos",
+    "heights": "Altura",
+    "button_hold_value": "Tener valor",
+    "tooltip_button_hold_value": "Establezca el valor en la presión y se restablezca al valor anterior en la versión",
+    "attr_group_css_style": "inventwo css - estilo",
+    "box_color": "Color de la caja",
+    "box_color_active": "Color de la caja activa",
+    "box_size": "Tamaño de la caja"
 }
