@@ -148,6 +148,7 @@
         "i18n": "component",
         "name": "vis2Inventwo",
         "url": "vis-2-widgets-inventwo/customWidgets.js",
+        "bundlerType": "module",
         "components": [
           "InventwoWidgetUniversal",
           "InventwoWidgetSlider",
