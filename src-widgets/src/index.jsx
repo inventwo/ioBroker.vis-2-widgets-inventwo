@@ -1,1 +1,1 @@
-import('./bootstrap');
+// empty file

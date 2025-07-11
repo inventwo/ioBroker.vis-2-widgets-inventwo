@@ -199,7 +199,145 @@ class InventwoWidgetTable extends InventwoGeneric {
                         },
                     ],
                 },
+                {
+                    name: 'attr_group_css_border',
+                    label: 'attr_group_css_border',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'borderStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetTable',
+                            all: true,
+                        },
+                        {
+                            name: 'borderColor',
+                            type: 'color',
+                            label: 'border_color',
+                        },
+                        {
+                            name: 'borderSizeTop',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 0,
+                            label: 'size_top',
+                            hidden: '!!data.borderStyleFromWidget'
+                        },
+                        {
+                            name: 'borderSizeBottom',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 0,
+                            label: 'size_bottom',
+                            hidden: '!!data.borderStyleFromWidget'
+                        },
+                        {
+                            name: 'borderSizeLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 0,
+                            label: 'size_left',
+                            hidden: '!!data.borderStyleFromWidget'
+                        },
+                        {
+                            name: 'borderSizeRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 0,
+                            label: 'size_right',
+                            hidden: '!!data.borderStyleFromWidget'
+                        },
+                        {
+                            name: 'borderStyle',
+                            type: 'select',
+                            options: [
+                                { value: 'none', label: 'none' },
+                                { value: 'dashed', label: 'dashed' },
+                                { value: 'dotted', label: 'dotted' },
+                                { value: 'double', label: 'double' },
+                                { value: 'groove', label: 'groove' },
+                                { value: 'inset', label: 'outset' },
+                                { value: 'ridge', label: 'ridge' },
+                                { value: 'solid', label: 'solid' },
+                            ],
+                            default: 'none',
+                            label: 'border_style',
+                            hidden: '!!data.borderStyleFromWidget'
+                        },
+                    ],
+                },
+                {
+                    name: 'attr_group_css_outer_shadow',
+                    label: 'attr_group_css_outer_shadow',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'outerShadowStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetTable',
+                            all: true,
+                        },
+                        {
+                            name: 'outerShadowColor',
+                            type: 'color',
+                            label: 'outer_shadow_color',
+                            default: 'rgb(0,0,0)',
+                            hidden: '!!data.outerShadowStyleFromWidget'
+                        },
+                        {
+                            name: 'outerShadowX',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 2,
+                            label: 'x_offset',
+                            hidden: '!!data.outerShadowStyleFromWidget'
+                        },
+                        {
+                            name: 'outerShadowY',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 2,
+                            label: 'y_offset',
+                            hidden: '!!data.outerShadowStyleFromWidget'
+                        },
+                        {
+                            name: 'outerShadowBlur',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 2,
+                            label: 'blur',
+                            hidden: '!!data.outerShadowStyleFromWidget'
+                        },
+                        {
+                            name: 'outerShadowSize',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 1,
+                            label: 'size',
+                            hidden: '!!data.outerShadowStyleFromWidget'
+                        },
+                    ],
+                }
             ],
+            visDefaultStyle: {
+                overflow: 'visible',
+            },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-table.png',
         };
     }
@@ -271,6 +409,9 @@ class InventwoWidgetTable extends InventwoGeneric {
         const headers = [];
         const rows = [];
 
+        const outerShadowStyle = this.getStyle('outerShadowStyleFromWidget', this.groupAttrs.attr_group_css_outer_shadow);
+        const borderStyle = this.getStyle('borderStyleFromWidget', this.groupAttrs.attr_group_css_border);
+
         const StyledTableHeaderRow = styled(TableRow)(() => ({
             [`&.${tableRowClasses.root}`]: {
                 height: this.state.rxData.headerHeight + (!Number.isNaN(Number(this.state.rxData.headerHeight)) ? 'px' : ''),
@@ -284,6 +425,16 @@ class InventwoWidgetTable extends InventwoGeneric {
             [`&.${tableCellClasses.root}`]: {
                 paddingTop: 0,
                 paddingBottom: 0,
+                fontSize: this.state.rxStyle['font-size'],
+                color: this.state.rxStyle.color,
+                textShadow: this.state.rxStyle['text-shadow'],
+                fontFamily: this.state.rxStyle['font-family'],
+                fontStyle: this.state.rxStyle['font-style'],
+                fontVariant: this.state.rxStyle['font-variant'],
+                fontWeight: this.state.rxStyle['font-weight'],
+                lineHeight: this.state.rxStyle['line-height'],
+                letterSpacing: this.state.rxStyle['letter-spacing'],
+                wordSpacing: this.state.rxStyle['word-spacing'],
             },
         }));
 
@@ -291,6 +442,16 @@ class InventwoWidgetTable extends InventwoGeneric {
             [`&.${tableCellClasses.root}`]: {
                 paddingTop: 0,
                 paddingBottom: 0,
+                fontSize: this.state.rxStyle['font-size'],
+                color: this.state.rxStyle.color,
+                textShadow: this.state.rxStyle['text-shadow'],
+                fontFamily: this.state.rxStyle['font-family'],
+                fontStyle: this.state.rxStyle['font-style'],
+                fontVariant: this.state.rxStyle['font-variant'],
+                fontWeight: this.state.rxStyle['font-weight'],
+                lineHeight: this.state.rxStyle['line-height'],
+                letterSpacing: this.state.rxStyle['letter-spacing'],
+                wordSpacing: this.state.rxStyle['word-spacing'],
             },
         }));
 
@@ -349,7 +510,7 @@ class InventwoWidgetTable extends InventwoGeneric {
 
                 if (countColumns === 0) {
                     Object.values(r).forEach((v, indexCol) => {
-                        if(typeof v === 'object' && v !== null) {
+                        if (typeof v === 'object' && v !== null) {
                             v = JSON.stringify(v);
                         }
                         columns.push(<StyledTableCell key={`${index}_${indexCol}`}>{v}</StyledTableCell>);
@@ -387,7 +548,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             }
                         }
 
-                        if(typeof columnValue === 'object' && columnValue !== null) {
+                        if (typeof columnValue === 'object' && columnValue !== null) {
                             columnValue = JSON.stringify(columnValue);
                         }
 
@@ -406,27 +567,44 @@ class InventwoWidgetTable extends InventwoGeneric {
 
                 rows.push(<StyledTableRow
                     key={index}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
                 >
                     {columns}
                 </StyledTableRow>);
             }
         }
 
-        return <TableContainer component={Paper} style={{ height: '100%' }}>
-            <Table>
-                {this.state.rxData.showHead && (
-                    <TableHead>
-                        <StyledTableHeaderRow>
-                            {headers}
-                        </StyledTableHeaderRow>
-                    </TableHead>
-                )}
-                <TableBody>
-                    {rows}
-                </TableBody>
-            </Table>
-        </TableContainer>;
+        let shadow = '';
+        if(outerShadowStyle.outerShadowColor) {
+            shadow += `${outerShadowStyle.outerShadowX}px ${outerShadowStyle.outerShadowY}px ${outerShadowStyle.outerShadowBlur}px ${outerShadowStyle.outerShadowSize}px ${outerShadowStyle.outerShadowColor}`
+        }
+
+        return <div style={{
+            boxShadow: `${shadow}`,
+            overflow: 'visible',
+            height: '100%',
+            borderColor: borderStyle.borderColor,
+            borderTopWidth: `${borderStyle.borderSizeTop}px`,
+            borderBottomWidth: `${borderStyle.borderSizeBottom}px`,
+            borderLeftWidth: `${borderStyle.borderSizeLeft}px`,
+            borderRightWidth: `${borderStyle.borderSizeRight}px`,
+            borderStyle: borderStyle.borderStyle,
+        }}>
+            <TableContainer component={Paper} style={{height: '100%'}}>
+                <Table>
+                    {this.state.rxData.showHead && (
+                        <TableHead>
+                            <StyledTableHeaderRow>
+                                {headers}
+                            </StyledTableHeaderRow>
+                        </TableHead>
+                    )}
+                    <TableBody>
+                        {rows}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>;
     }
 }
 

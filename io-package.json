@@ -16,19 +16,6 @@
         "uk": "Зміна побудови віта",
         "zh-cn": "更改构建为 vite"
       },
-      "0.3.0": {
-        "en": "Added new widget: Checkbox\nFixed issue with table widget and object values (#77)\nFixed translated text (#79)",
-        "de": "Neues Widget hinzugefügt: Checkbox\nProblem behoben mit Tabellen-Widget und Objektwerten (#77)\nText behoben (#79)",
-        "ru": "Добавлен новый виджет: Checkbox\nФиксированная проблема с виджетом таблицы и значениями объектов (#77)\nПереведенный текст (#79)",
-        "pt": "Adicionado novo elemento: caixa de seleção\nProblema corrigido com os valores do widget e objeto da tabela (#77)\nTexto traduzido corrigido (# 79)",
-        "nl": "Nieuw widget toegevoegd: selectievakje\nVast probleem met tabelwidget- en objectwaarden (#77)\nVaste vertaalde tekst (#79)",
-        "fr": "Ajout d'un nouveau widget: Checkbox\nProblème corrigé avec widget de table et valeurs objet (#77)\nTexte traduit corrigé (#79)",
-        "it": "Aggiunto nuovo widget: Checkbox\nProblema fisso con widget di tabella e valori oggetti (#77)\nTesto tradotto fisso (#79)",
-        "es": "Añadido nuevo widget: caja de verificación\nEdición fija con widget de mesa y valores de objeto (#77)\nTexto traducido fijo (#79)",
-        "pl": "Dodano nowy widget: Checkbox\nNaprawiono problem z widżetem tabeli i wartościami obiektu (# 77)\nNaprawiono przetłumaczony tekst (# 79)",
-        "uk": "Додано новий віджет: Checkbox\nВиправлено проблему з значеннями таблиці віджетів та об'єктів (#77)\nВиправлено перекладений текст (#79)",
-        "zh-cn": "添加新部件: 复选框\n表格部件和对象值的固定问题 (# 77)\n固定翻译文本 (# 79)"
-      },
       "0.2.2": {
         "en": "Fixed build issue",
         "de": "Fixed Build Problem",

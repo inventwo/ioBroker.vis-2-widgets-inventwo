@@ -39,6 +39,10 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Support font styles in table widget (#78)
+* Added border and shadow options for table widget (#78)
+
 ### 0.3.1 (2025-07-08)
 * Change build to vite
 
