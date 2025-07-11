@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "news": {
+      "0.3.2": {
+        "en": "Support font styles in table widget (#78)\nAdded border and shadow options for table widget (#78)",
+        "de": "Unterstützt Schriftarten im Tabellen-Widget (#78)\nHinzufügen von Grenz- und Schattenoptionen für Tisch-Widget (#78)",
+        "ru": "Поддержка стилей шрифтов в виджете таблицы (#78)\nДобавлены параметры границы и тени для виджета таблицы (#78)",
+        "pt": "Suporte aos estilos de letra no widget de tabelas (# 78)\nOpções de contorno e sombra adicionadas para o elemento da tabela (# 78)",
+        "nl": "Lettertypestijlen in tabelwidget ondersteunen (#78)\nRand- en schaduwopties toegevoegd voor tabelwidget (#78)",
+        "fr": "Prise en charge des styles de police dans le widget de table (#78)\nAjout d'options bordure et ombre pour widget de table (#78)",
+        "it": "Supporta gli stili di carattere nel widget della tabella (#78)\nOpzioni di bordo e ombra aggiunti per widget di tabella (#78)",
+        "es": "Soporte estilos de fuentes en el widget de mesa (#78)\nOpciones de borde y sombra adicionales para el widget de mesa (#78)",
+        "pl": "Wsparcie stylów czcionek w tabeli widget (# 78)\nDodano opcje graniczne i cienie dla widżetu tabeli (# 78)",
+        "uk": "Підтримка стилів шрифту в настільному віджеті (#78)\nДодано межі та параметри тіні для настільного віджету (#78)",
+        "zh-cn": "表格部件中支持字体样式 (# 78)\n为表格部件添加边框和阴影选项(# 78)"
+      },
       "0.3.1": {
         "en": "Change build to vite",
         "de": "Umbau auf Vite",
