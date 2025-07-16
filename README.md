@@ -39,7 +39,7 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### 0.3.3 (2025-07-16)
+### **WORK IN PROGRESS**
 - Added option to click through universal widget
 - Fixed state not used then oid is left empty
 - Added options to control table row line width and color
