@@ -260,5 +260,10 @@
     "attr_group_css_style": "Inventwo CSS - стиль",
     "box_color": "Цвет коробки",
     "box_color_active": "Цвет коробки активен",
-    "box_size": "Размер коробки"
+    "box_size": "Размер коробки",
+    "thickness_header": "Толщина заголовок",
+    "color_header": "Цветовой заголовок",
+    "thickness": "Толщина",
+    "click_through": "Нажмите",
+    "vis_2_widgets_inventwo_row_border": "Рядная граница"
 }

@@ -260,5 +260,10 @@
     "attr_group_css_style": "inventwo CSS - Stil",
     "box_color": "Boxfarbe",
     "box_color_active": "Boxfarbe aktiv",
-    "box_size": "Boxgröße"
+    "box_size": "Boxgröße",
+    "thickness_header": "Dicke Kopfzeile",
+    "color_header": "Farbe Kopfzeile",
+    "thickness": "Dicke",
+    "click_through": "Klick durchlassen",
+    "vis_2_widgets_inventwo_row_border": "Zeilenrand"
 }

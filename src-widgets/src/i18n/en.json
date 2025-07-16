@@ -260,6 +260,10 @@
   "attr_group_css_style": "inventwo CSS - Style",
   "box_color": "Box color",
   "box_color_active": "Box color active",
-  "box_size": "Box size"
-
+  "box_size": "Box size",
+  "thickness_header": "Thickness header",
+  "color_header": "Color header",
+  "thickness": "Thickness",
+  "click_through": "Click through",
+  "vis_2_widgets_inventwo_row_border": "Row border"
 }

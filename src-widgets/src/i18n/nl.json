@@ -260,5 +260,10 @@
     "attr_group_css_style": "InventWo CSS - Stijl",
     "box_color": "Dooskleur",
     "box_color_active": "Dooskleur actief",
-    "box_size": "Boxmaat"
+    "box_size": "Boxmaat",
+    "thickness_header": "Diktekop",
+    "color_header": "Kleurkop",
+    "thickness": "Dikte",
+    "click_through": "Doorklikken",
+    "vis_2_widgets_inventwo_row_border": "Rijgrens"
 }

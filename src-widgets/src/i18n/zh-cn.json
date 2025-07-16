@@ -260,5 +260,10 @@
     "attr_group_css_style": "Inventwo CSS-风格",
     "box_color": "盒子颜色",
     "box_color_active": "盒子颜色活跃",
-    "box_size": "盒子大小"
+    "box_size": "盒子大小",
+    "thickness_header": "厚度标头",
+    "color_header": "颜色标头",
+    "thickness": "厚度",
+    "click_through": "单击",
+    "vis_2_widgets_inventwo_row_border": "行边界"
 }

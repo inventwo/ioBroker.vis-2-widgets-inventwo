@@ -260,5 +260,10 @@
     "attr_group_css_style": "inventwo css - style",
     "box_color": "Couleur de la boîte",
     "box_color_active": "Couleur de boîte active",
-    "box_size": "Tailles"
+    "box_size": "Tailles",
+    "thickness_header": "En-tête d'épaisseur",
+    "color_header": "En-tête de couleur",
+    "thickness": "Épaisseur",
+    "click_through": "Cliquer",
+    "vis_2_widgets_inventwo_row_border": "Frontière"
 }

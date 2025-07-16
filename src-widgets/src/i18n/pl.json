@@ -260,5 +260,10 @@
     "attr_group_css_style": "Inventwo CSS - styl",
     "box_color": "Kolor pudełka",
     "box_color_active": "Kolor pudełka aktywny",
-    "box_size": "Rozmiar pudełka"
+    "box_size": "Rozmiar pudełka",
+    "thickness_header": "Nagłówek grubości",
+    "color_header": "Kolor nagłówka",
+    "thickness": "Grubość",
+    "click_through": "Kliknij",
+    "vis_2_widgets_inventwo_row_border": "Granica rządu"
 }

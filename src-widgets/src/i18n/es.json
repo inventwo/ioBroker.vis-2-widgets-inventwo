@@ -260,5 +260,10 @@
     "attr_group_css_style": "inventwo css - estilo",
     "box_color": "Color de la caja",
     "box_color_active": "Color de la caja activa",
-    "box_size": "Tamaño de la caja"
+    "box_size": "Tamaño de la caja",
+    "thickness_header": "Encabezado de grosor",
+    "color_header": "Encabezado de color",
+    "thickness": "Espesor",
+    "click_through": "Hacer clic",
+    "vis_2_widgets_inventwo_row_border": "Borde"
 }

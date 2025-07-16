@@ -320,11 +320,18 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_click_feedback',
                     fields: [
                         {
+                            name: 'clickThrough',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'click_through'
+                        },
+                        {
                             label: 'from_widget',
                             name: 'clickFeedbackFromWidget',
                             type: 'widget',
                             tpl: 'tplInventwoWidgetUniversal',
                             all: true,
+                            hidden: '!!data.clickThrough'
                         },
                         {
                             name: 'feedbackDuration',
@@ -334,53 +341,54 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 100,
                             default: 0,
                             label: 'duration',
-                            hidden: '!!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
                         },
                         {
                             type: 'delimiter',
+                            hidden: '!!data.clickThrough'
                         },
                         {
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_colors',
-                            hidden: '!!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'contentColorFeedback',
                             type: 'color',
                             label: 'content_color',
-                            hidden: '!!data.clickFeedbackFromWidget || data.mode == "separatedButtons" || data.contentType != "icon"',
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget || data.mode == "separatedButtons" || data.contentType != "icon"',
                         },
                         {
                             name: 'backgroundFeedback',
                             type: 'color',
                             default: 'rgba(69, 86, 24, 1)',
                             label: 'background',
-                            hidden: '!!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'textColorFeedback',
                             type: 'color',
                             label: 'text_color',
-                            hidden: '!!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'borderColorFeedback',
                             type: 'color',
                             label: 'border_color',
-                            hidden: '!!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'outerShadowColorFeedback',
                             type: 'color',
                             label: 'outer_shadow_color',
                             default: 'rgba(0, 0, 0, 1)',
-                            hidden: '!!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
                         },
                         {
                             name: 'innerShadowColorFeedback',
                             type: 'color',
                             label: 'inner_shadow_color',
-                            hidden: '!!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
                         },
                     ],
                 },
@@ -1656,6 +1664,10 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         setTimeout(() => {
             this.state.isMounted = true;
         }, 500);
+
+        if(!this.props.editMode && this.state.rxData.clickThrough) {
+            this.refService.current.style.pointerEvents = 'none';
+        }
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
@@ -1736,13 +1748,6 @@ class InventwoWidgetUniversal extends InventwoGeneric {
 
         if (index === null) {
             for (let i = 1; i <= this.state.rxData.countStates; i++) {
-                if (this.validOid(this.state.rxData[`oid${i}`])) {
-                    oid = this.state.rxData[`oid${i}`];
-                } else if (this.validOid(this.state.rxData.oid)) {
-                    oid = this.state.rxData.oid;
-                } else continue;
-
-                value = this.getValue(oid);
 
                 let compareBy = this.state.rxData[`compareBy${i}`];
                 if (compareBy === undefined || compareBy === null) {
@@ -1754,11 +1759,31 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     comparisonOperator = '===';
                 }
 
+
                 let compareValue = this.state.rxData.valueTrue;
-                if (this.state.rxData[`value${i}`] !== undefined && this.state.rxData[`value${i}`] !== null) {
+                if (this.validOid(this.state.rxData[`oid${i}`])
+                    && this.state.rxData[`value${i}`] !== undefined
+                    && this.state.rxData[`value${i}`] !== null
+                ) {
                     compareValue = this.state.rxData[`value${i}`];
                 }
                 compareValue = this.convertValue(compareValue);
+
+                const isNavBtn = (
+                        compareBy === 'default'
+                        && this.state.rxData.type === 'nav'
+                    )
+                    || compareBy === 'view'
+
+                if(!isNavBtn) {
+                    if (this.validOid(this.state.rxData[`oid${i}`])) {
+                        oid = this.state.rxData[`oid${i}`];
+                    } else if (this.validOid(this.state.rxData.oid)) {
+                        oid = this.state.rxData.oid;
+                    } else continue;
+
+                    value = this.getValue(oid);
+                }
 
                 if (
                     (
@@ -1772,25 +1797,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         && this.compare(value, compareValue, comparisonOperator)
                     )
                     || (
-                        (
-                            (
-                                compareBy === 'default'
-                                && this.state.rxData.type === 'nav'
-                            )
-                            || compareBy === 'view'
-                        )
+                        isNavBtn
                         && this.state.rxData.mode === 'singleButton'
                         && this.state.rxData.countStates === 1
                         && this.state.rxData.view === this.props.view
                     )
                     || (
-                        (
-                            (
-                                compareBy === 'default'
-                                && this.state.rxData.type === 'nav'
-                            )
-                            || compareBy === 'view'
-                        )
+                        isNavBtn
                         && this.state.rxData.countStates > 1
                         && this.state.rxData[`view${i}`] === this.props.view
                     )
@@ -1864,7 +1877,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             ...clickFeedback
         }
 
-        if (this.state.showFeedback) {
+        if (this.state.showFeedback && !this.state.rxData.clickThrough) {
             data = this.replaceWithClickFeedbackData(data);
         }
 
@@ -1929,8 +1942,6 @@ class InventwoWidgetUniversal extends InventwoGeneric {
 
     onClick(index = null, e = null) {
         if (!this.isInteractionAllowed(e)) return;
-
-        console.log("on click")
 
         const oid = this.state.rxData.oid;
 
@@ -2005,7 +2016,6 @@ class InventwoWidgetUniversal extends InventwoGeneric {
 
     onBtnMouseDown(index = null, e = null) {
         if (!this.isInteractionAllowed(e)) return;
-        console.log("on down")
 
         const oid = this.state.rxData.oid;
 
@@ -2028,8 +2038,6 @@ class InventwoWidgetUniversal extends InventwoGeneric {
     onBtnMouseUp(index = null, e = null) {
         if (!this.isInteractionAllowed(e)) return;
 
-        console.log("on up")
-
         const oid = this.state.rxData.oid;
 
         // eslint-disable-next-line default-case
@@ -2047,7 +2055,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         super.renderWidgetBody(props);
         this.wrappedContent = true;
 
-        if (this.state.showFeedback) {
+        if (this.state.showFeedback && !this.state.rxData.clickThrough) {
 
             const clickFeedback = this.getStyle('clickFeedbackFromWidget', this.groupAttrs.attr_group_click_feedback)
 
@@ -2372,8 +2380,8 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             </div>
             <div
                 style={{
-                    textAlign: valueData.styles.flexDirection === 'column' ? valueData.styles.textAlign : '',
-                    alignSelf: valueData.styles.flexDirection === 'row' ? valueData.styles.textAlign : '',
+                    textAlign: this.state.rxStyle["text-align"],
+                    alignSelf: valueData.styles.textAlign,
                     textDecoration: valueData.styles.textDecoration,
                     color: valueData.textColor,
                     margin: `${valueData.styles.textMarginTop}px ${valueData.styles.textMarginRight}px ${valueData.styles.textMarginBottom}px ${valueData.styles.textMarginLeft}px`,

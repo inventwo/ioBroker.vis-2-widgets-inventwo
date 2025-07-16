@@ -260,5 +260,10 @@
     "attr_group_css_style": "Inventwo CSS - estilo",
     "box_color": "Cor da caixa",
     "box_color_active": "Cor da caixa ativa",
-    "box_size": "Tamanho da caixa"
+    "box_size": "Tamanho da caixa",
+    "thickness_header": "Cabeçalho de espessura",
+    "color_header": "Cabeçalho de cores",
+    "thickness": "Grossura",
+    "click_through": "Clique",
+    "vis_2_widgets_inventwo_row_border": "Borda da linha"
 }

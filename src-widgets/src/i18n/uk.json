@@ -260,5 +260,10 @@
     "attr_group_css_style": "винахід CSS - стиль",
     "box_color": "Коробний колір коробки",
     "box_color_active": "Кольоровий колір активний",
-    "box_size": "Розмір коробки"
+    "box_size": "Розмір коробки",
+    "thickness_header": "Заголовок товщини",
+    "color_header": "Заголовок кольору",
+    "thickness": "Товщина",
+    "click_through": "Натиснути",
+    "vis_2_widgets_inventwo_row_border": "Кордон"
 }

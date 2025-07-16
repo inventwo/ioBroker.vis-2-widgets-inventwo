@@ -197,6 +197,40 @@ class InventwoWidgetTable extends InventwoGeneric {
                             default: 50,
                             label: 'column_height',
                         },
+                        {
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_row_border',
+                        },
+                        {
+                            name: 'headerBorderWidth',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 1,
+                            label: 'thickness_header',
+                        },
+                        {
+                            name: 'headerBorderColor',
+                            type: 'color',
+                            label: 'color_header',
+                            default: 'rgb(81, 81, 81)'
+                        },
+                        {
+                            name: 'rowBorderWidth',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 1,
+                            label: 'thickness',
+                        },
+                        {
+                            name: 'rowBorderColor',
+                            type: 'color',
+                            label: 'color',
+                            default: 'rgb(81, 81, 81)'
+                        },
                     ],
                 },
                 {
@@ -435,6 +469,8 @@ class InventwoWidgetTable extends InventwoGeneric {
                 lineHeight: this.state.rxStyle['line-height'],
                 letterSpacing: this.state.rxStyle['letter-spacing'],
                 wordSpacing: this.state.rxStyle['word-spacing'],
+                borderBottomWidth: this.state.rxData.headerBorderWidth,
+                borderColor: this.state.rxData.headerBorderColor
             },
         }));
 
@@ -452,6 +488,8 @@ class InventwoWidgetTable extends InventwoGeneric {
                 lineHeight: this.state.rxStyle['line-height'],
                 letterSpacing: this.state.rxStyle['letter-spacing'],
                 wordSpacing: this.state.rxStyle['word-spacing'],
+                borderBottomWidth: this.state.rxData.rowBorderWidth,
+                borderColor: this.state.rxData.rowBorderColor
             },
         }));
 
@@ -590,7 +628,10 @@ class InventwoWidgetTable extends InventwoGeneric {
             borderRightWidth: `${borderStyle.borderSizeRight}px`,
             borderStyle: borderStyle.borderStyle,
         }}>
-            <TableContainer component={Paper} style={{height: '100%'}}>
+            <TableContainer component={Paper} style={{
+                height: '100%',
+                background: 'transparent',
+            }}>
                 <Table>
                     {this.state.rxData.showHead && (
                         <TableHead>

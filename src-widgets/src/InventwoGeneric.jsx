@@ -119,7 +119,7 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
 
     // eslint-disable-next-line class-methods-use-this
     validOid(oid) {
-        return oid !== undefined && oid !== null && oid !== 'nothing_selected';
+        return oid !== undefined && oid !== null && oid !== 'nothing_selected' && oid !== '';
     }
 }
 
