@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "news": {
+      "0.3.3": {
+        "en": "Added option to click through universal widget\nFixed state not used then oid is left empty\nAdded options to control table row line width and color\nRemoved table background color to allow transparency",
+        "de": "Option hinzugefügt, um durch universelles Widget zu klicken\nFester Zustand nicht verwendet, dann oid ist leer gelassen\nOptionen zur Steuerung der Tischzeilenbreite und Farbe hinzugefügt\nEntfernte Tisch Hintergrundfarbe für Transparenz",
+        "ru": "Добавлена опция кликнуть через универсальный виджет\nФиксированное состояние не используется, тогда oid остается пустым\nДобавлены опции управления шириной строки таблицы и цветом\nСнятый цвет фона стола для обеспечения прозрачности",
+        "pt": "Adicionada opção para clicar através de widget universal\nEstado fixo não usado então o oid fica vazio\nOpções adicionadas para controlar a largura e cor da linha da tabela\nCor de fundo da tabela removida para permitir transparência",
+        "nl": "Toegevoegd optie om door universele widget te klikken\nVaste toestand niet gebruikt dan wordt oid leeg gelaten\nToegevoegde opties om rijlijnbreedte en kleur van de tabel te bepalen\nVerwijderde tabel achtergrondkleur om transparantie mogelijk te maken",
+        "fr": "Ajout d'une option pour cliquer sur le widget universel\nÉtat fixe non utilisé alors oid est laissé vide\nAjout d'options pour contrôler la largeur et la couleur de la ligne de ligne de table\nCouleur de fond de table supprimée pour permettre la transparence",
+        "it": "Aggiunta opzione per fare clic tramite widget universale\nStato fisso non utilizzato allora oid è lasciato vuoto\nOpzioni aggiuntive per controllare la larghezza della riga della tabella e il colore\nColore di sfondo tavolo rimosso per consentire la trasparenza",
+        "es": "Opción agregada para hacer clic a través del widget universal\nEstado fijo no utilizado entonces oid se deja vacío\nOpciones adicionales para controlar la línea de fila de mesa ancho y color\nColor de fondo de mesa eliminado para permitir la transparencia",
+        "pl": "Dodano opcję, aby kliknąć przez uniwersalny widget\nStan stały nie jest używany, wtedy oid pozostaje pusty\nDodano opcje do kontrolowania szerokości i koloru linii wiersza tabeli\nUsunięto kolor tła tabeli, aby umożliwić przejrzystość",
+        "uk": "Додана можливість натиснути через універсальний віджет\nВиправлений стан не використовується, потім oid залишається порожнім\nДодано параметри для управління шириною рядка рядків та кольором\nВидалити колір фону таблиці, щоб забезпечити прозорість",
+        "zh-cn": "通过通用部件单击已添加选项\n未使用的固定状态将 Oid 留为空\n添加选项以控制表格行宽度和颜色\n删除表格背景颜色以允许透明"
+      },
       "0.3.2": {
         "en": "Support font styles in table widget (#78)\nAdded border and shadow options for table widget (#78)",
         "de": "Unterstützt Schriftarten im Tabellen-Widget (#78)\nHinzufügen von Grenz- und Schattenoptionen für Tisch-Widget (#78)",
@@ -80,19 +93,6 @@
         "pl": "Nie jest uruchamiany stały widok w oknie dialogowym przy zmianie stanu, a wartość stanu nie jest ustawiana po otwarciu (# 30)\nDodano funkcję do kolorowych obrazów (# 38)\nZezwalaj na niestandardowy rozmiar okna dialogowego za pomocą połączenia (# 39)\nOkno dialogowe \"Zamknij kliknięcie z zewnątrz\" zostało odwrócone (# 42)",
         "uk": "Виправлено вид у діалоговому вікні не викликається змінами стану та значенням держави не встановлено при відкритті (#30)\nДодано функцію до кольорових зображень (#38)\nДозволити користувальницький розмір для діалогу, використовуючи посилання (#39)\nВиправлено діалогове вікно \"закривати натиснути ззовні\" прапорець було перевернуто (#42)",
         "zh-cn": "对话框中的固定视图不会在状态变化时触发, 状态值在打开时没有设置 (# 30)\n添加到颜色图像中的函数 (# 38)\n使用绑定(# 39) 允许自定义对话框大小\n修补对话框“ 从外部点击关闭” 复选框被反转 (# 42)"
-      },
-      "0.1.11": {
-        "en": "Fixed issues mentioned by eslint",
-        "de": "Behobene Probleme von eslint",
-        "ru": "Исправленные вопросы, упомянутые eslint",
-        "pt": "Questões fixas mencionadas por eslint",
-        "nl": "Vaste emissies genoemd door eslint",
-        "fr": "Problèmes corrigés mentionnés par eslint",
-        "it": "Questioni fisse menzionate da eslint",
-        "es": "Cuestiones fijas mencionadas por eslint",
-        "pl": "Poprawione kwestie wymienione przez eslint",
-        "uk": "Виправлені питання, зазначені еслінтом",
-        "zh-cn": "Eslint提到的固定问题"
       }
     },
     "titleLang": {
