@@ -1,8 +1,8 @@
 ![Logo](admin/vis-2-widgets-inventwo.png)
 # inventwo Widgets for ioBroker.vis 2.0
 
+![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-installed.svg)
 ![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-stable.svg) 
-![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-installed.svg) 
 [![NPM Version](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo.svg?style=shields&data=v,u,d&color=orange)](https://www.npmjs.com/package/iobroker.vis-2-widgets-inventwo)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.vis-2-widgets-inventwo.svg)](https://www.npmjs.com/package/iobroker.vis-2-widgets-inventwo)
 
