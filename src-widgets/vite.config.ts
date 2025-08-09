@@ -13,7 +13,8 @@ const config = {
             name: 'vis2Inventwo',
             filename: 'customWidgets.js',
             exposes: {
-                './InventwoWidgetUniversal': './src/InventwoWidgetUniversal',
+                './index': './src/index',
+                // './InventwoWidgetUniversal': './src/InventwoWidgetUniversal',
                 './InventwoWidgetSlider': './src/InventwoWidgetSlider',
                 './InventwoWidgetSwitch': './src/InventwoWidgetSwitch',
                 './InventwoWidgetCheckbox': './src/InventwoWidgetCheckbox',
@@ -53,6 +54,61 @@ const config = {
                 }
                 warn(warning);
             },
+            output: {
+                banner: `
+                    (function() {
+    if(!window.inventwoDebugLog) {
+        window.inventwoDebugLog = true;
+        const orig = {
+            log:   console.log,
+            warn:  console.warn,
+            error: console.error,
+            debug: console.debug
+        };
+        window.mylog = []
+        let isWriting = false;
+    
+        function appendLog(type, args) {
+            // Zeile bauen
+            const msg = Array.from(args).map(a => {
+                // Objekt? Dann JSON serialisieren.
+                if (typeof a === 'object' && a !== null) {
+                    try {
+                        return JSON.stringify(a);
+                    } catch { return '[object]'; }
+                }
+                return String(a);
+            }).join(' ');
+            mylog.push({type,msg})
+        }
+    
+        // Funktionen überschreiben
+        ['log', 'warn', 'error', 'debug'].forEach(function(type) {
+            console[type] = function(...args) {
+                appendLog(type, args);
+                orig[type].apply(console, args);
+            };
+        });
+    
+        setInterval(function () {
+            const $log = $('.mylog');
+            if(!$log || isWriting) return;
+            isWriting = true;
+    
+            const lines = mylog.splice(0, mylog.length);
+            lines.forEach((line) => {
+                $log.append($('<div>').addClass(line.type).text('[' + line.type + '] ' + line.msg));
+            });
+            if (lines.length) {
+                $log.scrollTop($log[0].scrollHeight);
+            }
+            isWriting = false;
+        }, 1000)
+    }
+
+})();
+                `
+            }
         },
     },
 };

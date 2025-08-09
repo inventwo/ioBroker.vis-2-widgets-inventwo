@@ -39,6 +39,9 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Added code to print console logs to a widget for debugging purposes
+
 ### 0.3.3 (2025-07-16)
 - Added option to click through universal widget
 - Fixed state not used then oid is left empty
