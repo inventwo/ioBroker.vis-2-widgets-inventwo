@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "news": {
+      "0.3.4": {
+        "en": "Added code to print console logs to a widget for debugging purposes",
+        "de": "Code hinzugefügt, um Konsolenprotokolle zu einem Widget für Debugging Zwecke zu drucken",
+        "ru": "Добавлен код для печати журналов консоли в виджет для целей отладки",
+        "pt": "Adicionado código para imprimir registros de console para um widget para fins de depuração",
+        "nl": "Code toegevoegd om consolelogs af te drukken aan een widget voor debuggen",
+        "fr": "Ajout de code pour imprimer les journaux de console à un widget pour le débogage",
+        "it": "Codice aggiunto per stampare i registri della console a un widget per scopi di debugging",
+        "es": "Código añadido para imprimir registros de consola a un widget para propósitos depuradores",
+        "pl": "Dodano kod do drukowania dzienników konsoli do widżetu do celów debugowania",
+        "uk": "Додано код для друку журналів консолі до віджету для цілей відключення",
+        "zh-cn": "为调试目的将代码添加到打印控制台日志到部件中"
+      },
       "0.3.3": {
         "en": "Added option to click through universal widget\nFixed state not used then oid is left empty\nAdded options to control table row line width and color\nRemoved table background color to allow transparency",
         "de": "Option hinzugefügt, um durch universelles Widget zu klicken\nFester Zustand nicht verwendet, dann oid ist leer gelassen\nOptionen zur Steuerung der Tischzeilenbreite und Farbe hinzugefügt\nEntfernte Tisch Hintergrundfarbe für Transparenz",
@@ -80,19 +93,6 @@
         "pl": "Stałe okno dialogowe jest otwierane przy obciążeniu strony i zmianie widoku\nNowy widget: Tabela",
         "uk": "Виправлено діалогове вікно відкривається на завантаження сторінок та зміни перегляду\nНовий віджет: Стіл",
         "zh-cn": "固定对话框在页面加载和视图更改时打开\n新部件: 表格"
-      },
-      "0.1.12": {
-        "en": "Fixed view in dialog is not triggered on state change and state value is not set when opened (#30)\nAdded function to color images (#38)\nAllow custom size for dialog by using binding (#39)\nFix dialog \"close on click from outside\" checkbox was inverted (#42)",
-        "de": "Feste Ansicht im Dialog wird bei geöffnetem Zustandswechsel nicht ausgelöst und Zustandswert nicht gesetzt (#30)\nFunktion zu Farbbildern hinzugefügt (#38)\nErlauben Sie benutzerdefinierte Größe für Dialog mit Bindung (#39)\nFix Dialog \"Klick von außen schließen\" Checkbox wurde invertiert (#42)",
-        "ru": "Фиксированный вид в диалоге не срабатывает при изменении состояния и значение состояния не устанавливается при открытии (#30)\nДобавлена функция цветных изображений (#38)\nРазрешить пользовательский размер для диалога с помощью связывания (#39)\nИсправлен диалог \"закрыть на клик снаружи\" флажок был перевернут (#42)",
-        "pt": "A visualização fixa na caixa de diálogo não é ativada na mudança do estado e o valor do estado não é definido quando aberto (#30)\nFunção adicionada a imagens coloridas (#38)\nPermitir tamanho personalizado para diálogo usando ligação (#39)\nCorrigir diálogo \"fechar no clique de fora\" caixa de seleção foi invertido (#42)",
-        "nl": "Vaste weergave in het dialoogvenster wordt niet geactiveerd bij statusverandering en statuswaarde wordt niet ingesteld wanneer geopend (#30)\nFunctie toegevoegd aan kleurafbeeldingen (#38)\nAangepaste grootte voor dialoog toestaan door binding (#39) te gebruiken\nHet dialoogvenster \"close on click from outside\" werd omgekeerd (#42)",
-        "fr": "La vue fixe dans la boîte de dialogue n'est pas déclenchée par changement d'état et la valeur d'état n'est pas définie lors de l'ouverture (#30)\nAjout de la fonction aux images couleur (#38)\nPermettre une taille personnalisée pour la boîte de dialogue en utilisant la liaison (#39)\nCorrection de la boîte de dialogue \"fermer le clic de l'extérieur\" a été inversée (#42)",
-        "it": "La visualizzazione fissa nella finestra di dialogo non viene attivata sul cambiamento di stato e il valore di stato non viene impostato quando aperto (#30)\nFunzione aggiunta alle immagini di colore (#38)\nConsentire dimensioni personalizzate per la finestra di dialogo utilizzando binding (#39)\nFissare la finestra di dialogo \"chiudi su clic dall'esterno\" la casella di controllo è stata invertita (#42)",
-        "es": "Vista fija en el diálogo no se activa en el cambio del estado y el valor del estado no se establece cuando se abre (#30)\nFunción agregada a las imágenes de color (#38)\nPermitir el tamaño personalizado para el diálogo mediante la unión (#39)\nSe invirtió el cuadro de diálogo \"cerrar el clic desde fuera\" (#42)",
-        "pl": "Nie jest uruchamiany stały widok w oknie dialogowym przy zmianie stanu, a wartość stanu nie jest ustawiana po otwarciu (# 30)\nDodano funkcję do kolorowych obrazów (# 38)\nZezwalaj na niestandardowy rozmiar okna dialogowego za pomocą połączenia (# 39)\nOkno dialogowe \"Zamknij kliknięcie z zewnątrz\" zostało odwrócone (# 42)",
-        "uk": "Виправлено вид у діалоговому вікні не викликається змінами стану та значенням держави не встановлено при відкритті (#30)\nДодано функцію до кольорових зображень (#38)\nДозволити користувальницький розмір для діалогу, використовуючи посилання (#39)\nВиправлено діалогове вікно \"закривати натиснути ззовні\" прапорець було перевернуто (#42)",
-        "zh-cn": "对话框中的固定视图不会在状态变化时触发, 状态值在打开时没有设置 (# 30)\n添加到颜色图像中的函数 (# 38)\n使用绑定(# 39) 允许自定义对话框大小\n修补对话框“ 从外部点击关闭” 复选框被反转 (# 42)"
       }
     },
     "titleLang": {
