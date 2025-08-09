@@ -1,12 +1,12 @@
 ![Logo](admin/vis-2-widgets-inventwo.png)
 # inventwo Widgets for ioBroker.vis 2.0
 
-![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-installed.svg) 
+![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-installed.svg)
 ![Number of Installations](http://iobroker.live/badges/vis-2-widgets-inventwo-stable.svg) 
-[![NPM version](http://img.shields.io/npm/v/iobroker.vis-2-widgets-inventwo.svg)](https://www.npmjs.com/package/iobroker.vis-2-widgets-inventwo)
+[![NPM Version](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo.svg?style=shields&data=v,u,d&color=orange)](https://www.npmjs.com/package/iobroker.vis-2-widgets-inventwo)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.vis-2-widgets-inventwo.svg)](https://www.npmjs.com/package/iobroker.vis-2-widgets-inventwo)
 
-[![NPM](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo.png?downloads=true)](https://nodei.co/npm/iobroker.vis-2-widgets-inventwo/)
+[![Paypal Donation](https://img.shields.io/badge/paypal-donate%20|%20spenden-green.svg)](https://www.paypal.com/donate/?hosted_button_id=7W6M3TFZ4W9LW)
 
 ## About
 Adds switches, buttons, sliders and more as widgets for ioBroker VIS 2.0.
