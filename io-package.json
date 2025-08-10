@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "news": {
+      "0.3.5": {
+        "en": "Fix for previous version",
+        "de": "Fix für die vorherige Version",
+        "ru": "Исправить предыдущую версию",
+        "pt": "Corrigir para a versão anterior",
+        "nl": "Fix voor vorige versie",
+        "fr": "Correction pour la version précédente",
+        "it": "Fissaggio per versione precedente",
+        "es": "Corrección para versión anterior",
+        "pl": "Popraw poprzednią wersję",
+        "uk": "Виправлення попередньої версії",
+        "zh-cn": "修复上一个版本"
+      },
       "0.3.4": {
         "en": "Added code to print console logs to a widget for debugging purposes",
         "de": "Code hinzugefügt, um Konsolenprotokolle zu einem Widget für Debugging Zwecke zu drucken",
@@ -80,19 +93,6 @@
         "pl": "Emisja stałych budynków",
         "uk": "Виправлено проблему побудови",
         "zh-cn": "固定建筑问题"
-      },
-      "0.2.0": {
-        "en": "Fixed dialog is opened on page load and view change\nNew widget: Table",
-        "de": "Feste Dialog wird auf Seite laden und Ansicht ändern geöffnet\nNeues Widget: Tabelle",
-        "ru": "Фиксированный диалог открывается при загрузке страницы и изменении просмотра\nНовый виджет: стол",
-        "pt": "A caixa de diálogo fixa é aberta na página carregar e visualizar a mudança\nNovo widget: Tabela",
-        "nl": "Vast dialoogvenster wordt geopend op pagina laden en weergave wijzigen\nNieuw widget: Tabel",
-        "fr": "La boîte de dialogue fixe est ouverte lors du chargement et de la visualisation de la page\nNouveau widget : Table",
-        "it": "La finestra di dialogo fissa è aperta sul carico della pagina e la modifica della vista\nNuovo widget: Table",
-        "es": "Diálogo fijo se abre en la carga de página y el cambio de vista\nNuevo widget: Tabla",
-        "pl": "Stałe okno dialogowe jest otwierane przy obciążeniu strony i zmianie widoku\nNowy widget: Tabela",
-        "uk": "Виправлено діалогове вікно відкривається на завантаження сторінок та зміни перегляду\nНовий віджет: Стіл",
-        "zh-cn": "固定对话框在页面加载和视图更改时打开\n新部件: 表格"
       }
     },
     "titleLang": {

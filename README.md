@@ -39,7 +39,7 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.3.5 (2025-08-10)
 - Fix for previous version
 
 ### 0.3.4 (2025-08-09)
