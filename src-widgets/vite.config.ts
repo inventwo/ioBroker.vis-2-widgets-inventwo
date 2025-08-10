@@ -14,7 +14,7 @@ const config = {
             filename: 'customWidgets.js',
             exposes: {
                 './index': './src/index',
-                // './InventwoWidgetUniversal': './src/InventwoWidgetUniversal',
+                './InventwoWidgetUniversal': './src/InventwoWidgetUniversal',
                 './InventwoWidgetSlider': './src/InventwoWidgetSlider',
                 './InventwoWidgetSwitch': './src/InventwoWidgetSwitch',
                 './InventwoWidgetCheckbox': './src/InventwoWidgetCheckbox',
