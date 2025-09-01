@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.5",
+    "version": "0.3.6",
     "news": {
+      "0.3.6": {
+        "en": "Extended debugging by printing source file with line number",
+        "de": "Erweiterte Debugging durch Drucken von Quelldatei mit Zeilennummer",
+        "ru": "Расширенная отладка путем печати исходного файла с номером строки",
+        "pt": "Depuração extendida por impressão de arquivo fonte com número de linha",
+        "nl": "Uitgebreide debuggen door bronbestand af te drukken met regelnummer",
+        "fr": "Débogage étendu par impression du fichier source avec numéro de ligne",
+        "it": "Disboscamento esteso tramite file sorgente di stampa con numero di riga",
+        "es": "Depuración ampliada por archivo fuente de impresión con número de línea",
+        "pl": "Rozszerzone debugowanie poprzez drukowanie pliku źródłowego z numerem linii",
+        "uk": "Розширений відбілювання по файлу джерела друку з номером лінії",
+        "zh-cn": "通过打印带有行号的源文件进行扩展调试"
+      },
       "0.3.5": {
         "en": "Fix for previous version",
         "de": "Fix für die vorherige Version",
@@ -69,19 +82,6 @@
         "zh-cn": "更改构建为 vite"
       },
       "0.2.2": {
-        "en": "Fixed build issue",
-        "de": "Fixed Build Problem",
-        "ru": "Проблема фиксированного строительства",
-        "pt": "Problema de compilação fixo",
-        "nl": "Probleem met vaste bouw",
-        "fr": "Problème de construction fixe",
-        "it": "Problema di costruzione fisso",
-        "es": "Cuestiones de construcción fijas",
-        "pl": "Emisja stałych budynków",
-        "uk": "Виправлено проблему побудови",
-        "zh-cn": "固定建筑问题"
-      },
-      "0.2.1": {
         "en": "Fixed build issue",
         "de": "Fixed Build Problem",
         "ru": "Проблема фиксированного строительства",
