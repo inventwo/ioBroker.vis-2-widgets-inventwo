@@ -7,7 +7,7 @@
         "@iobroker/adapter-react-v5": "^7.6.18",
         "@iobroker/types-vis-2": "^2.12.10",
         "@module-federation/vite": "^1.4.0",
-        "@vitejs/plugin-react": "^4.4.1",
+        "@vitejs/plugin-react": "^5.0.2",
         "@iobroker/vis-2-widgets-react-dev": "^4.0.4",
         "@jaames/iro": "^5.5.2",
         "@mui/icons-material": "^6.4.11",
