@@ -67,8 +67,8 @@ const config = {
         };
         window.mylog = []
         let isWriting = false;
-    
-        function appendLog(type, args) {
+
+        function appendLog(type, args, location) {
             // Zeile bauen
             const msg = Array.from(args).map(a => {
                 // Objekt? Dann JSON serialisieren.
@@ -79,25 +79,38 @@ const config = {
                 }
                 return String(a);
             }).join(' ');
-            mylog.push({type,msg})
+            mylog.push({type, msg, location})
         }
-    
+
         // Funktionen überschreiben
         ['log', 'warn', 'error', 'debug'].forEach(function(type) {
             console[type] = function(...args) {
-                appendLog(type, args);
+                // Stacktrace direkt hier holen, damit die Aufruferstelle korrekt ist
+                let location = '';
+                try {
+                    const stack = new Error().stack;
+                    if (stack) {
+                        const lines = stack.split('\\n');
+                        // Die dritte Zeile ist die Aufruferstelle außerhalb dieser Funktion
+                        const relevant = lines[2] || lines[1];
+                        if (relevant) {
+                            location = relevant.trim();
+                        }
+                    }
+                } catch {}
+                appendLog(type, args, location);
                 orig[type].apply(console, args);
             };
         });
-    
+
         setInterval(function () {
             const $log = $('.mylog');
             if(!$log || isWriting) return;
             isWriting = true;
-    
+
             const lines = mylog.splice(0, mylog.length);
             lines.forEach((line) => {
-                $log.append($('<div>').addClass(line.type).text('[' + line.type + '] ' + line.msg));
+                $log.append($('<div>').addClass(line.type).text('[' + line.type + '] ' + line.msg + (line.location ? ' @ ' + line.location : '')));
             });
             if (lines.length) {
                 $log.scrollTop($log[0].scrollHeight);
