@@ -39,7 +39,7 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.3.7 (2025-09-10)
 - Removed code to print console logs to a widget for debugging purposes
 
 ### 0.3.6 (2025-09-01)

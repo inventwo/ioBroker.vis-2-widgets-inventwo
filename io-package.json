@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "news": {
+      "0.3.7": {
+        "en": "Removed code to print console logs to a widget for debugging purposes",
+        "de": "Entfernter Code zum Drucken von Konsolenprotokollen in ein Widget zu Debugging-Zwecken",
+        "ru": "Удален код для вывода журнальных логов на виджет для отладочных целей",
+        "pt": "Removido o código para imprimir logs do console em um widget para fins de depuração",
+        "nl": "Verwijderde code om console logs af te drukken naar een widget voor debugdoeleinden",
+        "fr": "Suppression du code permettant d'imprimer les journaux de la console dans un widget à des fins de débogage",
+        "it": "Rimosso il codice per stampare i log della console su un widget a fini di debug",
+        "es": "Se eliminó el código que imprimía mensajes de consola en un widget con fines de depuración.",
+        "pl": "Usunięto kod odpowiedzialny za wyświetlanie logów konsoli w widżecie do celów debugowania.",
+        "uk": "Видалено код для виведення журналів консолі в віджет для налагодження коду.",
+        "zh-cn": "为了调试目的，已移除将控制台日志打印到小部件的代码。"
+      },
       "0.3.6": {
         "en": "Extended debugging by printing source file with line number",
         "de": "Erweiterte Debugging durch Drucken von Quelldatei mit Zeilennummer",
@@ -80,19 +93,6 @@
         "pl": "Zmień budowę do vite",
         "uk": "Зміна побудови віта",
         "zh-cn": "更改构建为 vite"
-      },
-      "0.2.2": {
-        "en": "Fixed build issue",
-        "de": "Fixed Build Problem",
-        "ru": "Проблема фиксированного строительства",
-        "pt": "Problema de compilação fixo",
-        "nl": "Probleem met vaste bouw",
-        "fr": "Problème de construction fixe",
-        "it": "Problema di costruzione fisso",
-        "es": "Cuestiones de construcción fijas",
-        "pl": "Emisja stałych budynków",
-        "uk": "Виправлено проблему побудови",
-        "zh-cn": "固定建筑问题"
       }
     },
     "titleLang": {
