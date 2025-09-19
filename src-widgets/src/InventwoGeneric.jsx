@@ -38,9 +38,10 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
         return undefined;
     }
 
-    getStyle(widgetFieldName, attrList) {
+    getStyle(widgetFieldName, attrList, index = null) {
         const trackStyle = {};
         const wid = this.state.rxData[widgetFieldName];
+        const isState = index > 0
         if (wid) {
             let found = false;
             // first try to find widget in the same view
@@ -48,7 +49,14 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
             const widgetData = thisView?.widgets?.[wid]?.data;
             if (widgetData) {
                 // extract palette settings from widget settings
-                attrList.forEach(attr => trackStyle[attr] = widgetData[attr]);
+                attrList.forEach(attr => {
+                    let attrName = attr;
+                    if (isState) {
+                        attrName = `${attr}${index}`;
+                    }
+
+                    trackStyle[attrName] = widgetData[attrName]
+                });
                 found = true;
             } else {
                 // try to find this widget
@@ -58,17 +66,38 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
                     if (view !== this.props.view && view.widgets?.[wid]?.data) {
                         const widgetData1 = view.widgets[wid].data;
                         // extract palette settings from widget settings
-                        attrList.forEach(attr => trackStyle[attr] = widgetData1[attr]);
+                        attrList.forEach(attr => {
+                            let attrName = attr;
+                            if (isState) {
+                                attrName = `${attr}${index}`;
+                            }
+
+                            trackStyle[attrName] = widgetData1[attrName]
+                        });
                         found = true;
                         break;
                     }
                 }
             }
             if (!found) {
-                attrList.forEach(attr => trackStyle[attr] = this.state.rxData[attr]);
+                attrList.forEach(attr => {
+                    let attrName = attr;
+                    if (isState) {
+                        attrName = `${attr}${index}`;
+                    }
+
+                    trackStyle[attrName] = this.state.rxData[attrName]
+                });
             }
         } else {
-            attrList.forEach(attr => trackStyle[attr] = this.state.rxData[attr]);
+            attrList.forEach(attr => {
+                let attrName = attr;
+                if (isState) {
+                    attrName = `${attr}${index}`;
+                }
+
+                trackStyle[attrName] = this.state.rxData[attrName]
+            });
         }
 
         return trackStyle;

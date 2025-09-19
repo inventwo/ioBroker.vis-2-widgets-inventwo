@@ -39,6 +39,11 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Fix issue with table border radius and added option to set border radius (#99)
+- Fix issue with universal widget and comparison other than "equal" (#109)
+- Added option to inherit state colors from other widgets (#120
+
 ### 0.3.7 (2025-09-10)
 - Removed code to print console logs to a widget for debugging purposes
 

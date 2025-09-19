@@ -634,75 +634,87 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             text: 'vis_2_widgets_inventwo_colors',
                         },
                         {
+                            label: 'from_widget',
+                            name: 'stateColorsStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
                             name: 'contentColor',     // name in data structure
                             type: 'color',
                             label: 'content_color', // translated field label,
-                            hidden: 'data.contentType != "icon" && data.contentType != "image"',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index] || data.contentType != "icon" && data.contentType != "image"',
                         },
                         {
                             name: 'contentColorTrue',     // name in data structure
                             type: 'color',
                             label: 'content_color_true', // translated field label
-                            hidden: 'data.mode == "singleButton" || data.contentType != "icon"',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index] || data.mode == "singleButton" || data.contentType != "icon"',
                         },
                         {
                             name: 'background',
                             type: 'color',
                             default: 'rgb(69,86,24)',
                             label: 'background',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index]'
                         },
                         {
                             name: 'backgroundTrue',
                             type: 'color',
                             default: 'rgb(69,86,24)',
                             label: 'background_true',
-                            hidden: 'data.mode == "singleButton"',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index] || data.mode == "singleButton"',
                         },
                         {
                             name: 'textColor',
                             type: 'color',
                             label: 'text_color',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index]'
                         },
                         {
                             name: 'textColorTrue',
                             type: 'color',
                             label: 'text_color_true',
-                            hidden: 'data.mode == "singleButton"',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index] || data.mode == "singleButton"',
                         },
                         {
                             name: 'borderColor',
                             type: 'color',
-                            label: 'border_color',
+                            label: '!!data["stateColorsStyleFromWidget" + index] || border_color',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index]'
                         },
                         {
                             name: 'borderColorTrue',
                             type: 'color',
                             label: 'border_color_true',
-                            hidden: 'data.mode == "singleButton"',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index] || data.mode == "singleButton"',
                         },
                         {
                             name: 'outerShadowColor',
                             type: 'color',
                             label: 'outer_shadow_color',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index]',
                             default: 'rgb(0,0,0)',
                         },
                         {
                             name: 'outerShadowColorTrue',
                             type: 'color',
                             label: 'outer_shadow_color_true',
-                            hidden: 'data.mode == "singleButton"',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index] || data.mode == "singleButton"',
                             default: 'rgb(0,0,0)',
                         },
                         {
                             name: 'innerShadowColor',
                             type: 'color',
                             label: 'inner_shadow_color',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index]'
                         },
                         {
                             name: 'innerShadowColorTrue',
                             type: 'color',
                             label: 'inner_shadow_color_true',
-                            hidden: 'data.mode == "singleButton"',
+                            hidden: '!!data["stateColorsStyleFromWidget" + index] || data.mode == "singleButton"',
                         },
                         {
                             type: 'delimiter',
@@ -1761,8 +1773,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
 
 
                 let compareValue = this.state.rxData.valueTrue;
-                if (this.validOid(this.state.rxData[`oid${i}`])
-                    && this.state.rxData[`value${i}`] !== undefined
+                if (this.state.rxData[`value${i}`] !== undefined
                     && this.state.rxData[`value${i}`] !== null
                 ) {
                     compareValue = this.state.rxData[`value${i}`];
@@ -1885,16 +1896,19 @@ class InventwoWidgetUniversal extends InventwoGeneric {
     }
 
     getStateData(i, useExtraTrueValues = false) {
+
+        const stateColorsStyle = this.getStyle(`stateColorsStyleFromWidget${i}`, this.groupAttrs.countStates, i)
+
         const data = {
-            background: this.state.rxData[`background${i}`],
+            background: stateColorsStyle[`background${i}`],
             icon: this.state.rxData[`icon${i}`],
             image: this.state.rxData[`image${i}`],
-            contentColor: this.state.rxData[`contentColor${i}`],
+            contentColor: stateColorsStyle[`contentColor${i}`],
             text: this.state.rxData[`text${i}`],
-            textColor: this.state.rxData[`textColor${i}`],
-            outerShadowColor: this.state.rxData[`outerShadowColor${i}`],
-            innerShadowColor: this.state.rxData[`innerShadowColor${i}`],
-            borderColor: this.state.rxData[`borderColor${i}`],
+            textColor: stateColorsStyle[`textColor${i}`],
+            outerShadowColor: stateColorsStyle[`outerShadowColor${i}`],
+            innerShadowColor: stateColorsStyle[`innerShadowColor${i}`],
+            borderColor: stateColorsStyle[`borderColor${i}`],
             html: this.state.rxData[`html${i}`],
             viewInWidget: this.state.rxData[`viewInWidget${i}`],
             contentBlinkInterval: this.state.rxData[`contentBlinkInterval${i}`],
@@ -1902,17 +1916,17 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         };
 
         if (useExtraTrueValues) {
-            data.background = this.state.rxData[`backgroundTrue${i}`];
+            data.background = stateColorsStyle[`backgroundTrue${i}`];
             data.icon = this.state.rxData[`iconTrue${i}`];
             data.image = this.state.rxData[`imageTrue${i}`];
-            data.contentColor = this.state.rxData[`contentColorTrue${i}`];
+            data.contentColor = stateColorsStyle[`contentColorTrue${i}`];
             data.text = this.state.rxData[`textTrue${i}`];
             data.html = this.state.rxData[`htmlTrue${i}`];
             data.viewInWidget = this.state.rxData[`viewInWidgetTrue${i}`];
-            data.textColor = this.state.rxData[`textColorTrue${i}`];
-            data.borderColor = this.state.rxData[`borderColorTrue${i}`];
-            data.outerShadowColor = this.state.rxData[`outerShadowColorTrue${i}`];
-            data.innerShadowColor = this.state.rxData[`innerShadowColorTrue${i}`];
+            data.textColor = stateColorsStyle[`textColorTrue${i}`];
+            data.borderColor = stateColorsStyle[`borderColorTrue${i}`];
+            data.outerShadowColor = stateColorsStyle[`outerShadowColorTrue${i}`];
+            data.innerShadowColor = stateColorsStyle[`innerShadowColorTrue${i}`];
         }
 
         return data;
@@ -1944,6 +1958,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         if (!this.isInteractionAllowed(e)) return;
 
         const oid = this.state.rxData.oid;
+        console.log(oid)
 
         this.setState({ showFeedback: true });
 

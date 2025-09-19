@@ -234,6 +234,59 @@ class InventwoWidgetTable extends InventwoGeneric {
                     ],
                 },
                 {
+                    name: 'attr_group_css_border_radius',
+                    label: 'attr_group_css_border_radius',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'borderRadiusStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetTable',
+                            all: true,
+                        },
+                        {
+                            name: 'borderRadiusTopLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 12,
+                            label: 'top_left',
+                            hidden: '!!data.borderRadiusStyleFromWidget'
+                        },
+                        {
+                            name: 'borderRadiusTopRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'top_right',
+                            hidden: '!!data.borderRadiusStyleFromWidget'
+                        },
+                        {
+                            name: 'borderRadiusBottomRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 12,
+                            label: 'bottom_right',
+                            hidden: '!!data.borderRadiusStyleFromWidget'
+                        },
+                        {
+                            name: 'borderRadiusBottomLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'bottom_left',
+                            hidden: '!!data.borderRadiusStyleFromWidget'
+                        },
+                    ],
+                },
+                {
                     name: 'attr_group_css_border',
                     label: 'attr_group_css_border',
                     fields: [
@@ -617,9 +670,11 @@ class InventwoWidgetTable extends InventwoGeneric {
             shadow += `${outerShadowStyle.outerShadowX}px ${outerShadowStyle.outerShadowY}px ${outerShadowStyle.outerShadowBlur}px ${outerShadowStyle.outerShadowSize}px ${outerShadowStyle.outerShadowColor}`
         }
 
+        const borderRadiusStyle = this.getStyle('borderRadiusStyleFromWidget', this.groupAttrs.attr_group_css_border_radius)
+
         return <div style={{
             boxShadow: `${shadow}`,
-            overflow: 'visible',
+            overflow: 'hidden',
             height: '100%',
             borderColor: borderStyle.borderColor,
             borderTopWidth: `${borderStyle.borderSizeTop}px`,
@@ -627,10 +682,12 @@ class InventwoWidgetTable extends InventwoGeneric {
             borderLeftWidth: `${borderStyle.borderSizeLeft}px`,
             borderRightWidth: `${borderStyle.borderSizeRight}px`,
             borderStyle: borderStyle.borderStyle,
+            borderRadius: `${borderRadiusStyle.borderRadiusTopLeft}px ${borderRadiusStyle.borderRadiusTopRight}px ${borderRadiusStyle.borderRadiusBottomRight}px ${borderRadiusStyle.borderRadiusBottomLeft}px`
         }}>
             <TableContainer component={Paper} style={{
                 height: '100%',
                 background: 'transparent',
+                borderRadius: 0
             }}>
                 <Table>
                     {this.state.rxData.showHead && (
