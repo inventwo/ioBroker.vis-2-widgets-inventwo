@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.7",
+    "version": "0.3.8",
     "news": {
+      "0.3.8": {
+        "en": "Fix issue with table border radius and added option to set border radius (#99)\nFix issue with universal widget and comparison other than \"equal\" (#109)\nAdded option to inherit state colors from other widgets (#120",
+        "de": "Problem mit der Tischrundung behoben und Option hinzugefügt, um die Tischrundung einzustellen (#99)\nBeheben Sie das Problem mit dem universellen Widget und dem Vergleich \"ungleich\" (#109)\nHinzufügen der Option, um Statusfarben von anderen Widgets zu übernehmen (#120)",
+        "ru": "Исправлена проблема с радиусом границы таблицы и добавлена опция для установки радиуса границы (#99)\nИсправлена проблема с универсальным виджетом и сравнением, отличным от \"равно\" (#109)\nДобавлена опция наследования цветов состояний из других виджетов (#120)",
+        "pt": "Corrigido problema com o raio da borda da tabela e adicionada a opção para definir o raio da borda (#99)\nCorrigir problema com o widget universal e a comparação que não seja \"igual\" (#109)\nAdicionada a opção de herdar as cores do estado de outros widgets (#120)",
+        "nl": "Probleem met tafelrandstraal opgelost en optie toegevoegd om de randstraal in te stellen (#99)\nHerstel probleem met universele widget en vergelijking andere dan \"gelijk\" (#109)\nToegevoegde optie om statuskleuren over te nemen van andere widgets (#120)",
+        "fr": "Corriger le problème avec le rayon de bordure du tableau et ajouter une option pour définir le rayon de bordure (#99)\nRésoudre le problème avec le widget universel et la comparaison autre que \"égal\" (#109)\nAjout de l'option permettant d'hériter des couleurs d'état d'autres widgets (#120)",
+        "it": "Risolto il problema con il raggio del bordo del tavolo e aggiunta l'opzione per impostare il raggio del bordo (#99)\nRisoluzione problema con il widget universale e il confronto diverso da \"uguale\" (#109)\nAggiunta opzione per ereditare i colori dello stato da altri widget (#120).",
+        "es": "Corregido problema con el radio de borde de la tabla y se añadió la opción de establecer el radio de borde (#99)\nCorregir problema con el widget universal y la comparación que no sea \"igual\" (#109)\nAñadida opción para heredar los colores de estado de otros widgets (#120)",
+        "pl": "Naprawiono problem z promieniem okręgu tabeli i dodano opcję ustawienia promienia okręgu (#99)\nNaprawiono problem z uniwersalnym widżetem i porównaniem innym niż \"równy\" (#109)\nDodano opcję dziedziczenia kolorów stanu z innych widżetów (#120)",
+        "uk": "Виправлено проблему з округленням кутів таблиці та додана опція для задання радіусу кутів (#99)\nВиправлено проблему з універсальним віджетом та порівнянням, відмінним від \"рівне\" (#109)\nДодана ​​опція успадкування кольорів стану від інших віджетів (#120)",
+        "zh-cn": "修复了表格边框半径的问题，并添加了设置边框半径的选项 (#99)\n修复通用小部件与\"等于\"之外的比较问题 (#109)\n添加了从其他小部件继承状态颜色的选项（#120）"
+      },
       "0.3.7": {
         "en": "Removed code to print console logs to a widget for debugging purposes",
         "de": "Entfernter Code zum Drucken von Konsolenprotokollen in ein Widget zu Debugging-Zwecken",
@@ -80,19 +93,6 @@
         "pl": "Wsparcie stylów czcionek w tabeli widget (# 78)\nDodano opcje graniczne i cienie dla widżetu tabeli (# 78)",
         "uk": "Підтримка стилів шрифту в настільному віджеті (#78)\nДодано межі та параметри тіні для настільного віджету (#78)",
         "zh-cn": "表格部件中支持字体样式 (# 78)\n为表格部件添加边框和阴影选项(# 78)"
-      },
-      "0.3.1": {
-        "en": "Change build to vite",
-        "de": "Umbau auf Vite",
-        "ru": "Изменить сборку для vite",
-        "pt": "Mudar a compilação para vite",
-        "nl": "Bouwen wijzigen naar vite",
-        "fr": "Changer la construction en rite",
-        "it": "Cambiare la costruzione per vite",
-        "es": "Cambio de construcción para vite",
-        "pl": "Zmień budowę do vite",
-        "uk": "Зміна побудови віта",
-        "zh-cn": "更改构建为 vite"
       }
     },
     "titleLang": {
