@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.8",
+    "version": "0.3.9",
     "news": {
+      "0.3.9": {
+        "en": "Fixed border color label in universal widget states (#120)",
+        "de": "Fehler behoben: Randfarbe des Labels im Universal Widget Zustände (#120)",
+        "ru": "Исправлен цвет рамки метки в универсальном виджете состояний (#120)",
+        "pt": "Corrigida a cor da borda do rótulo nos estados do widget universal (#120)",
+        "nl": "Oplossing voor de kleur van de rand van het label in universele widgetstaten (#120)",
+        "fr": "Correction de la couleur de bordure du libellé dans les états du widget universel (#120)",
+        "it": "Risolto il colore del bordo dell'etichetta nello stato del widget universale (#120)",
+        "es": "Se corrigió el color del borde de la etiqueta en los estados del widget universal (#120)",
+        "pl": "Naprawiono kolor granicy etykiety w stanie uniwersalnego widżetu (#120)",
+        "uk": "Виправлено колір межі мітки в універсальному віджеті станів (#120)",
+        "zh-cn": "修复了通用小部件状态中边框颜色标签的问题 (#120)"
+      },
       "0.3.8": {
         "en": "Fix issue with table border radius and added option to set border radius (#99)\nFix issue with universal widget and comparison other than \"equal\" (#109)\nAdded option to inherit state colors from other widgets (#120",
         "de": "Problem mit der Tischrundung behoben und Option hinzugefügt, um die Tischrundung einzustellen (#99)\nBeheben Sie das Problem mit dem universellen Widget und dem Vergleich \"ungleich\" (#109)\nHinzufügen der Option, um Statusfarben von anderen Widgets zu übernehmen (#120)",
@@ -80,19 +93,6 @@
         "pl": "Dodano opcję, aby kliknąć przez uniwersalny widget\nStan stały nie jest używany, wtedy oid pozostaje pusty\nDodano opcje do kontrolowania szerokości i koloru linii wiersza tabeli\nUsunięto kolor tła tabeli, aby umożliwić przejrzystość",
         "uk": "Додана можливість натиснути через універсальний віджет\nВиправлений стан не використовується, потім oid залишається порожнім\nДодано параметри для управління шириною рядка рядків та кольором\nВидалити колір фону таблиці, щоб забезпечити прозорість",
         "zh-cn": "通过通用部件单击已添加选项\n未使用的固定状态将 Oid 留为空\n添加选项以控制表格行宽度和颜色\n删除表格背景颜色以允许透明"
-      },
-      "0.3.2": {
-        "en": "Support font styles in table widget (#78)\nAdded border and shadow options for table widget (#78)",
-        "de": "Unterstützt Schriftarten im Tabellen-Widget (#78)\nHinzufügen von Grenz- und Schattenoptionen für Tisch-Widget (#78)",
-        "ru": "Поддержка стилей шрифтов в виджете таблицы (#78)\nДобавлены параметры границы и тени для виджета таблицы (#78)",
-        "pt": "Suporte aos estilos de letra no widget de tabelas (# 78)\nOpções de contorno e sombra adicionadas para o elemento da tabela (# 78)",
-        "nl": "Lettertypestijlen in tabelwidget ondersteunen (#78)\nRand- en schaduwopties toegevoegd voor tabelwidget (#78)",
-        "fr": "Prise en charge des styles de police dans le widget de table (#78)\nAjout d'options bordure et ombre pour widget de table (#78)",
-        "it": "Supporta gli stili di carattere nel widget della tabella (#78)\nOpzioni di bordo e ombra aggiunti per widget di tabella (#78)",
-        "es": "Soporte estilos de fuentes en el widget de mesa (#78)\nOpciones de borde y sombra adicionales para el widget de mesa (#78)",
-        "pl": "Wsparcie stylów czcionek w tabeli widget (# 78)\nDodano opcje graniczne i cienie dla widżetu tabeli (# 78)",
-        "uk": "Підтримка стилів шрифту в настільному віджеті (#78)\nДодано межі та параметри тіні для настільного віджету (#78)",
-        "zh-cn": "表格部件中支持字体样式 (# 78)\n为表格部件添加边框和阴影选项(# 78)"
       }
     },
     "titleLang": {

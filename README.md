@@ -39,7 +39,7 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.3.9 (2025-09-20)
 - Fixed border color label in universal widget states (#120)
 
 ### 0.3.8 (2025-09-19)
