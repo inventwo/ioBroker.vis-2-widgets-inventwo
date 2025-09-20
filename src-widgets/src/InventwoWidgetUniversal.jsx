@@ -681,7 +681,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                         {
                             name: 'borderColor',
                             type: 'color',
-                            label: '!!data["stateColorsStyleFromWidget" + index] || border_color',
+                            label: 'border_color',
                             hidden: '!!data["stateColorsStyleFromWidget" + index]'
                         },
                         {
@@ -1779,6 +1779,9 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     compareValue = this.state.rxData[`value${i}`];
                 }
                 compareValue = this.convertValue(compareValue);
+
+                console.log(this.props.id, compareValue, this.state.rxData[`value${i}`])
+
 
                 const isNavBtn = (
                         compareBy === 'default'

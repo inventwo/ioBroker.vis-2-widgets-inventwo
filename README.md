@@ -39,6 +39,9 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Fixed border color label in universal widget states (#120)
+
 ### 0.3.8 (2025-09-19)
 - Fix issue with table border radius and added option to set border radius (#99)
 - Fix issue with universal widget and comparison other than "equal" (#109)
