@@ -4,7 +4,7 @@
     "version": "0.3.9",
     "type": "module",
     "dependencies": {
-        "@iobroker/adapter-react-v5": "^7.7.2",
+        "@iobroker/adapter-react-v5": "^7.7.3",
         "@iobroker/types-vis-2": "^2.12.10",
         "@module-federation/vite": "^1.4.0",
         "@vitejs/plugin-react": "^5.0.2",
