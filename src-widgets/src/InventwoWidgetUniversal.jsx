@@ -1780,9 +1780,6 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 }
                 compareValue = this.convertValue(compareValue);
 
-                console.log(this.props.id, compareValue, this.state.rxData[`value${i}`])
-
-
                 const isNavBtn = (
                         compareBy === 'default'
                         && this.state.rxData.type === 'nav'
@@ -1961,8 +1958,6 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         if (!this.isInteractionAllowed(e)) return;
 
         const oid = this.state.rxData.oid;
-        console.log(oid)
-
         this.setState({ showFeedback: true });
 
         // eslint-disable-next-line default-case
