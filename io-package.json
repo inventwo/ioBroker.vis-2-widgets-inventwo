@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.9",
+    "version": "0.3.10",
     "news": {
+      "0.3.10": {
+        "en": "Updated dependencies",
+        "de": "Aktualisierte Abhängigkeiten",
+        "ru": "Обновленные зависимости",
+        "pt": "Dependências atualizadas",
+        "nl": "Bijgewerkte afhankelijkheden",
+        "fr": "Dépendances actualisées",
+        "it": "Dipendenze aggiornate",
+        "es": "Dependencias actualizadas",
+        "pl": "Aktualizacja zależności",
+        "uk": "Оновлені залежності",
+        "zh-cn": "更新的依赖关系"
+      },
       "0.3.9": {
         "en": "Fixed border color label in universal widget states (#120)",
         "de": "Fehler behoben: Randfarbe des Labels im Universal Widget Zustände (#120)",
@@ -80,19 +93,6 @@
         "pl": "Dodano kod do drukowania dzienników konsoli do widżetu do celów debugowania",
         "uk": "Додано код для друку журналів консолі до віджету для цілей відключення",
         "zh-cn": "为调试目的将代码添加到打印控制台日志到部件中"
-      },
-      "0.3.3": {
-        "en": "Added option to click through universal widget\nFixed state not used then oid is left empty\nAdded options to control table row line width and color\nRemoved table background color to allow transparency",
-        "de": "Option hinzugefügt, um durch universelles Widget zu klicken\nFester Zustand nicht verwendet, dann oid ist leer gelassen\nOptionen zur Steuerung der Tischzeilenbreite und Farbe hinzugefügt\nEntfernte Tisch Hintergrundfarbe für Transparenz",
-        "ru": "Добавлена опция кликнуть через универсальный виджет\nФиксированное состояние не используется, тогда oid остается пустым\nДобавлены опции управления шириной строки таблицы и цветом\nСнятый цвет фона стола для обеспечения прозрачности",
-        "pt": "Adicionada opção para clicar através de widget universal\nEstado fixo não usado então o oid fica vazio\nOpções adicionadas para controlar a largura e cor da linha da tabela\nCor de fundo da tabela removida para permitir transparência",
-        "nl": "Toegevoegd optie om door universele widget te klikken\nVaste toestand niet gebruikt dan wordt oid leeg gelaten\nToegevoegde opties om rijlijnbreedte en kleur van de tabel te bepalen\nVerwijderde tabel achtergrondkleur om transparantie mogelijk te maken",
-        "fr": "Ajout d'une option pour cliquer sur le widget universel\nÉtat fixe non utilisé alors oid est laissé vide\nAjout d'options pour contrôler la largeur et la couleur de la ligne de ligne de table\nCouleur de fond de table supprimée pour permettre la transparence",
-        "it": "Aggiunta opzione per fare clic tramite widget universale\nStato fisso non utilizzato allora oid è lasciato vuoto\nOpzioni aggiuntive per controllare la larghezza della riga della tabella e il colore\nColore di sfondo tavolo rimosso per consentire la trasparenza",
-        "es": "Opción agregada para hacer clic a través del widget universal\nEstado fijo no utilizado entonces oid se deja vacío\nOpciones adicionales para controlar la línea de fila de mesa ancho y color\nColor de fondo de mesa eliminado para permitir la transparencia",
-        "pl": "Dodano opcję, aby kliknąć przez uniwersalny widget\nStan stały nie jest używany, wtedy oid pozostaje pusty\nDodano opcje do kontrolowania szerokości i koloru linii wiersza tabeli\nUsunięto kolor tła tabeli, aby umożliwić przejrzystość",
-        "uk": "Додана можливість натиснути через універсальний віджет\nВиправлений стан не використовується, потім oid залишається порожнім\nДодано параметри для управління шириною рядка рядків та кольором\nВидалити колір фону таблиці, щоб забезпечити прозорість",
-        "zh-cn": "通过通用部件单击已添加选项\n未使用的固定状态将 Oid 留为空\n添加选项以控制表格行宽度和颜色\n删除表格背景颜色以允许透明"
       }
     },
     "titleLang": {
