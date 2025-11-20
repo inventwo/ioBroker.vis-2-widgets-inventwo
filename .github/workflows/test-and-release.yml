@@ -109,8 +109,6 @@ jobs:
       #        run: npm run build
       - name: Publish package to npm
         run: |
-          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
-          npm whoami
           npm publish
 
       - name: Create Github Release
@@ -124,6 +122,7 @@ jobs:
           # Prerelease versions create pre-releases on GitHub
           prerelease: ${{ contains(steps.extract_release.outputs.VERSION, '-') }}
           body: ${{ steps.extract_release.outputs.BODY }}
+          registry-url: 'https://registry.npmjs.org'
 
 #      - name: Notify Sentry.io about the release
 #        run: |
