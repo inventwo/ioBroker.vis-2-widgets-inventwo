@@ -21,6 +21,7 @@ const styles = {
     },
 };
 
+
 class InventwoWidgetUniversal extends InventwoGeneric {
     constructor(props) {
         super(props);
