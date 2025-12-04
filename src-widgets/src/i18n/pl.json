@@ -265,5 +265,21 @@
     "color_header": "Kolor nagłówka",
     "thickness": "Grubość",
     "click_through": "Kliknij",
-    "vis_2_widgets_inventwo_row_border": "Granica rządu"
+    "vis_2_widgets_inventwo_row_border": "Granica rządu",
+    "vis_2_widgets_inventwo_border_radius": "Promień granicy",
+    "vis_2_widgets_inventwo_close_button": "Przycisk Zamknij",
+    "vis_2_widgets_inventwo_titlebar": "Pasek tytułu",
+    "vis_2_widgets_inventwo_titlebar_padding": "Wypełnienie paska tytułu",
+    "hide": "Ukrywać",
+    "titlebar_padding": "Wypełnienie paska tytułu",
+    "close_after_x_seconds": "Zamknij po x sekundach",
+    "contain": "Zawierać",
+    "cover": "Okładka",
+    "fill": "Wypełnić",
+    "repeat": "Powtarzać",
+    "fill_type": "Typ wypełnienia",
+    "scale": "Skala",
+    "position": "Pozycja",
+    "vis_2_widgets_inventwo_image_size_and_position": "Rozmiar i położenie obrazu",
+    "vis_2_widgets_inventwo_image_resize_and_position": "Zmiana rozmiaru i położenia obrazu"
 }

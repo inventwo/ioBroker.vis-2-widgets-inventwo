@@ -265,5 +265,21 @@
     "color_header": "颜色标头",
     "thickness": "厚度",
     "click_through": "单击",
-    "vis_2_widgets_inventwo_row_border": "行边界"
+    "vis_2_widgets_inventwo_row_border": "行边界",
+    "vis_2_widgets_inventwo_border_radius": "边界半径",
+    "vis_2_widgets_inventwo_close_button": "关闭按钮",
+    "vis_2_widgets_inventwo_titlebar": "标题栏",
+    "vis_2_widgets_inventwo_titlebar_padding": "标题栏内边距",
+    "hide": "隐藏",
+    "titlebar_padding": "标题栏内边距",
+    "close_after_x_seconds": "x 秒后关闭",
+    "contain": "包含",
+    "cover": "覆盖",
+    "fill": "充满",
+    "repeat": "重复",
+    "fill_type": "填充类型",
+    "scale": "规模",
+    "position": "位置",
+    "vis_2_widgets_inventwo_image_size_and_position": "图像大小和位置",
+    "vis_2_widgets_inventwo_image_resize_and_position": "调整图像大小和位置"
 }

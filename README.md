@@ -40,6 +40,12 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Added padding options for dialog titlebar (#102, #153)
+- Added "close after x seconds" option for dialog (#102)
+- Added option to hide dialog titlebar (#102)
+- Added image resize and position options (#101)
+
 ### 0.3.10 (2025-11-20)
 - Updated dependencies
 

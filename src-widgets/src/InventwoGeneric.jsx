@@ -150,6 +150,10 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
     validOid(oid) {
         return oid !== undefined && oid !== null && oid !== 'nothing_selected' && oid !== '';
     }
+
+    valWithUnit(value) {
+       return value + (!Number.isNaN(Number(value)) ? 'px' : '')
+    }
 }
 
 export default InventwoGeneric;

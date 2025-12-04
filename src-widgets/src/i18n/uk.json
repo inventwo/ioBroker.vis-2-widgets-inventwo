@@ -265,5 +265,21 @@
     "color_header": "Заголовок кольору",
     "thickness": "Товщина",
     "click_through": "Натиснути",
-    "vis_2_widgets_inventwo_row_border": "Кордон"
+    "vis_2_widgets_inventwo_row_border": "Кордон",
+    "vis_2_widgets_inventwo_border_radius": "Радіус кордону",
+    "vis_2_widgets_inventwo_close_button": "Кнопка закриття",
+    "vis_2_widgets_inventwo_titlebar": "Рядок заголовка",
+    "vis_2_widgets_inventwo_titlebar_padding": "Заповнення рядка заголовка",
+    "hide": "Сховати",
+    "titlebar_padding": "Заповнення рядка заголовка",
+    "close_after_x_seconds": "Закрити через x секунд",
+    "contain": "Містять",
+    "cover": "Обкладинка",
+    "fill": "Заповнити",
+    "repeat": "Повторіть",
+    "fill_type": "Fill type",
+    "scale": "масштаб",
+    "position": "Позиція",
+    "vis_2_widgets_inventwo_image_size_and_position": "Розмір і положення зображення",
+    "vis_2_widgets_inventwo_image_resize_and_position": "Зміна розміру та положення зображення"
 }

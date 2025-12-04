@@ -265,5 +265,20 @@
   "color_header": "Color header",
   "thickness": "Thickness",
   "click_through": "Click through",
-  "vis_2_widgets_inventwo_row_border": "Row border"
+  "vis_2_widgets_inventwo_row_border": "Row border",
+  "vis_2_widgets_inventwo_border_radius": "Border radius",
+  "vis_2_widgets_inventwo_close_button": "Close button",
+  "vis_2_widgets_inventwo_titlebar": "Title bar",
+  "titlebar_padding": "Title bar padding",
+  "hide": "Hide",
+  "close_after_x_seconds": "Close after x seconds",
+  "contain": "Contain",
+  "cover": "Cover",
+  "fill": "Fill",
+  "repeat": "Repeat",
+  "fill_type": "Fill type",
+  "scale": "Scale",
+  "position": "Position",
+  "vis_2_widgets_inventwo_image_resize_and_position": "Image resize and position"
+
 }

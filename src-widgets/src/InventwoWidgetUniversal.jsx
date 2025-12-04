@@ -31,6 +31,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         this.state.isMounted = false;
         this.state.svgRef = React.createRef();
         this.state.previousOidValue = null;
+        this.state.dialogCloseTimeout = null;
     }
 
     static getWidgetInfo() {
@@ -211,6 +212,15 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             label: 'padding',
                         },
                         {
+                            name: 'dialogCloseTimeoutSeconds',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'close_after_x_seconds',
+                        },
+                        {
                             name: 'dialogBackground',
                             type: 'color',
                             default: 'rgb(18, 18, 18)',
@@ -224,15 +234,22 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             text: 'vis_2_widgets_inventwo_titlebar',
                         },
                         {
+                            name: 'dialogTitleHide',
+                            type: 'checkbox',
+                            label: 'hide',
+                        },
+                        {
                             name: 'dialogTitle',
                             type: 'html',
                             label: 'title',
+                            hidden: 'data.dialogTitleHide'
                         },
                         {
                             name: 'dialogTitleColor',
                             type: 'color',
                             default: 'rgb(255,255,255)',
                             label: 'color',
+                            hidden: 'data.dialogTitleHide'
                         },
                         {
                             name: 'dialogTitleSize',
@@ -242,25 +259,76 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 20,
                             label: 'size',
+                            hidden: 'data.dialogTitleHide'
+                        },
+
+                        {
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_titlebar_padding',
+                            hidden: 'data.dialogTitleHide'
+                        },
+                        {
+                            name: 'dialogTitlePaddingTop',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'top',
+                            hidden: 'data.dialogTitleHide'
+                        },
+                        {
+                            name: 'dialogTitlePaddingBottom',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'bottom',
+                            hidden: 'data.dialogTitleHide'
+                        },
+                        {
+                            name: 'dialogTitlePaddingLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 10,
+                            label: 'left',
+                            hidden: 'data.dialogTitleHide'
+                        },
+                        {
+                            name: 'dialogTitlePaddingRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'right',
+                            hidden: 'data.dialogTitleHide'
                         },
                         {
                             type: 'delimiter',
+                            hidden: 'data.dialogTitleHide'
                         },
                         {
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_close_button',
+                            hidden: 'data.dialogTitleHide'
                         },
                         {
                             name: 'dialogCloseButtonBackground',
                             type: 'color',
                             default: 'rgba(255,255,255,0)',
                             label: 'background',
+                            hidden: 'data.dialogTitleHide'
                         },
                         {
                             name: 'dialogCloseButtonColor',
                             type: 'color',
                             default: 'rgba(255,255,255,1)',
                             label: 'color',
+                            hidden: 'data.dialogTitleHide'
                         },
                         {
                             name: 'dialogCloseButtonSize',
@@ -270,6 +338,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 14,
                             label: 'size',
+                            hidden: 'data.dialogTitleHide'
                         },
                         {
                             type: 'delimiter',
@@ -1043,7 +1112,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 40,
                             label: 'content_size',
-                            hidden: '!!data.contentStyleFromWidget'
+                            hidden: '!!data.contentStyleFromWidget || (data.contentType == "image" && data.imageObjectFit)'
                         },
                         {
                             name: 'contentRotation',
@@ -1061,6 +1130,55 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             default: false,
                             label: 'mirror',
                             hidden: '!!data.contentStyleFromWidget'
+                        },
+
+                        {
+                            type: 'delimiter',
+                            hidden: 'data.contentType != "image"'
+                        },
+                        {
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_image_resize_and_position',
+                            hidden: 'data.contentType != "image"'
+                        },
+                        {
+                            name: 'imageObjectFit',
+                            type: 'select',
+                            options: [
+                                { value: '', label: 'none' },
+                                { value: 'contain', label: 'contain' },
+                                { value: 'cover', label: 'cover' },
+                                { value: 'fill', label: 'fill' },
+                                { value: 'repeat', label: 'repeat' },
+                            ],
+                            default: 'none',
+                            label: 'fill_type',
+                            hidden: '!!data.contentStyleFromWidget || data.contentType != "image"'
+                        },
+                        {
+                            name: 'imageBackgroundSize',
+                            type: 'slider',
+                            min: 0,
+                            max: 1000,
+                            step: 1,
+                            default: 100,
+                            label: 'scale',
+                            hidden: '!!data.contentStyleFromWidget || data.imageObjectFit != "repeat" || data.contentType != "image"'
+                        },
+                        {
+                            name: 'imageObjectPosition',
+                            type: 'select',
+                            options: [
+                                { value: 'none', label: '' },
+                                { value: 'top', label: 'top' },
+                                { value: 'bottom', label: 'bottom' },
+                                { value: 'left', label: 'left' },
+                                { value: 'right', label: 'right' },
+                                { value: 'center', label: 'center' },
+                            ],
+                            default: 'none',
+                            label: 'position',
+                            hidden: '!!data.contentStyleFromWidget || data.contentType != "image" || data.imageObjectFit == "none"'
                         },
                     ],
                 },
@@ -1683,6 +1801,12 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.dialogOpen && !this.state.dialogOpen) {
+            clearTimeout(this.state.dialogCloseTimeout)
+        }
+    }
+
     // Do not delete this method. It is used by vis to read the widget configuration.
     // eslint-disable-next-line class-methods-use-this
     getWidgetInfo() {
@@ -1999,6 +2123,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 break;
             case 'viewInDialog':
                 this.setState({ dialogOpen: true });
+                if(this.state.rxData.dialogCloseTimeoutSeconds && this.state.rxData.dialogCloseTimeoutSeconds > 0) {
+                    this.state.dialogCloseTimeout = setTimeout(() => {
+                        this.setState({ dialogOpen: false });
+                    },this.state.rxData.dialogCloseTimeoutSeconds * 1000)
+                }
                 if (oid) {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
                 }
@@ -2136,11 +2265,12 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             `,
                         },
                         '.MuiDialogContent-root': {
-                            padding: `${this.state.rxData.dialogPadding + (!Number.isNaN(Number(this.state.rxData.dialogPadding)) ? 'px' : '')}`,
+                            padding: `${this.valWithUnit(this.state.rxData.dialogPadding)}`,
                         },
                         '.MuiDialogTitle-root': {
-                            padding: `${this.state.rxData.dialogPadding + (!Number.isNaN(Number(this.state.rxData.dialogPadding)) ? 'px' : '')}`,
+                            padding: `${this.valWithUnit(this.state.rxData.dialogTitlePaddingTop)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingRight)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingBottom)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingLeft)}`,
                             color: this.state.rxData.dialogTitleColor,
+                            display: this.state.rxData.dialogTitleHide ? 'none !important' : 'flex',
                         },
                     },
                 }}
@@ -2221,13 +2351,28 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             filter = hexToCSSFilter(hex);
         }
 
-        return <Icon
-            src={img}
+        if(valueData.styles.imageObjectFit != 'repeat') {
+            return <Icon
+                src={img}
+                style={{
+                    width: !valueData.styles.imageObjectFit ? valueData.contentSize : '100%',
+                    filter: filter ? filter.filter : '',
+                    objectFit: valueData.styles.imageObjectFit ?? '',
+                    objectPosition: valueData.styles.imageObjectPosition ?? '',
+                    height: valueData.styles.imageObjectFit ? '100%' : ''
+                }}
+            />;
+        }
+
+        return  <div
             style={{
-                width: valueData.contentSize,
-                filter: filter ? filter.filter : '',
+                backgroundImage: `url(${img})`,
+                backgroundSize: valueData.styles.imageBackgroundSize ?? 'auto',
+                backgroundPosition: valueData.styles.imageObjectPosition ?? '',
+                height: '100%',
+                width: '100%',
             }}
-        />;
+        ></div>;
     }
 
     getContentHtml(valueData) {
@@ -2286,7 +2431,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             className={this.state.rxData.contentType === 'colorPicker' ? 'vis-inventwo-widget-color-picker-wrapper' : ''}
             style={{
                 height: '100%',
-                width: this.state.rxData.contentType === 'viewInWidget' ? '100%' : '',
+                width: this.state.rxData.contentType === 'viewInWidget' || (this.state.rxData.contentType === 'image' && valueData.styles.imageObjectFit) ? '100%' : '',
                 transform: `rotateZ(${valueData.styles.contentRotation}deg)`,
                 animation: valueData.contentBlinkInterval > 0 ? `blink ${valueData.contentBlinkInterval / 1000}s infinite` : '',
             }}
@@ -2382,6 +2527,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             <div
                 style={{
                     display: 'flex',
+                    flexGrow: 1,
                     justifyContent: valueData.styles.flexDirection === 'column' ? valueData.styles.contentAlign : '',
                     alignSelf: valueData.styles.flexDirection === 'row' ? valueData.styles.contentAlign : '',
                     transform: `scaleX(${valueData.styles.contentMirror ? -1 : 1})`,

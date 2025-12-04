@@ -265,5 +265,21 @@
     "color_header": "En-tête de couleur",
     "thickness": "Épaisseur",
     "click_through": "Cliquer",
-    "vis_2_widgets_inventwo_row_border": "Frontière"
+    "vis_2_widgets_inventwo_row_border": "Frontière",
+    "vis_2_widgets_inventwo_border_radius": "Rayon de la frontière",
+    "vis_2_widgets_inventwo_close_button": "Bouton Fermer",
+    "vis_2_widgets_inventwo_titlebar": "Barre de titre",
+    "vis_2_widgets_inventwo_titlebar_padding": "Remplissage de la barre de titre",
+    "hide": "Cacher",
+    "titlebar_padding": "Remplissage de la barre de titre",
+    "close_after_x_seconds": "Fermer après x secondes",
+    "contain": "Contenir",
+    "cover": "Couverture",
+    "fill": "Remplir",
+    "repeat": "Répéter",
+    "fill_type": "Type de remplissage",
+    "scale": "Échelle",
+    "position": "Position",
+    "vis_2_widgets_inventwo_image_size_and_position": "Taille et position de l'image",
+    "vis_2_widgets_inventwo_image_resize_and_position": "Redimensionnement et position de l'image"
 }

@@ -265,5 +265,21 @@
     "color_header": "Цветовой заголовок",
     "thickness": "Толщина",
     "click_through": "Нажмите",
-    "vis_2_widgets_inventwo_row_border": "Рядная граница"
+    "vis_2_widgets_inventwo_row_border": "Рядная граница",
+    "vis_2_widgets_inventwo_border_radius": "Радиус границы",
+    "vis_2_widgets_inventwo_close_button": "Кнопка закрытия",
+    "vis_2_widgets_inventwo_titlebar": "Строка заголовка",
+    "vis_2_widgets_inventwo_titlebar_padding": "Заполнение заголовка",
+    "hide": "Скрывать",
+    "titlebar_padding": "Заполнение заголовка",
+    "close_after_x_seconds": "Закрыть через x секунд",
+    "contain": "Содержать",
+    "cover": "Крышка",
+    "fill": "Наполнять",
+    "repeat": "Повторить",
+    "fill_type": "Тип заливки",
+    "scale": "Шкала",
+    "position": "Позиция",
+    "vis_2_widgets_inventwo_image_size_and_position": "Размер и положение изображения",
+    "vis_2_widgets_inventwo_image_resize_and_position": "Изменение размера и положения изображения"
 }

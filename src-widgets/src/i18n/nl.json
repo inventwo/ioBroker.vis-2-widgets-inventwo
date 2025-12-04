@@ -265,5 +265,21 @@
     "color_header": "Kleurkop",
     "thickness": "Dikte",
     "click_through": "Doorklikken",
-    "vis_2_widgets_inventwo_row_border": "Rijgrens"
+    "vis_2_widgets_inventwo_row_border": "Rijgrens",
+    "vis_2_widgets_inventwo_border_radius": "Randradius",
+    "vis_2_widgets_inventwo_close_button": "Knop Sluiten",
+    "vis_2_widgets_inventwo_titlebar": "Titelbalk",
+    "vis_2_widgets_inventwo_titlebar_padding": "Opvulling van de titelbalk",
+    "hide": "Verbergen",
+    "titlebar_padding": "Opvulling van de titelbalk",
+    "close_after_x_seconds": "Sluit na x seconden",
+    "contain": "Bevatten",
+    "cover": "Omslag",
+    "fill": "Vullen",
+    "repeat": "Herhalen",
+    "fill_type": "Vultype",
+    "scale": "Schaal",
+    "position": "Positie",
+    "vis_2_widgets_inventwo_image_size_and_position": "Afbeeldingsgrootte en -positie",
+    "vis_2_widgets_inventwo_image_resize_and_position": "Formaat en positie van afbeelding wijzigen"
 }
