@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.10",
+    "version": "0.3.11",
     "news": {
+      "0.3.11": {
+        "en": "Added padding options for dialog titlebar (#102, #153)\nAdded \"close after x seconds\" option for dialog (#102)\nAdded option to hide dialog titlebar (#102)\nAdded image resize and position options (#101)",
+        "de": "Hinzufügen von Padding-Optionen für Dialog-Titelleiste (#102, #153)\nHinzufügen \"Schließen nach x Sekunden\" Option für Dialog (#102)\nHinzugefügt Option zum Verbergen Dialog Titelleiste (#102)\nBildgröße und Positionsoptionen hinzugefügt (#101)",
+        "ru": "Добавлены параметры прокладки для панели заголовков диалогов (#102, #153)\nДобавлена опция «закрыть после x секунд» для диалога (#102)\nДобавлена возможность скрыть панель заголовков диалогов (#102)\nДобавлены параметры размера изображения и позиции (#101)",
+        "pt": "Opções de preenchimento adicionadas para a barra de título da janela (# 102, # 153)\nAdicionada a opção \"fechar após x segundos\" para o diálogo (# 102)\nOpção adicionada para ocultar a barra de título da janela (# 102)\nOpções de redimensionamento e posição da imagem adicionadas (#101)",
+        "nl": "Opties voor opvulling voor dialoogvenstertitelbalk (#102, #153) toegevoegd\nToegevoegd \"sluiten na x seconden\" optie voor dialoog (#102)\nToegevoegd optie om dialoogvenster titelbalk te verbergen (#102)\nAfbeeldingsgrootte en positieopties toegevoegd (#101)",
+        "fr": "Ajout d'options de rembourrage pour la barre de titres de dialogue (#102, #153)\nAjout de l'option « fermer après x secondes » pour la boîte de dialogue (#102)\nAjout d'une option pour masquer la barre de titre de la boîte de dialogue (#102)\nAjout d'options de redimensionnement et de position de l'image (#101)",
+        "it": "Aggiunto opzioni di imbottitura per la barra del titolo di dialogo (#102, #153)\nAggiunto \"chiudi dopo x secondi\" opzione per la finestra di dialogo (#102)\nAggiunta opzione per nascondere la barra del titolo di dialogo (#102)\nOpzioni di ridimensionamento e posizione dell'immagine aggiuntiva (#101)",
+        "es": "Opciones de relleno adicionales para la barra de diálogo (#102, #153)\nAñadido \"cerrar después de x segundos\" opción para el diálogo (#102)\nOpción adicional para ocultar la barra de diálogo (#102)\nOpciones de tamaño y posición agregadas (#101)",
+        "pl": "Dodano opcje wyściełania dla paska dialogowego (# 102, # 153)\nDodano opcję \"Zamknij po x sekundach\" dla okna dialogowego (# 102)\nDodano opcję ukrywania paska dialogowego (# 102)\nDodano zmianę rozmiaru obrazu i opcji pozycji (# 101)",
+        "uk": "Додано параметри наповнення діалогового вікна (#102, #153)\nДодано \"close після x секунд\" варіант для діалогу (#102)\nДодано варіант, щоб приховати діалогове заголовок (#102)\nДодано розмір зображення та параметри позиції (#101)",
+        "zh-cn": "添加对话框标题栏的编码选项(# 102, # 153)\n添加“ x 秒后关闭” 对话框选项 (# 102)\n添加到隐藏对话框标题栏的选项(# 102)\n添加图像调整大小和位置选项(# 101)"
+      },
       "0.3.10": {
         "en": "Updated dependencies",
         "de": "Aktualisierte Abhängigkeiten",
@@ -80,19 +93,6 @@
         "pl": "Popraw poprzednią wersję",
         "uk": "Виправлення попередньої версії",
         "zh-cn": "修复上一个版本"
-      },
-      "0.3.4": {
-        "en": "Added code to print console logs to a widget for debugging purposes",
-        "de": "Code hinzugefügt, um Konsolenprotokolle zu einem Widget für Debugging Zwecke zu drucken",
-        "ru": "Добавлен код для печати журналов консоли в виджет для целей отладки",
-        "pt": "Adicionado código para imprimir registros de console para um widget para fins de depuração",
-        "nl": "Code toegevoegd om consolelogs af te drukken aan een widget voor debuggen",
-        "fr": "Ajout de code pour imprimer les journaux de console à un widget pour le débogage",
-        "it": "Codice aggiunto per stampare i registri della console a un widget per scopi di debugging",
-        "es": "Código añadido para imprimir registros de consola a un widget para propósitos depuradores",
-        "pl": "Dodano kod do drukowania dzienników konsoli do widżetu do celów debugowania",
-        "uk": "Додано код для друку журналів консолі до віджету для цілей відключення",
-        "zh-cn": "为调试目的将代码添加到打印控制台日志到部件中"
       }
     },
     "titleLang": {
