@@ -1,6 +1,6 @@
 {
   "name": "iobroker.vis-2-widgets-inventwo",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "description": "ioBroker vis2 inventwo widgets",
   "author": "jkvarel <jk@inventwo.com>",
   "contributors": [

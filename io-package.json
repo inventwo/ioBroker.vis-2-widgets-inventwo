@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.11",
+    "version": "0.3.12",
     "news": {
+      "0.3.12": {
+        "en": "Fixed content position caused by previous version",
+        "de": "Feste Inhaltsposition durch vorherige Version",
+        "ru": "Позиция фиксированного контента, вызванная предыдущей версией",
+        "pt": "Posição de conteúdo fixa causada pela versão anterior",
+        "nl": "Vaste inhoudpositie veroorzaakt door vorige versie",
+        "fr": "Position de contenu fixe causée par la version précédente",
+        "it": "Posizione fissa dei contenuti causata dalla versione precedente",
+        "es": "Posición de contenido fija causada por la versión anterior",
+        "pl": "Stała pozycja treści spowodowana poprzednią wersją",
+        "uk": "Виправлена позиція вмісту, викликана попередньою версією",
+        "zh-cn": "上一个版本造成的固定内容位置"
+      },
       "0.3.11": {
         "en": "Added padding options for dialog titlebar (#102, #153)\nAdded \"close after x seconds\" option for dialog (#102)\nAdded option to hide dialog titlebar (#102)\nAdded image resize and position options (#101)",
         "de": "Hinzufügen von Padding-Optionen für Dialog-Titelleiste (#102, #153)\nHinzufügen \"Schließen nach x Sekunden\" Option für Dialog (#102)\nHinzugefügt Option zum Verbergen Dialog Titelleiste (#102)\nBildgröße und Positionsoptionen hinzugefügt (#101)",
@@ -80,19 +93,6 @@
         "pl": "Rozszerzone debugowanie poprzez drukowanie pliku źródłowego z numerem linii",
         "uk": "Розширений відбілювання по файлу джерела друку з номером лінії",
         "zh-cn": "通过打印带有行号的源文件进行扩展调试"
-      },
-      "0.3.5": {
-        "en": "Fix for previous version",
-        "de": "Fix für die vorherige Version",
-        "ru": "Исправить предыдущую версию",
-        "pt": "Corrigir para a versão anterior",
-        "nl": "Fix voor vorige versie",
-        "fr": "Correction pour la version précédente",
-        "it": "Fissaggio per versione precedente",
-        "es": "Corrección para versión anterior",
-        "pl": "Popraw poprzednią wersję",
-        "uk": "Виправлення попередньої версії",
-        "zh-cn": "修复上一个版本"
       }
     },
     "titleLang": {
