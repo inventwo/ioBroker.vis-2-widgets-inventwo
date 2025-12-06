@@ -2527,7 +2527,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             <div
                 style={{
                     display: 'flex',
-                    flexGrow: 1,
+                    flexGrow: valueData.styles.imageObjectFit ? 1 : '',
                     justifyContent: valueData.styles.flexDirection === 'column' ? valueData.styles.contentAlign : '',
                     alignSelf: valueData.styles.flexDirection === 'row' ? valueData.styles.contentAlign : '',
                     transform: `scaleX(${valueData.styles.contentMirror ? -1 : 1})`,
