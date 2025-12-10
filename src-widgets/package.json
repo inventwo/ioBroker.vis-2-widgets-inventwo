@@ -14,7 +14,7 @@
         "@mui/material": "^6.4.11",
         "hex-to-css-filter": "^6.0.0",
         "react": "^18.3.1",
-        "react-dom": "^18.3.1",
+        "react-dom": "^19.2.0",
         "react-icons": "^5.5.0",
         "react-scripts": "^5.0.1",
         "sass": "^1.93.2",
