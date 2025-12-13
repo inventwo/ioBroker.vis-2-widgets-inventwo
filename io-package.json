@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.3.12",
+    "version": "0.4.0",
     "news": {
+      "0.4.0": {
+        "en": "Switched to TypeScript",
+        "de": "Zu TypeScript geschaltet",
+        "ru": "Переключается на TypeScript",
+        "pt": "Alternado para TypeScript",
+        "nl": "Overgeschakeld naar TypeScript",
+        "fr": "Passé à TypeScript",
+        "it": "Passato a TypeScript",
+        "es": "Cambiar a TipoScript",
+        "pl": "Przełączono na TypeScript",
+        "uk": "Перемкнено до TypeScript",
+        "zh-cn": "切换到类型脚本"
+      },
       "0.3.12": {
         "en": "Fixed content position caused by previous version",
         "de": "Feste Inhaltsposition durch vorherige Version",
@@ -80,19 +93,6 @@
         "pl": "Usunięto kod odpowiedzialny za wyświetlanie logów konsoli w widżecie do celów debugowania.",
         "uk": "Видалено код для виведення журналів консолі в віджет для налагодження коду.",
         "zh-cn": "为了调试目的，已移除将控制台日志打印到小部件的代码。"
-      },
-      "0.3.6": {
-        "en": "Extended debugging by printing source file with line number",
-        "de": "Erweiterte Debugging durch Drucken von Quelldatei mit Zeilennummer",
-        "ru": "Расширенная отладка путем печати исходного файла с номером строки",
-        "pt": "Depuração extendida por impressão de arquivo fonte com número de linha",
-        "nl": "Uitgebreide debuggen door bronbestand af te drukken met regelnummer",
-        "fr": "Débogage étendu par impression du fichier source avec numéro de ligne",
-        "it": "Disboscamento esteso tramite file sorgente di stampa con numero di riga",
-        "es": "Depuración ampliada por archivo fuente de impresión con número de línea",
-        "pl": "Rozszerzone debugowanie poprzez drukowanie pliku źródłowego z numerem linii",
-        "uk": "Розширений відбілювання по файлу джерела друку з номером лінії",
-        "zh-cn": "通过打印带有行号的源文件进行扩展调试"
       }
     },
     "titleLang": {
