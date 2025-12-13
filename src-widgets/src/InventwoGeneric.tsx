@@ -180,6 +180,47 @@ class InventwoGeneric<
     valWithUnit(value: any): string {
         return value + (!Number.isNaN(Number(value)) ? 'px' : '');
     }
+
+    // formatDate(format: string, d: Date): string {
+    //     const pad = (n: number): string => {
+    //         return String(n).padStart(2, '0');
+    //     };
+    //
+    //     const map = {
+    //         // Jahr
+    //         Y: () => d.getFullYear(),
+    //         y: () => String(d.getFullYear()).slice(-2),
+    //
+    //         // Monat
+    //         m: () => pad(d.getMonth() + 1),
+    //         n: () => d.getMonth() + 1,
+    //         F: () => d.toLocaleString('de-DE', { month: 'long' }),
+    //         M: () => d.toLocaleString('de-DE', { month: 'short' }),
+    //
+    //         // Tag
+    //         d: () => pad(d.getDate()),
+    //         j: () => d.getDate(),
+    //         D: () => d.toLocaleString('de-DE', { weekday: 'short' }),
+    //         l: () => d.toLocaleString('de-DE', { weekday: 'long' }),
+    //         N: () => (d.getDay() === 0 ? 7 : d.getDay()),
+    //
+    //         // Zeit
+    //         H: () => pad(d.getHours()),
+    //         G: () => d.getHours(),
+    //         i: () => pad(d.getMinutes()),
+    //         s: () => pad(d.getSeconds()),
+    //
+    //         // Sonstiges
+    //         U: () => Math.floor(d.getTime() / 1000)
+    //     };
+    //
+    //     return format.replace(/\\?([a-zA-Z])/g, (match, token) => {
+    //         if (match.startsWith('\\')) {
+    //             return token; // escaped character
+    //         }
+    //         return map[token] ? map[token]() : token;
+    //     });
+    // }
 }
 
 export default InventwoGeneric;

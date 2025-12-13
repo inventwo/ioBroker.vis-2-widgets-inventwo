@@ -249,6 +249,7 @@
   "Datetime": "Datetime",
   "Date": "Date",
   "Time": "Time",
+  "Custom": "Custom format",
   "datetime_format": "Datetime format",
   "widget_checkbox": "Checkbox",
   "thumb_shadow": "Thumb shadow",
@@ -279,6 +280,8 @@
   "fill_type": "Fill type",
   "scale": "Scale",
   "position": "Position",
-  "vis_2_widgets_inventwo_image_resize_and_position": "Image resize and position"
+  "vis_2_widgets_inventwo_image_resize_and_position": "Image resize and position",
+  "datetime_format_custom": "Custom format",
+  "tooltip_datetime_custom_format": "YYYY: 4-digit year (e.g., 2025)\nYY: 2-digit year (e.g., 25)\nMM: 2-digit month with leading zero (01-12)\nM: Month without leading zero (1-12)\nDD: 2-digit day with leading zero (01-31)\nD: Day without leading zero (1-31)\nhh: 2-digit hours with leading zero (00-23)\nh: Hours without leading zero (0-23)\nmm: 2-digit minutes with leading zero (00-59)\nm: Minutes without leading zero (0-59)\nss: 2-digit seconds with leading zero (00-59)\ns: Seconds without leading zero (0-59)\nsss: 3-digit milliseconds with leading zeros (000-999)"
 
 }

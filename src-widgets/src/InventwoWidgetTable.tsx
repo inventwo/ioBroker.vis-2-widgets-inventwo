@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { Table, TableRow, TableCell, TableContainer, TableHead, TableBody, Paper } from '@mui/material';
-
+import { Icon } from '@iobroker/adapter-react-v5';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
 
@@ -30,10 +30,11 @@ interface TableRxData {
     [key: `columnPrefix${number}`]: string;
     [key: `columnSuffix${number}`]: string;
     [key: `columnPlaceholder${number}`]: string;
-    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime';
+    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime' | 'image';
     [key: `columnNumberDecimals${number}`]: number;
     [key: `columnDatetimeFormat${number}`]: 'datetime' | 'date' | 'time';
     [key: `columnContentAlign${number}`]: React.CSSProperties['textAlign'];
+    [key: `columnDatetimeFormatCustom${number}`]: string;
 }
 
 export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, VisRxWidgetState> {
@@ -145,6 +146,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
                                 { value: 'text', label: 'Text' },
                                 { value: 'number', label: 'Number' },
                                 { value: 'datetime', label: 'datetime' },
+                                { value: 'image', label: 'image' },
                             ],
                             default: 'text',
                             label: 'format',
@@ -164,10 +166,18 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
                                 { value: 'datetime', label: 'Datetime' },
                                 { value: 'date', label: 'Date' },
                                 { value: 'time', label: 'Time' },
+                                { value: 'custom', label: 'Custom' },
                             ],
                             default: 'datetime',
                             label: 'datetime_format',
                             hidden: 'data["columnValueFormat" + index] != "datetime"',
+                        },
+                        {
+                            name: 'columnDatetimeFormatCustom',
+                            type: 'text',
+                            label: 'datetime_format_custom',
+                            tooltip: 'tooltip_datetime_custom_format',
+                            hidden: 'data["columnValueFormat" + index] != "datetime" || data["columnDatetimeFormat" + index] != "custom"',
                         },
                     ],
                 },
@@ -624,12 +634,33 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
                                     columnValue = new Date(columnValue).toLocaleDateString();
                                 } else if (datetimeFormat === 'time') {
                                     columnValue = new Date(columnValue).toLocaleTimeString();
+                                } else if (datetimeFormat === 'custom') {
+                                    columnValue = this.formatDate(
+                                        columnValue,
+                                        this.state.rxData[`columnDatetimeFormatCustom${i}`] ?? '',
+                                    );
                                 }
                             }
-                        }
-
-                        if (typeof columnValue === 'object' && columnValue !== null) {
-                            columnValue = JSON.stringify(columnValue);
+                        } else if (columnFormat == 'image') {
+                            let columnWidth = this.state.rxData[`columnWidth${i}`];
+                            if (!columnWidth || columnWidth === 0) {
+                                columnWidth = '100%';
+                            } else {
+                                columnWidth = this.valWithUnit(columnWidth);
+                            }
+                            columnValue = (
+                                <img
+                                    src={columnValue}
+                                    style={{
+                                        width: columnWidth,
+                                    }}
+                                    alt={columnValue}
+                                />
+                            );
+                        } else {
+                            if (typeof columnValue === 'object' && columnValue !== null) {
+                                columnValue = JSON.stringify(columnValue);
+                            }
                         }
 
                         columns.push(
