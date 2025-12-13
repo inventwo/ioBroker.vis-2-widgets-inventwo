@@ -1,24 +1,43 @@
-import React from 'react';
-
 import { styled } from '@mui/material/styles';
-// it is important to from '@mui/material' instead of '@mui/material/XXX' for federation
-import {
-    Table,
-    TableRow,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableBody,
-    Paper,
-} from '@mui/material';
+import { Table, TableRow, TableCell, TableContainer, TableHead, TableBody, Paper } from '@mui/material';
 
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
 
 import InventwoGeneric from './InventwoGeneric';
+import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState } from '@iobroker/types-vis-2';
+import type { CSSProperties } from 'react';
+import React from 'react';
 
-class InventwoWidgetTable extends InventwoGeneric {
-    static getWidgetInfo() {
+interface TableRxData {
+    oid: null | string;
+    countColumns: number;
+    maxRows: number;
+    showHead: boolean;
+    headerHeight: number | string;
+    backgroundHeader: string;
+    headerBorderWidth: number | string;
+    headerBorderColor: string;
+    rowBorderWidth: string | number;
+    rowBorderColor: string;
+    backgroundOddRow: string;
+    backgroundEvenRow: string;
+    columnHeight: string | number;
+    [key: `columnTitleAlign${number}`]: React.CSSProperties['textAlign'];
+    [key: `columnWidth${number}`]: string | number;
+    [key: `columnTitle${number}`]: string | number;
+    [key: `columnKey${number}`]: string | number;
+    [key: `columnPrefix${number}`]: string;
+    [key: `columnSuffix${number}`]: string;
+    [key: `columnPlaceholder${number}`]: string;
+    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime';
+    [key: `columnNumberDecimals${number}`]: number;
+    [key: `columnDatetimeFormat${number}`]: 'datetime' | 'date' | 'time';
+    [key: `columnContentAlign${number}`]: React.CSSProperties['textAlign'];
+}
+
+export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, VisRxWidgetState> {
+    static getWidgetInfo(): RxWidgetInfo {
         return {
             id: 'tplInventwoWidgetTable',
             visSet: 'vis-2-widgets-inventwo',
@@ -157,6 +176,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                     label: 'attr_content_css_table',
                     fields: [
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_colors',
                         },
@@ -176,6 +196,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             label: 'background_even_row',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_heights',
                         },
@@ -198,6 +219,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             label: 'column_height',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_row_border',
                         },
@@ -214,7 +236,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             name: 'headerBorderColor',
                             type: 'color',
                             label: 'color_header',
-                            default: 'rgb(81, 81, 81)'
+                            default: 'rgb(81, 81, 81)',
                         },
                         {
                             name: 'rowBorderWidth',
@@ -229,7 +251,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             name: 'rowBorderColor',
                             type: 'color',
                             label: 'color',
-                            default: 'rgb(81, 81, 81)'
+                            default: 'rgb(81, 81, 81)',
                         },
                     ],
                 },
@@ -252,7 +274,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 12,
                             label: 'top_left',
-                            hidden: '!!data.borderRadiusStyleFromWidget'
+                            hidden: '!!data.borderRadiusStyleFromWidget',
                         },
                         {
                             name: 'borderRadiusTopRight',
@@ -262,7 +284,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'top_right',
-                            hidden: '!!data.borderRadiusStyleFromWidget'
+                            hidden: '!!data.borderRadiusStyleFromWidget',
                         },
                         {
                             name: 'borderRadiusBottomRight',
@@ -272,7 +294,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 12,
                             label: 'bottom_right',
-                            hidden: '!!data.borderRadiusStyleFromWidget'
+                            hidden: '!!data.borderRadiusStyleFromWidget',
                         },
                         {
                             name: 'borderRadiusBottomLeft',
@@ -282,7 +304,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'bottom_left',
-                            hidden: '!!data.borderRadiusStyleFromWidget'
+                            hidden: '!!data.borderRadiusStyleFromWidget',
                         },
                     ],
                 },
@@ -310,7 +332,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_top',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                         {
                             name: 'borderSizeBottom',
@@ -320,7 +342,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_bottom',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                         {
                             name: 'borderSizeLeft',
@@ -330,7 +352,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_left',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                         {
                             name: 'borderSizeRight',
@@ -340,7 +362,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_right',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                         {
                             name: 'borderStyle',
@@ -357,7 +379,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             ],
                             default: 'none',
                             label: 'border_style',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                     ],
                 },
@@ -377,7 +399,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             type: 'color',
                             label: 'outer_shadow_color',
                             default: 'rgb(0,0,0)',
-                            hidden: '!!data.outerShadowStyleFromWidget'
+                            hidden: '!!data.outerShadowStyleFromWidget',
                         },
                         {
                             name: 'outerShadowX',
@@ -387,7 +409,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 2,
                             label: 'x_offset',
-                            hidden: '!!data.outerShadowStyleFromWidget'
+                            hidden: '!!data.outerShadowStyleFromWidget',
                         },
                         {
                             name: 'outerShadowY',
@@ -397,7 +419,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 2,
                             label: 'y_offset',
-                            hidden: '!!data.outerShadowStyleFromWidget'
+                            hidden: '!!data.outerShadowStyleFromWidget',
                         },
                         {
                             name: 'outerShadowBlur',
@@ -407,7 +429,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 2,
                             label: 'blur',
-                            hidden: '!!data.outerShadowStyleFromWidget'
+                            hidden: '!!data.outerShadowStyleFromWidget',
                         },
                         {
                             name: 'outerShadowSize',
@@ -417,78 +439,43 @@ class InventwoWidgetTable extends InventwoGeneric {
                             step: 1,
                             default: 1,
                             label: 'size',
-                            hidden: '!!data.outerShadowStyleFromWidget'
+                            hidden: '!!data.outerShadowStyleFromWidget',
                         },
                     ],
-                }
+                },
             ],
             visDefaultStyle: {
-                overflow: 'visible',
+                'overflow-x': 'visible',
+                'overflow-y': 'visible',
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-table.png',
         };
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    propertiesUpdate() {
-        // Widget has 3 important states
-        // 1. this.state.values - contains all state values, that are used in widget (automatically collected from widget info).
-        //                        So you can use `this.state.values[this.state.rxData.oid + '.val']` to get value of state with id this.state.rxData.oid
-        // 2. this.state.rxData - contains all widget data with replaced bindings. E.g. if this.state.data.type is `{system.adapter.admin.0.alive}`,
-        //                        then this.state.rxData.type will have state value of `system.adapter.admin.0.alive`
-        // 3. this.state.rxStyle - contains all widget styles with replaced bindings. E.g. if this.state.styles.width is `{javascript.0.width}px`,
-        //                        then this.state.rxData.type will have state value of `javascript.0.width` + 'px
-    }
-
-    componentDidMount() {
-        super.componentDidMount();
-
-        // Update data
-        this.propertiesUpdate();
-    }
-
-    static getI18nPrefix() {
+    static getI18nPrefix(): string {
         return 'vis_2_widgets_inventwo_';
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
     // eslint-disable-next-line class-methods-use-this
-    getWidgetInfo() {
+    getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetTable.getWidgetInfo();
     }
 
-    // This function is called every time when rxData is changed
-    onRxDataChanged() {
-        this.propertiesUpdate();
-    }
-
-    // This function is called every time when rxStyle is changed
-    // eslint-disable-next-line class-methods-use-this
-    onRxStyleChanged() {
-
-    }
-
-    // This function is called every time when some Object State updated, but all changes lands into this.state.values too
-    // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    onStateUpdated(id, state) {
-
-    }
-
-    renderWidgetBody(props) {
+    renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
         super.renderWidgetBody(props);
-
-        this.wrappedContent = true;
 
         const oid = this.state.rxData.oid;
         const value = this.getValue(oid);
 
-        let json = null;
+        let json: null | Record<string, any>[] = null;
 
         if (value === undefined || value === null || value === '') {
             return <div>Keine Daten</div>;
         }
         try {
             json = JSON.parse(value);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
             return <div>Invalides JSON</div>;
         }
@@ -496,12 +483,15 @@ class InventwoWidgetTable extends InventwoGeneric {
         const headers = [];
         const rows = [];
 
-        const outerShadowStyle = this.getStyle('outerShadowStyleFromWidget', this.groupAttrs.attr_group_css_outer_shadow);
+        const outerShadowStyle = this.getStyle(
+            'outerShadowStyleFromWidget',
+            this.groupAttrs.attr_group_css_outer_shadow,
+        );
         const borderStyle = this.getStyle('borderStyleFromWidget', this.groupAttrs.attr_group_css_border);
 
         const StyledTableHeaderRow = styled(TableRow)(() => ({
             [`&.${tableRowClasses.root}`]: {
-                height: this.state.rxData.headerHeight + (!Number.isNaN(Number(this.state.rxData.headerHeight)) ? 'px' : ''),
+                height: this.valWithUnit(this.state.rxData.headerHeight),
             },
         }));
 
@@ -512,18 +502,18 @@ class InventwoWidgetTable extends InventwoGeneric {
             [`&.${tableCellClasses.root}`]: {
                 paddingTop: 0,
                 paddingBottom: 0,
-                fontSize: this.state.rxStyle['font-size'],
-                color: this.state.rxStyle.color,
-                textShadow: this.state.rxStyle['text-shadow'],
-                fontFamily: this.state.rxStyle['font-family'],
-                fontStyle: this.state.rxStyle['font-style'],
-                fontVariant: this.state.rxStyle['font-variant'],
-                fontWeight: this.state.rxStyle['font-weight'],
-                lineHeight: this.state.rxStyle['line-height'],
-                letterSpacing: this.state.rxStyle['letter-spacing'],
-                wordSpacing: this.state.rxStyle['word-spacing'],
+                fontSize: this.state.rxStyle!['font-size'],
+                color: this.state.rxStyle!.color,
+                textShadow: this.state.rxStyle!['text-shadow'],
+                fontFamily: this.state.rxStyle!['font-family'],
+                fontStyle: this.state.rxStyle!['font-style'],
+                fontVariant: this.state.rxStyle!['font-variant'],
+                fontWeight: this.state.rxStyle!['font-weight'],
+                lineHeight: this.state.rxStyle!['line-height'],
+                letterSpacing: this.state.rxStyle!['letter-spacing'],
+                wordSpacing: this.state.rxStyle!['word-spacing'],
                 borderBottomWidth: this.state.rxData.headerBorderWidth,
-                borderColor: this.state.rxData.headerBorderColor
+                borderColor: this.state.rxData.headerBorderColor,
             },
         }));
 
@@ -531,18 +521,18 @@ class InventwoWidgetTable extends InventwoGeneric {
             [`&.${tableCellClasses.root}`]: {
                 paddingTop: 0,
                 paddingBottom: 0,
-                fontSize: this.state.rxStyle['font-size'],
-                color: this.state.rxStyle.color,
-                textShadow: this.state.rxStyle['text-shadow'],
-                fontFamily: this.state.rxStyle['font-family'],
-                fontStyle: this.state.rxStyle['font-style'],
-                fontVariant: this.state.rxStyle['font-variant'],
-                fontWeight: this.state.rxStyle['font-weight'],
-                lineHeight: this.state.rxStyle['line-height'],
-                letterSpacing: this.state.rxStyle['letter-spacing'],
-                wordSpacing: this.state.rxStyle['word-spacing'],
+                fontSize: this.state.rxStyle!['font-size'],
+                color: this.state.rxStyle!.color,
+                textShadow: this.state.rxStyle!['text-shadow'],
+                fontFamily: this.state.rxStyle!['font-family'],
+                fontStyle: this.state.rxStyle!['font-style'],
+                fontVariant: this.state.rxStyle!['font-variant'],
+                fontWeight: this.state.rxStyle!['font-weight'],
+                lineHeight: this.state.rxStyle!['line-height'],
+                letterSpacing: this.state.rxStyle!['letter-spacing'],
+                wordSpacing: this.state.rxStyle!['word-spacing'],
                 borderBottomWidth: this.state.rxData.rowBorderWidth,
-                borderColor: this.state.rxData.rowBorderColor
+                borderColor: this.state.rxData.rowBorderColor,
             },
         }));
 
@@ -554,17 +544,15 @@ class InventwoWidgetTable extends InventwoGeneric {
                 backgroundColor: this.state.rxData.backgroundEvenRow,
             },
             [`&.${tableRowClasses.root}`]: {
-                height: this.state.rxData.columnHeight + (!Number.isNaN(Number(this.state.rxData.columnHeight)) ? 'px' : ''),
+                height: this.valWithUnit(this.state.rxData.columnHeight),
             },
         }));
 
-        if (json.length > 0) {
+        if (json && json.length > 0) {
             const countColumns = this.state.rxData.countColumns;
             if (countColumns === 0) {
                 Object.keys(json[0]).forEach((h, index) => {
-                    headers.push(<StyledTableHeaderCell key={index}>
-                        {h}
-                    </StyledTableHeaderCell>);
+                    headers.push(<StyledTableHeaderCell key={index}>{h}</StyledTableHeaderCell>);
                 });
             } else {
                 for (let i = 1; i <= this.state.rxData.countColumns; i++) {
@@ -573,18 +561,20 @@ class InventwoWidgetTable extends InventwoGeneric {
                     if (columnTitle === null) {
                         columnTitle = Object.keys(json[0])[i - 1];
                     }
-                    const styles = {
+                    const styles: CSSProperties = {
                         textAlign: this.state.rxData[`columnTitleAlign${i}`],
                     };
                     if (this.state.rxData[`columnWidth${i}`]) {
-                        styles.width = `${this.state.rxData[`columnWidth${i}`]}${(!Number.isNaN(Number(this.state.rxData[`columnWidth${i}`])) ? 'px' : '')}`;
+                        styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
                     }
-                    headers.push(<StyledTableHeaderCell
-                        key={i}
-                        style={styles}
-                    >
-                        {columnTitle}
-                    </StyledTableHeaderCell>);
+                    headers.push(
+                        <StyledTableHeaderCell
+                            key={i}
+                            style={styles}
+                        >
+                            {columnTitle}
+                        </StyledTableHeaderCell>,
+                    );
                 }
             }
 
@@ -600,7 +590,7 @@ class InventwoWidgetTable extends InventwoGeneric {
                 const columns = [];
 
                 if (countColumns === 0) {
-                    Object.values(r).forEach((v, indexCol) => {
+                    Object.values(r).forEach((v, indexCol: number) => {
                         if (typeof v === 'object' && v !== null) {
                             v = JSON.stringify(v);
                         }
@@ -620,7 +610,6 @@ class InventwoWidgetTable extends InventwoGeneric {
                         if ((columnValue === null || columnValue === '') && columnPlaceholder) {
                             columnValue = columnPlaceholder;
                         } else if (columnFormat === 'number') {
-                            // columnValue = parseFloat(columnValue).toFixed(this.state.rxData[`columnNumberDecimals${i}`] ?? 0);
                             const formatter = new Intl.NumberFormat(navigator.language, {
                                 minimumFractionDigits: this.state.rxData[`columnNumberDecimals${i}`] ?? 0,
                                 maximumFractionDigits: this.state.rxData[`columnNumberDecimals${i}`] ?? 0,
@@ -643,67 +632,75 @@ class InventwoWidgetTable extends InventwoGeneric {
                             columnValue = JSON.stringify(columnValue);
                         }
 
-                        columns.push(<StyledTableCell
-                            key={`${index}_${i}`}
-                            style={{
-                                textAlign: this.state.rxData[`columnContentAlign${i}`],
-                            }}
-                        >
-                            {columnPrefix}
-                            {columnValue}
-                            {columnSuffix}
-                        </StyledTableCell>);
+                        columns.push(
+                            <StyledTableCell
+                                key={`${index}_${i}`}
+                                style={{
+                                    textAlign: this.state.rxData[`columnContentAlign${i}`],
+                                }}
+                            >
+                                {columnPrefix}
+                                {columnValue}
+                                {columnSuffix}
+                            </StyledTableCell>,
+                        );
                     }
                 }
 
-                rows.push(<StyledTableRow
-                    key={index}
-                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                >
-                    {columns}
-                </StyledTableRow>);
+                rows.push(
+                    <StyledTableRow
+                        key={index}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                        {columns}
+                    </StyledTableRow>,
+                );
             }
         }
 
         let shadow = '';
-        if(outerShadowStyle.outerShadowColor) {
-            shadow += `${outerShadowStyle.outerShadowX}px ${outerShadowStyle.outerShadowY}px ${outerShadowStyle.outerShadowBlur}px ${outerShadowStyle.outerShadowSize}px ${outerShadowStyle.outerShadowColor}`
+        if (outerShadowStyle.outerShadowColor) {
+            shadow += `${outerShadowStyle.outerShadowX}px ${outerShadowStyle.outerShadowY}px ${outerShadowStyle.outerShadowBlur}px ${outerShadowStyle.outerShadowSize}px ${outerShadowStyle.outerShadowColor}`;
         }
 
-        const borderRadiusStyle = this.getStyle('borderRadiusStyleFromWidget', this.groupAttrs.attr_group_css_border_radius)
+        const borderRadiusStyle = this.getStyle(
+            'borderRadiusStyleFromWidget',
+            this.groupAttrs.attr_group_css_border_radius,
+        );
 
-        return <div style={{
-            boxShadow: `${shadow}`,
-            overflow: 'hidden',
-            height: '100%',
-            borderColor: borderStyle.borderColor,
-            borderTopWidth: `${borderStyle.borderSizeTop}px`,
-            borderBottomWidth: `${borderStyle.borderSizeBottom}px`,
-            borderLeftWidth: `${borderStyle.borderSizeLeft}px`,
-            borderRightWidth: `${borderStyle.borderSizeRight}px`,
-            borderStyle: borderStyle.borderStyle,
-            borderRadius: `${borderRadiusStyle.borderRadiusTopLeft}px ${borderRadiusStyle.borderRadiusTopRight}px ${borderRadiusStyle.borderRadiusBottomRight}px ${borderRadiusStyle.borderRadiusBottomLeft}px`
-        }}>
-            <TableContainer component={Paper} style={{
-                height: '100%',
-                background: 'transparent',
-                borderRadius: 0
-            }}>
-                <Table>
-                    {this.state.rxData.showHead && (
-                        <TableHead>
-                            <StyledTableHeaderRow>
-                                {headers}
-                            </StyledTableHeaderRow>
-                        </TableHead>
-                    )}
-                    <TableBody>
-                        {rows}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </div>;
+        return (
+            <div
+                style={{
+                    boxShadow: `${shadow}`,
+                    overflow: 'hidden',
+                    height: '100%',
+                    borderColor: borderStyle.borderColor,
+                    borderTopWidth: `${borderStyle.borderSizeTop}px`,
+                    borderBottomWidth: `${borderStyle.borderSizeBottom}px`,
+                    borderLeftWidth: `${borderStyle.borderSizeLeft}px`,
+                    borderRightWidth: `${borderStyle.borderSizeRight}px`,
+                    borderStyle: borderStyle.borderStyle,
+                    borderRadius: `${borderRadiusStyle.borderRadiusTopLeft}px ${borderRadiusStyle.borderRadiusTopRight}px ${borderRadiusStyle.borderRadiusBottomRight}px ${borderRadiusStyle.borderRadiusBottomLeft}px`,
+                }}
+            >
+                <TableContainer
+                    component={Paper}
+                    style={{
+                        height: '100%',
+                        background: 'transparent',
+                        borderRadius: 0,
+                    }}
+                >
+                    <Table>
+                        {this.state.rxData.showHead && (
+                            <TableHead>
+                                <StyledTableHeaderRow>{headers}</StyledTableHeaderRow>
+                            </TableHead>
+                        )}
+                        <TableBody>{rows}</TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
+        );
     }
 }
-
-export default InventwoWidgetTable;

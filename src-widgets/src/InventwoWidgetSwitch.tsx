@@ -1,14 +1,20 @@
 import React from 'react';
-import {
-    FormControlLabel,
-    FormGroup,
-    Switch,
-} from '@mui/material';
+import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 
 import InventwoGeneric from './InventwoGeneric';
+import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState } from '@iobroker/types-vis-2';
 
-class InventwoWidgetSwitch extends InventwoGeneric {
-    static getWidgetInfo() {
+interface SwitchRxData {
+    oid: null | string;
+    valueFalse: any;
+    valueTrue: any;
+    textFalse: string;
+    textTrue: string;
+    textPosition: 'top' | 'bottom' | 'start' | 'end';
+}
+
+export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, VisRxWidgetState> {
+    static getWidgetInfo(): RxWidgetInfo {
         return {
             id: 'tplInventwoWidgetSwitch',
             visSet: 'vis-2-widgets-inventwo',
@@ -37,7 +43,8 @@ class InventwoWidgetSwitch extends InventwoGeneric {
                             name: 'textFalse',
                             type: 'html',
                             label: 'text_false',
-                        }, {
+                        },
+                        {
                             name: 'textTrue',
                             type: 'html',
                             label: 'text_true',
@@ -101,10 +108,12 @@ class InventwoWidgetSwitch extends InventwoGeneric {
                             hidden: '!!data.trackFromWidget',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
                             hidden: '!!data.trackFromWidget',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_track_shadow',
                             hidden: '!!data.trackFromWidget',
@@ -210,10 +219,12 @@ class InventwoWidgetSwitch extends InventwoGeneric {
                             hidden: '!!data.thumbFromWidget',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
                             hidden: '!!data.thumbFromWidget',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_thumb_shadow',
                             hidden: '!!data.thumbFromWidget',
@@ -276,100 +287,46 @@ class InventwoWidgetSwitch extends InventwoGeneric {
                 },
             ],
             visDefaultStyle: {
-                overflow: 'visible',
+                'overflow-x': 'visible',
+                'overflow-y': 'visible',
                 width: 70,
                 height: 40,
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-switch.png',
         };
     }
-
-    // eslint-disable-next-line class-methods-use-this
-    propertiesUpdate() {
-        // Widget has 3 important states
-        // 1. this.state.values - contains all state values, that are used in widget (automatically collected from widget info).
-        //                        So you can use `this.state.values[this.state.rxData.oid + '.val']` to get value of state with id this.state.rxData.oid
-        // 2. this.state.rxData - contains all widget data with replaced bindings. E.g. if this.state.data.type is `{system.adapter.admin.0.alive}`,
-        //                        then this.state.rxData.type will have state value of `system.adapter.admin.0.alive`
-        // 3. this.state.rxStyle - contains all widget styles with replaced bindings. E.g. if this.state.styles.width is `{javascript.0.width}px`,
-        //                        then this.state.rxData.type will have state value of `javascript.0.width` + 'px
-    }
-
-    componentDidMount() {
-        super.componentDidMount();
-
-        // Update data
-        this.propertiesUpdate();
-    }
-
     // Do not delete this method. It is used by vis to read the widget configuration.
     // eslint-disable-next-line class-methods-use-this
-    getWidgetInfo() {
+    getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetSwitch.getWidgetInfo();
     }
 
-    // This function is called every time when rxData is changed
-    onRxDataChanged() {
-        this.propertiesUpdate();
-    }
-
-    // This function is called every time when rxStyle is changed
-    // eslint-disable-next-line class-methods-use-this
-    onRxStyleChanged() {
-
-    }
-
-    // This function is called every time when some Object State updated, but all changes lands into this.state.values too
-    // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    onStateUpdated(id, state) {
-
-    }
-
-    static getI18nPrefix() {
+    static getI18nPrefix(): string {
         return 'vis_2_widgets_inventwo_';
     }
 
-    onChange() {
-        if (this.props.editMode) return;
+    onChange(): void {
+        if (this.props.editMode) {
+            return;
+        }
+
         const oid = this.state.rxData.oid;
-        if (this.getValue(this.state.rxData.oid) === InventwoWidgetSwitch.convertValue(this.state.rxData.valueTrue, true)) {
-            this.props.context.setValue(oid, InventwoWidgetSwitch.convertValue(this.state.rxData.valueFalse, false));
+        if (!this.validOid(oid) || !oid) {
+            return;
+        }
+        if (this.getValue(oid) === this.convertValue(this.state.rxData.valueTrue, true)) {
+            this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueFalse, false));
         } else {
-            this.props.context.setValue(oid, InventwoWidgetSwitch.convertValue(this.state.rxData.valueTrue, true));
+            this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue, true));
         }
     }
 
-    getValue(oid) {
-        if (oid !== undefined && oid !== '' && oid !== 'nothing_selected') {
-            return this.state.values[`${oid}.val`];
-        }
-        return undefined;
-    }
-
-    static convertValue(value, defaultValue) {
-        if (value === 'true') {
-            return true;
-        }
-        if (value === 'false') {
-            return false;
-        }
-        // eslint-disable-next-line no-restricted-globals
-        if (!isNaN(value)) {
-            return parseFloat(value);
-        }
-        if (value === undefined || value === null || value === '') {
-            return defaultValue;
-        }
-
-        return value;
-    }
-
-    renderWidgetBody(props) {
+    renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
         super.renderWidgetBody(props);
 
         const oid = this.state.rxData.oid;
         const value = this.getValue(oid);
-        const isChecked = value === InventwoWidgetSwitch.convertValue(this.state.rxData.valueTrue, true);
+        const isChecked = value === this.convertValue(this.state.rxData.valueTrue, true);
 
         const trackStyle = this.getStyle('trackFromWidget', this.groupAttrs.attr_group_css_track);
         const thumbStyle = this.getStyle('thumbFromWidget', this.groupAttrs.attr_group_css_thumb);
@@ -403,8 +360,8 @@ class InventwoWidgetSwitch extends InventwoGeneric {
             },
             '& .MuiSwitch-track': {
                 backgroundColor: trackStyle.trackColor,
-                // eslint-disable-next-line no-mixed-operators
-                borderRadius: `${trackStyle.trackBorderRadius / 2 / 100 * trackStyle.trackSize}px`,
+
+                borderRadius: `${(trackStyle.trackBorderRadius / 2 / 100) * trackStyle.trackSize}px`,
                 boxShadow: `${trackStyle.trackShadowX}px ${trackStyle.trackShadowY}px ${trackStyle.trackShadowBlur}px ${trackStyle.trackShadowSize}px ${trackShadowColor}`,
             },
             '& .Mui-checked + .MuiSwitch-track': {
@@ -412,18 +369,20 @@ class InventwoWidgetSwitch extends InventwoGeneric {
             },
         };
 
-        return <FormGroup>
-            <FormControlLabel
-                control={<Switch
-                    sx={attributes}
-                    onClick={() => this.onChange()}
-                    checked={isChecked}
-                />}
-                label={isChecked ? this.state.rxData.textTrue : this.state.rxData.textFalse}
-                labelPlacement={this.state.rxData.textPosition}
-            />
-        </FormGroup>;
+        return (
+            <FormGroup>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            sx={attributes}
+                            onClick={() => this.onChange()}
+                            checked={isChecked}
+                        />
+                    }
+                    label={isChecked ? this.state.rxData.textTrue : this.state.rxData.textFalse}
+                    labelPlacement={this.state.rxData.textPosition}
+                />
+            </FormGroup>
+        );
     }
 }
-
-export default InventwoWidgetSwitch;

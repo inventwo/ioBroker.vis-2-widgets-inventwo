@@ -40,6 +40,9 @@ Switches
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Switched to TypeScript
+
 ### 0.3.12 (2025-12-06)
 - Fixed content position caused by previous version
 

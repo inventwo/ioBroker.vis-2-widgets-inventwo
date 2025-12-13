@@ -1,17 +1,32 @@
 import React from 'react';
-import {
-    Card, CardContent, Dialog,
-    DialogContent, DialogTitle, IconButton,
-} from '@mui/material';
+import { Card, CardContent, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
 import { Icon } from '@iobroker/adapter-react-v5';
 
 import { hexToCSSFilter } from 'hex-to-css-filter';
-import iro from './lib/iro.min';
+import iro from '@jaames/iro';
 
 import './assets/inventwo.css';
 import InventwoGeneric from './InventwoGeneric';
+import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
+import type { ColorPickerProps } from '@jaames/iro/dist/ColorPicker';
+import type { UniversalCompleteRxData } from './types/UniversalWidgetRxDataTypes';
+import type {
+    UniversalWidgetAlignmentStyles,
+    UniversalWidgetBorderRadiusStyles,
+    UniversalWidgetBorderStyles,
+    UniversalWidgetClickFeedbackStyles,
+    UniversalWidgetContentStyles,
+    UniversalWidgetInnerShadowStyles,
+    UniversalWidgetOuterShadowStyles,
+    UniversalWidgetSpacingStyles,
+    UniversalWidgetStyles,
+    UniversalWidgetStylesStyles,
+    UniversalWidgetTextStyles,
+    UniversalWidgetTransparencyStyles,
+    UniversalWidgetValueData,
+} from './types/UniversalWidgetValueData';
 
 const styles = {
     dialogTitle: {
@@ -21,20 +36,34 @@ const styles = {
     },
 };
 
+interface UniversalState extends VisRxWidgetState {
+    currentView: null | string;
+    dialogOpen: boolean;
+    showFeedback: boolean;
+    isMounted: boolean;
+    svgRef: React.RefObject<SVGSVGElement | null>;
+    previousOidValue: any;
+    dialogCloseTimeout: null | number;
+    colorPicker: iro.ColorPicker | null;
+}
 
-class InventwoWidgetUniversal extends InventwoGeneric {
-    constructor(props) {
+export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
+    constructor(props: VisRxWidgetProps) {
         super(props);
-        this.state.currentView = null;
-        this.state.dialogOpen = false;
-        this.state.showFeedback = false;
-        this.state.isMounted = false;
-        this.state.svgRef = React.createRef();
-        this.state.previousOidValue = null;
-        this.state.dialogCloseTimeout = null;
+        this.state = {
+            ...this.state,
+            currentView: null,
+            dialogOpen: false,
+            showFeedback: false,
+            isMounted: false,
+            svgRef: React.createRef(),
+            previousOidValue: null,
+            dialogCloseTimeout: null,
+            colorPicker: null,
+        };
     }
 
-    static getWidgetInfo() {
+    static getWidgetInfo(): RxWidgetInfo {
         return {
             id: 'tplInventwoWidgetUniversal',
             visSet: 'vis-2-widgets-inventwo',
@@ -160,7 +189,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             default: false,
                             label: 'button_hold_value',
                             tooltip: 'tooltip_button_hold_value',
-                            hidden: 'data.type != "button"'
+                            hidden: 'data.type != "button"',
                         },
                     ],
                 },
@@ -227,9 +256,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             label: 'background',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_titlebar',
                         },
@@ -242,14 +273,14 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             name: 'dialogTitle',
                             type: 'html',
                             label: 'title',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
                             name: 'dialogTitleColor',
                             type: 'color',
                             default: 'rgb(255,255,255)',
                             label: 'color',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
                             name: 'dialogTitleSize',
@@ -259,13 +290,14 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 20,
                             label: 'size',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
 
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_titlebar_padding',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
                             name: 'dialogTitlePaddingTop',
@@ -275,7 +307,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'top',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
                             name: 'dialogTitlePaddingBottom',
@@ -285,7 +317,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'bottom',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
                             name: 'dialogTitlePaddingLeft',
@@ -295,7 +327,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 10,
                             label: 'left',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
                             name: 'dialogTitlePaddingRight',
@@ -305,30 +337,32 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'right',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_close_button',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
                             name: 'dialogCloseButtonBackground',
                             type: 'color',
                             default: 'rgba(255,255,255,0)',
                             label: 'background',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
                             name: 'dialogCloseButtonColor',
                             type: 'color',
                             default: 'rgba(255,255,255,1)',
                             label: 'color',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
                             name: 'dialogCloseButtonSize',
@@ -338,12 +372,14 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 14,
                             label: 'size',
-                            hidden: 'data.dialogTitleHide'
+                            hidden: 'data.dialogTitleHide',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_border_radius',
                         },
@@ -393,7 +429,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             name: 'clickThrough',
                             type: 'checkbox',
                             default: false,
-                            label: 'click_through'
+                            label: 'click_through',
                         },
                         {
                             label: 'from_widget',
@@ -401,7 +437,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             type: 'widget',
                             tpl: 'tplInventwoWidgetUniversal',
                             all: true,
-                            hidden: '!!data.clickThrough'
+                            hidden: '!!data.clickThrough',
                         },
                         {
                             name: 'feedbackDuration',
@@ -411,16 +447,18 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 100,
                             default: 0,
                             label: 'duration',
-                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
-                            hidden: '!!data.clickThrough'
+                            hidden: '!!data.clickThrough',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_colors',
-                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget',
                         },
                         {
                             name: 'contentColorFeedback',
@@ -433,32 +471,32 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             type: 'color',
                             default: 'rgba(69, 86, 24, 1)',
                             label: 'background',
-                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget',
                         },
                         {
                             name: 'textColorFeedback',
                             type: 'color',
                             label: 'text_color',
-                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget',
                         },
                         {
                             name: 'borderColorFeedback',
                             type: 'color',
                             label: 'border_color',
-                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget',
                         },
                         {
                             name: 'outerShadowColorFeedback',
                             type: 'color',
                             label: 'outer_shadow_color',
                             default: 'rgba(0, 0, 0, 1)',
-                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget',
                         },
                         {
                             name: 'innerShadowColorFeedback',
                             type: 'color',
                             label: 'inner_shadow_color',
-                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget'
+                            hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget',
                         },
                     ],
                 },
@@ -468,6 +506,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_state_default',
                     fields: [
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_text_and_content',
                         },
@@ -511,10 +550,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             label: 'content_blink_interval',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
                         },
-
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_colors',
                         },
@@ -535,32 +575,32 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             name: 'background',
                             type: 'color',
                             label: 'background',
-                            hidden: '!!data.defaultColorsStyleFromWidget'
+                            hidden: '!!data.defaultColorsStyleFromWidget',
                         },
                         {
                             name: 'textColor',
                             type: 'color',
                             label: 'text_color',
-                            hidden: '!!data.defaultColorsStyleFromWidget'
+                            hidden: '!!data.defaultColorsStyleFromWidget',
                         },
                         {
                             name: 'borderColor',
                             type: 'color',
                             label: 'border_color',
-                            hidden: '!!data.defaultColorsStyleFromWidget'
+                            hidden: '!!data.defaultColorsStyleFromWidget',
                         },
                         {
                             name: 'outerShadowColor',
                             type: 'color',
                             label: 'outer_shadow_color',
                             default: 'rgba(0, 0, 0, 1)',
-                            hidden: '!!data.defaultColorsStyleFromWidget'
+                            hidden: '!!data.defaultColorsStyleFromWidget',
                         },
                         {
                             name: 'innerShadowColor',
                             type: 'color',
                             label: 'inner_shadow_color',
-                            hidden: '!!data.defaultColorsStyleFromWidget'
+                            hidden: '!!data.defaultColorsStyleFromWidget',
                         },
                     ],
                 },
@@ -571,6 +611,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     label: 'attr_group_states',
                     fields: [
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_condition',
                         },
@@ -610,57 +651,59 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             hidden: 'data.type == "nav" || data["compareBy" + index] == "view" || data.mode == "separatedButtons"',
                         },
                         {
-                            name: 'value',     // name in data structure
+                            name: 'value',
                             type: 'text',
-                            label: 'value', // translated field label
+                            label: 'value',
                             hidden: '(data.type == "nav" && data["compareBy" + index] != "value") || data["compareBy" + index] == "view"',
                         },
                         {
-                            name: 'view',     // name in data structure
+                            name: 'view',
                             type: 'views',
-                            label: 'view', // translated field label,
+                            label: 'view',
                             hidden: '(data.type != "nav" && data["compareBy" + index] != "view") || data["compareBy" + index] == "value"',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_text_and_content',
                         },
                         {
-                            name: 'text',     // name in data structure
+                            name: 'text',
                             type: 'html',
-                            label: 'text', // translated field label
+                            label: 'text',
                         },
                         {
-                            name: 'textTrue',     // name in data structure
+                            name: 'textTrue',
                             type: 'html',
-                            label: 'text_true', // translated field label
+                            label: 'text_true',
                             hidden: 'data.mode == "singleButton"',
                         },
                         {
-                            name: 'icon',     // name in data structure
+                            name: 'icon',
                             type: 'icon64',
-                            label: 'icon', // translated field label
+                            label: 'icon',
                             hidden: 'data.contentType != "icon"',
                         },
                         {
-                            name: 'iconTrue',     // name in data structure
+                            name: 'iconTrue',
                             type: 'icon64',
-                            label: 'icon_true', // translated field label
+                            label: 'icon_true',
                             hidden: 'data.mode == "singleButton" || data.contentType != "icon"',
                         },
                         {
-                            name: 'image',     // name in data structure
+                            name: 'image',
                             type: 'image',
-                            label: 'image', // translated field label
+                            label: 'image',
                             hidden: 'data.contentType != "image"',
                         },
                         {
-                            name: 'imageTrue',     // name in data structure
+                            name: 'imageTrue',
                             type: 'image',
-                            label: 'image_true', // translated field label
+                            label: 'image_true',
                             hidden: 'data.mode == "singleButton" || data.contentType != "image"',
                         },
                         {
@@ -697,9 +740,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             label: 'content_blink_interval',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_colors',
                         },
@@ -711,15 +756,15 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             all: true,
                         },
                         {
-                            name: 'contentColor',     // name in data structure
+                            name: 'contentColor',
                             type: 'color',
-                            label: 'content_color', // translated field label,
+                            label: 'content_color',
                             hidden: '!!data["stateColorsStyleFromWidget" + index] || data.contentType != "icon" && data.contentType != "image"',
                         },
                         {
-                            name: 'contentColorTrue',     // name in data structure
+                            name: 'contentColorTrue',
                             type: 'color',
-                            label: 'content_color_true', // translated field label
+                            label: 'content_color_true',
                             hidden: '!!data["stateColorsStyleFromWidget" + index] || data.mode == "singleButton" || data.contentType != "icon"',
                         },
                         {
@@ -727,7 +772,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             type: 'color',
                             default: 'rgb(69,86,24)',
                             label: 'background',
-                            hidden: '!!data["stateColorsStyleFromWidget" + index]'
+                            hidden: '!!data["stateColorsStyleFromWidget" + index]',
                         },
                         {
                             name: 'backgroundTrue',
@@ -740,7 +785,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             name: 'textColor',
                             type: 'color',
                             label: 'text_color',
-                            hidden: '!!data["stateColorsStyleFromWidget" + index]'
+                            hidden: '!!data["stateColorsStyleFromWidget" + index]',
                         },
                         {
                             name: 'textColorTrue',
@@ -752,7 +797,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             name: 'borderColor',
                             type: 'color',
                             label: 'border_color',
-                            hidden: '!!data["stateColorsStyleFromWidget" + index]'
+                            hidden: '!!data["stateColorsStyleFromWidget" + index]',
                         },
                         {
                             name: 'borderColorTrue',
@@ -778,7 +823,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             name: 'innerShadowColor',
                             type: 'color',
                             label: 'inner_shadow_color',
-                            hidden: '!!data["stateColorsStyleFromWidget" + index]'
+                            hidden: '!!data["stateColorsStyleFromWidget" + index]',
                         },
                         {
                             name: 'innerShadowColorTrue',
@@ -787,9 +832,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             hidden: '!!data["stateColorsStyleFromWidget" + index] || data.mode == "singleButton"',
                         },
                         {
+                            name: '',
                             type: 'delimiter',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_content',
                         },
@@ -849,6 +896,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             label: 'oid_value_3',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_layout_size',
                         },
@@ -913,6 +961,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             label: 'border_color',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_components',
                         },
@@ -995,7 +1044,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'none',
                             label: 'text_decoration',
-                            hidden: '!!data.textStyleFromWidget'
+                            hidden: '!!data.textStyleFromWidget',
                         },
                         {
                             name: 'textMarginTop',
@@ -1005,7 +1054,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_top',
-                            hidden: '!!data.textStyleFromWidget'
+                            hidden: '!!data.textStyleFromWidget',
                         },
                         {
                             name: 'textMarginBottom',
@@ -1015,7 +1064,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_bottom',
-                            hidden: '!!data.textStyleFromWidget'
+                            hidden: '!!data.textStyleFromWidget',
                         },
                         {
                             name: 'textMarginLeft',
@@ -1025,7 +1074,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_left',
-                            hidden: '!!data.textStyleFromWidget'
+                            hidden: '!!data.textStyleFromWidget',
                         },
                         {
                             name: 'textMarginRight',
@@ -1035,7 +1084,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_right',
-                            hidden: '!!data.textStyleFromWidget'
+                            hidden: '!!data.textStyleFromWidget',
                         },
                     ],
                 },
@@ -1072,7 +1121,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_top',
-                            hidden: '!!data.contentStyleFromWidget'
+                            hidden: '!!data.contentStyleFromWidget',
                         },
                         {
                             name: 'contentMarginBottom',
@@ -1082,7 +1131,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_bottom',
-                            hidden: '!!data.contentStyleFromWidget'
+                            hidden: '!!data.contentStyleFromWidget',
                         },
                         {
                             name: 'contentMarginLeft',
@@ -1092,7 +1141,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_left',
-                            hidden: '!!data.contentStyleFromWidget'
+                            hidden: '!!data.contentStyleFromWidget',
                         },
                         {
                             name: 'contentMarginRight',
@@ -1102,7 +1151,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'margin_right',
-                            hidden: '!!data.contentStyleFromWidget'
+                            hidden: '!!data.contentStyleFromWidget',
                         },
                         {
                             name: 'contentSize',
@@ -1112,7 +1161,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 40,
                             label: 'content_size',
-                            hidden: '!!data.contentStyleFromWidget || (data.contentType == "image" && data.imageObjectFit)'
+                            hidden: '!!data.contentStyleFromWidget || (data.contentType == "image" && data.imageObjectFit)',
                         },
                         {
                             name: 'contentRotation',
@@ -1122,24 +1171,26 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'rotation',
-                            hidden: '!!data.contentStyleFromWidget'
+                            hidden: '!!data.contentStyleFromWidget',
                         },
                         {
                             name: 'contentMirror',
                             type: 'checkbox',
                             default: false,
                             label: 'mirror',
-                            hidden: '!!data.contentStyleFromWidget'
+                            hidden: '!!data.contentStyleFromWidget',
                         },
 
                         {
+                            name: '',
                             type: 'delimiter',
-                            hidden: 'data.contentType != "image"'
+                            hidden: 'data.contentType != "image"',
                         },
                         {
+                            name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_image_resize_and_position',
-                            hidden: 'data.contentType != "image"'
+                            hidden: 'data.contentType != "image"',
                         },
                         {
                             name: 'imageObjectFit',
@@ -1153,7 +1204,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'none',
                             label: 'fill_type',
-                            hidden: '!!data.contentStyleFromWidget || data.contentType != "image"'
+                            hidden: '!!data.contentStyleFromWidget || data.contentType != "image"',
                         },
                         {
                             name: 'imageBackgroundSize',
@@ -1163,7 +1214,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 100,
                             label: 'scale',
-                            hidden: '!!data.contentStyleFromWidget || data.imageObjectFit != "repeat" || data.contentType != "image"'
+                            hidden: '!!data.contentStyleFromWidget || data.imageObjectFit != "repeat" || data.contentType != "image"',
                         },
                         {
                             name: 'imageObjectPosition',
@@ -1178,7 +1229,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'none',
                             label: 'position',
-                            hidden: '!!data.contentStyleFromWidget || data.contentType != "image" || data.imageObjectFit == "none"'
+                            hidden: '!!data.contentStyleFromWidget || data.contentType != "image" || data.imageObjectFit == "none"',
                         },
                     ],
                 },
@@ -1194,18 +1245,18 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             all: true,
                         },
                         {
-                            name: 'flexDirection',     // name in data structure
+                            name: 'flexDirection',
                             type: 'select',
                             options: [
                                 { value: 'row', label: 'row' },
                                 { value: 'column', label: 'column' },
                             ],
                             default: 'column',
-                            label: 'direction', // translated field label
-                            hidden: '!!data.alignmentStyleFromWidget'
+                            label: 'direction',
+                            hidden: '!!data.alignmentStyleFromWidget',
                         },
                         {
-                            name: 'alignItems',     // name in data structure
+                            name: 'alignItems',
                             type: 'select',
                             options: [
                                 { value: 'flex-start', label: 'start' },
@@ -1214,11 +1265,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                                 { value: 'space-between', label: 'space between' },
                             ],
                             default: 'space-between',
-                            label: 'alignment', // translated field label
-                            hidden: '!!data.alignmentStyleFromWidget'
+                            label: 'alignment',
+                            hidden: '!!data.alignmentStyleFromWidget',
                         },
                         {
-                            name: 'textAlign',     // name in data structure
+                            name: 'textAlign',
                             type: 'select',
                             options: [
                                 { value: 'start', label: 'start' },
@@ -1226,11 +1277,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                                 { value: 'end', label: 'end' },
                             ],
                             default: 'start',
-                            label: 'text_align', // translated field label
-                            hidden: '!!data.alignmentStyleFromWidget'
+                            label: 'text_align',
+                            hidden: '!!data.alignmentStyleFromWidget',
                         },
                         {
-                            name: 'contentAlign',     // name in data structure
+                            name: 'contentAlign',
                             type: 'select',
                             options: [
                                 { value: 'start', label: 'start' },
@@ -1238,14 +1289,14 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                                 { value: 'end', label: 'end' },
                             ],
                             default: 'center',
-                            label: 'content_align', // translated field label
-                            hidden: '!!data.alignmentStyleFromWidget'
+                            label: 'content_align',
+                            hidden: '!!data.alignmentStyleFromWidget',
                         },
                         {
-                            name: 'invertOrder',     // name in data structure
+                            name: 'invertOrder',
                             type: 'checkbox',
-                            label: 'invert_order', // translated field label
-                            hidden: '!!data.alignmentStyleFromWidget'
+                            label: 'invert_order',
+                            hidden: '!!data.alignmentStyleFromWidget',
                         },
                     ],
                 },
@@ -1268,7 +1319,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 0.1,
                             default: 1,
                             label: 'background_opacity',
-                            hidden: '!!data.transparencyStyleFromWidget'
+                            hidden: '!!data.transparencyStyleFromWidget',
                         },
                         {
                             name: 'contentOpacity',
@@ -1278,7 +1329,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 0.1,
                             default: 1,
                             label: 'content_opacity',
-                            hidden: '!!data.transparencyStyleFromWidget'
+                            hidden: '!!data.transparencyStyleFromWidget',
                         },
                     ],
                 },
@@ -1301,7 +1352,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 10,
                             label: 'padding_left',
-                            hidden: '!!data.spacingStyleFromWidget'
+                            hidden: '!!data.spacingStyleFromWidget',
                         },
                         {
                             name: 'paddingRight',
@@ -1311,7 +1362,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 10,
                             label: 'padding_right',
-                            hidden: '!!data.spacingStyleFromWidget'
+                            hidden: '!!data.spacingStyleFromWidget',
                         },
                         {
                             name: 'paddingTop',
@@ -1321,7 +1372,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 10,
                             label: 'padding_top',
-                            hidden: '!!data.spacingStyleFromWidget'
+                            hidden: '!!data.spacingStyleFromWidget',
                         },
                         {
                             name: 'paddingBottom',
@@ -1331,7 +1382,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 10,
                             label: 'padding_bottom',
-                            hidden: '!!data.spacingStyleFromWidget'
+                            hidden: '!!data.spacingStyleFromWidget',
                         },
                     ],
                 },
@@ -1354,7 +1405,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 12,
                             label: 'top_left',
-                            hidden: '!!data.borderRadiusStyleFromWidget'
+                            hidden: '!!data.borderRadiusStyleFromWidget',
                         },
                         {
                             name: 'borderRadiusTopRight',
@@ -1364,7 +1415,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'top_right',
-                            hidden: '!!data.borderRadiusStyleFromWidget'
+                            hidden: '!!data.borderRadiusStyleFromWidget',
                         },
                         {
                             name: 'borderRadiusBottomRight',
@@ -1374,7 +1425,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 12,
                             label: 'bottom_right',
-                            hidden: '!!data.borderRadiusStyleFromWidget'
+                            hidden: '!!data.borderRadiusStyleFromWidget',
                         },
                         {
                             name: 'borderRadiusBottomLeft',
@@ -1384,7 +1435,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'bottom_left',
-                            hidden: '!!data.borderRadiusStyleFromWidget'
+                            hidden: '!!data.borderRadiusStyleFromWidget',
                         },
                     ],
                 },
@@ -1407,7 +1458,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_top',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                         {
                             name: 'borderSizeBottom',
@@ -1417,7 +1468,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_bottom',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                         {
                             name: 'borderSizeLeft',
@@ -1427,7 +1478,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_left',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                         {
                             name: 'borderSizeRight',
@@ -1437,7 +1488,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size_right',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                         {
                             name: 'borderStyle',
@@ -1454,7 +1505,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             ],
                             default: 'none',
                             label: 'border_style',
-                            hidden: '!!data.borderStyleFromWidget'
+                            hidden: '!!data.borderStyleFromWidget',
                         },
                     ],
                 },
@@ -1477,7 +1528,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 2,
                             label: 'x_offset',
-                            hidden: '!!data.outerShadowStyleFromWidget'
+                            hidden: '!!data.outerShadowStyleFromWidget',
                         },
                         {
                             name: 'outerShadowY',
@@ -1487,7 +1538,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 2,
                             label: 'y_offset',
-                            hidden: '!!data.outerShadowStyleFromWidget'
+                            hidden: '!!data.outerShadowStyleFromWidget',
                         },
                         {
                             name: 'outerShadowBlur',
@@ -1497,7 +1548,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 2,
                             label: 'blur',
-                            hidden: '!!data.outerShadowStyleFromWidget'
+                            hidden: '!!data.outerShadowStyleFromWidget',
                         },
                         {
                             name: 'outerShadowSize',
@@ -1507,7 +1558,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 1,
                             label: 'size',
-                            hidden: '!!data.outerShadowStyleFromWidget'
+                            hidden: '!!data.outerShadowStyleFromWidget',
                         },
                     ],
                 },
@@ -1530,7 +1581,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'x_offset',
-                            hidden: '!!data.innerShadowStyleFromWidget'
+                            hidden: '!!data.innerShadowStyleFromWidget',
                         },
                         {
                             name: 'innerShadowY',
@@ -1540,7 +1591,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'y_offset',
-                            hidden: '!!data.innerShadowStyleFromWidget'
+                            hidden: '!!data.innerShadowStyleFromWidget',
                         },
                         {
                             name: 'innerShadowBlur',
@@ -1550,7 +1601,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'blur',
-                            hidden: '!!data.innerShadowStyleFromWidget'
+                            hidden: '!!data.innerShadowStyleFromWidget',
                         },
                         {
                             name: 'innerShadowSize',
@@ -1560,7 +1611,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                             step: 1,
                             default: 0,
                             label: 'size',
-                            hidden: '!!data.innerShadowStyleFromWidget'
+                            hidden: '!!data.innerShadowStyleFromWidget',
                         },
                     ],
                 },
@@ -1571,17 +1622,17 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 width: 110,
                 height: 110,
                 position: 'absolute',
-                overflow: 'visible',
+                'overflow-x': 'visible',
+                'overflow-y': 'visible',
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-universal.png',
         };
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    propertiesUpdate() {
-        // Widget has 3 important states
+    propertiesUpdate(): void {
+        // The Widget has 3 important states
         // 1. this.state.values - contains all state values, that are used in widget (automatically collected from widget info).
-        //                        So you can use `this.state.values[this.state.rxData.oid + '.val']` to get value of state with id this.state.rxData.oid
+        //                        So you can use `this.state.values[this.state.rxData.oid + '.val']` to get the value of state with id this.state.rxData.oid
         // 2. this.state.rxData - contains all widget data with replaced bindings. E.g. if this.state.data.type is `{system.adapter.admin.0.alive}`,
         //                        then this.state.rxData.type will have state value of `system.adapter.admin.0.alive`
         // 3. this.state.rxStyle - contains all widget styles with replaced bindings. E.g. if this.state.styles.width is `{javascript.0.width}px`,
@@ -1667,71 +1718,110 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 });
             }
 
-            const el = document.querySelector(`#${this.props.id} .vis-inventwo-widget-color-picker-wrapper`);
-            el.innerHTML = '';
+            const el: HTMLElement | null = document.querySelector(
+                `#${this.props.id} .vis-inventwo-widget-color-picker-wrapper`,
+            );
+            if (el) {
+                el.innerHTML = '';
 
-            this.state.colorPicker = new iro.ColorPicker(el, {
-                width: this.state.rxData.colorPickerWidth,
-                color: '#ffff00',
-                layout: components,
-                handleRadius: this.state.rxData.colorPickerHandleSize,
-                padding: this.state.rxData.colorPickerHandleMargin,
-                margin: this.state.rxData.colorPickerComponentsSpace,
-                layoutDirection: this.state.rxData.colorPickerDirection,
-                borderWidth: this.state.rxData.colorPickerBorderWidth,
-                borderColor: this.state.rxData.colorPickerBorderColor,
-            });
+                const colorPickerProps: ColorPickerProps = {
+                    width: this.state.rxData.colorPickerWidth,
+                    color: '#ffff00',
+                    layout: components,
+                    handleRadius: this.state.rxData.colorPickerHandleSize,
+                    padding: this.state.rxData.colorPickerHandleMargin,
+                    margin: this.state.rxData.colorPickerComponentsSpace,
+                    layoutDirection: this.state.rxData.colorPickerDirection,
+                    borderWidth: this.state.rxData.colorPickerBorderWidth,
+                    borderColor: this.state.rxData.colorPickerBorderColor,
+                };
+                // @ts-expect-error
+                const colorPicker = new iro.ColorPicker(el, colorPickerProps);
+                this.setState({ colorPicker: colorPicker });
 
-            this.state.colorPicker.on('input:change', color => {
-                const colorModel = this.state.rxData.colorPickerColorModel;
-                // eslint-disable-next-line default-case
-                switch (colorModel) {
-                    case 'hex':
-                        if (this.state.rxData.colorPickerOid) this.props.context.setValue(this.state.rxData.colorPickerOid, color.hexString);
-                        break;
-                    case 'hex8':
-                        if (this.state.rxData.colorPickerOid) this.props.context.setValue(this.state.rxData.colorPickerOid, color.hex8String);
-                        break;
-                    case 'rgb':
-                        if (this.state.rxData.colorPickerOid1) this.props.context.setValue(this.state.rxData.colorPickerOid1, color.rgb.r);
-                        if (this.state.rxData.colorPickerOid2) this.props.context.setValue(this.state.rxData.colorPickerOid2, color.rgb.g);
-                        if (this.state.rxData.colorPickerOid3) this.props.context.setValue(this.state.rxData.colorPickerOid3, color.rgb.b);
-                        break;
-                    case 'hsl':
-                        if (this.state.rxData.colorPickerOid1) this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsl.h);
-                        if (this.state.rxData.colorPickerOid2) this.props.context.setValue(this.state.rxData.colorPickerOid2, color.hsl.s);
-                        if (this.state.rxData.colorPickerOid3) this.props.context.setValue(this.state.rxData.colorPickerOid3, color.hsl.l);
-                        break;
-                    case 'hsv':
-                        if (this.state.rxData.colorPickerOid1) this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsv.h);
-                        if (this.state.rxData.colorPickerOid2) this.props.context.setValue(this.state.rxData.colorPickerOid2, color.hsv.s);
-                        if (this.state.rxData.colorPickerOid3) this.props.context.setValue(this.state.rxData.colorPickerOid3, color.hsv.v);
-                        break;
-                }
-            });
+                colorPicker.on('input:change', (color: iro.Color) => {
+                    const colorModel = this.state.rxData.colorPickerColorModel;
 
-            this.setColorPickerColor();
+                    switch (colorModel) {
+                        case 'hex':
+                            if (this.state.rxData.colorPickerOid) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid, color.hexString);
+                            }
+                            break;
+                        case 'hex8':
+                            if (this.state.rxData.colorPickerOid) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid, color.hex8String);
+                            }
+                            break;
+                        case 'rgb':
+                            if (this.state.rxData.colorPickerOid1) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid1, color.rgb.r);
+                            }
+                            if (this.state.rxData.colorPickerOid2) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid2, color.rgb.g);
+                            }
+                            if (this.state.rxData.colorPickerOid3) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid3, color.rgb.b);
+                            }
+                            break;
+                        case 'hsl':
+                            if (this.state.rxData.colorPickerOid1) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsl.h);
+                            }
+                            if (this.state.rxData.colorPickerOid2) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid2, color.hsl.s);
+                            }
+                            if (this.state.rxData.colorPickerOid3) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid3, color.hsl.l);
+                            }
+                            break;
+                        case 'hsv':
+                            if (this.state.rxData.colorPickerOid1) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsv.h ?? null);
+                            }
+                            if (this.state.rxData.colorPickerOid2) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid2, color.hsv.s ?? null);
+                            }
+                            if (this.state.rxData.colorPickerOid3) {
+                                this.props.context.setValue(this.state.rxData.colorPickerOid3, color.hsv.v ?? null);
+                            }
+                            break;
+                    }
+                });
+
+                void this.setColorPickerColor();
+            }
         }
     }
 
-    async setColorPickerColor() {
+    async setColorPickerColor(): Promise<void> {
+        if (!this.state.colorPicker) {
+            return;
+        }
         const colorModel = this.state.rxData.colorPickerColorModel;
-        const color = this.state.rxData.colorPickerOid ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid)).val : undefined;
-        const color1 = this.state.rxData.colorPickerOid1 ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid1)).val : undefined;
-        const color2 = this.state.rxData.colorPickerOid2 ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid2)).val : undefined;
-        const color3 = this.state.rxData.colorPickerOid3 ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid3)).val : undefined;
+        const color = this.state.rxData.colorPickerOid
+            ? ((await this.props.context.socket.getState(this.state.rxData.colorPickerOid))?.val as string)
+            : undefined;
+        const color1 = this.state.rxData.colorPickerOid1
+            ? ((await this.props.context.socket.getState(this.state.rxData.colorPickerOid1))?.val as number)
+            : undefined;
+        const color2 = this.state.rxData.colorPickerOid2
+            ? ((await this.props.context.socket.getState(this.state.rxData.colorPickerOid2))?.val as number)
+            : undefined;
+        const color3 = this.state.rxData.colorPickerOid3
+            ? ((await this.props.context.socket.getState(this.state.rxData.colorPickerOid3))?.val as number)
+            : undefined;
 
-        // eslint-disable-next-line default-case
         switch (colorModel) {
             case 'hex':
-                if (color && (/^#([A-Fa-f0-9]{3}$)|([A-Fa-f0-9]{6}$)/.test(color))) {
+                if (color && /^#([A-Fa-f0-9]{3}$)|([A-Fa-f0-9]{6}$)/.test(color)) {
                     this.state.colorPicker.color.hexString = color;
                 } else {
                     this.state.colorPicker.color.hexString = '#ffffff';
                 }
                 break;
             case 'hex8':
-                if (color && (/^#([A-Fa-f0-9]{8}$)/.test(color))) {
+                if (color && /^#([A-Fa-f0-9]{8}$)/.test(color)) {
                     this.state.colorPicker.color.hex8String = color;
                 } else {
                     this.state.colorPicker.color.hexString = '#ffffffff';
@@ -1785,7 +1875,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         }
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         super.componentDidMount();
 
         // Update data
@@ -1793,40 +1883,33 @@ class InventwoWidgetUniversal extends InventwoGeneric {
 
         // Adding delay to prevent dialog is opened on page load or view change, when object id value matches
         setTimeout(() => {
-            this.state.isMounted = true;
+            this.setState({ isMounted: true });
         }, 500);
 
-        if(!this.props.editMode && this.state.rxData.clickThrough) {
+        if (!this.props.editMode && this.state.rxData.clickThrough) {
             this.refService.current.style.pointerEvents = 'none';
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if(prevState.dialogOpen && !this.state.dialogOpen) {
-            clearTimeout(this.state.dialogCloseTimeout)
+    componentDidUpdate(_prevProps: any, prevState: { dialogOpen: any }): void {
+        if (prevState.dialogOpen && !this.state.dialogOpen && this.state.dialogCloseTimeout) {
+            clearTimeout(this.state.dialogCloseTimeout);
         }
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
     // eslint-disable-next-line class-methods-use-this
-    getWidgetInfo() {
+    getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetUniversal.getWidgetInfo();
     }
 
     // This function is called every time when rxData is changed
-    onRxDataChanged() {
+    onRxDataChanged(): void {
         this.propertiesUpdate();
     }
 
-    // This function is called every time when rxStyle is changed
-    // eslint-disable-next-line class-methods-use-this
-    onRxStyleChanged() {
-
-    }
-
     // This function is called every time when some Object State updated, but all changes lands into this.state.values too
-    // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    onStateUpdated(id, state) {
+    onStateUpdated(id: string, state: ioBroker.State): void {
         if (this.state.rxData.type === 'viewInDialog' && id === this.state.rxData.oid && !this.props.editMode) {
             const val = this.convertValue(this.state.rxData.valueTrue);
             if (this.state.isMounted) {
@@ -1839,26 +1922,12 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         }
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    eval(value1, value2, operator = '===') {
-        // eslint-disable-next-line no-restricted-globals
-        if (isNaN(value1)) {
-            value1 = `"${value1}"`;
-        }
-        // eslint-disable-next-line no-restricted-globals
-        if (isNaN(value2)) {
-            value2 = `"${value2}"`;
-        }
-        // eslint-disable-next-line no-eval
-        return eval(`${value1} ${operator} ${value2}`);
-    }
-
-    static getI18nPrefix() {
+    static getI18nPrefix(): string {
         return 'vis_2_widgets_inventwo_';
     }
 
     // eslint-disable-next-line class-methods-use-this
-    compare(value1, value2, operator = '===') {
+    compare(value1: any, value2: any, operator = '==='): boolean {
         switch (operator) {
             case '===':
             case '==':
@@ -1878,14 +1947,13 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         }
     }
 
-    getValueData(index = null) {
+    getValueData(index: number | null = null): UniversalWidgetValueData {
         let oid = null;
         let value = null;
-        let data = null;
+        let data: UniversalWidgetStyles | null = null;
 
         if (index === null) {
             for (let i = 1; i <= this.state.rxData.countStates; i++) {
-
                 let compareBy = this.state.rxData[`compareBy${i}`];
                 if (compareBy === undefined || compareBy === null) {
                     compareBy = 'default';
@@ -1896,53 +1964,34 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     comparisonOperator = '===';
                 }
 
-
                 let compareValue = this.state.rxData.valueTrue;
-                if (this.state.rxData[`value${i}`] !== undefined
-                    && this.state.rxData[`value${i}`] !== null
-                ) {
+                if (this.state.rxData[`value${i}`] !== undefined && this.state.rxData[`value${i}`] !== null) {
                     compareValue = this.state.rxData[`value${i}`];
                 }
                 compareValue = this.convertValue(compareValue);
 
-                const isNavBtn = (
-                        compareBy === 'default'
-                        && this.state.rxData.type === 'nav'
-                    )
-                    || compareBy === 'view'
+                const isNavBtn = (compareBy === 'default' && this.state.rxData.type === 'nav') || compareBy === 'view';
 
-                if(!isNavBtn) {
+                if (!isNavBtn) {
                     if (this.validOid(this.state.rxData[`oid${i}`])) {
                         oid = this.state.rxData[`oid${i}`];
                     } else if (this.validOid(this.state.rxData.oid)) {
                         oid = this.state.rxData.oid;
-                    } else continue;
+                    } else {
+                        continue;
+                    }
 
                     value = this.getValue(oid);
                 }
 
                 if (
-                    (
-                        (
-                            (
-                                compareBy === 'default'
-                                && this.state.rxData.type !== 'nav'
-                            )
-                            || compareBy === 'value'
-                        )
-                        && this.compare(value, compareValue, comparisonOperator)
-                    )
-                    || (
-                        isNavBtn
-                        && this.state.rxData.mode === 'singleButton'
-                        && this.state.rxData.countStates === 1
-                        && this.state.rxData.view === this.props.view
-                    )
-                    || (
-                        isNavBtn
-                        && this.state.rxData.countStates > 1
-                        && this.state.rxData[`view${i}`] === this.props.view
-                    )
+                    (((compareBy === 'default' && this.state.rxData.type !== 'nav') || compareBy === 'value') &&
+                        this.compare(value, compareValue, comparisonOperator)) ||
+                    (isNavBtn &&
+                        this.state.rxData.mode === 'singleButton' &&
+                        this.state.rxData.countStates === 1 &&
+                        this.state.rxData.view === this.props.view) ||
+                    (isNavBtn && this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.view)
                 ) {
                     data = this.getStateData(i);
                     break;
@@ -1952,15 +2001,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             oid = this.state.rxData.oid;
             value = this.getValue(oid);
             if (
-                (
-                    (
-                        this.state.rxData.type === 'switch'
-                        || this.state.rxData.type === 'button'
-                        || this.state.rxData.type === 'readonly'
-                    )
-                    && value === this.convertValue(this.state.rxData[`value${index}`])
-                )
-                || (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)
+                ((this.state.rxData.type === 'switch' ||
+                    this.state.rxData.type === 'button' ||
+                    this.state.rxData.type === 'readonly') &&
+                    value === this.convertValue(this.state.rxData[`value${index}`])) ||
+                (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)
             ) {
                 data = this.getStateData(index, true);
             } else {
@@ -1968,9 +2013,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             }
         }
 
-        if (data === null) {
-
-            const defaultColorsStyle = this.getStyle('defaultColorsStyleFromWidget', this.groupAttrs.attr_group_state_default)
+        if (data == null) {
+            const defaultColorsStyle = this.getStyle(
+                'defaultColorsStyleFromWidget',
+                this.groupAttrs.attr_group_state_default,
+            );
 
             data = {
                 background: defaultColorsStyle.background,
@@ -1989,40 +2036,59 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             };
         }
 
-        const textStyle = this.getStyle('textStyleFromWidget', this.groupAttrs.attr_group_css_text)
-        const contentStyle = this.getStyle('contentStyleFromWidget', this.groupAttrs.attr_group_css_content)
-        const alignmentStyle = this.getStyle('alignmentStyleFromWidget', this.groupAttrs.attr_group_css_alignment)
-        const transparencyStyle = this.getStyle('transparencyStyleFromWidget', this.groupAttrs.attr_group_css_transparency)
-        const spacingStyle = this.getStyle('spacingStyleFromWidget', this.groupAttrs.attr_group_css_spacing)
-        const borderRadiusStyle = this.getStyle('borderRadiusStyleFromWidget', this.groupAttrs.attr_group_css_border_radius)
-        const borderStyle = this.getStyle('borderStyleFromWidget', this.groupAttrs.attr_group_css_border)
-        const outerShadowStyle = this.getStyle('outerShadowStyleFromWidget', this.groupAttrs.attr_group_css_outer_shadow)
-        const innerShadowStyle = this.getStyle('innerShadowStyleFromWidget', this.groupAttrs.attr_group_css_inner_shadow)
-        const clickFeedback = this.getStyle('clickFeedbackFromWidget', this.groupAttrs.attr_group_click_feedback)
-
-        data.styles = {
-            ...textStyle,
-            ...contentStyle,
-            ...alignmentStyle,
-            ...transparencyStyle,
-            ...spacingStyle,
-            ...borderRadiusStyle,
-            ...borderStyle,
-            ...outerShadowStyle,
-            ...innerShadowStyle,
-            ...clickFeedback
-        }
+        let dataWithStyles: UniversalWidgetValueData = {
+            ...data,
+            styles: {} as UniversalWidgetStylesStyles,
+        };
+        dataWithStyles.styles = {
+            ...(this.getStyle('textStyleFromWidget', this.groupAttrs.attr_group_css_text) as UniversalWidgetTextStyles),
+            ...(this.getStyle(
+                'contentStyleFromWidget',
+                this.groupAttrs.attr_group_css_content,
+            ) as UniversalWidgetContentStyles),
+            ...(this.getStyle(
+                'alignmentStyleFromWidget',
+                this.groupAttrs.attr_group_css_alignment,
+            ) as UniversalWidgetAlignmentStyles),
+            ...(this.getStyle(
+                'transparencyStyleFromWidget',
+                this.groupAttrs.attr_group_css_transparency,
+            ) as UniversalWidgetTransparencyStyles),
+            ...(this.getStyle(
+                'spacingStyleFromWidget',
+                this.groupAttrs.attr_group_css_spacing,
+            ) as UniversalWidgetSpacingStyles),
+            ...(this.getStyle(
+                'borderRadiusStyleFromWidget',
+                this.groupAttrs.attr_group_css_border_radius,
+            ) as UniversalWidgetBorderRadiusStyles),
+            ...(this.getStyle(
+                'borderStyleFromWidget',
+                this.groupAttrs.attr_group_css_border,
+            ) as UniversalWidgetBorderStyles),
+            ...(this.getStyle(
+                'outerShadowStyleFromWidget',
+                this.groupAttrs.attr_group_css_outer_shadow,
+            ) as UniversalWidgetOuterShadowStyles),
+            ...(this.getStyle(
+                'innerShadowStyleFromWidget',
+                this.groupAttrs.attr_group_css_inner_shadow,
+            ) as UniversalWidgetInnerShadowStyles),
+            ...(this.getStyle(
+                'clickFeedbackFromWidget',
+                this.groupAttrs.attr_group_click_feedback,
+            ) as UniversalWidgetClickFeedbackStyles),
+        };
 
         if (this.state.showFeedback && !this.state.rxData.clickThrough) {
-            data = this.replaceWithClickFeedbackData(data);
+            dataWithStyles = this.replaceWithClickFeedbackData(dataWithStyles);
         }
 
-        return data;
+        return dataWithStyles;
     }
 
-    getStateData(i, useExtraTrueValues = false) {
-
-        const stateColorsStyle = this.getStyle(`stateColorsStyleFromWidget${i}`, this.groupAttrs.countStates, i)
+    getStateData(i: number, useExtraTrueValues = false): UniversalWidgetStyles {
+        const stateColorsStyle = this.getStyle(`stateColorsStyleFromWidget${i}`, this.groupAttrs.countStates, i);
 
         const data = {
             background: stateColorsStyle[`background${i}`],
@@ -2037,7 +2103,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             html: this.state.rxData[`html${i}`],
             viewInWidget: this.state.rxData[`viewInWidget${i}`],
             contentBlinkInterval: this.state.rxData[`contentBlinkInterval${i}`],
-            contentSize: this.state.rxData[`contentSize${i}`] > 0 ? this.state.rxData[`contentSize${i}`] : this.state.rxData.contentSize,
+            contentSize:
+                (this.state.rxData[`contentSize${i}`] as unknown as number) > 0
+                    ? this.state.rxData[`contentSize${i}`]
+                    : this.state.rxData.contentSize,
+            styles: {},
         };
 
         if (useExtraTrueValues) {
@@ -2053,11 +2123,10 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             data.outerShadowColor = stateColorsStyle[`outerShadowColorTrue${i}`];
             data.innerShadowColor = stateColorsStyle[`innerShadowColorTrue${i}`];
         }
-
         return data;
     }
 
-    replaceWithClickFeedbackData(data) {
+    replaceWithClickFeedbackData(data: UniversalWidgetValueData): UniversalWidgetValueData {
         if (this.validFieldValue(data.styles.backgroundFeedback)) {
             data.background = data.styles.backgroundFeedback;
         }
@@ -2079,15 +2148,19 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         return data;
     }
 
-    onClick(index = null, e = null) {
-        if (!this.isInteractionAllowed(e)) return;
+    onClick(index: number | null, e: React.MouseEvent<HTMLDivElement>): void {
+        if (!this.isInteractionAllowed(e)) {
+            return;
+        }
 
         const oid = this.state.rxData.oid;
         this.setState({ showFeedback: true });
 
-        // eslint-disable-next-line default-case
         switch (this.state.rxData.type) {
             case 'switch':
+                if (!oid || !this.validOid(oid)) {
+                    break;
+                }
                 if (this.state.rxData.mode === 'singleButton') {
                     const valueTrue = this.convertValue(this.state.rxData.valueTrue);
                     if (this.state.values[`${oid}.val`] === valueTrue) {
@@ -2095,44 +2168,57 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                     } else {
                         this.props.context.setValue(oid, valueTrue);
                     }
-                } else {
+                } else if (index !== null) {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
                 }
                 break;
             case 'button':
-                if (this.state.rxData.buttonHoldValue) break;
+                if (!oid || !this.validOid(oid)) {
+                    break;
+                }
+                if (this.state.rxData.buttonHoldValue) {
+                    break;
+                }
 
-                const val = this.state.rxData.mode === 'singleButton'
-                    ? this.state.rxData.valueTrue : this.state.rxData[`value${index}`];
-
-                this.props.context.setValue(oid, this.convertValue(val));
+                if (this.state.rxData.mode === 'singleButton') {
+                    this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
+                } else if (index !== null) {
+                    this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
+                }
 
                 break;
             case 'nav':
-                // eslint-disable-next-line no-case-declarations
-                const elCheckDialog = e.target.closest('.inventwo-dialog');
-                if (elCheckDialog !== undefined && elCheckDialog !== null) {
+                // @ts-expect-error
+                if (e?.target?.closest('.inventwo-dialog')) {
                     return;
                 }
 
                 if (this.state.rxData.mode === 'singleButton') {
-                    window.vis.changeView(this.state.rxData.view, this.state.rxData.view);
-                } else {
-                    window.vis.changeView(this.state.rxData[`view${index}`], this.state.rxData[`view${index}`]);
+                    if (this.state.rxData.view) {
+                        window.vis.changeView(this.state.rxData.view, this.state.rxData.view);
+                    }
+                } else if (index !== null) {
+                    if (this.state.rxData[`view${index}`]) {
+                        window.vis.changeView(this.state.rxData[`view${index}`], this.state.rxData[`view${index}`]);
+                    }
                 }
                 break;
             case 'viewInDialog':
                 this.setState({ dialogOpen: true });
-                if(this.state.rxData.dialogCloseTimeoutSeconds && this.state.rxData.dialogCloseTimeoutSeconds > 0) {
-                    this.state.dialogCloseTimeout = setTimeout(() => {
+                if (this.state.rxData.dialogCloseTimeoutSeconds && this.state.rxData.dialogCloseTimeoutSeconds > 0) {
+                    const dialogCloseTimeout = setTimeout(() => {
                         this.setState({ dialogOpen: false });
-                    },this.state.rxData.dialogCloseTimeoutSeconds * 1000)
+                    }, this.state.rxData.dialogCloseTimeoutSeconds * 1000) as unknown as number;
+                    this.setState({ dialogCloseTimeout: dialogCloseTimeout });
                 }
                 if (oid) {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
                 }
                 break;
             case 'increaseDecreaseValue':
+                if (!oid || !this.validOid(oid)) {
+                    break;
+                }
                 // eslint-disable-next-line no-case-declarations
                 let value = this.getValue(oid);
                 value += this.convertValue(this.state.rxData.valueTrue);
@@ -2157,36 +2243,49 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         }
     }
 
-    onBtnMouseDown(index = null, e = null) {
-        if (!this.isInteractionAllowed(e)) return;
+    onBtnMouseDown(index: number | null, e: React.MouseEvent<HTMLDivElement>): void {
+        if (!this.isInteractionAllowed(e)) {
+            return;
+        }
 
         const oid = this.state.rxData.oid;
+        if (!oid || !this.validOid(oid)) {
+            return;
+        }
 
-        // eslint-disable-next-line default-case
         switch (this.state.rxData.type) {
             case 'button':
-                if (!this.state.rxData.buttonHoldValue) break;
+                if (!this.state.rxData.buttonHoldValue) {
+                    break;
+                }
 
-                const val = this.state.rxData.mode === 'singleButton'
-                    ? this.state.rxData.valueTrue : this.state.rxData[`value${index}`];
+                this.setState({ previousOidValue: this.getValue(oid) });
 
-                this.state.previousOidValue = this.getValue(oid);
-
-                this.props.context.setValue(oid, this.convertValue(val));
+                if (this.state.rxData.mode === 'singleButton') {
+                    this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
+                } else if (index !== null) {
+                    this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
+                }
 
                 break;
         }
     }
 
-    onBtnMouseUp(index = null, e = null) {
-        if (!this.isInteractionAllowed(e)) return;
+    onBtnMouseUp(e: React.MouseEvent<HTMLDivElement>): void {
+        if (!this.isInteractionAllowed(e)) {
+            return;
+        }
 
         const oid = this.state.rxData.oid;
+        if (!oid || !this.validOid(oid)) {
+            return;
+        }
 
-        // eslint-disable-next-line default-case
         switch (this.state.rxData.type) {
             case 'button':
-                if (!this.state.rxData.buttonHoldValue) break;
+                if (!this.state.rxData.buttonHoldValue) {
+                    break;
+                }
 
                 this.props.context.setValue(oid, this.state.previousOidValue);
 
@@ -2194,13 +2293,11 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         }
     }
 
-    renderWidgetBody(props) {
+    renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
         super.renderWidgetBody(props);
-        this.wrappedContent = true;
 
         if (this.state.showFeedback && !this.state.rxData.clickThrough) {
-
-            const clickFeedback = this.getStyle('clickFeedbackFromWidget', this.groupAttrs.attr_group_click_feedback)
+            const clickFeedback = this.getStyle('clickFeedbackFromWidget', this.groupAttrs.attr_group_click_feedback);
 
             let feedbackDuration = clickFeedback.feedbackDuration;
             if (feedbackDuration === undefined) {
@@ -2218,7 +2315,7 @@ class InventwoWidgetUniversal extends InventwoGeneric {
         return this.buildWidgetBody();
     }
 
-    buildWidgetBody() {
+    buildWidgetBody(): React.JSX.Element {
         const widgetContent = [];
 
         if (this.state.rxData.mode === 'singleButton') {
@@ -2229,117 +2326,130 @@ class InventwoWidgetUniversal extends InventwoGeneric {
                 content.push(this.getSingleCard(i));
             }
 
-            widgetContent.push(<div
-                key="cardWrapper"
-                style={{
-                    display: 'flex',
-                    height: '100%',
-                    overflow: 'auto',
-                    gap: `${this.state.rxData.btnSpacing}px`,
-                    flexDirection: this.state.rxData.direction,
-                    padding: 10,
-                    margin: -10,
-                }}
-            >
-                {content}
-            </div>);
+            widgetContent.push(
+                <div
+                    key="cardWrapper"
+                    style={{
+                        display: 'flex',
+                        height: '100%',
+                        overflow: 'auto',
+                        gap: `${this.state.rxData.btnSpacing}px`,
+                        flexDirection: this.state.rxData.direction,
+                        padding: 10,
+                        margin: -10,
+                    }}
+                >
+                    {content}
+                </div>,
+            );
         }
 
         if (this.state.rxData.type === 'viewInDialog') {
-            widgetContent.push(<Dialog
-                className="inventwo-dialog"
-                key="dialog"
-                open={this.state.dialogOpen}
-                fullScreen
-                sx={{
-                    '& .MuiDialog-container': {
-                        '& .MuiDialog-paper': {
-                            maxWidth: !this.state.rxData.dialogFullscreen ? `${this.state.rxData.dialogWidth + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}` : '100%',
-                            maxHeight: !this.state.rxData.dialogFullscreen ? `${this.state.rxData.dialogHeight + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}` : '100%',
-                            background: this.state.rxData.dialogBackground,
-                            borderRadius: `
+            widgetContent.push(
+                <Dialog
+                    className="inventwo-dialog"
+                    key="dialog"
+                    open={this.state.dialogOpen}
+                    fullScreen
+                    sx={{
+                        '& .MuiDialog-container': {
+                            '& .MuiDialog-paper': {
+                                maxWidth: !this.state.rxData.dialogFullscreen
+                                    ? `${this.state.rxData.dialogWidth + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}`
+                                    : '100%',
+                                maxHeight: !this.state.rxData.dialogFullscreen
+                                    ? `${this.state.rxData.dialogHeight + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}`
+                                    : '100%',
+                                background: this.state.rxData.dialogBackground,
+                                borderRadius: `
                                 ${this.state.rxData.dialogBorderRadiusTopLeft}px 
                                 ${this.state.rxData.dialogBorderRadiusTopRight}px 
                                 ${this.state.rxData.dialogBorderRadiusBottomRight}px 
                                 ${this.state.rxData.dialogBorderRadiusBottomLeft}px
                             `,
-                        },
-                        '.MuiDialogContent-root': {
-                            padding: `${this.valWithUnit(this.state.rxData.dialogPadding)}`,
-                        },
-                        '.MuiDialogTitle-root': {
-                            padding: `${this.valWithUnit(this.state.rxData.dialogTitlePaddingTop)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingRight)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingBottom)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingLeft)}`,
-                            color: this.state.rxData.dialogTitleColor,
-                            display: this.state.rxData.dialogTitleHide ? 'none !important' : 'flex',
-                        },
-                    },
-                }}
-                onClose={(event, reason) => {
-                    if (reason && reason === 'backdropClick' && !this.state.rxData.dialogCloseOnClickOutside) return;
-                    this.setState({ dialogOpen: false });
-                }}
-            >
-                <DialogTitle style={styles.dialogTitle}>
-                    <span>{this.state.rxData.dialogTitle}</span>
-                    <IconButton
-                        onClick={() => this.setState({ dialogOpen: false })}
-                        sx={{
-                            background: this.state.rxData.dialogCloseButtonBackground,
-                            color: this.state.rxData.dialogCloseButtonColor,
-                            '&:hover': {
-                                background: this.state.rxData.dialogCloseButtonBackground,
                             },
-                        }}
-                    >
-                        <CloseIcon
+                            '.MuiDialogContent-root': {
+                                padding: `${this.valWithUnit(this.state.rxData.dialogPadding)}`,
+                            },
+                            '.MuiDialogTitle-root': {
+                                padding: `${this.valWithUnit(this.state.rxData.dialogTitlePaddingTop)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingRight)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingBottom)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingLeft)}`,
+                                color: this.state.rxData.dialogTitleColor,
+                                display: this.state.rxData.dialogTitleHide ? 'none !important' : 'flex',
+                            },
+                        },
+                    }}
+                    onClose={(_event, reason) => {
+                        if (reason && reason === 'backdropClick' && !this.state.rxData.dialogCloseOnClickOutside) {
+                            return;
+                        }
+                        this.setState({ dialogOpen: false });
+                    }}
+                >
+                    <DialogTitle style={styles.dialogTitle}>
+                        <span>{this.state.rxData.dialogTitle}</span>
+                        <IconButton
+                            onClick={() => this.setState({ dialogOpen: false })}
                             sx={{
-                                width: this.state.rxData.dialogCloseButtonSize,
-                                height: this.state.rxData.dialogCloseButtonSize,
+                                background: this.state.rxData.dialogCloseButtonBackground,
+                                color: this.state.rxData.dialogCloseButtonColor,
+                                '&:hover': {
+                                    background: this.state.rxData.dialogCloseButtonBackground,
+                                },
                             }}
-                        />
-                    </IconButton>
-                </DialogTitle>
-                <DialogContent>
-                    {this.buildViewInWidget(this.state.rxData.view)}
-                </DialogContent>
-            </Dialog>);
+                        >
+                            <CloseIcon
+                                sx={{
+                                    width: this.state.rxData.dialogCloseButtonSize,
+                                    height: this.state.rxData.dialogCloseButtonSize,
+                                }}
+                            />
+                        </IconButton>
+                    </DialogTitle>
+                    <DialogContent>{this.buildViewInWidget(this.state.rxData.view)}</DialogContent>
+                </Dialog>,
+            );
         }
 
-        return <div
-            style={{
-                overflow: 'visible',
-                height: '100%',
-                width: '100%',
-                fontSize: this.state.rxStyle['font-size'],
-                color: this.state.rxStyle.color,
-                textShadow: this.state.rxStyle['text-shadow'],
-                fontFamily: this.state.rxStyle['font-family'],
-                fontStyle: this.state.rxStyle['font-style'],
-                fontVariant: this.state.rxStyle['font-variant'],
-                fontWeight: this.state.rxStyle['font-weight'],
-                lineHeight: this.state.rxStyle['line-height'],
-                letterSpacing: this.state.rxStyle['letter-spacing'],
-                wordSpacing: this.state.rxStyle['word-spacing'],
-            }}
-        >
-            {widgetContent}
-        </div>;
+        return (
+            <div
+                style={{
+                    overflow: 'visible',
+                    height: '100%',
+                    width: '100%',
+                    fontSize: this.state.rxStyle!['font-size'],
+                    color: this.state.rxStyle!.color,
+                    textShadow: this.state.rxStyle!['text-shadow'] as string,
+                    fontFamily: this.state.rxStyle!['font-family'] as string,
+                    fontStyle: this.state.rxStyle!['font-style'] as string,
+                    fontVariant: this.state.rxStyle!['font-variant'] as string,
+                    fontWeight: this.state.rxStyle!['font-weight'],
+                    lineHeight: this.state.rxStyle!['line-height'],
+                    letterSpacing: this.state.rxStyle!['letter-spacing'],
+                    wordSpacing: this.state.rxStyle!['word-spacing'],
+                }}
+            >
+                {widgetContent}
+            </div>
+        );
     }
 
-    getContentIcon(valueData) {
+    // eslint-disable-next-line class-methods-use-this
+    getContentIcon(valueData: UniversalWidgetValueData): React.JSX.Element | string {
         if (valueData.icon === null) {
             return '';
         }
-        return <Icon
-            src={valueData.icon}
-            style={{
-                width: valueData.contentSize,
-                color: valueData.contentColor,
-            }}
-        ></Icon>;
+        return (
+            <Icon
+                src={valueData.icon}
+                style={{
+                    width: valueData.contentSize,
+                    color: valueData.contentColor,
+                }}
+            ></Icon>
+        );
     }
 
-    getContentImage(valueData) {
+    getContentImage(valueData: UniversalWidgetValueData): React.JSX.Element | string {
         const img = valueData.image;
         if (img === null) {
             return '';
@@ -2351,65 +2461,73 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             filter = hexToCSSFilter(hex);
         }
 
-        if(valueData.styles.imageObjectFit != 'repeat') {
-            return <Icon
-                src={img}
-                style={{
-                    width: !valueData.styles.imageObjectFit ? valueData.contentSize : '100%',
-                    filter: filter ? filter.filter : '',
-                    objectFit: valueData.styles.imageObjectFit ?? '',
-                    objectPosition: valueData.styles.imageObjectPosition ?? '',
-                    height: valueData.styles.imageObjectFit ? '100%' : ''
-                }}
-            />;
+        if (valueData.styles.imageObjectFit != 'repeat') {
+            return (
+                <Icon
+                    src={img}
+                    style={{
+                        width: !valueData.styles.imageObjectFit ? valueData.contentSize : '100%',
+                        filter: filter ? filter.filter : '',
+                        objectFit: (valueData.styles.imageObjectFit ?? '') as React.CSSProperties['objectFit'],
+                        objectPosition: valueData.styles.imageObjectPosition ?? '',
+                        height: valueData.styles.imageObjectFit ? '100%' : '',
+                    }}
+                />
+            );
         }
 
-        return  <div
-            style={{
-                backgroundImage: `url(${img})`,
-                backgroundSize: valueData.styles.imageBackgroundSize ?? 'auto',
-                backgroundPosition: valueData.styles.imageObjectPosition ?? '',
-                height: '100%',
-                width: '100%',
-            }}
-        ></div>;
+        return (
+            <div
+                style={{
+                    backgroundImage: `url(${img})`,
+                    backgroundSize: valueData.styles.imageBackgroundSize ?? 'auto',
+                    backgroundPosition: valueData.styles.imageObjectPosition ?? '',
+                    height: '100%',
+                    width: '100%',
+                }}
+            ></div>
+        );
     }
 
-    getContentHtml(valueData) {
-        return <div
-            style={{
-                fontSize: `${valueData.contentSize}px`,
-            }}
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: valueData.html }}
-        />;
+    // eslint-disable-next-line class-methods-use-this
+    getContentHtml(valueData: UniversalWidgetValueData): React.JSX.Element {
+        return (
+            <div
+                style={{
+                    fontSize: `${valueData.contentSize}px`,
+                }}
+                dangerouslySetInnerHTML={{ __html: valueData.html as string }}
+            />
+        );
     }
 
-    getContentViewInWidget(valueData) {
+    getContentViewInWidget(valueData: UniversalWidgetValueData): React.JSX.Element {
         const view = valueData.viewInWidget;
         return this.buildViewInWidget(view);
     }
 
-    buildViewInWidget(view) {
+    buildViewInWidget(view: string | null): React.JSX.Element {
         if (view === this.props.view) {
             return <div>Cannot use recursive views</div>;
         }
 
         const style = {};
 
-        return <div
-            style={{
-                position: 'relative',
-                overflow: 'auto',
-                height: '100%',
-            }}
-            className="inventwo-view-in-widget-wrapper"
-        >
-            {view ? this.getWidgetView(view, { style }) : null}
-        </div>;
+        return (
+            <div
+                style={{
+                    position: 'relative',
+                    overflow: 'auto',
+                    height: '100%',
+                }}
+                className="inventwo-view-in-widget-wrapper"
+            >
+                {view ? this.getWidgetView(view, { style }) : null}
+            </div>
+        );
     }
 
-    getCardContent(valueData) {
+    getCardContent(valueData: UniversalWidgetValueData): React.JSX.Element {
         let c;
         switch (this.state.rxData.contentType) {
             case 'icon':
@@ -2427,20 +2545,35 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             default:
                 c = '';
         }
-        return <div
-            className={this.state.rxData.contentType === 'colorPicker' ? 'vis-inventwo-widget-color-picker-wrapper' : ''}
-            style={{
-                height: '100%',
-                width: this.state.rxData.contentType === 'viewInWidget' || (this.state.rxData.contentType === 'image' && valueData.styles.imageObjectFit) ? '100%' : '',
-                transform: `rotateZ(${valueData.styles.contentRotation}deg)`,
-                animation: valueData.contentBlinkInterval > 0 ? `blink ${valueData.contentBlinkInterval / 1000}s infinite` : '',
-            }}
-        >
-            {c}
-        </div>;
+        return (
+            <div
+                className={
+                    this.state.rxData.contentType === 'colorPicker' ? 'vis-inventwo-widget-color-picker-wrapper' : ''
+                }
+                style={{
+                    height: '100%',
+                    width:
+                        this.state.rxData.contentType === 'viewInWidget' ||
+                        (this.state.rxData.contentType === 'image' && valueData.styles.imageObjectFit)
+                            ? '100%'
+                            : '',
+                    transform: `rotateZ(${valueData.styles.contentRotation}deg)`,
+                    animation:
+                        valueData.contentBlinkInterval > 0
+                            ? `blink ${valueData.contentBlinkInterval / 1000}s infinite`
+                            : '',
+                }}
+            >
+                {c}
+            </div>
+        );
     }
 
-    buildCard(valueData, i, content) {
+    buildCard(
+        valueData: UniversalWidgetValueData,
+        i: number | null,
+        content: React.JSX.Element | string,
+    ): React.JSX.Element {
         let shadow = '';
         if (valueData.outerShadowColor) {
             shadow += `${valueData.styles.outerShadowX}px ${valueData.styles.outerShadowY}px ${valueData.styles.outerShadowBlur}px ${valueData.styles.outerShadowSize}px ${valueData.outerShadowColor}`;
@@ -2453,106 +2586,114 @@ class InventwoWidgetUniversal extends InventwoGeneric {
             shadow += `inset ${valueData.styles.innerShadowX}px ${valueData.styles.innerShadowY}px ${valueData.styles.innerShadowBlur}px ${valueData.styles.innerShadowSize}px ${valueData.innerShadowColor}`;
         }
 
-        return <div
-            key={i !== null ? i : ''}
-            style={{
-                width: i === null ? '100%' : '',
-                height: i === null ? '100%' : '',
-                flex: i !== null ? `0 0 ${this.state.rxData.buttonSize}px` : '',
-                position: 'relative',
-                border: valueData.styles.borderRadiusTopLeft,
-                borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
-            }}
-        >
-            <Card
-                className="vis_rx_widget_card"
+        return (
+            <div
+                key={i !== null ? i : ''}
                 style={{
-                    background: valueData.background,
+                    width: i === null ? '100%' : '',
+                    height: i === null ? '100%' : '',
+                    flex: i !== null ? `0 0 ${this.state.rxData.buttonSize}px` : '',
+                    position: 'relative',
+                    border: valueData.styles.borderRadiusTopLeft,
                     borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
-                    boxShadow: shadow,
-                    opacity: valueData.styles.backgroundOpacity,
-                    position: 'absolute',
-                    inset: 0,
-                    borderColor: valueData.borderColor,
-                    borderTopWidth: `${valueData.styles.borderSizeTop}px`,
-                    borderBottomWidth: `${valueData.styles.borderSizeBottom}px`,
-                    borderLeftWidth: `${valueData.styles.borderSizeLeft}px`,
-                    borderRightWidth: `${valueData.styles.borderSizeRight}px`,
-                    borderStyle: valueData.styles.borderStyle,
                 }}
-            />
-            <Card
-                style={{
-                    cursor: this.state.rxData.type !== 'readonly' ? 'pointer' : '',
-                    background: 'transparent',
-                    borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
-                    opacity: valueData.styles.contentOpacity,
-                    position: 'absolute',
-                    inset: 0,
-                    color: 'unset',
-                    boxShadow: 'none',
-                }}
-                onClick={e => this.onClick(i, e)}
-                onMouseDown={e => this.onBtnMouseDown(i, e)}
-                onMouseUp={e => this.onBtnMouseUp(i, e)}
             >
-                <CardContent
+                <Card
+                    className="vis_rx_widget_card"
                     style={{
-                        padding: `${valueData.styles.paddingTop}px ${valueData.styles.paddingRight}px ${valueData.styles.paddingBottom}px ${valueData.styles.paddingLeft}px`,
-                        boxSizing: 'border-box',
-                        width: '100%',
-                        height: '100%',
+                        background: valueData.background,
+                        borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+                        boxShadow: shadow,
+                        opacity: valueData.styles.backgroundOpacity,
+                        position: 'absolute',
+                        inset: 0,
+                        borderColor: valueData.borderColor,
+                        borderTopWidth: `${valueData.styles.borderSizeTop}px`,
+                        borderBottomWidth: `${valueData.styles.borderSizeBottom}px`,
+                        borderLeftWidth: `${valueData.styles.borderSizeLeft}px`,
+                        borderRightWidth: `${valueData.styles.borderSizeRight}px`,
+                        borderStyle: valueData.styles.borderStyle,
                     }}
+                />
+                <Card
+                    style={{
+                        cursor: this.state.rxData.type !== 'readonly' ? 'pointer' : '',
+                        background: 'transparent',
+                        borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+                        opacity: valueData.styles.contentOpacity,
+                        position: 'absolute',
+                        inset: 0,
+                        color: 'unset',
+                        boxShadow: 'none',
+                    }}
+                    onClick={e => this.onClick(i, e)}
+                    onMouseDown={e => this.onBtnMouseDown(i, e)}
+                    onMouseUp={e => this.onBtnMouseUp(e)}
                 >
-                    {content}
-                </CardContent>
-            </Card>
-        </div>;
+                    <CardContent
+                        style={{
+                            padding: `${valueData.styles.paddingTop}px ${valueData.styles.paddingRight}px ${valueData.styles.paddingBottom}px ${valueData.styles.paddingLeft}px`,
+                            boxSizing: 'border-box',
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    >
+                        {content}
+                    </CardContent>
+                </Card>
+            </div>
+        );
     }
 
-    getSingleCard(i = null) {
+    getSingleCard(i: number | null = null): React.JSX.Element {
         const valueData = this.getValueData(i);
 
         const content = this.getCardContent(valueData);
 
-        const cardContent = <div
-            style={{
-                height: '100%',
-                width: '100%',
-                display: 'flex',
-                flexDirection: valueData.styles.flexDirection + (valueData.styles.invertOrder ? '-reverse' : ''),
-                justifyContent: valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-start' ? 'flex-end' : (valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-end' ? 'flex-start' : valueData.styles.alignItems),
-            }}
-        >
+        const cardContent = (
             <div
                 style={{
+                    height: '100%',
+                    width: '100%',
                     display: 'flex',
-                    flexGrow: valueData.styles.imageObjectFit ? 1 : '',
-                    justifyContent: valueData.styles.flexDirection === 'column' ? valueData.styles.contentAlign : '',
-                    alignSelf: valueData.styles.flexDirection === 'row' ? valueData.styles.contentAlign : '',
-                    transform: `scaleX(${valueData.styles.contentMirror ? -1 : 1})`,
-                    height: this.state.rxData.contentType === 'viewInWidget' ? '100%' : '',
-                    overflow: 'hidden',
-                    margin: `${valueData.styles.contentMarginTop}px ${valueData.styles.contentMarginRight}px ${valueData.styles.contentMarginBottom}px ${valueData.styles.contentMarginLeft}px`,
+                    flexDirection: (valueData.styles.flexDirection +
+                        (valueData.styles.invertOrder ? '-reverse' : '')) as React.CSSProperties['flexDirection'],
+                    justifyContent:
+                        valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-start'
+                            ? 'flex-end'
+                            : valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-end'
+                              ? 'flex-start'
+                              : valueData.styles.alignItems,
                 }}
             >
-                {content}
+                <div
+                    style={{
+                        display: 'flex',
+                        flexGrow: valueData.styles.imageObjectFit ? 1 : '',
+                        justifyContent:
+                            valueData.styles.flexDirection === 'column' ? valueData.styles.contentAlign : '',
+                        alignSelf: valueData.styles.flexDirection === 'row' ? valueData.styles.contentAlign : '',
+                        transform: `scaleX(${valueData.styles.contentMirror ? -1 : 1})`,
+                        height: this.state.rxData.contentType === 'viewInWidget' ? '100%' : '',
+                        overflow: 'hidden',
+                        margin: `${valueData.styles.contentMarginTop}px ${valueData.styles.contentMarginRight}px ${valueData.styles.contentMarginBottom}px ${valueData.styles.contentMarginLeft}px`,
+                    }}
+                >
+                    {content}
+                </div>
+                <div
+                    style={{
+                        textAlign: this.state.rxStyle!['text-align'] as React.CSSProperties['textAlign'],
+                        alignSelf: valueData.styles.textAlign,
+                        textDecoration: valueData.styles.textDecoration,
+                        color: valueData.textColor,
+                        margin: `${valueData.styles.textMarginTop}px ${valueData.styles.textMarginRight}px ${valueData.styles.textMarginBottom}px ${valueData.styles.textMarginLeft}px`,
+                    }}
+                    dangerouslySetInnerHTML={{ __html: valueData.text }}
+                />
             </div>
-            <div
-                style={{
-                    textAlign: this.state.rxStyle["text-align"],
-                    alignSelf: valueData.styles.textAlign,
-                    textDecoration: valueData.styles.textDecoration,
-                    color: valueData.textColor,
-                    margin: `${valueData.styles.textMarginTop}px ${valueData.styles.textMarginRight}px ${valueData.styles.textMarginBottom}px ${valueData.styles.textMarginLeft}px`,
-                }}
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{ __html: valueData.text }}
-            />
-        </div>;
+        );
 
         return this.buildCard(valueData, i, cardContent);
     }
 }
-
-export default InventwoWidgetUniversal;

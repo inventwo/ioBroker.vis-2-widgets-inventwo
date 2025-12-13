@@ -1,18 +1,26 @@
-import { VisRxWidget } from '@iobroker/vis-2-widgets-react-dev';
+import type VisRxWidget from '@iobroker/types-vis-2/visRxWidget';
+import type { VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
+import type React from 'react';
 
-class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
-    static getI18nPrefix() {
+class InventwoGeneric<
+    RxData extends Record<string, any>,
+    State extends Partial<VisRxWidgetState> = VisRxWidgetState,
+> extends (window.visRxWidget as typeof VisRxWidget)<RxData, State> {
+    protected groupAttrs: Record<string, string[]> = {};
+
+    static getI18nPrefix(): string {
         return 'vis_2_widgets_inventwo_';
     }
 
-    constructor(props) {
+    constructor(props: VisRxWidgetProps) {
         super(props);
 
-        this.groupAttrs = [];
         const info = this.getWidgetInfo();
         info.visAttrs.forEach(group => {
             group.fields.forEach(field => {
-                if (field.name === undefined) return;
+                if (field.name === undefined) {
+                    return;
+                }
                 if (!field.name.endsWith('FromWidget')) {
                     if (this.groupAttrs[group.name] === undefined) {
                         this.groupAttrs[group.name] = [];
@@ -23,7 +31,7 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
         });
     }
 
-    onChange(e, value) {
+    onChange(_e: any, value: any): void {
         if (this.props.editMode) {
             return;
         }
@@ -31,17 +39,17 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
         this.props.context.setValue(oid, parseFloat(value));
     }
 
-    getValue(oid) {
+    getValue(oid: string | null | undefined): any {
         if (oid !== undefined && oid !== '' && oid !== 'nothing_selected') {
             return this.state.values[`${oid}.val`];
         }
         return undefined;
     }
 
-    getStyle(widgetFieldName, attrList, index = null) {
-        const trackStyle = {};
+    getStyle(widgetFieldName: string, attrList: string[], index: number | null = null): Record<string, any> {
+        const trackStyle: Record<string, any> = {};
         const wid = this.state.rxData[widgetFieldName];
-        const isState = index > 0
+        const isState = index ?? 0 > 0;
         if (wid) {
             let found = false;
             // first try to find widget in the same view
@@ -55,7 +63,7 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
                         attrName = `${attr}${index}`;
                     }
 
-                    trackStyle[attrName] = widgetData[attrName]
+                    trackStyle[attrName] = widgetData[attrName];
                 });
                 found = true;
             } else {
@@ -63,7 +71,7 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
                 const viewIds = Object.keys(this.props.context.views);
                 for (let v = 0; v < viewIds.length; v++) {
                     const view = this.props.context.views[viewIds[v]];
-                    if (view !== this.props.view && view.widgets?.[wid]?.data) {
+                    if (view.name !== this.props.view && view.widgets?.[wid]?.data) {
                         const widgetData1 = view.widgets[wid].data;
                         // extract palette settings from widget settings
                         attrList.forEach(attr => {
@@ -72,7 +80,7 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
                                 attrName = `${attr}${index}`;
                             }
 
-                            trackStyle[attrName] = widgetData1[attrName]
+                            trackStyle[attrName] = widgetData1[attrName];
                         });
                         found = true;
                         break;
@@ -86,7 +94,7 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
                         attrName = `${attr}${index}`;
                     }
 
-                    trackStyle[attrName] = this.state.rxData[attrName]
+                    trackStyle[attrName] = this.state.rxData[attrName];
                 });
             }
         } else {
@@ -96,7 +104,7 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
                     attrName = `${attr}${index}`;
                 }
 
-                trackStyle[attrName] = this.state.rxData[attrName]
+                trackStyle[attrName] = this.state.rxData[attrName];
             });
         }
 
@@ -104,29 +112,40 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    convertValue(value) {
-        if (value === 'true') return true;
-        if (value === 'false') return false;
-        // eslint-disable-next-line no-restricted-globals
-        if (!isNaN(value)) return parseFloat(value);
+    convertValue(value: any, defaultValue: any = null): any {
+        if (value === 'true') {
+            return true;
+        }
+        if (value === 'false') {
+            return false;
+        }
+        if (!isNaN(value)) {
+            return parseFloat(value);
+        }
+
+        if ((value === undefined || value === null || value === '') && defaultValue !== null) {
+            return defaultValue;
+        }
         return value;
     }
 
     // eslint-disable-next-line class-methods-use-this
-    validFieldValue(value) {
+    validFieldValue(value: any): boolean {
         return value !== undefined && value !== null && value !== '';
     }
 
     // eslint-disable-next-line class-methods-use-this
-    convertRgbToHex(colorStr) {
-        if (!colorStr) return null;
+    convertRgbToHex(colorStr: string): string | null {
+        if (!colorStr) {
+            return null;
+        }
         const rgbaValues = colorStr.match(/(\d+),(\d+),(\d+),(\d+)/);
         if (!rgbaValues) {
             return null;
         }
         const [red, green, blue] = rgbaValues.slice(1, 5).map(parseFloat);
 
-        function componentToHex(c) {
+        function componentToHex(c: number): string {
             const hex = c.toString(16);
             return hex.length === 1 ? `0${hex}` : hex;
         }
@@ -134,25 +153,32 @@ class InventwoGeneric extends (window.visRxWidget || VisRxWidget) {
         return `#${componentToHex(red)}${componentToHex(green)}${componentToHex(blue)}`;
     }
 
-    isInteractionAllowed(e = null) {
-        if (this.props.editMode) return false;
-        if (e && e.target.closest('.IroColorPicker') !== null) return false;
+    isInteractionAllowed(e: React.MouseEvent<HTMLDivElement>): boolean {
+        if (this.props.editMode) {
+            return false;
+        }
+        // @ts-expect-error
+        if (e && e.target?.closest('.IroColorPicker') !== null) {
+            return false;
+        }
 
-        const closestElementCheck = e.target.closest(`.inventwo-view-in-widget-wrapper, #${this.props.id}`);
-        if (closestElementCheck.classList.contains('inventwo-view-in-widget-wrapper')) return false;
+        // @ts-expect-error
+        const closestElementCheck = e?.target?.closest(`.inventwo-view-in-widget-wrapper, #${this.props.id}`);
+        if (closestElementCheck.classList.contains('inventwo-view-in-widget-wrapper')) {
+            return false;
+        }
 
-        if (this.state.rxData.type === 'readonly') return false;
-
-        return true;
+        return this.state.rxData.type !== 'readonly';
     }
 
     // eslint-disable-next-line class-methods-use-this
-    validOid(oid) {
+    validOid(oid: string | null | undefined): boolean {
         return oid !== undefined && oid !== null && oid !== 'nothing_selected' && oid !== '';
     }
 
-    valWithUnit(value) {
-       return value + (!Number.isNaN(Number(value)) ? 'px' : '')
+    // eslint-disable-next-line class-methods-use-this
+    valWithUnit(value: any): string {
+        return value + (!Number.isNaN(Number(value)) ? 'px' : '');
     }
 }
 

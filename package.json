@@ -35,8 +35,7 @@
   ],
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "npm run build-jsv",
-    "build-jsv": "node tasks --javascript-vite",
+    "build": "node tasks",
     "test": "mocha ./test/*.test.js",
     "release": "release-script",
     "release-patch": "release-script patch --yes",
