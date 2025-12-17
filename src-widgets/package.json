@@ -8,14 +8,14 @@
         "@iobroker/types-vis-2": "^2.13.8",
         "@iobroker/vis-2-widgets-react-dev": "^4.0.4",
         "@jaames/iro": "^5.5.2",
-        "@module-federation/vite": "^1.7.2",
+        "@module-federation/vite": "^1.9.3",
         "@mui/icons-material": "^6.5.0",
         "@mui/material": "^6.5.0",
         "@vitejs/plugin-react": "^5.0.4",
         "hex-to-css-filter": "^6.0.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "vite": "7.1.11",
+        "vite": "7.2.7",
         "vite-plugin-commonjs": "^0.10.4",
         "vite-plugin-top-level-await": "^1.6.0",
         "vite-tsconfig-paths": "^5.1.4"
@@ -37,8 +37,5 @@
         "not dead",
         "not ie <= 11",
         "not op_mini all"
-    ],
-    "devDependencies": {
-        "@iobroker/adapter-dev": "^1.5.0"
-    }
+    ]
 }
