@@ -48,6 +48,8 @@ interface UniversalState extends VisRxWidgetState {
 }
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
+    private readonly refContentContainer: React.RefObject<HTMLDivElement> = React.createRef();
+
     constructor(props: VisRxWidgetProps) {
         super(props);
         this.state = {
@@ -1112,6 +1114,13 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             default: 'icon',
                             label: 'content_type',
                             tooltip: 'tooltip_content_type',
+                        },
+                        {
+                            name: 'scaleContentToFit',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'scale_to_fit',
+                            hidden: 'data.contentType != "viewInWidget"',
                         },
                         {
                             name: 'contentMarginTop',
@@ -2511,13 +2520,30 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             return <div>Cannot use recursive views</div>;
         }
 
-        const style = {};
+        const style: Record<string, string | number> = {};
+
+        if (this.state.rxData.scaleContentToFit && this.props.refParent.current && this.refContentContainer.current) {
+            const width = this.refContentContainer.current.offsetWidth;
+            let parentView = this.props.refParent.current;
+            let count = 0;
+            while (parentView.className.includes('vis-view') && count < 5) {
+                parentView = parentView.parentNode as HTMLElement;
+                count += 1;
+            }
+
+            const parentWidth = parentView.offsetWidth;
+            const factor = width / parentWidth;
+            style.transform = `scale(${factor})`;
+            style.transformOrigin = 'top left';
+            style.width = `${(1 / factor) * 100}%`;
+            style.height = `${(1 / factor) * 100}%`;
+        }
 
         return (
             <div
                 style={{
                     position: 'relative',
-                    overflow: 'auto',
+                    overflow: !this.state.rxData.scaleContentToFit ? 'auto' : '',
                     height: '100%',
                 }}
                 className="inventwo-view-in-widget-wrapper"
@@ -2563,6 +2589,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             ? `blink ${valueData.contentBlinkInterval / 1000}s infinite`
                             : '',
                 }}
+                ref={this.refContentContainer}
             >
                 {c}
             </div>

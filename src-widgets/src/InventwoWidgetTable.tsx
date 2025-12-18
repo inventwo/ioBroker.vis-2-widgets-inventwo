@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles';
 import { Table, TableRow, TableCell, TableContainer, TableHead, TableBody, Paper } from '@mui/material';
-import { Icon } from '@iobroker/adapter-react-v5';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
 
