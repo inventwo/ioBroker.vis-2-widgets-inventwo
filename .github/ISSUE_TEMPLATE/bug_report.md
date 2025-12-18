@@ -40,6 +40,7 @@ If applicable, add screenshots to help explain your problem.
 - Admin Version
 - VIS 2 Version
 - Version of this adapter
+- Node JS Version
 
 **Additional context**
 Add any other context about the problem here.
