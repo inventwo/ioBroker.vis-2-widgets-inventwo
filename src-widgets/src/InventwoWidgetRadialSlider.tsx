@@ -499,7 +499,7 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
         );
         const centerX = size / 2;
         const centerY = size / 2;
-        const radius = (size - trackStyle.trackWidth - thumbStyle.thumbSize) / 2;
+        const radius = Math.max(10, (size - trackStyle.trackWidth - thumbStyle.thumbSize) / 2);
 
         const minValue = this.state.rxData.minValue;
         const maxValue = this.state.rxData.maxValue;

@@ -1,0 +1,27 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="transparent"/>
+  
+  <!-- Background track -->
+  <path d="M 150.355 49.645 A 70 70 0 1 1 49.645 49.645" 
+        fill="none" 
+        stroke="rgb(110,110,110)" 
+        stroke-width="10" 
+        stroke-linecap="round"/>
+  
+  <!-- Active track -->
+  <path d="M 150.355 49.645 A 70 70 0 0 1 168.385 127.500" 
+        fill="none" 
+        stroke="rgb(94,107,63)" 
+        stroke-width="10" 
+        stroke-linecap="round"/>
+  
+  <!-- Thumb -->
+  <circle cx="168.385" cy="127.500" r="8" fill="rgb(69,86,24)"/>
+  
+  <!-- Value text -->
+  <text x="100" y="100" text-anchor="middle" font-size="32" font-weight="bold" fill="white">80</text>
+  
+  <!-- Label text -->
+  <text x="100" y="120" text-anchor="middle" font-size="14" fill="rgb(200,200,200)">Volume</text>
+</svg>
