@@ -45,6 +45,8 @@ interface UniversalState extends VisRxWidgetState {
     previousOidValue: any;
     dialogCloseTimeout: null | number;
     colorPicker: iro.ColorPicker | null;
+    clockInterval: null | number;
+    currentTime: Date;
 }
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
@@ -60,6 +62,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             previousOidValue: null,
             dialogCloseTimeout: null,
             colorPicker: null,
+            clockInterval: null,
+            currentTime: new Date(),
         };
     }
 
@@ -1021,6 +1025,144 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     ],
                 },
 
+                {
+                    name: 'attr_content_analog_clock',
+                    label: 'attr_content_analog_clock',
+                    hidden: 'data.contentType != "analogClock"',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_clock_face',
+                        },
+                        {
+                            name: 'analogClockFaceDesign',
+                            type: 'select',
+                            options: [
+                                { value: 'classic', label: 'classic' },
+                                { value: 'modern', label: 'modern' },
+                                { value: 'minimal', label: 'minimal' },
+                            ],
+                            default: 'classic',
+                            label: 'design',
+                        },
+                        {
+                            name: 'analogClockFaceColor',
+                            type: 'color',
+                            default: 'rgb(0, 0, 0)',
+                            label: 'color',
+                        },
+                        {
+                            name: 'analogClockBackgroundColor',
+                            type: 'color',
+                            default: 'rgb(255, 255, 255)',
+                            label: 'background',
+                        },
+                        {
+                            name: '',
+                            type: 'delimiter',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_hour_hand',
+                        },
+                        {
+                            name: 'analogClockShowHourHand',
+                            type: 'checkbox',
+                            default: true,
+                            label: 'show',
+                        },
+                        {
+                            name: 'analogClockHourHandDesign',
+                            type: 'select',
+                            options: [
+                                { value: 'classic', label: 'classic' },
+                                { value: 'modern', label: 'modern' },
+                                { value: 'arrow', label: 'arrow' },
+                            ],
+                            default: 'classic',
+                            label: 'design',
+                            hidden: '!data.analogClockShowHourHand',
+                        },
+                        {
+                            name: 'analogClockHourHandColor',
+                            type: 'color',
+                            default: 'rgb(0, 0, 0)',
+                            label: 'color',
+                            hidden: '!data.analogClockShowHourHand',
+                        },
+                        {
+                            name: '',
+                            type: 'delimiter',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_minute_hand',
+                        },
+                        {
+                            name: 'analogClockShowMinuteHand',
+                            type: 'checkbox',
+                            default: true,
+                            label: 'show',
+                        },
+                        {
+                            name: 'analogClockMinuteHandDesign',
+                            type: 'select',
+                            options: [
+                                { value: 'classic', label: 'classic' },
+                                { value: 'modern', label: 'modern' },
+                                { value: 'arrow', label: 'arrow' },
+                            ],
+                            default: 'classic',
+                            label: 'design',
+                            hidden: '!data.analogClockShowMinuteHand',
+                        },
+                        {
+                            name: 'analogClockMinuteHandColor',
+                            type: 'color',
+                            default: 'rgb(0, 0, 0)',
+                            label: 'color',
+                            hidden: '!data.analogClockShowMinuteHand',
+                        },
+                        {
+                            name: '',
+                            type: 'delimiter',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_second_hand',
+                        },
+                        {
+                            name: 'analogClockShowSecondHand',
+                            type: 'checkbox',
+                            default: true,
+                            label: 'show',
+                        },
+                        {
+                            name: 'analogClockSecondHandDesign',
+                            type: 'select',
+                            options: [
+                                { value: 'classic', label: 'classic' },
+                                { value: 'modern', label: 'modern' },
+                                { value: 'arrow', label: 'arrow' },
+                            ],
+                            default: 'classic',
+                            label: 'design',
+                            hidden: '!data.analogClockShowSecondHand',
+                        },
+                        {
+                            name: 'analogClockSecondHandColor',
+                            type: 'color',
+                            default: 'rgb(255, 0, 0)',
+                            label: 'color',
+                            hidden: '!data.analogClockShowSecondHand',
+                        },
+                    ],
+                },
+
                 // CSS Settings
                 {
                     name: 'attr_group_css_text',
@@ -1108,6 +1250,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 { value: 'html', label: 'text_html' },
                                 { value: 'viewInWidget', label: 'view_in_widget' },
                                 { value: 'colorPicker', label: 'color_picker' },
+                                { value: 'analogClock', label: 'analog_clock' },
                             ],
                             default: 'icon',
                             label: 'content_type',
@@ -1889,11 +2032,36 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         if (!this.props.editMode && this.state.rxData.clickThrough) {
             this.refService.current.style.pointerEvents = 'none';
         }
+
+        // Start clock interval for analog clock
+        if (this.state.rxData.contentType === 'analogClock') {
+            const clockInterval = setInterval(() => {
+                this.setState({ currentTime: new Date() });
+            }, 1000) as unknown as number;
+            this.setState({ clockInterval });
+        }
+    }
+
+    componentWillUnmount(): void {
+        if (this.state.clockInterval) {
+            clearInterval(this.state.clockInterval);
+        }
     }
 
     componentDidUpdate(_prevProps: any, prevState: { dialogOpen: any }): void {
         if (prevState.dialogOpen && !this.state.dialogOpen && this.state.dialogCloseTimeout) {
             clearTimeout(this.state.dialogCloseTimeout);
+        }
+
+        // Start or stop clock interval based on content type changes
+        if (this.state.rxData.contentType === 'analogClock' && !this.state.clockInterval) {
+            const clockInterval = setInterval(() => {
+                this.setState({ currentTime: new Date() });
+            }, 1000) as unknown as number;
+            this.setState({ clockInterval });
+        } else if (this.state.rxData.contentType !== 'analogClock' && this.state.clockInterval) {
+            clearInterval(this.state.clockInterval);
+            this.setState({ clockInterval: null });
         }
     }
 
@@ -2527,6 +2695,193 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
+    getContentAnalogClock(valueData: UniversalWidgetValueData): React.JSX.Element {
+        const time = this.state.currentTime;
+        const hours = time.getHours() % 12;
+        const minutes = time.getMinutes();
+        const seconds = time.getSeconds();
+
+        // Calculate angles for clock hands
+        const secondAngle = (seconds * 6); // 360 / 60 = 6 degrees per second
+        const minuteAngle = (minutes * 6) + (seconds * 0.1); // 6 degrees per minute + fractional
+        const hourAngle = (hours * 30) + (minutes * 0.5); // 30 degrees per hour + fractional
+
+        const size = 100; // Use viewBox for scalability
+        const centerX = size / 2;
+        const centerY = size / 2;
+
+        // Clock face design rendering
+        const renderClockFace = () => {
+            const faceColor = this.state.rxData.analogClockFaceColor || 'rgb(0, 0, 0)';
+            const bgColor = this.state.rxData.analogClockBackgroundColor || 'rgb(255, 255, 255)';
+            const design = this.state.rxData.analogClockFaceDesign || 'classic';
+
+            if (design === 'minimal') {
+                return (
+                    <>
+                        <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth="0.5" />
+                        <circle cx={centerX} cy={centerY} r={2} fill={faceColor} />
+                    </>
+                );
+            } else if (design === 'modern') {
+                return (
+                    <>
+                        <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth="2" />
+                        {[...Array(12)].map((_, i) => {
+                            const angle = (i * 30 - 90) * (Math.PI / 180);
+                            const x1 = centerX + Math.cos(angle) * 42;
+                            const y1 = centerY + Math.sin(angle) * 42;
+                            const x2 = centerX + Math.cos(angle) * 46;
+                            const y2 = centerY + Math.sin(angle) * 46;
+                            return (
+                                <line
+                                    key={`hour-${i}`}
+                                    x1={x1}
+                                    y1={y1}
+                                    x2={x2}
+                                    y2={y2}
+                                    stroke={faceColor}
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                />
+                            );
+                        })}
+                        <circle cx={centerX} cy={centerY} r={3} fill={faceColor} />
+                    </>
+                );
+            } else {
+                // classic
+                return (
+                    <>
+                        <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth="1" />
+                        {[...Array(12)].map((_, i) => {
+                            const angle = (i * 30 - 90) * (Math.PI / 180);
+                            const number = i === 0 ? 12 : i;
+                            const x = centerX + Math.cos(angle) * 36;
+                            const y = centerY + Math.sin(angle) * 36;
+                            return (
+                                <text
+                                    key={`number-${i}`}
+                                    x={x}
+                                    y={y}
+                                    textAnchor="middle"
+                                    dominantBaseline="middle"
+                                    fill={faceColor}
+                                    fontSize="8"
+                                    fontWeight="bold"
+                                >
+                                    {number}
+                                </text>
+                            );
+                        })}
+                        <circle cx={centerX} cy={centerY} r={2.5} fill={faceColor} />
+                    </>
+                );
+            }
+        };
+
+        // Render clock hand based on design
+        const renderHand = (angle: number, length: number, width: number, color: string, design: string) => {
+            const rad = (angle - 90) * (Math.PI / 180);
+            const x = centerX + Math.cos(rad) * length;
+            const y = centerY + Math.sin(rad) * length;
+
+            if (design === 'arrow') {
+                const tipX = centerX + Math.cos(rad) * length;
+                const tipY = centerY + Math.sin(rad) * length;
+                const leftAngle = rad + (150 * Math.PI / 180);
+                const rightAngle = rad - (150 * Math.PI / 180);
+                const arrowWidth = width * 2;
+                const leftX = tipX + Math.cos(leftAngle) * arrowWidth;
+                const leftY = tipY + Math.sin(leftAngle) * arrowWidth;
+                const rightX = tipX + Math.cos(rightAngle) * arrowWidth;
+                const rightY = tipY + Math.sin(rightAngle) * arrowWidth;
+
+                return (
+                    <>
+                        <line
+                            x1={centerX}
+                            y1={centerY}
+                            x2={x}
+                            y2={y}
+                            stroke={color}
+                            strokeWidth={width}
+                            strokeLinecap="round"
+                        />
+                        <polygon
+                            points={`${tipX},${tipY} ${leftX},${leftY} ${rightX},${rightY}`}
+                            fill={color}
+                        />
+                    </>
+                );
+            } else if (design === 'modern') {
+                return (
+                    <line
+                        x1={centerX}
+                        y1={centerY}
+                        x2={x}
+                        y2={y}
+                        stroke={color}
+                        strokeWidth={width}
+                        strokeLinecap="square"
+                    />
+                );
+            } else {
+                // classic
+                return (
+                    <line
+                        x1={centerX}
+                        y1={centerY}
+                        x2={x}
+                        y2={y}
+                        stroke={color}
+                        strokeWidth={width}
+                        strokeLinecap="round"
+                    />
+                );
+            }
+        };
+
+        return (
+            <svg
+                viewBox={`0 0 ${size} ${size}`}
+                style={{
+                    width: '100%',
+                    height: '100%',
+                }}
+            >
+                {renderClockFace()}
+                
+                {/* Hour hand */}
+                {this.state.rxData.analogClockShowHourHand && renderHand(
+                    hourAngle,
+                    25,
+                    3,
+                    this.state.rxData.analogClockHourHandColor || 'rgb(0, 0, 0)',
+                    this.state.rxData.analogClockHourHandDesign || 'classic'
+                )}
+
+                {/* Minute hand */}
+                {this.state.rxData.analogClockShowMinuteHand && renderHand(
+                    minuteAngle,
+                    35,
+                    2,
+                    this.state.rxData.analogClockMinuteHandColor || 'rgb(0, 0, 0)',
+                    this.state.rxData.analogClockMinuteHandDesign || 'classic'
+                )}
+
+                {/* Second hand */}
+                {this.state.rxData.analogClockShowSecondHand && renderHand(
+                    secondAngle,
+                    38,
+                    1,
+                    this.state.rxData.analogClockSecondHandColor || 'rgb(255, 0, 0)',
+                    this.state.rxData.analogClockSecondHandDesign || 'classic'
+                )}
+            </svg>
+        );
+    }
+
     getCardContent(valueData: UniversalWidgetValueData): React.JSX.Element {
         let c;
         switch (this.state.rxData.contentType) {
@@ -2542,6 +2897,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             case 'viewInWidget':
                 c = this.getContentViewInWidget(valueData);
                 break;
+            case 'analogClock':
+                c = this.getContentAnalogClock(valueData);
+                break;
             default:
                 c = '';
         }
@@ -2554,6 +2912,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     height: '100%',
                     width:
                         this.state.rxData.contentType === 'viewInWidget' ||
+                        this.state.rxData.contentType === 'analogClock' ||
                         (this.state.rxData.contentType === 'image' && valueData.styles.imageObjectFit)
                             ? '100%'
                             : '',

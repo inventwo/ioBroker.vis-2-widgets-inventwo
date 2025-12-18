@@ -44,7 +44,7 @@ export interface UniversalWidgetTextStyles {
 }
 
 export interface UniversalWidgetContentStyles {
-    contentType: 'icon' | 'image' | 'html' | 'viewInWidget' | 'colorPicker';
+    contentType: 'icon' | 'image' | 'html' | 'viewInWidget' | 'colorPicker' | 'analogClock';
     contentMarginTop: number | string;
     contentMarginBottom: number | string;
     contentMarginLeft: number | string;

@@ -1,0 +1,1 @@
+  "vis_2_widgets_inventwo_clock_face": "Zifferblatt",

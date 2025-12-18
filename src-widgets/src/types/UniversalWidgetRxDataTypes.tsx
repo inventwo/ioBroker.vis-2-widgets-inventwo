@@ -16,6 +16,7 @@ export interface UniversalCompleteRxData
     extends UniversalRxData,
         UniversalStateRxData,
         ColorPickerRxData,
+        AnalogClockRxData,
         DialogRxData,
         UniversalWidgetDefaultState,
         UniversalWidgetTextStyles,
@@ -41,7 +42,7 @@ export interface UniversalRxData {
     btnSpacing: number;
     countStates: number;
     buttonHoldValue: boolean;
-    contentType: 'icon' | 'image' | 'html' | 'viewInWidget' | 'colorPicker';
+    contentType: 'icon' | 'image' | 'html' | 'viewInWidget' | 'colorPicker' | 'analogClock';
     clickThrough: boolean;
     dialogCloseTimeoutSeconds: number;
     direction: 'row' | 'column';
@@ -90,6 +91,21 @@ export interface ColorPickerRxData {
     colorPickerOid1: string | null;
     colorPickerOid2: string | null;
     colorPickerOid3: string | null;
+}
+
+export interface AnalogClockRxData {
+    analogClockFaceDesign: 'classic' | 'modern' | 'minimal';
+    analogClockFaceColor: string;
+    analogClockBackgroundColor: string;
+    analogClockShowHourHand: boolean;
+    analogClockHourHandDesign: 'classic' | 'modern' | 'arrow';
+    analogClockHourHandColor: string;
+    analogClockShowMinuteHand: boolean;
+    analogClockMinuteHandDesign: 'classic' | 'modern' | 'arrow';
+    analogClockMinuteHandColor: string;
+    analogClockShowSecondHand: boolean;
+    analogClockSecondHandDesign: 'classic' | 'modern' | 'arrow';
+    analogClockSecondHandColor: string;
 }
 
 export interface DialogRxData {
