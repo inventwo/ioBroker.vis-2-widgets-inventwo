@@ -399,7 +399,9 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
     private describeArc(x: number, y: number, radius: number, startAngle: number, endAngle: number): string {
         const start = this.polarToCartesian(x, y, radius, endAngle);
         const end = this.polarToCartesian(x, y, radius, startAngle);
-        const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+        let arcSpan = endAngle - startAngle;
+        if (arcSpan < 0) arcSpan += 360;
+        const largeArcFlag = arcSpan > 180 ? '1' : '0';
         return ['M', start.x, start.y, 'A', radius, radius, 0, largeArcFlag, 0, end.x, end.y].join(' ');
     }
 
@@ -440,6 +442,8 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
         if (!this.containerRef.current) return;
 
         const rect = this.containerRef.current.getBoundingClientRect();
+        // Use the same size calculation as in render for consistency
+        const size = Math.min(rect.width, rect.height);
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
@@ -447,6 +451,8 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
         let clientY: number;
 
         if ('touches' in e) {
+            // Check if there are any touches (user may have lifted finger)
+            if (e.touches.length === 0) return;
             clientX = e.touches[0].clientX - rect.left;
             clientY = e.touches[0].clientY - rect.top;
         } else {
@@ -468,10 +474,11 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
         let normalizedAngle = angle - startAngle;
         if (normalizedAngle < 0) normalizedAngle += 360;
 
+        // Snap to nearest boundary when outside valid range
         if (normalizedAngle > totalAngle) {
-            const distToStart = Math.min(normalizedAngle, 360 - normalizedAngle);
-            const distToEnd = Math.abs(normalizedAngle - totalAngle);
-            normalizedAngle = distToStart < distToEnd ? 0 : totalAngle;
+            const distanceToStartAngle = Math.min(normalizedAngle, 360 - normalizedAngle);
+            const distanceToEndAngle = Math.abs(normalizedAngle - totalAngle);
+            normalizedAngle = distanceToStartAngle < distanceToEndAngle ? 0 : totalAngle;
         }
 
         const percentage = normalizedAngle / totalAngle;
