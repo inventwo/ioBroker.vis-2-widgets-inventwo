@@ -2035,16 +2035,16 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
         // Start clock interval for analog clock
         if (this.state.rxData.contentType === 'analogClock') {
-            const clockInterval = setInterval(() => {
+            const clockInterval = window.setInterval(() => {
                 this.setState({ currentTime: new Date() });
-            }, 1000) as unknown as number;
+            }, 1000);
             this.setState({ clockInterval });
         }
     }
 
     componentWillUnmount(): void {
         if (this.state.clockInterval) {
-            clearInterval(this.state.clockInterval);
+            window.clearInterval(this.state.clockInterval);
         }
     }
 
@@ -2055,12 +2055,12 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
         // Start or stop clock interval based on content type changes
         if (this.state.rxData.contentType === 'analogClock' && !this.state.clockInterval) {
-            const clockInterval = setInterval(() => {
+            const clockInterval = window.setInterval(() => {
                 this.setState({ currentTime: new Date() });
-            }, 1000) as unknown as number;
+            }, 1000);
             this.setState({ clockInterval });
         } else if (this.state.rxData.contentType !== 'analogClock' && this.state.clockInterval) {
-            clearInterval(this.state.clockInterval);
+            window.clearInterval(this.state.clockInterval);
             this.setState({ clockInterval: null });
         }
     }
