@@ -57,6 +57,8 @@ All widgets come with extensive design options to customize the look and feel to
 ### **WORK IN PROGRESS**
 - Added image type to column for table widget (#97)
 - Added custom datetime format support for table widget (#97)
+- Fix issue in slider widget when steps is active but value is empty
+- Changed module federation version to match vis 2.0 stable
 
 ### 0.4.0 (2025-12-13)
 - Switched to TypeScript
