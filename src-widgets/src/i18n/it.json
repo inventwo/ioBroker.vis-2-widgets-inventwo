@@ -284,5 +284,17 @@
   "widget_universal": "universale",
   "width": "Larghezza",
   "x_offset": "Scostamento X",
-  "y_offset": "Scostamento Y"
+  "y_offset": "Scostamento Y",
+  "analog_clock": "Orologio analogico",
+  "arrow": "Freccia",
+  "attr_content_analog_clock": "Contenuto del widget - Orologio analogico",
+  "classic": "Classico",
+  "design": "Design",
+  "minimal": "Minimo",
+  "modern": "Moderno",
+  "show": "Mostra",
+  "vis_2_widgets_inventwo_clock_face": "Quadrante dell'orologio",
+  "vis_2_widgets_inventwo_hour_hand": "Lancetta delle ore",
+  "vis_2_widgets_inventwo_minute_hand": "Lancetta dei minuti",
+  "vis_2_widgets_inventwo_second_hand": "Lancetta dei secondi"
 }

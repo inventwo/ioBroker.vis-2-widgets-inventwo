@@ -284,5 +284,17 @@
   "widget_universal": "Universeel",
   "width": "Breedte",
   "x_offset": "X-verschuiving",
-  "y_offset": "Y-verschuiving"
+  "y_offset": "Y-verschuiving",
+  "analog_clock": "Analoge klok",
+  "arrow": "Pijl",
+  "attr_content_analog_clock": "Widget-inhoud - Analoge klok",
+  "classic": "Klassiek",
+  "design": "Ontwerp",
+  "minimal": "Minimaal",
+  "modern": "Modern",
+  "show": "Tonen",
+  "vis_2_widgets_inventwo_clock_face": "Wijzerplaat",
+  "vis_2_widgets_inventwo_hour_hand": "Uurwijzer",
+  "vis_2_widgets_inventwo_minute_hand": "Minuutwijzer",
+  "vis_2_widgets_inventwo_second_hand": "Secondewijzer"
 }

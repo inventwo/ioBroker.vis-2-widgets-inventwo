@@ -284,5 +284,17 @@
   "widget_universal": "Універсальний",
   "width": "Ширина",
   "x_offset": "X зміщення",
-  "y_offset": "Y зміщення"
+  "y_offset": "Y зміщення",
+  "analog_clock": "Аналоговий годинник",
+  "arrow": "Стрілка",
+  "attr_content_analog_clock": "Вміст віджета - Аналоговий годинник",
+  "classic": "Класичний",
+  "design": "Дизайн",
+  "minimal": "Мінімальний",
+  "modern": "Сучасний",
+  "show": "Показати",
+  "vis_2_widgets_inventwo_clock_face": "Циферблат",
+  "vis_2_widgets_inventwo_hour_hand": "Годинна стрілка",
+  "vis_2_widgets_inventwo_minute_hand": "Хвилинна стрілка",
+  "vis_2_widgets_inventwo_second_hand": "Секундна стрілка"
 }

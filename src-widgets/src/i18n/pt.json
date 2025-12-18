@@ -284,5 +284,17 @@
   "widget_universal": "Universal",
   "width": "Largura",
   "x_offset": "Deslocamento X",
-  "y_offset": "Deslocamento Y"
+  "y_offset": "Deslocamento Y",
+  "analog_clock": "Relógio analógico",
+  "arrow": "Seta",
+  "attr_content_analog_clock": "Conteúdo do widget - Relógio analógico",
+  "classic": "Clássico",
+  "design": "Design",
+  "minimal": "Mínimo",
+  "modern": "Moderno",
+  "show": "Mostrar",
+  "vis_2_widgets_inventwo_clock_face": "Mostrador do relógio",
+  "vis_2_widgets_inventwo_hour_hand": "Ponteiro das horas",
+  "vis_2_widgets_inventwo_minute_hand": "Ponteiro dos minutos",
+  "vis_2_widgets_inventwo_second_hand": "Ponteiro dos segundos"
 }
