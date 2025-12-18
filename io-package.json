@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "news": {
+      "0.4.1": {
+        "en": "Added image type to column for table widget (#97)\nAdded custom datetime format support for table widget (#97)\nFix issue in slider widget when steps is active but value is empty\nChanged module federation version to match vis 2.0 stable",
+        "de": "Bildtyp zur Spalte für Tabelle Widget (#97) hinzugefügt\nHinzugefügt benutzerdefinierte Datetime-Format-Unterstützung für Tabelle Widget (#97)\nProblem im Slider Widget beheben, wenn die Schritte aktiv sind, aber der Wert leer ist\nGeänderte Modul-Feederationsversion passend zu vis 2.0 stabil",
+        "ru": "Добавлен тип изображения в колонку для виджета таблицы (#97)\nДобавлена поддержка пользовательского формата даты для виджета таблицы (#97)\nИсправление проблемы в виджете слайдера, когда шаги активны, но ценность пуста\nИзмененная версия федерации модулей соответствует стабильной версии 2.0",
+        "pt": "Tipo de imagem adicionado à coluna para o elemento da tabela (# 97)\nAdicionado suporte personalizado ao formato datetime para widget de tabela (# 97)\nCorrigir o problema no elemento da barra deslizante quando os passos estiverem activos, mas o valor estiver vazio\nVersão alterada da federação do módulo para coincidir com a versão 2.0 estável",
+        "nl": "Afbeeldingstype toegevoegd aan kolom voor tabelwidget (#97)\nAangepaste datum-indelingsondersteuning voor tabelwidget (#97) toegevoegd\nFix probleem in dia widget wanneer stappen actief zijn, maar waarde is leeg\nVeranderde module federatie versie om te passen vis 2.0 stabiel",
+        "fr": "Ajout du type d'image à la colonne pour le widget de table (#97)\nAjout du support personnalisé de format datetime pour widget de table (#97)\nCorrection de problème dans le widget slider lorsque les étapes sont actives mais la valeur est vide\nVersion modifiée de la fédération module pour correspondre vis 2.0 stable",
+        "it": "Tipo di immagine aggiunto alla colonna per widget di tabella (#97)\nAggiunto supporto di formato datatime personalizzato per widget di tabella (#97)\nRisolvi il problema nel widget del cursore quando i passaggi sono attivi ma il valore è vuoto\nModificata versione federativa del modulo per abbinare vis 2.0 stable",
+        "es": "Tipo de imagen añadido a la columna para el widget de mesa (#97)\nAñadido soporte de formato de fecha personalizada para el widget de mesa (#97)\nCorregir el problema en el widget deslizante cuando los pasos están activos pero el valor está vacío\nVersión de federación del módulo cambiado para comparar con 2.0 estable",
+        "pl": "Dodano typ obrazka do kolumny dla widżetu tabeli (# 97)\nDodano niestandardowe wsparcie formatu datetime dla interfejsu tabeli (# 97)\nNaprawianie problemu w widżecie suwaka, gdy kroki są aktywne, ale wartość jest pusta\nZmieniona wersja federacyjna modułu do dopasowania do wersji 2.0 stabilnej",
+        "uk": "Додано тип зображення до колонки для настільного віджету (#97)\nДодано користувальницький дата-центр підтримки для настільного віджету (#97)\nВиправлено проблему у віджеті слайдера, коли дії активні, але значення є порожнім\nЗмінений варіант федерації модуля, щоб відповідати в'язам 2.0 стабільний",
+        "zh-cn": "将图像类型添加到表格部件的列(# 97)\n为表格部件添加自定义日期时间格式支持(# 97)\n当步骤活动但值为空时, 在滑动部件中修正发行\n更改模块 Federation 版本, 与 2.0 稳定匹配"
+      },
       "0.4.0": {
         "en": "Switched to TypeScript",
         "de": "Zu TypeScript geschaltet",
@@ -80,19 +93,6 @@
         "pl": "Naprawiono problem z promieniem okręgu tabeli i dodano opcję ustawienia promienia okręgu (#99)\nNaprawiono problem z uniwersalnym widżetem i porównaniem innym niż \"równy\" (#109)\nDodano opcję dziedziczenia kolorów stanu z innych widżetów (#120)",
         "uk": "Виправлено проблему з округленням кутів таблиці та додана опція для задання радіусу кутів (#99)\nВиправлено проблему з універсальним віджетом та порівнянням, відмінним від \"рівне\" (#109)\nДодана ​​опція успадкування кольорів стану від інших віджетів (#120)",
         "zh-cn": "修复了表格边框半径的问题，并添加了设置边框半径的选项 (#99)\n修复通用小部件与\"等于\"之外的比较问题 (#109)\n添加了从其他小部件继承状态颜色的选项（#120）"
-      },
-      "0.3.7": {
-        "en": "Removed code to print console logs to a widget for debugging purposes",
-        "de": "Entfernter Code zum Drucken von Konsolenprotokollen in ein Widget zu Debugging-Zwecken",
-        "ru": "Удален код для вывода журнальных логов на виджет для отладочных целей",
-        "pt": "Removido o código para imprimir logs do console em um widget para fins de depuração",
-        "nl": "Verwijderde code om console logs af te drukken naar een widget voor debugdoeleinden",
-        "fr": "Suppression du code permettant d'imprimer les journaux de la console dans un widget à des fins de débogage",
-        "it": "Rimosso il codice per stampare i log della console su un widget a fini di debug",
-        "es": "Se eliminó el código que imprimía mensajes de consola en un widget con fines de depuración.",
-        "pl": "Usunięto kod odpowiedzialny za wyświetlanie logów konsoli w widżecie do celów debugowania.",
-        "uk": "Видалено код для виведення журналів консолі в віджет для налагодження коду.",
-        "zh-cn": "为了调试目的，已移除将控制台日志打印到小部件的代码。"
       }
     },
     "titleLang": {
