@@ -54,7 +54,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.4.2 (2025-12-22)
 - Vite downgrade
 
 ### 0.4.1 (2025-12-18)
