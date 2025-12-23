@@ -18,6 +18,7 @@ const config = {
             exposes: {
                 './InventwoWidgetUniversal': './src/InventwoWidgetUniversal',
                 './InventwoWidgetSlider': './src/InventwoWidgetSlider',
+                './InventwoWidgetRadialSlider': './src/InventwoWidgetRadialSlider',
                 './InventwoWidgetSwitch': './src/InventwoWidgetSwitch',
                 './InventwoWidgetCheckbox': './src/InventwoWidgetCheckbox',
                 './InventwoWidgetTable': './src/InventwoWidgetTable',
