@@ -1045,9 +1045,69 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 { value: 'modern', label: 'modern' },
                                 { value: 'minimal', label: 'minimal' },
                                 { value: 'dashes', label: 'dashes' },
+                                { value: 'custom', label: 'custom' },
                             ],
                             default: 'classic',
                             label: 'design',
+                        },
+                        {
+                            name: 'analogClockCustomTickInterval',
+                            type: 'select',
+                            options: [
+                                { value: 'hours', label: 'hours_only' },
+                                { value: 'minutes', label: 'minutes_as_small' },
+                                { value: 'both', label: 'both' },
+                            ],
+                            default: 'hours',
+                            label: 'tick_interval',
+                            hidden: 'data.analogClockFaceDesign != "custom"',
+                        },
+                        {
+                            name: 'analogClockCustomTickThickness',
+                            type: 'slider',
+                            min: 0.5,
+                            max: 5,
+                            step: 0.5,
+                            default: 1.5,
+                            label: 'tick_thickness',
+                            hidden: 'data.analogClockFaceDesign != "custom"',
+                        },
+                        {
+                            name: 'analogClockCustomTickThicknessMain',
+                            type: 'slider',
+                            min: 0.5,
+                            max: 5,
+                            step: 0.5,
+                            default: 2,
+                            label: 'tick_thickness_main',
+                            hidden: 'data.analogClockFaceDesign != "custom"',
+                        },
+                        {
+                            name: 'analogClockCustomShowNumbers',
+                            type: 'checkbox',
+                            default: true,
+                            label: 'show_numbers',
+                            hidden: 'data.analogClockFaceDesign != "custom"',
+                        },
+                        {
+                            name: 'analogClockCustomNumberSize',
+                            type: 'slider',
+                            min: 4,
+                            max: 16,
+                            step: 1,
+                            default: 8,
+                            label: 'number_size',
+                            hidden: 'data.analogClockFaceDesign != "custom" || !data.analogClockCustomShowNumbers',
+                        },
+                        {
+                            name: 'analogClockCustomNumberOffset',
+                            type: 'slider',
+                            min: 10,
+                            max: 45,
+                            step: 1,
+                            default: 30,
+                            label: 'number_offset',
+                            hidden: 'data.analogClockFaceDesign != "custom" || !data.analogClockCustomShowNumbers',
                         },
                         {
                             name: 'analogClockFaceColor',
@@ -2743,115 +2803,147 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             const bgColor = this.state.rxData.analogClockBackgroundColor || 'rgb(255, 255, 255)';
             const design = this.state.rxData.analogClockFaceDesign || 'classic';
 
-            if (design === 'minimal') {
-                return (
-                    <>
-                        <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth="0.5" />
-                        <circle cx={centerX} cy={centerY} r={2} fill={faceColor} />
-                    </>
-                );
+            // Get custom settings or preset defaults
+            let tickInterval: 'hours' | 'minutes' | 'both' = 'hours';
+            let tickThickness = 1.5;
+            let tickThicknessMain = 2;
+            let numberSize = 8;
+            let numberOffset = 30;
+            let showNumbers = true;
+
+            if (design === 'classic') {
+                // Classic: all 12 numbers, no tick marks
+                tickInterval = 'hours';
+                showNumbers = true;
+                numberSize = 8;
+                numberOffset = 36;
+                tickThickness = 0; // no ticks in classic
             } else if (design === 'modern') {
-                return (
-                    <>
-                        <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth="2" />
-                        {[...Array(12)].map((_, i) => {
-                            const angle = (i * 30 - 90) * (Math.PI / 180);
-                            const x1 = centerX + Math.cos(angle) * 42;
-                            const y1 = centerY + Math.sin(angle) * 42;
-                            const x2 = centerX + Math.cos(angle) * 46;
-                            const y2 = centerY + Math.sin(angle) * 46;
-                            return (
-                                <line
-                                    key={`hour-${i}`}
-                                    x1={x1}
-                                    y1={y1}
-                                    x2={x2}
-                                    y2={y2}
-                                    stroke={faceColor}
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                />
-                            );
-                        })}
-                        <circle cx={centerX} cy={centerY} r={3} fill={faceColor} />
-                    </>
-                );
+                // Modern: tick marks only, no numbers
+                tickInterval = 'hours';
+                tickThickness = 2;
+                tickThicknessMain = 2;
+                showNumbers = false;
+            } else if (design === 'minimal') {
+                // Minimal: no ticks, no numbers
+                tickInterval = 'hours';
+                tickThickness = 0;
+                showNumbers = false;
             } else if (design === 'dashes') {
-                return (
-                    <>
-                        <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth="1" />
-                        {[...Array(12)].map((_, i) => {
-                            const angle = (i * 30 - 90) * (Math.PI / 180);
-                            const number = i === 0 ? 12 : i;
-                            const isMainHour = i === 0 || i === 3 || i === 6 || i === 9;
+                // Dashes: tick marks with numbers at 12, 3, 6, 9
+                tickInterval = 'hours';
+                tickThickness = 1.5;
+                tickThicknessMain = 2;
+                showNumbers = true;
+                numberSize = 8;
+                numberOffset = 30;
+            } else if (design === 'custom') {
+                // Custom: use user-defined settings
+                tickInterval = this.state.rxData.analogClockCustomTickInterval || 'hours';
+                tickThickness = this.state.rxData.analogClockCustomTickThickness ?? 1.5;
+                tickThicknessMain = this.state.rxData.analogClockCustomTickThicknessMain ?? 2;
+                numberSize = this.state.rxData.analogClockCustomNumberSize ?? 8;
+                numberOffset = this.state.rxData.analogClockCustomNumberOffset ?? 30;
+                showNumbers = this.state.rxData.analogClockCustomShowNumbers ?? true;
+            }
+
+            // Render base circle
+            const borderWidth = design === 'modern' ? 2 : design === 'minimal' ? 0.5 : 1;
+            
+            return (
+                <>
+                    <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth={borderWidth} />
+                    
+                    {/* Render tick marks and numbers */}
+                    {design !== 'minimal' && (
+                        <>
+                            {/* Hour marks */}
+                            {[...Array(12)].map((_, i) => {
+                                const angle = (i * 30 - 90) * (Math.PI / 180);
+                                const number = i === 0 ? 12 : i;
+                                const isMainHour = i === 0 || i === 3 || i === 6 || i === 9;
+                                
+                                // Determine if we should show this tick
+                                const showTick = design === 'classic' ? false : tickThickness > 0;
+                                
+                                // Calculate tick mark positions
+                                const innerRadius = isMainHour ? 38 : 42;
+                                const outerRadius = 47;
+                                const x1 = centerX + Math.cos(angle) * innerRadius;
+                                const y1 = centerY + Math.sin(angle) * innerRadius;
+                                const x2 = centerX + Math.cos(angle) * outerRadius;
+                                const y2 = centerY + Math.sin(angle) * outerRadius;
+                                
+                                // Determine if we should show numbers for this position
+                                const showNumberHere = showNumbers && (
+                                    design === 'classic' || 
+                                    (design === 'dashes' && isMainHour) ||
+                                    (design === 'custom' && isMainHour)
+                                );
+                                
+                                return (
+                                    <g key={`hour-${i}`}>
+                                        {showTick && (
+                                            <line
+                                                x1={x1}
+                                                y1={y1}
+                                                x2={x2}
+                                                y2={y2}
+                                                stroke={faceColor}
+                                                strokeWidth={isMainHour ? tickThicknessMain : tickThickness}
+                                                strokeLinecap="round"
+                                            />
+                                        )}
+                                        {showNumberHere && (
+                                            <text
+                                                x={centerX + Math.cos(angle) * numberOffset}
+                                                y={centerY + Math.sin(angle) * numberOffset}
+                                                textAnchor="middle"
+                                                dominantBaseline="middle"
+                                                fill={faceColor}
+                                                fontSize={numberSize}
+                                                fontWeight="bold"
+                                            >
+                                                {number}
+                                            </text>
+                                        )}
+                                    </g>
+                                );
+                            })}
                             
-                            // Longer tick marks for 12, 3, 6, 9
-                            const innerRadius = isMainHour ? 38 : 42;
-                            const outerRadius = 47;
-                            const x1 = centerX + Math.cos(angle) * innerRadius;
-                            const y1 = centerY + Math.sin(angle) * innerRadius;
-                            const x2 = centerX + Math.cos(angle) * outerRadius;
-                            const y2 = centerY + Math.sin(angle) * outerRadius;
-                            
-                            return (
-                                <g key={`hour-${i}`}>
+                            {/* Minute marks (only if tickInterval is 'minutes' or 'both') */}
+                            {(tickInterval === 'minutes' || tickInterval === 'both') && [...Array(60)].map((_, i) => {
+                                // Skip hour positions
+                                if (i % 5 === 0) return null;
+                                
+                                const angle = (i * 6 - 90) * (Math.PI / 180);
+                                const innerRadius = 45;
+                                const outerRadius = 47;
+                                const x1 = centerX + Math.cos(angle) * innerRadius;
+                                const y1 = centerY + Math.sin(angle) * innerRadius;
+                                const x2 = centerX + Math.cos(angle) * outerRadius;
+                                const y2 = centerY + Math.sin(angle) * outerRadius;
+                                
+                                return (
                                     <line
+                                        key={`minute-${i}`}
                                         x1={x1}
                                         y1={y1}
                                         x2={x2}
                                         y2={y2}
                                         stroke={faceColor}
-                                        strokeWidth={isMainHour ? "2" : "1.5"}
+                                        strokeWidth={tickThickness * 0.5}
                                         strokeLinecap="round"
                                     />
-                                    {isMainHour && (
-                                        <text
-                                            x={centerX + Math.cos(angle) * 30}
-                                            y={centerY + Math.sin(angle) * 30}
-                                            textAnchor="middle"
-                                            dominantBaseline="middle"
-                                            fill={faceColor}
-                                            fontSize="8"
-                                            fontWeight="bold"
-                                        >
-                                            {number}
-                                        </text>
-                                    )}
-                                </g>
-                            );
-                        })}
-                        <circle cx={centerX} cy={centerY} r={2.5} fill={faceColor} />
-                    </>
-                );
-            } else {
-                // classic
-                return (
-                    <>
-                        <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth="1" />
-                        {[...Array(12)].map((_, i) => {
-                            const angle = (i * 30 - 90) * (Math.PI / 180);
-                            const number = i === 0 ? 12 : i;
-                            const x = centerX + Math.cos(angle) * 36;
-                            const y = centerY + Math.sin(angle) * 36;
-                            return (
-                                <text
-                                    key={`number-${i}`}
-                                    x={x}
-                                    y={y}
-                                    textAnchor="middle"
-                                    dominantBaseline="middle"
-                                    fill={faceColor}
-                                    fontSize="8"
-                                    fontWeight="bold"
-                                >
-                                    {number}
-                                </text>
-                            );
-                        })}
-                        <circle cx={centerX} cy={centerY} r={2.5} fill={faceColor} />
-                    </>
-                );
-            }
+                                );
+                            })}
+                        </>
+                    )}
+                    
+                    {/* Center dot */}
+                    <circle cx={centerX} cy={centerY} r={design === 'modern' ? 3 : 2.5} fill={faceColor} />
+                </>
+            );
         };
 
         // Render clock hand based on design
