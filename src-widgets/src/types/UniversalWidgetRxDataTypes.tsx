@@ -94,7 +94,7 @@ export interface ColorPickerRxData {
 }
 
 export interface AnalogClockRxData {
-    analogClockFaceDesign: 'classic' | 'modern' | 'minimal';
+    analogClockFaceDesign: 'classic' | 'modern' | 'minimal' | 'dashes';
     analogClockFaceColor: string;
     analogClockBackgroundColor: string;
     analogClockShowHourHand: boolean;

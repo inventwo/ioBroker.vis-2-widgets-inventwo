@@ -1044,6 +1044,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 { value: 'classic', label: 'classic' },
                                 { value: 'modern', label: 'modern' },
                                 { value: 'minimal', label: 'minimal' },
+                                { value: 'dashes', label: 'dashes' },
                             ],
                             default: 'classic',
                             label: 'design',
@@ -2773,6 +2774,53 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             );
                         })}
                         <circle cx={centerX} cy={centerY} r={3} fill={faceColor} />
+                    </>
+                );
+            } else if (design === 'dashes') {
+                return (
+                    <>
+                        <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth="1" />
+                        {[...Array(12)].map((_, i) => {
+                            const angle = (i * 30 - 90) * (Math.PI / 180);
+                            const number = i === 0 ? 12 : i;
+                            const isMainHour = i === 0 || i === 3 || i === 6 || i === 9;
+                            
+                            // Longer tick marks for 12, 3, 6, 9
+                            const innerRadius = isMainHour ? 38 : 42;
+                            const outerRadius = 47;
+                            const x1 = centerX + Math.cos(angle) * innerRadius;
+                            const y1 = centerY + Math.sin(angle) * innerRadius;
+                            const x2 = centerX + Math.cos(angle) * outerRadius;
+                            const y2 = centerY + Math.sin(angle) * outerRadius;
+                            
+                            return (
+                                <g key={`hour-${i}`}>
+                                    <line
+                                        x1={x1}
+                                        y1={y1}
+                                        x2={x2}
+                                        y2={y2}
+                                        stroke={faceColor}
+                                        strokeWidth={isMainHour ? "2" : "1.5"}
+                                        strokeLinecap="round"
+                                    />
+                                    {isMainHour && (
+                                        <text
+                                            x={centerX + Math.cos(angle) * 30}
+                                            y={centerY + Math.sin(angle) * 30}
+                                            textAnchor="middle"
+                                            dominantBaseline="middle"
+                                            fill={faceColor}
+                                            fontSize="8"
+                                            fontWeight="bold"
+                                        >
+                                            {number}
+                                        </text>
+                                    )}
+                                </g>
+                            );
+                        })}
+                        <circle cx={centerX} cy={centerY} r={2.5} fill={faceColor} />
                     </>
                 );
             } else {
