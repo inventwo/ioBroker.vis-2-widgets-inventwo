@@ -2863,8 +2863,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 const number = i === 0 ? 12 : i;
                                 const isMainHour = i === 0 || i === 3 || i === 6 || i === 9;
                                 
-                                // Determine if we should show this tick
-                                const showTick = design === 'classic' ? false : tickThickness > 0;
+                                // Classic design never shows tick marks
+                                const showTick = design !== 'classic' && tickThickness > 0;
                                 
                                 // Calculate tick mark positions
                                 const innerRadius = isMainHour ? 38 : 42;
@@ -2875,11 +2875,19 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 const y2 = centerY + Math.sin(angle) * outerRadius;
                                 
                                 // Determine if we should show numbers for this position
-                                const showNumberHere = showNumbers && (
-                                    design === 'classic' || 
-                                    (design === 'dashes' && isMainHour) ||
-                                    (design === 'custom' && isMainHour)
-                                );
+                                let showNumberHere = false;
+                                if (showNumbers) {
+                                    if (design === 'classic') {
+                                        // Classic shows all numbers
+                                        showNumberHere = true;
+                                    } else if (design === 'dashes') {
+                                        // Dashes shows only main hour numbers
+                                        showNumberHere = isMainHour;
+                                    } else if (design === 'custom') {
+                                        // Custom shows all numbers when enabled
+                                        showNumberHere = true;
+                                    }
+                                }
                                 
                                 return (
                                     <g key={`hour-${i}`}>
