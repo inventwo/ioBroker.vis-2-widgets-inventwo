@@ -289,7 +289,6 @@
   "attr_group_css_radial_value": "inventwo CSS - Radial value",
   "start_angle": "Start angle",
   "end_angle": "End angle",
-  "show_value": "Show value",
   "show_label": "Show label",
   "label": "Label",
   "track_active_color": "Track active color",
@@ -297,5 +296,17 @@
   "value_color": "Value color",
   "label_size": "Label size",
   "label_color": "Label color",
-  "scale_to_fit": "Scale to fit"
+  "scale_to_fit": "Scale to fit",
+  "analog_clock": "Analog clock",
+  "arrow": "Arrow",
+  "attr_content_analog_clock": "Widget content - Analog clock",
+  "classic": "Classic",
+  "design": "Design",
+  "minimal": "Minimal",
+  "modern": "Modern",
+  "show": "Show",
+  "vis_2_widgets_inventwo_clock_face": "Clock face",
+  "vis_2_widgets_inventwo_hour_hand": "Hour hand",
+  "vis_2_widgets_inventwo_minute_hand": "Minute hand",
+  "vis_2_widgets_inventwo_second_hand": "Second hand"
 }
