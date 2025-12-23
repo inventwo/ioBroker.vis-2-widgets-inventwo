@@ -129,7 +129,7 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                             min: 0,
                             max: 360,
                             step: 1,
-                            default: 135,
+                            default: 225,
                             label: 'start_angle',
                         },
                         {
@@ -138,7 +138,7 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                             min: 0,
                             max: 360,
                             step: 1,
-                            default: 45,
+                            default: 135,
                             label: 'end_angle',
                         },
                         {
