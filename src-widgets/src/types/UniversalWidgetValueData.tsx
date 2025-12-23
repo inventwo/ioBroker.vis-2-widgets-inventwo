@@ -45,6 +45,7 @@ export interface UniversalWidgetTextStyles {
 
 export interface UniversalWidgetContentStyles {
     contentType: 'icon' | 'image' | 'html' | 'viewInWidget' | 'colorPicker';
+    scaleContentToFit: boolean;
     contentMarginTop: number | string;
     contentMarginBottom: number | string;
     contentMarginLeft: number | string;

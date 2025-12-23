@@ -296,6 +296,6 @@
   "value_size": "Value size",
   "value_color": "Value color",
   "label_size": "Label size",
-  "label_color": "Label color"
-
+  "label_color": "Label color",
+  "scale_to_fit": "Scale to fit"
 }

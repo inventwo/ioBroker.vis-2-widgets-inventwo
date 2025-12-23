@@ -436,7 +436,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
         if (this.state.rxData.showSteps) {
             if (this.state.rxData.stepMode === 'auto') {
                 const stepDisplay = this.state.rxData.stepDisplay;
-                if (stepDisplay > 0) {
+                if (stepDisplay > 0 && minValue && maxValue && stepDisplay) {
                     for (let i = minValue + stepDisplay; i < maxValue; i += stepDisplay) {
                         marks.push({
                             value: parseFloat(i.toFixed(2).replace(/[.,]00$/, '')),
