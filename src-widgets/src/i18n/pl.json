@@ -315,6 +315,8 @@
   "show": "Pokaż",
   "show_numbers": "Pokaż liczby",
   "tick_interval": "Interwał kresek",
+  "tick_length": "Długość kresek",
+  "tick_length_main": "Długość głównych kresek",
   "tick_thickness": "Grubość kresek",
   "tick_thickness_main": "Grubość głównych kresek",
   "vis_2_widgets_inventwo_clock_face": "Tarcza zegara",

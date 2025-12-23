@@ -109,6 +109,8 @@ export interface AnalogClockRxData {
     analogClockCustomTickInterval: 'hours' | 'minutes' | 'both';
     analogClockCustomTickThickness: number;
     analogClockCustomTickThicknessMain: number;
+    analogClockCustomTickLength: number;
+    analogClockCustomTickLengthMain: number;
     analogClockCustomNumberSize: number;
     analogClockCustomNumberOffset: number;
     analogClockCustomShowNumbers: boolean;

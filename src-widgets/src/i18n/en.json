@@ -314,6 +314,8 @@
   "show": "Show",
   "show_numbers": "Show numbers",
   "tick_interval": "Tick interval",
+  "tick_length": "Tick length",
+  "tick_length_main": "Main tick length",
   "tick_thickness": "Tick thickness",
   "tick_thickness_main": "Main tick thickness",
   "vis_2_widgets_inventwo_clock_face": "Clock face",

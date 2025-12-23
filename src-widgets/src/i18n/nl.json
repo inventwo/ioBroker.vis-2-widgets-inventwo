@@ -315,6 +315,8 @@
   "show": "Tonen",
   "show_numbers": "Nummers tonen",
   "tick_interval": "Streepjes interval",
+  "tick_length": "Streepjes lengte",
+  "tick_length_main": "Hoofd streepjes lengte",
   "tick_thickness": "Streepjes dikte",
   "tick_thickness_main": "Hoofd streepjes dikte",
   "vis_2_widgets_inventwo_clock_face": "Wijzerplaat",

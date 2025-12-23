@@ -315,6 +315,8 @@
   "show": "Mostrar",
   "show_numbers": "Mostrar números",
   "tick_interval": "Intervalo de marcas",
+  "tick_length": "Longitud de marcas",
+  "tick_length_main": "Longitud de marcas principales",
   "tick_thickness": "Grosor de marcas",
   "tick_thickness_main": "Grosor de marcas principales",
   "vis_2_widgets_inventwo_clock_face": "Esfera del reloj",

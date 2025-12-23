@@ -315,6 +315,8 @@
   "show": "Anzeigen",
   "show_numbers": "Zahlen anzeigen",
   "tick_interval": "Strichintervall",
+  "tick_length": "Strichlänge",
+  "tick_length_main": "Hauptstrichlänge",
   "tick_thickness": "Strichstärke",
   "tick_thickness_main": "Hauptstrichstärke",
   "vis_2_widgets_inventwo_clock_face": "Zifferblatt",

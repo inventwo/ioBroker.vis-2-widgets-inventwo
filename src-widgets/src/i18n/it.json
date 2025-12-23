@@ -315,6 +315,8 @@
   "show": "Mostra",
   "show_numbers": "Mostra numeri",
   "tick_interval": "Intervallo segni",
+  "tick_length": "Lunghezza segni",
+  "tick_length_main": "Lunghezza segni principali",
   "tick_thickness": "Spessore segni",
   "tick_thickness_main": "Spessore segni principali",
   "vis_2_widgets_inventwo_clock_face": "Quadrante dell'orologio",

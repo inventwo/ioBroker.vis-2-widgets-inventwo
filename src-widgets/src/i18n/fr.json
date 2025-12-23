@@ -315,6 +315,8 @@
   "show": "Afficher",
   "show_numbers": "Afficher les numéros",
   "tick_interval": "Intervalle des marques",
+  "tick_length": "Longueur des marques",
+  "tick_length_main": "Longueur des marques principales",
   "tick_thickness": "Épaisseur des marques",
   "tick_thickness_main": "Épaisseur des marques principales",
   "vis_2_widgets_inventwo_clock_face": "Cadran de l'horloge",

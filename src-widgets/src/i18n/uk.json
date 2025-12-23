@@ -315,6 +315,8 @@
   "show": "Показати",
   "show_numbers": "Показати числа",
   "tick_interval": "Інтервал штрихів",
+  "tick_length": "Довжина штрихів",
+  "tick_length_main": "Довжина основних штрихів",
   "tick_thickness": "Товщина штрихів",
   "tick_thickness_main": "Товщина основних штрихів",
   "vis_2_widgets_inventwo_clock_face": "Циферблат",

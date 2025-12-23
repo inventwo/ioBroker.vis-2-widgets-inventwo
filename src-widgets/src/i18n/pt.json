@@ -315,6 +315,8 @@
   "show": "Mostrar",
   "show_numbers": "Mostrar números",
   "tick_interval": "Intervalo de marcas",
+  "tick_length": "Comprimento das marcas",
+  "tick_length_main": "Comprimento das marcas principais",
   "tick_thickness": "Espessura das marcas",
   "tick_thickness_main": "Espessura das marcas principais",
   "vis_2_widgets_inventwo_clock_face": "Mostrador do relógio",
