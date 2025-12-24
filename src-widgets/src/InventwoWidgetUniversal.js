@@ -1,33 +1,12 @@
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import React from 'react';
 import { Card, CardContent, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
-
 import { Icon } from '@iobroker/adapter-react-v5';
-
 import { hexToCSSFilter } from 'hex-to-css-filter';
 import iro from '@jaames/iro';
-
 import './assets/inventwo.css';
 import InventwoGeneric from './InventwoGeneric';
-import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
-import type { ColorPickerProps } from '@jaames/iro/dist/ColorPicker';
-import type { UniversalCompleteRxData } from './types/UniversalWidgetRxDataTypes';
-import type {
-    UniversalWidgetAlignmentStyles,
-    UniversalWidgetBorderRadiusStyles,
-    UniversalWidgetBorderStyles,
-    UniversalWidgetClickFeedbackStyles,
-    UniversalWidgetContentStyles,
-    UniversalWidgetInnerShadowStyles,
-    UniversalWidgetOuterShadowStyles,
-    UniversalWidgetSpacingStyles,
-    UniversalWidgetStyles,
-    UniversalWidgetStylesStyles,
-    UniversalWidgetTextStyles,
-    UniversalWidgetTransparencyStyles,
-    UniversalWidgetValueData,
-} from './types/UniversalWidgetValueData';
-
 const styles = {
     dialogTitle: {
         display: 'flex',
@@ -35,24 +14,9 @@ const styles = {
         alignItems: 'center',
     },
 };
-
-interface UniversalState extends VisRxWidgetState {
-    currentView: null | string;
-    dialogOpen: boolean;
-    showFeedback: boolean;
-    isMounted: boolean;
-    svgRef: React.RefObject<SVGSVGElement | null>;
-    previousOidValue: any;
-    dialogCloseTimeout: null | number;
-    colorPicker: iro.ColorPicker | null;
-    clockInterval: null | number;
-    currentTime: Date;
-}
-
-export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
-    private readonly refContentContainer: React.RefObject<HTMLDivElement | null> = React.createRef();
-
-    constructor(props: VisRxWidgetProps) {
+export default class InventwoWidgetUniversal extends InventwoGeneric {
+    refContentContainer = React.createRef();
+    constructor(props) {
         super(props);
         this.state = {
             ...this.state,
@@ -68,8 +32,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             currentTime: new Date(),
         };
     }
-
-    static getWidgetInfo(): RxWidgetInfo {
+    static getWidgetInfo() {
         return {
             id: 'tplInventwoWidgetUniversal',
             visSet: 'vis-2-widgets-inventwo',
@@ -199,7 +162,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         },
                     ],
                 },
-
                 {
                     name: 'attr_group_type_view_in_dialog',
                     label: 'attr_group_type_view_in_dialog',
@@ -298,7 +260,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             label: 'size',
                             hidden: 'data.dialogTitleHide',
                         },
-
                         {
                             name: '',
                             type: 'help',
@@ -506,7 +467,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         },
                     ],
                 },
-
                 {
                     name: 'attr_group_state_default',
                     label: 'attr_group_state_default',
@@ -857,7 +817,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         },
                     ],
                 },
-
                 {
                     name: 'attr_content_color_picker',
                     label: 'attr_content_color_picker',
@@ -1026,7 +985,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         },
                     ],
                 },
-
                 {
                     name: 'attr_content_analog_clock',
                     label: 'attr_content_analog_clock',
@@ -1245,7 +1203,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         },
                     ],
                 },
-
                 // CSS Settings
                 {
                     name: 'attr_group_css_text',
@@ -1413,7 +1370,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             label: 'mirror',
                             hidden: '!!data.contentStyleFromWidget',
                         },
-
                         {
                             name: '',
                             type: 'delimiter',
@@ -1848,7 +1804,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         },
                     ],
                 },
-
                 // check here all possible types https://github.com/ioBroker/ioBroker.vis/blob/react/src/src/Attributes/Widget/SCHEMA.md
             ],
             visDefaultStyle: {
@@ -1861,8 +1816,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-universal.png',
         };
     }
-
-    propertiesUpdate(): void {
+    propertiesUpdate() {
         // The Widget has 3 important states
         // 1. this.state.values - contains all state values, that are used in widget (automatically collected from widget info).
         //                        So you can use `this.state.values[this.state.rxData.oid + '.val']` to get the value of state with id this.state.rxData.oid
@@ -1870,10 +1824,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         //                        then this.state.rxData.type will have state value of `system.adapter.admin.0.alive`
         // 3. this.state.rxStyle - contains all widget styles with replaced bindings. E.g. if this.state.styles.width is `{javascript.0.width}px`,
         //                        then this.state.rxData.type will have state value of `javascript.0.width` + 'px
-
         if (this.state.rxData.contentType === 'colorPicker') {
             const components = [];
-
             if (this.state.rxData.colorPickerShowWheel) {
                 components.push({
                     component: iro.ui.Wheel,
@@ -1950,14 +1902,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     },
                 });
             }
-
-            const el: HTMLElement | null = document.querySelector(
-                `#${this.props.id} .vis-inventwo-widget-color-picker-wrapper`,
-            );
+            const el = document.querySelector(`#${this.props.id} .vis-inventwo-widget-color-picker-wrapper`);
             if (el) {
                 el.innerHTML = '';
-
-                const colorPickerProps: ColorPickerProps = {
+                const colorPickerProps = {
                     width: this.state.rxData.colorPickerWidth,
                     color: '#ffff00',
                     layout: components,
@@ -1971,10 +1919,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 // @ts-expect-error
                 const colorPicker = new iro.ColorPicker(el, colorPickerProps);
                 this.setState({ colorPicker: colorPicker });
-
-                colorPicker.on('input:change', (color: iro.Color) => {
+                colorPicker.on('input:change', (color) => {
                     const colorModel = this.state.rxData.colorPickerColorModel;
-
                     switch (colorModel) {
                         case 'hex':
                             if (this.state.rxData.colorPickerOid) {
@@ -2021,42 +1967,41 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             break;
                     }
                 });
-
                 void this.setColorPickerColor();
             }
         }
     }
-
-    async setColorPickerColor(): Promise<void> {
+    async setColorPickerColor() {
         if (!this.state.colorPicker) {
             return;
         }
         const colorModel = this.state.rxData.colorPickerColorModel;
         const color = this.state.rxData.colorPickerOid
-            ? ((await this.props.context.socket.getState(this.state.rxData.colorPickerOid))?.val as string)
+            ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid))?.val
             : undefined;
         const color1 = this.state.rxData.colorPickerOid1
-            ? ((await this.props.context.socket.getState(this.state.rxData.colorPickerOid1))?.val as number)
+            ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid1))?.val
             : undefined;
         const color2 = this.state.rxData.colorPickerOid2
-            ? ((await this.props.context.socket.getState(this.state.rxData.colorPickerOid2))?.val as number)
+            ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid2))?.val
             : undefined;
         const color3 = this.state.rxData.colorPickerOid3
-            ? ((await this.props.context.socket.getState(this.state.rxData.colorPickerOid3))?.val as number)
+            ? (await this.props.context.socket.getState(this.state.rxData.colorPickerOid3))?.val
             : undefined;
-
         switch (colorModel) {
             case 'hex':
                 if (color && /^#([A-Fa-f0-9]{3}$)|([A-Fa-f0-9]{6}$)/.test(color)) {
                     this.state.colorPicker.color.hexString = color;
-                } else {
+                }
+                else {
                     this.state.colorPicker.color.hexString = '#ffffff';
                 }
                 break;
             case 'hex8':
                 if (color && /^#([A-Fa-f0-9]{8}$)/.test(color)) {
                     this.state.colorPicker.color.hex8String = color;
-                } else {
+                }
+                else {
                     this.state.colorPicker.color.hexString = '#ffffffff';
                 }
                 break;
@@ -2067,7 +2012,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         g: color2,
                         b: color3,
                     };
-                } else {
+                }
+                else {
                     this.state.colorPicker.color.rgb = {
                         r: 255,
                         g: 255,
@@ -2082,7 +2028,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         s: color2,
                         l: color3,
                     };
-                } else {
+                }
+                else {
                     this.state.colorPicker.color.hsl = {
                         h: 330,
                         s: 0,
@@ -2097,7 +2044,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         s: color2,
                         v: color3,
                     };
-                } else {
+                }
+                else {
                     this.state.colorPicker.color.hsv = {
                         h: 0,
                         s: 0,
@@ -2107,22 +2055,17 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 break;
         }
     }
-
-    componentDidMount(): void {
+    componentDidMount() {
         super.componentDidMount();
-
         // Update data
         this.propertiesUpdate();
-
         // Adding delay to prevent dialog is opened on page load or view change, when object id value matches
         setTimeout(() => {
             this.setState({ isMounted: true });
         }, 500);
-
         if (!this.props.editMode && this.state.rxData.clickThrough) {
             this.refService.current.style.pointerEvents = 'none';
         }
-
         // Start clock interval for analog clock
         if (this.state.rxData.contentType === 'analogClock') {
             const clockInterval = window.setInterval(() => {
@@ -2131,61 +2074,55 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             this.setState({ clockInterval });
         }
     }
-
-    componentWillUnmount(): void {
+    componentWillUnmount() {
         if (this.state.clockInterval) {
             window.clearInterval(this.state.clockInterval);
         }
     }
-
-    componentDidUpdate(_prevProps: any, prevState: { dialogOpen: any }): void {
+    componentDidUpdate(_prevProps, prevState) {
         if (prevState.dialogOpen && !this.state.dialogOpen && this.state.dialogCloseTimeout) {
             clearTimeout(this.state.dialogCloseTimeout);
         }
-
         // Start or stop clock interval based on content type changes
         if (this.state.rxData.contentType === 'analogClock' && !this.state.clockInterval) {
             const clockInterval = window.setInterval(() => {
                 this.setState({ currentTime: new Date() });
             }, 1000);
             this.setState({ clockInterval });
-        } else if (this.state.rxData.contentType !== 'analogClock' && this.state.clockInterval) {
+        }
+        else if (this.state.rxData.contentType !== 'analogClock' && this.state.clockInterval) {
             window.clearInterval(this.state.clockInterval);
             this.setState({ clockInterval: null });
         }
     }
-
     // Do not delete this method. It is used by vis to read the widget configuration.
     // eslint-disable-next-line class-methods-use-this
-    getWidgetInfo(): RxWidgetInfo {
+    getWidgetInfo() {
         return InventwoWidgetUniversal.getWidgetInfo();
     }
-
     // This function is called every time when rxData is changed
-    onRxDataChanged(): void {
+    onRxDataChanged() {
         this.propertiesUpdate();
     }
-
     // This function is called every time when some Object State updated, but all changes lands into this.state.values too
-    onStateUpdated(id: string, state: ioBroker.State): void {
+    onStateUpdated(id, state) {
         if (this.state.rxData.type === 'viewInDialog' && id === this.state.rxData.oid && !this.props.editMode) {
             const val = this.convertValue(this.state.rxData.valueTrue);
             if (this.state.isMounted) {
                 if (val === state.val) {
                     this.setState({ dialogOpen: true });
-                } else {
+                }
+                else {
                     this.setState({ dialogOpen: false });
                 }
             }
         }
     }
-
-    static getI18nPrefix(): string {
+    static getI18nPrefix() {
         return 'vis_2_widgets_inventwo_';
     }
-
     // eslint-disable-next-line class-methods-use-this
-    compare(value1: any, value2: any, operator = '==='): boolean {
+    compare(value1, value2, operator = '===') {
         switch (operator) {
             case '===':
             case '==':
@@ -2204,79 +2141,66 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 return false;
         }
     }
-
-    getValueData(index: number | null = null): UniversalWidgetValueData {
+    getValueData(index = null) {
         let oid = null;
         let value = null;
-        let data: UniversalWidgetStyles | null = null;
-
+        let data = null;
         if (index === null) {
             for (let i = 1; i <= this.state.rxData.countStates; i++) {
                 let compareBy = this.state.rxData[`compareBy${i}`];
                 if (compareBy === undefined || compareBy === null) {
                     compareBy = 'default';
                 }
-
                 let comparisonOperator = this.state.rxData[`comparisonOperator${i}`];
                 if (comparisonOperator === undefined || comparisonOperator === null) {
                     comparisonOperator = '===';
                 }
-
                 let compareValue = this.state.rxData.valueTrue;
                 if (this.state.rxData[`value${i}`] !== undefined && this.state.rxData[`value${i}`] !== null) {
                     compareValue = this.state.rxData[`value${i}`];
                 }
                 compareValue = this.convertValue(compareValue);
-
                 const isNavBtn = (compareBy === 'default' && this.state.rxData.type === 'nav') || compareBy === 'view';
-
                 if (!isNavBtn) {
                     if (this.validOid(this.state.rxData[`oid${i}`])) {
                         oid = this.state.rxData[`oid${i}`];
-                    } else if (this.validOid(this.state.rxData.oid)) {
+                    }
+                    else if (this.validOid(this.state.rxData.oid)) {
                         oid = this.state.rxData.oid;
-                    } else {
+                    }
+                    else {
                         continue;
                     }
-
                     value = this.getValue(oid);
                 }
-
-                if (
-                    (((compareBy === 'default' && this.state.rxData.type !== 'nav') || compareBy === 'value') &&
-                        this.compare(value, compareValue, comparisonOperator)) ||
+                if ((((compareBy === 'default' && this.state.rxData.type !== 'nav') || compareBy === 'value') &&
+                    this.compare(value, compareValue, comparisonOperator)) ||
                     (isNavBtn &&
                         this.state.rxData.mode === 'singleButton' &&
                         this.state.rxData.countStates === 1 &&
                         this.state.rxData.view === this.props.view) ||
-                    (isNavBtn && this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.view)
-                ) {
+                    (isNavBtn && this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.view)) {
                     data = this.getStateData(i);
                     break;
                 }
             }
-        } else {
+        }
+        else {
             oid = this.state.rxData.oid;
             value = this.getValue(oid);
-            if (
-                ((this.state.rxData.type === 'switch' ||
-                    this.state.rxData.type === 'button' ||
-                    this.state.rxData.type === 'readonly') &&
-                    value === this.convertValue(this.state.rxData[`value${index}`])) ||
-                (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)
-            ) {
+            if (((this.state.rxData.type === 'switch' ||
+                this.state.rxData.type === 'button' ||
+                this.state.rxData.type === 'readonly') &&
+                value === this.convertValue(this.state.rxData[`value${index}`])) ||
+                (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)) {
                 data = this.getStateData(index, true);
-            } else {
+            }
+            else {
                 data = this.getStateData(index);
             }
         }
-
         if (data == null) {
-            const defaultColorsStyle = this.getStyle(
-                'defaultColorsStyleFromWidget',
-                this.groupAttrs.attr_group_state_default,
-            );
-
+            const defaultColorsStyle = this.getStyle('defaultColorsStyleFromWidget', this.groupAttrs.attr_group_state_default);
             data = {
                 background: defaultColorsStyle.background,
                 icon: this.state.rxData.icon,
@@ -2293,61 +2217,29 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 contentSize: this.state.rxData.contentSize,
             };
         }
-
-        let dataWithStyles: UniversalWidgetValueData = {
+        let dataWithStyles = {
             ...data,
-            styles: {} as UniversalWidgetStylesStyles,
+            styles: {},
         };
         dataWithStyles.styles = {
-            ...(this.getStyle('textStyleFromWidget', this.groupAttrs.attr_group_css_text) as UniversalWidgetTextStyles),
-            ...(this.getStyle(
-                'contentStyleFromWidget',
-                this.groupAttrs.attr_group_css_content,
-            ) as UniversalWidgetContentStyles),
-            ...(this.getStyle(
-                'alignmentStyleFromWidget',
-                this.groupAttrs.attr_group_css_alignment,
-            ) as UniversalWidgetAlignmentStyles),
-            ...(this.getStyle(
-                'transparencyStyleFromWidget',
-                this.groupAttrs.attr_group_css_transparency,
-            ) as UniversalWidgetTransparencyStyles),
-            ...(this.getStyle(
-                'spacingStyleFromWidget',
-                this.groupAttrs.attr_group_css_spacing,
-            ) as UniversalWidgetSpacingStyles),
-            ...(this.getStyle(
-                'borderRadiusStyleFromWidget',
-                this.groupAttrs.attr_group_css_border_radius,
-            ) as UniversalWidgetBorderRadiusStyles),
-            ...(this.getStyle(
-                'borderStyleFromWidget',
-                this.groupAttrs.attr_group_css_border,
-            ) as UniversalWidgetBorderStyles),
-            ...(this.getStyle(
-                'outerShadowStyleFromWidget',
-                this.groupAttrs.attr_group_css_outer_shadow,
-            ) as UniversalWidgetOuterShadowStyles),
-            ...(this.getStyle(
-                'innerShadowStyleFromWidget',
-                this.groupAttrs.attr_group_css_inner_shadow,
-            ) as UniversalWidgetInnerShadowStyles),
-            ...(this.getStyle(
-                'clickFeedbackFromWidget',
-                this.groupAttrs.attr_group_click_feedback,
-            ) as UniversalWidgetClickFeedbackStyles),
+            ...this.getStyle('textStyleFromWidget', this.groupAttrs.attr_group_css_text),
+            ...this.getStyle('contentStyleFromWidget', this.groupAttrs.attr_group_css_content),
+            ...this.getStyle('alignmentStyleFromWidget', this.groupAttrs.attr_group_css_alignment),
+            ...this.getStyle('transparencyStyleFromWidget', this.groupAttrs.attr_group_css_transparency),
+            ...this.getStyle('spacingStyleFromWidget', this.groupAttrs.attr_group_css_spacing),
+            ...this.getStyle('borderRadiusStyleFromWidget', this.groupAttrs.attr_group_css_border_radius),
+            ...this.getStyle('borderStyleFromWidget', this.groupAttrs.attr_group_css_border),
+            ...this.getStyle('outerShadowStyleFromWidget', this.groupAttrs.attr_group_css_outer_shadow),
+            ...this.getStyle('innerShadowStyleFromWidget', this.groupAttrs.attr_group_css_inner_shadow),
+            ...this.getStyle('clickFeedbackFromWidget', this.groupAttrs.attr_group_click_feedback),
         };
-
         if (this.state.showFeedback && !this.state.rxData.clickThrough) {
             dataWithStyles = this.replaceWithClickFeedbackData(dataWithStyles);
         }
-
         return dataWithStyles;
     }
-
-    getStateData(i: number, useExtraTrueValues = false): UniversalWidgetStyles {
+    getStateData(i, useExtraTrueValues = false) {
         const stateColorsStyle = this.getStyle(`stateColorsStyleFromWidget${i}`, this.groupAttrs.countStates, i);
-
         const data = {
             background: stateColorsStyle[`background${i}`],
             icon: this.state.rxData[`icon${i}`],
@@ -2361,13 +2253,11 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             html: this.state.rxData[`html${i}`],
             viewInWidget: this.state.rxData[`viewInWidget${i}`],
             contentBlinkInterval: this.state.rxData[`contentBlinkInterval${i}`],
-            contentSize:
-                (this.state.rxData[`contentSize${i}`] as unknown as number) > 0
-                    ? this.state.rxData[`contentSize${i}`]
-                    : this.state.rxData.contentSize,
+            contentSize: this.state.rxData[`contentSize${i}`] > 0
+                ? this.state.rxData[`contentSize${i}`]
+                : this.state.rxData.contentSize,
             styles: {},
         };
-
         if (useExtraTrueValues) {
             data.background = stateColorsStyle[`backgroundTrue${i}`];
             data.icon = this.state.rxData[`iconTrue${i}`];
@@ -2383,8 +2273,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
         return data;
     }
-
-    replaceWithClickFeedbackData(data: UniversalWidgetValueData): UniversalWidgetValueData {
+    replaceWithClickFeedbackData(data) {
         if (this.validFieldValue(data.styles.backgroundFeedback)) {
             data.background = data.styles.backgroundFeedback;
         }
@@ -2405,15 +2294,12 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
         return data;
     }
-
-    onClick(index: number | null, e: React.MouseEvent<HTMLDivElement>): void {
+    onClick(index, e) {
         if (!this.isInteractionAllowed(e)) {
             return;
         }
-
         const oid = this.state.rxData.oid;
         this.setState({ showFeedback: true });
-
         switch (this.state.rxData.type) {
             case 'switch':
                 if (!oid || !this.validOid(oid)) {
@@ -2423,10 +2309,12 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     const valueTrue = this.convertValue(this.state.rxData.valueTrue);
                     if (this.state.values[`${oid}.val`] === valueTrue) {
                         this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueFalse));
-                    } else {
+                    }
+                    else {
                         this.props.context.setValue(oid, valueTrue);
                     }
-                } else if (index !== null) {
+                }
+                else if (index !== null) {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
                 }
                 break;
@@ -2437,25 +2325,24 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 if (this.state.rxData.buttonHoldValue) {
                     break;
                 }
-
                 if (this.state.rxData.mode === 'singleButton') {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
-                } else if (index !== null) {
+                }
+                else if (index !== null) {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
                 }
-
                 break;
             case 'nav':
                 // @ts-expect-error
                 if (e?.target?.closest('.inventwo-dialog')) {
                     return;
                 }
-
                 if (this.state.rxData.mode === 'singleButton') {
                     if (this.state.rxData.view) {
                         window.vis.changeView(this.state.rxData.view, this.state.rxData.view);
                     }
-                } else if (index !== null) {
+                }
+                else if (index !== null) {
                     if (this.state.rxData[`view${index}`]) {
                         window.vis.changeView(this.state.rxData[`view${index}`], this.state.rxData[`view${index}`]);
                     }
@@ -2466,7 +2353,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 if (this.state.rxData.dialogCloseTimeoutSeconds && this.state.rxData.dialogCloseTimeoutSeconds > 0) {
                     const dialogCloseTimeout = setTimeout(() => {
                         this.setState({ dialogOpen: false });
-                    }, this.state.rxData.dialogCloseTimeoutSeconds * 1000) as unknown as number;
+                    }, this.state.rxData.dialogCloseTimeoutSeconds * 1000);
                     this.setState({ dialogCloseTimeout: dialogCloseTimeout });
                 }
                 if (oid) {
@@ -2487,76 +2374,64 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 const httpType = this.state.rxData.httpType;
                 // eslint-disable-next-line no-case-declarations
                 const url = this.state.rxData.url;
-
                 if (httpType === 'send') {
                     const http = new XMLHttpRequest();
                     http.open('GET', url);
                     http.send();
-                } else if (httpType === 'open') {
+                }
+                else if (httpType === 'open') {
                     window.open(url, '_self');
-                } else if (httpType === 'openNewTab') {
+                }
+                else if (httpType === 'openNewTab') {
                     window.open(url, '_blank');
                 }
                 break;
         }
     }
-
-    onBtnMouseDown(index: number | null, e: React.MouseEvent<HTMLDivElement>): void {
+    onBtnMouseDown(index, e) {
         if (!this.isInteractionAllowed(e)) {
             return;
         }
-
         const oid = this.state.rxData.oid;
         if (!oid || !this.validOid(oid)) {
             return;
         }
-
         switch (this.state.rxData.type) {
             case 'button':
                 if (!this.state.rxData.buttonHoldValue) {
                     break;
                 }
-
                 this.setState({ previousOidValue: this.getValue(oid) });
-
                 if (this.state.rxData.mode === 'singleButton') {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
-                } else if (index !== null) {
+                }
+                else if (index !== null) {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
                 }
-
                 break;
         }
     }
-
-    onBtnMouseUp(e: React.MouseEvent<HTMLDivElement>): void {
+    onBtnMouseUp(e) {
         if (!this.isInteractionAllowed(e)) {
             return;
         }
-
         const oid = this.state.rxData.oid;
         if (!oid || !this.validOid(oid)) {
             return;
         }
-
         switch (this.state.rxData.type) {
             case 'button':
                 if (!this.state.rxData.buttonHoldValue) {
                     break;
                 }
-
                 this.props.context.setValue(oid, this.state.previousOidValue);
-
                 break;
         }
     }
-
-    renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
+    renderWidgetBody(props) {
         super.renderWidgetBody(props);
-
         if (this.state.showFeedback && !this.state.rxData.clickThrough) {
             const clickFeedback = this.getStyle('clickFeedbackFromWidget', this.groupAttrs.attr_group_click_feedback);
-
             let feedbackDuration = clickFeedback.feedbackDuration;
             if (feedbackDuration === undefined) {
                 feedbackDuration = 0;
@@ -2565,221 +2440,152 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 setTimeout(() => {
                     this.setState({ showFeedback: false });
                 }, feedbackDuration);
-            } else {
+            }
+            else {
                 this.setState({ showFeedback: false });
             }
         }
-
         return this.buildWidgetBody();
     }
-
-    buildWidgetBody(): React.JSX.Element {
+    buildWidgetBody() {
         const widgetContent = [];
-
         if (this.state.rxData.mode === 'singleButton') {
             widgetContent.push(this.getSingleCard());
-        } else {
+        }
+        else {
             const content = [];
             for (let i = 1; i <= this.state.rxData.countStates; i++) {
                 content.push(this.getSingleCard(i));
             }
-
-            widgetContent.push(
-                <div
-                    key="cardWrapper"
-                    style={{
-                        display: 'flex',
-                        height: '100%',
-                        overflow: 'auto',
-                        gap: `${this.state.rxData.btnSpacing}px`,
-                        flexDirection: this.state.rxData.direction,
-                        padding: 10,
-                        margin: -10,
-                    }}
-                >
-                    {content}
-                </div>,
-            );
+            widgetContent.push(_jsx("div", { style: {
+                    display: 'flex',
+                    height: '100%',
+                    overflow: 'auto',
+                    gap: `${this.state.rxData.btnSpacing}px`,
+                    flexDirection: this.state.rxData.direction,
+                    padding: 10,
+                    margin: -10,
+                }, children: content }, "cardWrapper"));
         }
-
         if (this.state.rxData.type === 'viewInDialog') {
-            widgetContent.push(
-                <Dialog
-                    className="inventwo-dialog"
-                    key="dialog"
-                    open={this.state.dialogOpen}
-                    fullScreen
-                    sx={{
-                        '& .MuiDialog-container': {
-                            '& .MuiDialog-paper': {
-                                maxWidth: !this.state.rxData.dialogFullscreen
-                                    ? `${this.state.rxData.dialogWidth + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}`
-                                    : '100%',
-                                maxHeight: !this.state.rxData.dialogFullscreen
-                                    ? `${this.state.rxData.dialogHeight + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}`
-                                    : '100%',
-                                background: this.state.rxData.dialogBackground,
-                                borderRadius: `
+            widgetContent.push(_jsxs(Dialog, { className: "inventwo-dialog", open: this.state.dialogOpen, fullScreen: true, sx: {
+                    '& .MuiDialog-container': {
+                        '& .MuiDialog-paper': {
+                            maxWidth: !this.state.rxData.dialogFullscreen
+                                ? `${this.state.rxData.dialogWidth + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}`
+                                : '100%',
+                            maxHeight: !this.state.rxData.dialogFullscreen
+                                ? `${this.state.rxData.dialogHeight + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}`
+                                : '100%',
+                            background: this.state.rxData.dialogBackground,
+                            borderRadius: `
                                 ${this.state.rxData.dialogBorderRadiusTopLeft}px 
                                 ${this.state.rxData.dialogBorderRadiusTopRight}px 
                                 ${this.state.rxData.dialogBorderRadiusBottomRight}px 
                                 ${this.state.rxData.dialogBorderRadiusBottomLeft}px
                             `,
-                            },
-                            '.MuiDialogContent-root': {
-                                padding: `${this.valWithUnit(this.state.rxData.dialogPadding)}`,
-                            },
-                            '.MuiDialogTitle-root': {
-                                padding: `${this.valWithUnit(this.state.rxData.dialogTitlePaddingTop)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingRight)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingBottom)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingLeft)}`,
-                                color: this.state.rxData.dialogTitleColor,
-                                display: this.state.rxData.dialogTitleHide ? 'none !important' : 'flex',
-                            },
                         },
-                    }}
-                    onClose={(_event, reason) => {
-                        if (reason && reason === 'backdropClick' && !this.state.rxData.dialogCloseOnClickOutside) {
-                            return;
-                        }
-                        this.setState({ dialogOpen: false });
-                    }}
-                >
-                    <DialogTitle style={styles.dialogTitle}>
-                        <span>{this.state.rxData.dialogTitle}</span>
-                        <IconButton
-                            onClick={() => this.setState({ dialogOpen: false })}
-                            sx={{
-                                background: this.state.rxData.dialogCloseButtonBackground,
-                                color: this.state.rxData.dialogCloseButtonColor,
-                                '&:hover': {
+                        '.MuiDialogContent-root': {
+                            padding: `${this.valWithUnit(this.state.rxData.dialogPadding)}`,
+                        },
+                        '.MuiDialogTitle-root': {
+                            padding: `${this.valWithUnit(this.state.rxData.dialogTitlePaddingTop)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingRight)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingBottom)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingLeft)}`,
+                            color: this.state.rxData.dialogTitleColor,
+                            display: this.state.rxData.dialogTitleHide ? 'none !important' : 'flex',
+                        },
+                    },
+                }, onClose: (_event, reason) => {
+                    if (reason && reason === 'backdropClick' && !this.state.rxData.dialogCloseOnClickOutside) {
+                        return;
+                    }
+                    this.setState({ dialogOpen: false });
+                }, children: [_jsxs(DialogTitle, { style: styles.dialogTitle, children: [_jsx("span", { children: this.state.rxData.dialogTitle }), _jsx(IconButton, { onClick: () => this.setState({ dialogOpen: false }), sx: {
                                     background: this.state.rxData.dialogCloseButtonBackground,
-                                },
-                            }}
-                        >
-                            <CloseIcon
-                                sx={{
-                                    width: this.state.rxData.dialogCloseButtonSize,
-                                    height: this.state.rxData.dialogCloseButtonSize,
-                                }}
-                            />
-                        </IconButton>
-                    </DialogTitle>
-                    <DialogContent>{this.buildViewInWidget(this.state.rxData.view)}</DialogContent>
-                </Dialog>,
-            );
+                                    color: this.state.rxData.dialogCloseButtonColor,
+                                    '&:hover': {
+                                        background: this.state.rxData.dialogCloseButtonBackground,
+                                    },
+                                }, children: _jsx(CloseIcon, { sx: {
+                                        width: this.state.rxData.dialogCloseButtonSize,
+                                        height: this.state.rxData.dialogCloseButtonSize,
+                                    } }) })] }), _jsx(DialogContent, { children: this.buildViewInWidget(this.state.rxData.view) })] }, "dialog"));
         }
-
-        return (
-            <div
-                style={{
-                    overflow: 'visible',
-                    height: '100%',
-                    width: '100%',
-                    fontSize: this.state.rxStyle!['font-size'],
-                    color: this.state.rxStyle!.color,
-                    textShadow: this.state.rxStyle!['text-shadow'] as string,
-                    fontFamily: this.state.rxStyle!['font-family'] as string,
-                    fontStyle: this.state.rxStyle!['font-style'] as string,
-                    fontVariant: this.state.rxStyle!['font-variant'] as string,
-                    fontWeight: this.state.rxStyle!['font-weight'],
-                    lineHeight: this.state.rxStyle!['line-height'],
-                    letterSpacing: this.state.rxStyle!['letter-spacing'],
-                    wordSpacing: this.state.rxStyle!['word-spacing'],
-                }}
-            >
-                {widgetContent}
-            </div>
-        );
+        return (_jsx("div", { style: {
+                overflow: 'visible',
+                height: '100%',
+                width: '100%',
+                fontSize: this.state.rxStyle['font-size'],
+                color: this.state.rxStyle.color,
+                textShadow: this.state.rxStyle['text-shadow'],
+                fontFamily: this.state.rxStyle['font-family'],
+                fontStyle: this.state.rxStyle['font-style'],
+                fontVariant: this.state.rxStyle['font-variant'],
+                fontWeight: this.state.rxStyle['font-weight'],
+                lineHeight: this.state.rxStyle['line-height'],
+                letterSpacing: this.state.rxStyle['letter-spacing'],
+                wordSpacing: this.state.rxStyle['word-spacing'],
+            }, children: widgetContent }));
     }
-
     // eslint-disable-next-line class-methods-use-this
-    getContentIcon(valueData: UniversalWidgetValueData): React.JSX.Element | string {
+    getContentIcon(valueData) {
         if (valueData.icon === null) {
             return '';
         }
-        return (
-            <Icon
-                src={valueData.icon}
-                style={{
-                    width: valueData.contentSize,
-                    color: valueData.contentColor,
-                }}
-            ></Icon>
-        );
+        return (_jsx(Icon, { src: valueData.icon, style: {
+                width: valueData.contentSize,
+                color: valueData.contentColor,
+            } }));
     }
-
-    getContentImage(valueData: UniversalWidgetValueData): React.JSX.Element | string {
+    getContentImage(valueData) {
         const img = valueData.image;
         if (img === null) {
             return '';
         }
-
         const hex = this.convertRgbToHex(valueData.contentColor);
         let filter = null;
         if (hex) {
             filter = hexToCSSFilter(hex);
         }
-
         if (valueData.styles.imageObjectFit != 'repeat') {
-            return (
-                <Icon
-                    src={img}
-                    style={{
-                        width: !valueData.styles.imageObjectFit ? valueData.contentSize : '100%',
-                        filter: filter ? filter.filter : '',
-                        objectFit: (valueData.styles.imageObjectFit ?? '') as React.CSSProperties['objectFit'],
-                        objectPosition: valueData.styles.imageObjectPosition ?? '',
-                        height: valueData.styles.imageObjectFit ? '100%' : '',
-                    }}
-                />
-            );
+            return (_jsx(Icon, { src: img, style: {
+                    width: !valueData.styles.imageObjectFit ? valueData.contentSize : '100%',
+                    filter: filter ? filter.filter : '',
+                    objectFit: (valueData.styles.imageObjectFit ?? ''),
+                    objectPosition: valueData.styles.imageObjectPosition ?? '',
+                    height: valueData.styles.imageObjectFit ? '100%' : '',
+                } }));
         }
-
-        return (
-            <div
-                style={{
-                    backgroundImage: `url(${img})`,
-                    backgroundSize: valueData.styles.imageBackgroundSize ?? 'auto',
-                    backgroundPosition: valueData.styles.imageObjectPosition ?? '',
-                    height: '100%',
-                    width: '100%',
-                }}
-            ></div>
-        );
+        return (_jsx("div", { style: {
+                backgroundImage: `url(${img})`,
+                backgroundSize: valueData.styles.imageBackgroundSize ?? 'auto',
+                backgroundPosition: valueData.styles.imageObjectPosition ?? '',
+                height: '100%',
+                width: '100%',
+            } }));
     }
-
     // eslint-disable-next-line class-methods-use-this
-    getContentHtml(valueData: UniversalWidgetValueData): React.JSX.Element {
-        return (
-            <div
-                style={{
-                    fontSize: `${valueData.contentSize}px`,
-                }}
-                dangerouslySetInnerHTML={{ __html: valueData.html as string }}
-            />
-        );
+    getContentHtml(valueData) {
+        return (_jsx("div", { style: {
+                fontSize: `${valueData.contentSize}px`,
+            }, dangerouslySetInnerHTML: { __html: valueData.html } }));
     }
-
-    getContentViewInWidget(valueData: UniversalWidgetValueData): React.JSX.Element {
+    getContentViewInWidget(valueData) {
         const view = valueData.viewInWidget;
         return this.buildViewInWidget(view);
     }
-
-    buildViewInWidget(view: string | null): React.JSX.Element {
+    buildViewInWidget(view) {
         if (view === this.props.view) {
-            return <div>Cannot use recursive views</div>;
+            return _jsx("div", { children: "Cannot use recursive views" });
         }
-
-        const style: Record<string, string | number> = {};
-
+        const style = {};
         if (this.state.rxData.scaleContentToFit && this.props.refParent.current && this.refContentContainer.current) {
             const width = this.refContentContainer.current.offsetWidth;
             let parentView = this.props.refParent.current;
             let count = 0;
             while (parentView.className.includes('vis-view') && count < 5) {
-                parentView = parentView.parentNode as HTMLElement;
+                parentView = parentView.parentNode;
                 count += 1;
             }
-
             const parentWidth = parentView.offsetWidth;
             const factor = width / parentWidth;
             style.transform = `scale(${factor})`;
@@ -2787,50 +2593,36 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             style.width = `${(1 / factor) * 100}%`;
             style.height = `${(1 / factor) * 100}%`;
         }
-
-        return (
-            <div
-                style={{
-                    position: 'relative',
-                    overflow: !this.state.rxData.scaleContentToFit ? 'auto' : '',
-                    height: '100%',
-                }}
-                className="inventwo-view-in-widget-wrapper"
-            >
-                {view ? this.getWidgetView(view, { style }) : null}
-            </div>
-        );
+        return (_jsx("div", { style: {
+                position: 'relative',
+                overflow: !this.state.rxData.scaleContentToFit ? 'auto' : '',
+                height: '100%',
+            }, className: "inventwo-view-in-widget-wrapper", children: view ? this.getWidgetView(view, { style }) : null }));
     }
-
-    getContentAnalogClock(valueData: UniversalWidgetValueData): React.JSX.Element {
+    getContentAnalogClock(valueData) {
         const time = this.state.currentTime;
         const hours = time.getHours() % 12;
         const minutes = time.getMinutes();
         const seconds = time.getSeconds();
-
         // Calculate angles for clock hands
         const secondAngle = (seconds * 6); // 360 / 60 = 6 degrees per second
         const minuteAngle = (minutes * 6) + (seconds * 0.1); // 6 degrees per minute + fractional
         const hourAngle = (hours * 30) + (minutes * 0.5); // 30 degrees per hour + fractional
-
         const size = 100; // Use viewBox for scalability
         const centerX = size / 2;
         const centerY = size / 2;
-
         // Clock face design rendering
         const renderClockFace = () => {
             const faceColor = this.state.rxData.analogClockFaceColor || 'rgb(0, 0, 0)';
             const bgColor = this.state.rxData.analogClockBackgroundColor || 'rgb(255, 255, 255)';
             const design = this.state.rxData.analogClockFaceDesign || 'classic';
-
             // Get custom settings or preset defaults
-            let tickInterval: 'hours' | 'minutes' | 'both' = 'hours';
+            let tickInterval = 'hours';
             let tickThickness = 1.5;
             let tickThicknessMain = 2;
             let numberSize = 8;
             let numberOffset = 30;
             let showNumbers = true;
-
             if (design === 'classic') {
                 // Classic: all 12 numbers, no tick marks
                 tickInterval = 'hours';
@@ -2838,18 +2630,21 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 numberSize = 8;
                 numberOffset = 36;
                 tickThickness = 0; // no ticks in classic
-            } else if (design === 'modern') {
+            }
+            else if (design === 'modern') {
                 // Modern: tick marks only, no numbers
                 tickInterval = 'hours';
                 tickThickness = 2;
                 tickThicknessMain = 2;
                 showNumbers = false;
-            } else if (design === 'minimal') {
+            }
+            else if (design === 'minimal') {
                 // Minimal: no ticks, no numbers
                 tickInterval = 'hours';
                 tickThickness = 0;
                 showNumbers = false;
-            } else if (design === 'dashes') {
+            }
+            else if (design === 'dashes') {
                 // Dashes: tick marks with numbers at 12, 3, 6, 9
                 tickInterval = 'hours';
                 tickThickness = 1.5;
@@ -2857,7 +2652,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 showNumbers = true;
                 numberSize = 8;
                 numberOffset = 30;
-            } else if (design === 'custom') {
+            }
+            else if (design === 'custom') {
                 // Custom: use user-defined settings
                 tickInterval = this.state.rxData.analogClockCustomTickInterval || 'hours';
                 tickThickness = this.state.rxData.analogClockCustomTickThickness ?? 1.5;
@@ -2866,35 +2662,21 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 numberOffset = this.state.rxData.analogClockCustomNumberOffset ?? 30;
                 showNumbers = this.state.rxData.analogClockCustomShowNumbers ?? true;
             }
-
             // Get tick length settings
             let tickLength = 5; // Default regular tick length
             let tickLengthMain = 9; // Default main tick length
-            
             if (design === 'custom') {
                 tickLength = this.state.rxData.analogClockCustomTickLength ?? 5;
                 tickLengthMain = this.state.rxData.analogClockCustomTickLengthMain ?? 9;
             }
-
             // Render base circle
             const borderWidth = design === 'modern' ? 2 : design === 'minimal' ? 0.5 : 1;
-            
-            return (
-                <>
-                    <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth={borderWidth} />
-                    
-                    {/* Render tick marks and numbers */}
-                    {design !== 'minimal' && (
-                        <>
-                            {/* Hour marks (only show if tickInterval is 'hours' or 'both') */}
-                            {(tickInterval === 'hours' || tickInterval === 'both') && [...Array(12)].map((_, i) => {
+            return (_jsxs(_Fragment, { children: [_jsx("circle", { cx: centerX, cy: centerY, r: 48, fill: bgColor, stroke: faceColor, strokeWidth: borderWidth }), design !== 'minimal' && (_jsxs(_Fragment, { children: [(tickInterval === 'hours' || tickInterval === 'both') && [...Array(12)].map((_, i) => {
                                 const angle = (i * 30 - 90) * (Math.PI / 180);
                                 const number = i === 0 ? 12 : i;
                                 const isMainHour = i === 0 || i === 3 || i === 6 || i === 9;
-                                
                                 // Classic design never shows tick marks
                                 const showTick = design !== 'classic' && tickThickness > 0;
-                                
                                 // Calculate tick mark positions using customizable length
                                 const outerRadius = 47;
                                 const currentTickLength = isMainHour ? tickLengthMain : tickLength;
@@ -2903,58 +2685,28 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 const y1 = centerY + Math.sin(angle) * innerRadius;
                                 const x2 = centerX + Math.cos(angle) * outerRadius;
                                 const y2 = centerY + Math.sin(angle) * outerRadius;
-                                
                                 // Determine if we should show numbers for this position
                                 let showNumberHere = false;
                                 if (showNumbers) {
                                     if (design === 'classic') {
                                         // Classic shows all numbers
                                         showNumberHere = true;
-                                    } else if (design === 'dashes') {
+                                    }
+                                    else if (design === 'dashes') {
                                         // Dashes shows only main hour numbers
                                         showNumberHere = isMainHour;
-                                    } else if (design === 'custom') {
+                                    }
+                                    else if (design === 'custom') {
                                         // Custom shows all numbers when enabled
                                         showNumberHere = true;
                                     }
                                 }
-                                
-                                return (
-                                    <g key={`hour-${i}`}>
-                                        {showTick && (
-                                            <line
-                                                x1={x1}
-                                                y1={y1}
-                                                x2={x2}
-                                                y2={y2}
-                                                stroke={faceColor}
-                                                strokeWidth={isMainHour ? tickThicknessMain : tickThickness}
-                                                strokeLinecap="round"
-                                            />
-                                        )}
-                                        {showNumberHere && (
-                                            <text
-                                                x={centerX + Math.cos(angle) * numberOffset}
-                                                y={centerY + Math.sin(angle) * numberOffset}
-                                                textAnchor="middle"
-                                                dominantBaseline="middle"
-                                                fill={faceColor}
-                                                fontSize={numberSize}
-                                                fontWeight="bold"
-                                            >
-                                                {number}
-                                            </text>
-                                        )}
-                                    </g>
-                                );
-                            })}
-                            
-                            {/* Minute marks (only if tickInterval is 'minutes' or 'both') */}
-                            {(tickInterval === 'minutes' || tickInterval === 'both') && [...Array(60)].map((_, i) => {
+                                return (_jsxs("g", { children: [showTick && (_jsx("line", { x1: x1, y1: y1, x2: x2, y2: y2, stroke: faceColor, strokeWidth: isMainHour ? tickThicknessMain : tickThickness, strokeLinecap: "round" })), showNumberHere && (_jsx("text", { x: centerX + Math.cos(angle) * numberOffset, y: centerY + Math.sin(angle) * numberOffset, textAnchor: "middle", dominantBaseline: "middle", fill: faceColor, fontSize: numberSize, fontWeight: "bold", children: number }))] }, `hour-${i}`));
+                            }), (tickInterval === 'minutes' || tickInterval === 'both') && [...Array(60)].map((_, i) => {
                                 // For 'both' mode, skip hour positions (they're already drawn)
                                 // For 'minutes' mode, show all 60 minute marks
-                                if (tickInterval === 'both' && i % 5 === 0) return null;
-                                
+                                if (tickInterval === 'both' && i % 5 === 0)
+                                    return null;
                                 const angle = (i * 6 - 90) * (Math.PI / 180);
                                 const outerRadius = 47;
                                 const minuteTickLength = tickLength * 0.4; // Minute marks are 40% of regular tick length
@@ -2963,35 +2715,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 const y1 = centerY + Math.sin(angle) * innerRadius;
                                 const x2 = centerX + Math.cos(angle) * outerRadius;
                                 const y2 = centerY + Math.sin(angle) * outerRadius;
-                                
-                                return (
-                                    <line
-                                        key={`minute-${i}`}
-                                        x1={x1}
-                                        y1={y1}
-                                        x2={x2}
-                                        y2={y2}
-                                        stroke={faceColor}
-                                        strokeWidth={tickThickness * 0.5}
-                                        strokeLinecap="round"
-                                    />
-                                );
-                            })}
-                        </>
-                    )}
-                    
-                    {/* Center dot */}
-                    <circle cx={centerX} cy={centerY} r={design === 'modern' ? 3 : 2.5} fill={faceColor} />
-                </>
-            );
+                                return (_jsx("line", { x1: x1, y1: y1, x2: x2, y2: y2, stroke: faceColor, strokeWidth: tickThickness * 0.5, strokeLinecap: "round" }, `minute-${i}`));
+                            })] })), _jsx("circle", { cx: centerX, cy: centerY, r: design === 'modern' ? 3 : 2.5, fill: faceColor })] }));
         };
-
         // Render clock hand based on design
-        const renderHand = (angle: number, length: number, width: number, color: string, design: string) => {
+        const renderHand = (angle, length, width, color, design) => {
             const rad = (angle - 90) * (Math.PI / 180);
             const x = centerX + Math.cos(rad) * length;
             const y = centerY + Math.sin(rad) * length;
-
             if (design === 'arrow') {
                 const tipX = centerX + Math.cos(rad) * length;
                 const tipY = centerY + Math.sin(rad) * length;
@@ -3002,93 +2733,22 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 const leftY = tipY + Math.sin(leftAngle) * arrowWidth;
                 const rightX = tipX + Math.cos(rightAngle) * arrowWidth;
                 const rightY = tipY + Math.sin(rightAngle) * arrowWidth;
-
-                return (
-                    <>
-                        <line
-                            x1={centerX}
-                            y1={centerY}
-                            x2={x}
-                            y2={y}
-                            stroke={color}
-                            strokeWidth={width}
-                            strokeLinecap="round"
-                        />
-                        <polygon
-                            points={`${tipX},${tipY} ${leftX},${leftY} ${rightX},${rightY}`}
-                            fill={color}
-                        />
-                    </>
-                );
-            } else if (design === 'modern') {
-                return (
-                    <line
-                        x1={centerX}
-                        y1={centerY}
-                        x2={x}
-                        y2={y}
-                        stroke={color}
-                        strokeWidth={width}
-                        strokeLinecap="square"
-                    />
-                );
-            } else {
+                return (_jsxs(_Fragment, { children: [_jsx("line", { x1: centerX, y1: centerY, x2: x, y2: y, stroke: color, strokeWidth: width, strokeLinecap: "round" }), _jsx("polygon", { points: `${tipX},${tipY} ${leftX},${leftY} ${rightX},${rightY}`, fill: color })] }));
+            }
+            else if (design === 'modern') {
+                return (_jsx("line", { x1: centerX, y1: centerY, x2: x, y2: y, stroke: color, strokeWidth: width, strokeLinecap: "square" }));
+            }
+            else {
                 // classic
-                return (
-                    <line
-                        x1={centerX}
-                        y1={centerY}
-                        x2={x}
-                        y2={y}
-                        stroke={color}
-                        strokeWidth={width}
-                        strokeLinecap="round"
-                    />
-                );
+                return (_jsx("line", { x1: centerX, y1: centerY, x2: x, y2: y, stroke: color, strokeWidth: width, strokeLinecap: "round" }));
             }
         };
-
-        return (
-            <svg
-                viewBox={`0 0 ${size} ${size}`}
-                style={{
-                    width: '100%',
-                    height: '100%',
-                }}
-            >
-                {renderClockFace()}
-                
-                {/* Hour hand */}
-                {this.state.rxData.analogClockShowHourHand && renderHand(
-                    hourAngle,
-                    25,
-                    3,
-                    this.state.rxData.analogClockHourHandColor || 'rgb(0, 0, 0)',
-                    this.state.rxData.analogClockHourHandDesign || 'classic'
-                )}
-
-                {/* Minute hand */}
-                {this.state.rxData.analogClockShowMinuteHand && renderHand(
-                    minuteAngle,
-                    35,
-                    2,
-                    this.state.rxData.analogClockMinuteHandColor || 'rgb(0, 0, 0)',
-                    this.state.rxData.analogClockMinuteHandDesign || 'classic'
-                )}
-
-                {/* Second hand */}
-                {this.state.rxData.analogClockShowSecondHand && renderHand(
-                    secondAngle,
-                    38,
-                    1,
-                    this.state.rxData.analogClockSecondHandColor || 'rgb(255, 0, 0)',
-                    this.state.rxData.analogClockSecondHandDesign || 'classic'
-                )}
-            </svg>
-        );
+        return (_jsxs("svg", { viewBox: `0 0 ${size} ${size}`, style: {
+                width: '100%',
+                height: '100%',
+            }, children: [renderClockFace(), this.state.rxData.analogClockShowHourHand && renderHand(hourAngle, 25, 3, this.state.rxData.analogClockHourHandColor || 'rgb(0, 0, 0)', this.state.rxData.analogClockHourHandDesign || 'classic'), this.state.rxData.analogClockShowMinuteHand && renderHand(minuteAngle, 35, 2, this.state.rxData.analogClockMinuteHandColor || 'rgb(0, 0, 0)', this.state.rxData.analogClockMinuteHandDesign || 'classic'), this.state.rxData.analogClockShowSecondHand && renderHand(secondAngle, 38, 1, this.state.rxData.analogClockSecondHandColor || 'rgb(255, 0, 0)', this.state.rxData.analogClockSecondHandDesign || 'classic')] }));
     }
-
-    getCardContent(valueData: UniversalWidgetValueData): React.JSX.Element {
+    getCardContent(valueData) {
         let c;
         switch (this.state.rxData.contentType) {
             case 'icon':
@@ -3109,64 +2769,38 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             default:
                 c = '';
         }
-        return (
-            <div
-                className={
-                    this.state.rxData.contentType === 'colorPicker' ? 'vis-inventwo-widget-color-picker-wrapper' : ''
-                }
-                style={{
-                    height: '100%',
-                    width:
-                        this.state.rxData.contentType === 'viewInWidget' ||
-                        this.state.rxData.contentType === 'analogClock' ||
-                        (this.state.rxData.contentType === 'image' && valueData.styles.imageObjectFit)
-                            ? '100%'
-                            : '',
-                    transform: `rotateZ(${valueData.styles.contentRotation}deg)`,
-                    animation:
-                        valueData.contentBlinkInterval > 0
-                            ? `blink ${valueData.contentBlinkInterval / 1000}s infinite`
-                            : '',
-                }}
-                ref={this.refContentContainer}
-            >
-                {c}
-            </div>
-        );
+        return (_jsx("div", { className: this.state.rxData.contentType === 'colorPicker' ? 'vis-inventwo-widget-color-picker-wrapper' : '', style: {
+                height: '100%',
+                width: this.state.rxData.contentType === 'viewInWidget' ||
+                    this.state.rxData.contentType === 'analogClock' ||
+                    (this.state.rxData.contentType === 'image' && valueData.styles.imageObjectFit)
+                    ? '100%'
+                    : '',
+                transform: `rotateZ(${valueData.styles.contentRotation}deg)`,
+                animation: valueData.contentBlinkInterval > 0
+                    ? `blink ${valueData.contentBlinkInterval / 1000}s infinite`
+                    : '',
+            }, ref: this.refContentContainer, children: c }));
     }
-
-    buildCard(
-        valueData: UniversalWidgetValueData,
-        i: number | null,
-        content: React.JSX.Element | string,
-    ): React.JSX.Element {
+    buildCard(valueData, i, content) {
         let shadow = '';
         if (valueData.outerShadowColor) {
             shadow += `${valueData.styles.outerShadowX}px ${valueData.styles.outerShadowY}px ${valueData.styles.outerShadowBlur}px ${valueData.styles.outerShadowSize}px ${valueData.outerShadowColor}`;
         }
-
         if (valueData.innerShadowColor) {
             if (shadow !== '') {
                 shadow += ', ';
             }
             shadow += `inset ${valueData.styles.innerShadowX}px ${valueData.styles.innerShadowY}px ${valueData.styles.innerShadowBlur}px ${valueData.styles.innerShadowSize}px ${valueData.innerShadowColor}`;
         }
-
-        return (
-            <div
-                key={i !== null ? i : ''}
-                style={{
-                    width: i === null ? '100%' : '',
-                    height: i === null ? '100%' : '',
-                    flex: i !== null ? `0 0 ${this.state.rxData.buttonSize}px` : '',
-                    position: 'relative',
-                    border: valueData.styles.borderRadiusTopLeft,
-                    borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
-                }}
-            >
-                <Card
-                    className="vis_rx_widget_card"
-                    style={{
+        return (_jsxs("div", { style: {
+                width: i === null ? '100%' : '',
+                height: i === null ? '100%' : '',
+                flex: i !== null ? `0 0 ${this.state.rxData.buttonSize}px` : '',
+                position: 'relative',
+                border: valueData.styles.borderRadiusTopLeft,
+                borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+            }, children: [_jsx(Card, { className: "vis_rx_widget_card", style: {
                         background: valueData.background,
                         borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
                         boxShadow: shadow,
@@ -3179,10 +2813,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         borderLeftWidth: `${valueData.styles.borderSizeLeft}px`,
                         borderRightWidth: `${valueData.styles.borderSizeRight}px`,
                         borderStyle: valueData.styles.borderStyle,
-                    }}
-                />
-                <Card
-                    style={{
+                    } }), _jsx(Card, { style: {
                         cursor: this.state.rxData.type !== 'readonly' ? 'pointer' : '',
                         background: 'transparent',
                         borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
@@ -3191,75 +2822,43 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         inset: 0,
                         color: 'unset',
                         boxShadow: 'none',
-                    }}
-                    onClick={e => this.onClick(i, e)}
-                    onMouseDown={e => this.onBtnMouseDown(i, e)}
-                    onMouseUp={e => this.onBtnMouseUp(e)}
-                >
-                    <CardContent
-                        style={{
+                    }, onClick: e => this.onClick(i, e), onMouseDown: e => this.onBtnMouseDown(i, e), onMouseUp: e => this.onBtnMouseUp(e), children: _jsx(CardContent, { style: {
                             padding: `${valueData.styles.paddingTop}px ${valueData.styles.paddingRight}px ${valueData.styles.paddingBottom}px ${valueData.styles.paddingLeft}px`,
                             boxSizing: 'border-box',
                             width: '100%',
                             height: '100%',
-                        }}
-                    >
-                        {content}
-                    </CardContent>
-                </Card>
-            </div>
-        );
+                        }, children: content }) })] }, i !== null ? i : ''));
     }
-
-    getSingleCard(i: number | null = null): React.JSX.Element {
+    getSingleCard(i = null) {
         const valueData = this.getValueData(i);
-
         const content = this.getCardContent(valueData);
-
-        const cardContent = (
-            <div
-                style={{
-                    height: '100%',
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: (valueData.styles.flexDirection +
-                        (valueData.styles.invertOrder ? '-reverse' : '')) as React.CSSProperties['flexDirection'],
-                    justifyContent:
-                        valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-start'
-                            ? 'flex-end'
-                            : valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-end'
-                              ? 'flex-start'
-                              : valueData.styles.alignItems,
-                }}
-            >
-                <div
-                    style={{
+        const cardContent = (_jsxs("div", { style: {
+                height: '100%',
+                width: '100%',
+                display: 'flex',
+                flexDirection: (valueData.styles.flexDirection +
+                    (valueData.styles.invertOrder ? '-reverse' : '')),
+                justifyContent: valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-start'
+                    ? 'flex-end'
+                    : valueData.styles.invertOrder && valueData.styles.alignItems === 'flex-end'
+                        ? 'flex-start'
+                        : valueData.styles.alignItems,
+            }, children: [_jsx("div", { style: {
                         display: 'flex',
                         flexGrow: valueData.styles.imageObjectFit ? 1 : '',
-                        justifyContent:
-                            valueData.styles.flexDirection === 'column' ? valueData.styles.contentAlign : '',
+                        justifyContent: valueData.styles.flexDirection === 'column' ? valueData.styles.contentAlign : '',
                         alignSelf: valueData.styles.flexDirection === 'row' ? valueData.styles.contentAlign : '',
                         transform: `scaleX(${valueData.styles.contentMirror ? -1 : 1})`,
                         height: this.state.rxData.contentType === 'viewInWidget' ? '100%' : '',
                         overflow: 'hidden',
                         margin: `${valueData.styles.contentMarginTop}px ${valueData.styles.contentMarginRight}px ${valueData.styles.contentMarginBottom}px ${valueData.styles.contentMarginLeft}px`,
-                    }}
-                >
-                    {content}
-                </div>
-                <div
-                    style={{
-                        textAlign: this.state.rxStyle!['text-align'] as React.CSSProperties['textAlign'],
+                    }, children: content }), _jsx("div", { style: {
+                        textAlign: this.state.rxStyle['text-align'],
                         alignSelf: valueData.styles.textAlign,
                         textDecoration: valueData.styles.textDecoration,
                         color: valueData.textColor,
                         margin: `${valueData.styles.textMarginTop}px ${valueData.styles.textMarginRight}px ${valueData.styles.textMarginBottom}px ${valueData.styles.textMarginLeft}px`,
-                    }}
-                    dangerouslySetInnerHTML={{ __html: valueData.text }}
-                />
-            </div>
-        );
-
+                    }, dangerouslySetInnerHTML: { __html: valueData.text } })] }));
         return this.buildCard(valueData, i, cardContent);
     }
 }

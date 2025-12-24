@@ -94,7 +94,7 @@ export interface ColorPickerRxData {
 }
 
 export interface AnalogClockRxData {
-    analogClockFaceDesign: 'classic' | 'modern' | 'minimal';
+    analogClockFaceDesign: 'classic' | 'modern' | 'minimal' | 'dashes' | 'custom';
     analogClockFaceColor: string;
     analogClockBackgroundColor: string;
     analogClockShowHourHand: boolean;
@@ -106,6 +106,14 @@ export interface AnalogClockRxData {
     analogClockShowSecondHand: boolean;
     analogClockSecondHandDesign: 'classic' | 'modern' | 'arrow';
     analogClockSecondHandColor: string;
+    analogClockCustomTickInterval: 'hours' | 'minutes' | 'both';
+    analogClockCustomTickThickness: number;
+    analogClockCustomTickThicknessMain: number;
+    analogClockCustomTickLength: number;
+    analogClockCustomTickLengthMain: number;
+    analogClockCustomNumberSize: number;
+    analogClockCustomNumberOffset: number;
+    analogClockCustomShowNumbers: boolean;
 }
 
 export interface DialogRxData {
