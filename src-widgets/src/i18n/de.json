@@ -1,5 +1,5 @@
 {
-  "Custom": "Brauch",
+  "Custom": "Benutzerdefiniert",
   "Date": "Datum",
   "Datetime": "Datum/Uhrzeit",
   "Heptagon": "Heptagon",
@@ -89,7 +89,7 @@
   "count_columns": "Spalten zählen",
   "count_states": "Zählzustände",
   "cover": "Abdeckung",
-  "custom": "Brauch",
+  "custom": "Benutzerdefiniert",
   "custom_steps": "Benutzerdefinierte Schritte",
   "custom_steps_tooltip": "Definieren Sie benutzerdefinierte Schritte durch Kommas getrennt",
   "dashed": "Gestrichelt",
