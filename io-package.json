@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "news": {
+      "0.5.1": {
+        "en": "Added missing translations for the previous version",
+        "de": "Fehlende Übersetzungen für die vorherige Version hinzugefügt",
+        "ru": "Добавлены недостающие переводы для предыдущей версии",
+        "pt": "Adicionadas as traduções em falta para a versão anterior",
+        "nl": "Toegevoegd ontbrekende vertalingen voor de vorige versie",
+        "fr": "Ajout de traductions manquantes pour la version précédente",
+        "it": "Aggiunta traduzioni mancanti per la versione precedente",
+        "es": "Añadido traducciones faltantes para la versión anterior",
+        "pl": "Dodano brakujące tłumaczenia dla poprzedniej wersji",
+        "uk": "Додано відсутні переклади для попередньої версії",
+        "zh-cn": "上一个版本缺少的翻译"
+      },
       "0.5.0": {
         "en": "Added radial slider widget (#17)\nAdded analog clock content type to universal widget (#100)\nChanged german translation for \"custom\"",
         "de": "Hinzugefügt Radialschieber Widget (#17)\nHinzugefügt analoge Taktinhaltsart zu universellem Widget (#100)\nGeänderte deutsche Übersetzung für \"custom\"",
@@ -80,19 +93,6 @@
         "pl": "Dodano opcje wyściełania dla paska dialogowego (# 102, # 153)\nDodano opcję \"Zamknij po x sekundach\" dla okna dialogowego (# 102)\nDodano opcję ukrywania paska dialogowego (# 102)\nDodano zmianę rozmiaru obrazu i opcji pozycji (# 101)",
         "uk": "Додано параметри наповнення діалогового вікна (#102, #153)\nДодано \"close після x секунд\" варіант для діалогу (#102)\nДодано варіант, щоб приховати діалогове заголовок (#102)\nДодано розмір зображення та параметри позиції (#101)",
         "zh-cn": "添加对话框标题栏的编码选项(# 102, # 153)\n添加“ x 秒后关闭” 对话框选项 (# 102)\n添加到隐藏对话框标题栏的选项(# 102)\n添加图像调整大小和位置选项(# 101)"
-      },
-      "0.3.10": {
-        "en": "Updated dependencies",
-        "de": "Aktualisierte Abhängigkeiten",
-        "ru": "Обновленные зависимости",
-        "pt": "Dependências atualizadas",
-        "nl": "Bijgewerkte afhankelijkheden",
-        "fr": "Dépendances actualisées",
-        "it": "Dipendenze aggiornate",
-        "es": "Dependencias actualizadas",
-        "pl": "Aktualizacja zależności",
-        "uk": "Оновлені залежності",
-        "zh-cn": "更新的依赖关系"
       }
     },
     "titleLang": {
