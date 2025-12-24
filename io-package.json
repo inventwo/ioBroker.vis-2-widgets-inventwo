@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.4.2",
+    "version": "0.5.0",
     "news": {
+      "0.5.0": {
+        "en": "Added radial slider widget (#17)\nAdded analog clock content type to universal widget (#100)\nChanged german translation for \"custom\"",
+        "de": "Hinzugefügt Radialschieber Widget (#17)\nHinzugefügt analoge Taktinhaltsart zu universellem Widget (#100)\nGeänderte deutsche Übersetzung für \"custom\"",
+        "ru": "Добавлен виджет радиального слайдера (#17)\nДобавлен тип содержимого аналоговых часов в универсальный виджет (#100)\nИзменился немецкий перевод на «таможенный»",
+        "pt": "Adicionado widget de controle deslizante radial (# 17)\nAdicionado o tipo de conteúdo de relógio analógico ao widget universal (# 100)\nTradução alemã alterada para \"custom\"",
+        "nl": "Toegevoegd radiale schuifregelaar-widget (#17)\nAnaloge klokinhoud toegevoegd aan universele widget (#100)\nVeranderde Duitse vertaling voor \"custom\"",
+        "fr": "Ajout du widget slider radial (#17)\nAjout du type d'horloge analogique au widget universel (#100)\nTraduction allemande modifiée pour \"ustom\"",
+        "it": "Aggiunto widget cursore radiale (#17)\nAggiunto tipo di contenuto orologio analogico al widget universale (#100)\nCambiata traduzione tedesca per \"custom\"",
+        "es": "Añadido widget de deslizador radial (#17)\nAñadido tipo de contenido de reloj analógico al widget universal (#100)\nTraducción modificada alemana para \"costo\"",
+        "pl": "Dodano radial slider widget (# 17)\nDodano analogowy typ zawartości zegara do uniwersalnego widgetu (# 100)\nZmieniono tłumaczenie germana na \"niestandardowe\"",
+        "uk": "Додано радіальний слайдер віджет (#17)\nДодано аналоговий тип вмісту годинника в універсальний віджет (#100)\nЗмінений німецький переклад для \"кутом\"",
+        "zh-cn": "添加的光圈滑动部件( # 17)\n将模拟时钟内容类型添加到通用部件(# 100)\n更改的德国语翻译为“ Custom” Name"
+      },
       "0.4.2": {
         "en": "Vite downgrade",
         "de": "Vit Downgrade",
@@ -80,19 +93,6 @@
         "pl": "Aktualizacja zależności",
         "uk": "Оновлені залежності",
         "zh-cn": "更新的依赖关系"
-      },
-      "0.3.9": {
-        "en": "Fixed border color label in universal widget states (#120)",
-        "de": "Fehler behoben: Randfarbe des Labels im Universal Widget Zustände (#120)",
-        "ru": "Исправлен цвет рамки метки в универсальном виджете состояний (#120)",
-        "pt": "Corrigida a cor da borda do rótulo nos estados do widget universal (#120)",
-        "nl": "Oplossing voor de kleur van de rand van het label in universele widgetstaten (#120)",
-        "fr": "Correction de la couleur de bordure du libellé dans les états du widget universel (#120)",
-        "it": "Risolto il colore del bordo dell'etichetta nello stato del widget universale (#120)",
-        "es": "Se corrigió el color del borde de la etiqueta en los estados del widget universal (#120)",
-        "pl": "Naprawiono kolor granicy etykiety w stanie uniwersalnego widżetu (#120)",
-        "uk": "Виправлено колір межі мітки в універсальному віджеті станів (#120)",
-        "zh-cn": "修复了通用小部件状态中边框颜色标签的问题 (#120)"
       }
     },
     "titleLang": {
