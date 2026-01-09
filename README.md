@@ -56,6 +56,9 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Added radial slider widget in io-package.json
+
 ### 0.5.2 (2026-01-09)
 - Added configurable ring thickness and number visibility for analog clock (#161)
 

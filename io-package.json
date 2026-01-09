@@ -152,6 +152,7 @@
         "components": [
           "InventwoWidgetUniversal",
           "InventwoWidgetSlider",
+          "InventwoWidgetRadialSlider",
           "InventwoWidgetSwitch",
           "InventwoWidgetCheckbox",
           "InventwoWidgetTable"
