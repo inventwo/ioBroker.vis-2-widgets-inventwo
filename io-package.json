@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "news": {
+      "0.5.2": {
+        "en": "Added configurable ring thickness and number visibility for analog clock (#161)",
+        "de": "Hinzugefügt konfigurierbare Ringstärke und Zahlensicht für analoge Uhr (#161)",
+        "ru": "Добавлена настраиваемая толщина кольца и видимость номера для аналоговых часов (#161)",
+        "pt": "Adicionada espessura de anel configurável e visibilidade numérica para o relógio analógico (# 161)",
+        "nl": "Toegevoegd configureerbare ringdikte en nummerweergave voor analoge klok (#161)",
+        "fr": "Ajout d'épaisseur de bague configurable et de visibilité du nombre pour horloge analogique (#161)",
+        "it": "Aggiunto lo spessore dell'anello configurabile e la visibilità del numero per orologio analogico (#161)",
+        "es": "Se agregó el espesor del anillo configurable y la visibilidad del número para el reloj analógico (#161)",
+        "pl": "Dodano konfigurowalną grubość pierścienia i widoczność cyfrową zegara analogowego (# 161)",
+        "uk": "Додано конфігуровану товщину кільця і видимість номеру для аналогового годинника (#161)",
+        "zh-cn": "为模拟时钟添加可配置的环厚度和数字可见度(# 161)"
+      },
       "0.5.1": {
         "en": "Added missing translations for the previous version",
         "de": "Fehlende Übersetzungen für die vorherige Version hinzugefügt",
@@ -80,19 +93,6 @@
         "pl": "Stała pozycja treści spowodowana poprzednią wersją",
         "uk": "Виправлена позиція вмісту, викликана попередньою версією",
         "zh-cn": "上一个版本造成的固定内容位置"
-      },
-      "0.3.11": {
-        "en": "Added padding options for dialog titlebar (#102, #153)\nAdded \"close after x seconds\" option for dialog (#102)\nAdded option to hide dialog titlebar (#102)\nAdded image resize and position options (#101)",
-        "de": "Hinzufügen von Padding-Optionen für Dialog-Titelleiste (#102, #153)\nHinzufügen \"Schließen nach x Sekunden\" Option für Dialog (#102)\nHinzugefügt Option zum Verbergen Dialog Titelleiste (#102)\nBildgröße und Positionsoptionen hinzugefügt (#101)",
-        "ru": "Добавлены параметры прокладки для панели заголовков диалогов (#102, #153)\nДобавлена опция «закрыть после x секунд» для диалога (#102)\nДобавлена возможность скрыть панель заголовков диалогов (#102)\nДобавлены параметры размера изображения и позиции (#101)",
-        "pt": "Opções de preenchimento adicionadas para a barra de título da janela (# 102, # 153)\nAdicionada a opção \"fechar após x segundos\" para o diálogo (# 102)\nOpção adicionada para ocultar a barra de título da janela (# 102)\nOpções de redimensionamento e posição da imagem adicionadas (#101)",
-        "nl": "Opties voor opvulling voor dialoogvenstertitelbalk (#102, #153) toegevoegd\nToegevoegd \"sluiten na x seconden\" optie voor dialoog (#102)\nToegevoegd optie om dialoogvenster titelbalk te verbergen (#102)\nAfbeeldingsgrootte en positieopties toegevoegd (#101)",
-        "fr": "Ajout d'options de rembourrage pour la barre de titres de dialogue (#102, #153)\nAjout de l'option « fermer après x secondes » pour la boîte de dialogue (#102)\nAjout d'une option pour masquer la barre de titre de la boîte de dialogue (#102)\nAjout d'options de redimensionnement et de position de l'image (#101)",
-        "it": "Aggiunto opzioni di imbottitura per la barra del titolo di dialogo (#102, #153)\nAggiunto \"chiudi dopo x secondi\" opzione per la finestra di dialogo (#102)\nAggiunta opzione per nascondere la barra del titolo di dialogo (#102)\nOpzioni di ridimensionamento e posizione dell'immagine aggiuntiva (#101)",
-        "es": "Opciones de relleno adicionales para la barra de diálogo (#102, #153)\nAñadido \"cerrar después de x segundos\" opción para el diálogo (#102)\nOpción adicional para ocultar la barra de diálogo (#102)\nOpciones de tamaño y posición agregadas (#101)",
-        "pl": "Dodano opcje wyściełania dla paska dialogowego (# 102, # 153)\nDodano opcję \"Zamknij po x sekundach\" dla okna dialogowego (# 102)\nDodano opcję ukrywania paska dialogowego (# 102)\nDodano zmianę rozmiaru obrazu i opcji pozycji (# 101)",
-        "uk": "Додано параметри наповнення діалогового вікна (#102, #153)\nДодано \"close після x секунд\" варіант для діалогу (#102)\nДодано варіант, щоб приховати діалогове заголовок (#102)\nДодано розмір зображення та параметри позиції (#101)",
-        "zh-cn": "添加对话框标题栏的编码选项(# 102, # 153)\n添加“ x 秒后关闭” 对话框选项 (# 102)\n添加到隐藏对话框标题栏的选项(# 102)\n添加图像调整大小和位置选项(# 101)"
       }
     },
     "titleLang": {
