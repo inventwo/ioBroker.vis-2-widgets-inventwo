@@ -50,7 +50,7 @@ interface UniversalState extends VisRxWidgetState {
 }
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
-    private readonly refContentContainer: React.RefObject<HTMLDivElement | null> = React.createRef();
+    private readonly refContentContainer: React.RefObject<HTMLDivElement> = React.createRef();
 
     constructor(props: VisRxWidgetProps) {
         super(props);
@@ -2839,9 +2839,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         const seconds = time.getSeconds();
 
         // Calculate angles for clock hands
-        const secondAngle = (seconds * 6); // 360 / 60 = 6 degrees per second
-        const minuteAngle = (minutes * 6) + (seconds * 0.1); // 6 degrees per minute + fractional
-        const hourAngle = (hours * 30) + (minutes * 0.5); // 30 degrees per hour + fractional
+        const secondAngle = seconds * 6; // 360 / 60 = 6 degrees per second
+        const minuteAngle = minutes * 6 + seconds * 0.1; // 6 degrees per minute + fractional
+        const hourAngle = hours * 30 + minutes * 0.5; // 30 degrees per hour + fractional
 
         const size = 100; // Use viewBox for scalability
         const centerX = size / 2;
@@ -2900,7 +2900,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             // Get tick length settings
             let tickLength = 5; // Default regular tick length
             let tickLengthMain = 9; // Default main tick length
-            
+
             if (design === 'custom') {
                 tickLength = this.state.rxData.analogClockCustomTickLength ?? 5;
                 tickLengthMain = this.state.rxData.analogClockCustomTickLengthMain ?? 9;
@@ -2910,7 +2910,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             let borderWidth = 1;
             const showRing = this.state.rxData.analogClockShowRing ?? true;
             const ringThickness = this.state.rxData.analogClockRingThickness ?? 1;
-            
+
             if (design === 'custom') {
                 // Custom design uses user-defined ring settings
                 borderWidth = showRing ? ringThickness : 0;
@@ -2921,108 +2921,124 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             } else {
                 borderWidth = 1;
             }
-            
+
             return (
                 <>
-                    <circle cx={centerX} cy={centerY} r={48} fill={bgColor} stroke={faceColor} strokeWidth={borderWidth} />
-                    
+                    <circle
+                        cx={centerX}
+                        cy={centerY}
+                        r={48}
+                        fill={bgColor}
+                        stroke={faceColor}
+                        strokeWidth={borderWidth}
+                    />
+
                     {/* Render tick marks and numbers */}
                     {design !== 'minimal' && (
                         <>
                             {/* Hour marks (only show if tickInterval is 'hours' or 'both') */}
-                            {(tickInterval === 'hours' || tickInterval === 'both') && [...Array(12)].map((_, i) => {
-                                const angle = (i * 30 - 90) * (Math.PI / 180);
-                                const number = i === 0 ? 12 : i;
-                                const isMainHour = i === 0 || i === 3 || i === 6 || i === 9;
-                                
-                                // Classic design never shows tick marks
-                                const showTick = design !== 'classic' && tickThickness > 0;
-                                
-                                // Calculate tick mark positions using customizable length
-                                const outerRadius = 47;
-                                const currentTickLength = isMainHour ? tickLengthMain : tickLength;
-                                const innerRadius = outerRadius - currentTickLength;
-                                const x1 = centerX + Math.cos(angle) * innerRadius;
-                                const y1 = centerY + Math.sin(angle) * innerRadius;
-                                const x2 = centerX + Math.cos(angle) * outerRadius;
-                                const y2 = centerY + Math.sin(angle) * outerRadius;
-                                
-                                // Determine if we should show numbers for this position
-                                let showNumberHere = false;
-                                if (showNumbers === 'all') {
-                                    // Show all 12 numbers
-                                    showNumberHere = true;
-                                } else if (showNumbers === 'main') {
-                                    // Show only main hour numbers (12, 3, 6, 9)
-                                    showNumberHere = isMainHour;
-                                } else if (showNumbers === 'none') {
-                                    // Show no numbers
-                                    showNumberHere = false;
-                                }
-                                
-                                return (
-                                    <g key={`hour-${i}`}>
-                                        {showTick && (
-                                            <line
-                                                x1={x1}
-                                                y1={y1}
-                                                x2={x2}
-                                                y2={y2}
-                                                stroke={faceColor}
-                                                strokeWidth={isMainHour ? tickThicknessMain : tickThickness}
-                                                strokeLinecap="round"
-                                            />
-                                        )}
-                                        {showNumberHere && (
-                                            <text
-                                                x={centerX + Math.cos(angle) * numberOffset}
-                                                y={centerY + Math.sin(angle) * numberOffset}
-                                                textAnchor="middle"
-                                                dominantBaseline="middle"
-                                                fill={faceColor}
-                                                fontSize={numberSize}
-                                                fontWeight="bold"
-                                            >
-                                                {number}
-                                            </text>
-                                        )}
-                                    </g>
-                                );
-                            })}
-                            
+                            {(tickInterval === 'hours' || tickInterval === 'both') &&
+                                [...Array(12)].map((_, i) => {
+                                    const angle = (i * 30 - 90) * (Math.PI / 180);
+                                    const number = i === 0 ? 12 : i;
+                                    const isMainHour = i === 0 || i === 3 || i === 6 || i === 9;
+
+                                    // Classic design never shows tick marks
+                                    const showTick = design !== 'classic' && tickThickness > 0;
+
+                                    // Calculate tick mark positions using customizable length
+                                    const outerRadius = 47;
+                                    const currentTickLength = isMainHour ? tickLengthMain : tickLength;
+                                    const innerRadius = outerRadius - currentTickLength;
+                                    const x1 = centerX + Math.cos(angle) * innerRadius;
+                                    const y1 = centerY + Math.sin(angle) * innerRadius;
+                                    const x2 = centerX + Math.cos(angle) * outerRadius;
+                                    const y2 = centerY + Math.sin(angle) * outerRadius;
+
+                                    // Determine if we should show numbers for this position
+                                    let showNumberHere = false;
+                                    if (showNumbers === 'all') {
+                                        // Show all 12 numbers
+                                        showNumberHere = true;
+                                    } else if (showNumbers === 'main') {
+                                        // Show only main hour numbers (12, 3, 6, 9)
+                                        showNumberHere = isMainHour;
+                                    } else if (showNumbers === 'none') {
+                                        // Show no numbers
+                                        showNumberHere = false;
+                                    }
+
+                                    return (
+                                        <g key={`hour-${i}`}>
+                                            {showTick && (
+                                                <line
+                                                    x1={x1}
+                                                    y1={y1}
+                                                    x2={x2}
+                                                    y2={y2}
+                                                    stroke={faceColor}
+                                                    strokeWidth={isMainHour ? tickThicknessMain : tickThickness}
+                                                    strokeLinecap="round"
+                                                />
+                                            )}
+                                            {showNumberHere && (
+                                                <text
+                                                    x={centerX + Math.cos(angle) * numberOffset}
+                                                    y={centerY + Math.sin(angle) * numberOffset}
+                                                    textAnchor="middle"
+                                                    dominantBaseline="middle"
+                                                    fill={faceColor}
+                                                    fontSize={numberSize}
+                                                    fontWeight="bold"
+                                                >
+                                                    {number}
+                                                </text>
+                                            )}
+                                        </g>
+                                    );
+                                })}
+
                             {/* Minute marks (only if tickInterval is 'minutes' or 'both') */}
-                            {(tickInterval === 'minutes' || tickInterval === 'both') && [...Array(60)].map((_, i) => {
-                                // For 'both' mode, skip hour positions (they're already drawn)
-                                // For 'minutes' mode, show all 60 minute marks
-                                if (tickInterval === 'both' && i % 5 === 0) return null;
-                                
-                                const angle = (i * 6 - 90) * (Math.PI / 180);
-                                const outerRadius = 47;
-                                const minuteTickLength = tickLength * 0.4; // Minute marks are 40% of regular tick length
-                                const innerRadius = outerRadius - minuteTickLength;
-                                const x1 = centerX + Math.cos(angle) * innerRadius;
-                                const y1 = centerY + Math.sin(angle) * innerRadius;
-                                const x2 = centerX + Math.cos(angle) * outerRadius;
-                                const y2 = centerY + Math.sin(angle) * outerRadius;
-                                
-                                return (
-                                    <line
-                                        key={`minute-${i}`}
-                                        x1={x1}
-                                        y1={y1}
-                                        x2={x2}
-                                        y2={y2}
-                                        stroke={faceColor}
-                                        strokeWidth={tickThickness * 0.5}
-                                        strokeLinecap="round"
-                                    />
-                                );
-                            })}
+                            {(tickInterval === 'minutes' || tickInterval === 'both') &&
+                                [...Array(60)].map((_, i) => {
+                                    // For 'both' mode, skip hour positions (they're already drawn)
+                                    // For 'minutes' mode, show all 60 minute marks
+                                    if (tickInterval === 'both' && i % 5 === 0) {
+                                        return null;
+                                    }
+
+                                    const angle = (i * 6 - 90) * (Math.PI / 180);
+                                    const outerRadius = 47;
+                                    const minuteTickLength = tickLength * 0.4; // Minute marks are 40% of regular tick length
+                                    const innerRadius = outerRadius - minuteTickLength;
+                                    const x1 = centerX + Math.cos(angle) * innerRadius;
+                                    const y1 = centerY + Math.sin(angle) * innerRadius;
+                                    const x2 = centerX + Math.cos(angle) * outerRadius;
+                                    const y2 = centerY + Math.sin(angle) * outerRadius;
+
+                                    return (
+                                        <line
+                                            key={`minute-${i}`}
+                                            x1={x1}
+                                            y1={y1}
+                                            x2={x2}
+                                            y2={y2}
+                                            stroke={faceColor}
+                                            strokeWidth={tickThickness * 0.5}
+                                            strokeLinecap="round"
+                                        />
+                                    );
+                                })}
                         </>
                     )}
-                    
+
                     {/* Center dot */}
-                    <circle cx={centerX} cy={centerY} r={design === 'modern' ? 3 : 2.5} fill={faceColor} />
+                    <circle
+                        cx={centerX}
+                        cy={centerY}
+                        r={design === 'modern' ? 3 : 2.5}
+                        fill={faceColor}
+                    />
                 </>
             );
         };
@@ -3036,8 +3052,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             if (design === 'arrow') {
                 const tipX = centerX + Math.cos(rad) * length;
                 const tipY = centerY + Math.sin(rad) * length;
-                const leftAngle = rad + (150 * Math.PI / 180);
-                const rightAngle = rad - (150 * Math.PI / 180);
+                const leftAngle = rad + (150 * Math.PI) / 180;
+                const rightAngle = rad - (150 * Math.PI) / 180;
                 const arrowWidth = width * 2;
                 const leftX = tipX + Math.cos(leftAngle) * arrowWidth;
                 const leftY = tipY + Math.sin(leftAngle) * arrowWidth;
@@ -3073,20 +3089,19 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         strokeLinecap="square"
                     />
                 );
-            } else {
-                // classic
-                return (
-                    <line
-                        x1={centerX}
-                        y1={centerY}
-                        x2={x}
-                        y2={y}
-                        stroke={color}
-                        strokeWidth={width}
-                        strokeLinecap="round"
-                    />
-                );
             }
+            // classic
+            return (
+                <line
+                    x1={centerX}
+                    y1={centerY}
+                    x2={x}
+                    y2={y}
+                    stroke={color}
+                    strokeWidth={width}
+                    strokeLinecap="round"
+                />
+            );
         };
 
         return (
@@ -3098,33 +3113,36 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 }}
             >
                 {renderClockFace()}
-                
+
                 {/* Hour hand */}
-                {this.state.rxData.analogClockShowHourHand && renderHand(
-                    hourAngle,
-                    25,
-                    3,
-                    this.state.rxData.analogClockHourHandColor || 'rgb(0, 0, 0)',
-                    this.state.rxData.analogClockHourHandDesign || 'classic'
-                )}
+                {this.state.rxData.analogClockShowHourHand &&
+                    renderHand(
+                        hourAngle,
+                        25,
+                        3,
+                        this.state.rxData.analogClockHourHandColor || 'rgb(0, 0, 0)',
+                        this.state.rxData.analogClockHourHandDesign || 'classic',
+                    )}
 
                 {/* Minute hand */}
-                {this.state.rxData.analogClockShowMinuteHand && renderHand(
-                    minuteAngle,
-                    35,
-                    2,
-                    this.state.rxData.analogClockMinuteHandColor || 'rgb(0, 0, 0)',
-                    this.state.rxData.analogClockMinuteHandDesign || 'classic'
-                )}
+                {this.state.rxData.analogClockShowMinuteHand &&
+                    renderHand(
+                        minuteAngle,
+                        35,
+                        2,
+                        this.state.rxData.analogClockMinuteHandColor || 'rgb(0, 0, 0)',
+                        this.state.rxData.analogClockMinuteHandDesign || 'classic',
+                    )}
 
                 {/* Second hand */}
-                {this.state.rxData.analogClockShowSecondHand && renderHand(
-                    secondAngle,
-                    38,
-                    1,
-                    this.state.rxData.analogClockSecondHandColor || 'rgb(255, 0, 0)',
-                    this.state.rxData.analogClockSecondHandDesign || 'classic'
-                )}
+                {this.state.rxData.analogClockShowSecondHand &&
+                    renderHand(
+                        secondAngle,
+                        38,
+                        1,
+                        this.state.rxData.analogClockSecondHandColor || 'rgb(255, 0, 0)',
+                        this.state.rxData.analogClockSecondHandDesign || 'classic',
+                    )}
             </svg>
         );
     }
