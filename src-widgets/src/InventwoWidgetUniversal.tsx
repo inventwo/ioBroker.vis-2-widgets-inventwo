@@ -1104,8 +1104,13 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         },
                         {
                             name: 'analogClockCustomShowNumbers',
-                            type: 'checkbox',
-                            default: true,
+                            type: 'select',
+                            options: [
+                                { value: 'all', label: 'all_numbers' },
+                                { value: 'main', label: 'main_hours_only' },
+                                { value: 'none', label: 'none' },
+                            ],
+                            default: 'all',
                             label: 'show_numbers',
                             hidden: 'data.analogClockFaceDesign != "custom"',
                         },
@@ -1117,7 +1122,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             step: 1,
                             default: 8,
                             label: 'number_size',
-                            hidden: 'data.analogClockFaceDesign != "custom" || !data.analogClockCustomShowNumbers',
+                            hidden: 'data.analogClockFaceDesign != "custom" || data.analogClockCustomShowNumbers == "none"',
                         },
                         {
                             name: 'analogClockCustomNumberOffset',
@@ -1127,7 +1132,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             step: 1,
                             default: 30,
                             label: 'number_offset',
-                            hidden: 'data.analogClockFaceDesign != "custom" || !data.analogClockCustomShowNumbers',
+                            hidden: 'data.analogClockFaceDesign != "custom" || data.analogClockCustomShowNumbers == "none"',
                         },
                         {
                             name: 'analogClockFaceColor',
@@ -1140,6 +1145,31 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             type: 'color',
                             default: 'rgb(255, 255, 255)',
                             label: 'background',
+                        },
+                        {
+                            name: '',
+                            type: 'delimiter',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_clock_ring',
+                        },
+                        {
+                            name: 'analogClockShowRing',
+                            type: 'checkbox',
+                            default: true,
+                            label: 'show_ring',
+                        },
+                        {
+                            name: 'analogClockRingThickness',
+                            type: 'slider',
+                            min: 0.5,
+                            max: 5,
+                            step: 0.5,
+                            default: 1,
+                            label: 'ring_thickness',
+                            hidden: '!data.analogClockShowRing',
                         },
                         {
                             name: '',
@@ -2829,12 +2859,12 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             let tickThicknessMain = 2;
             let numberSize = 8;
             let numberOffset = 30;
-            let showNumbers = true;
+            let showNumbers: 'all' | 'main' | 'none' = 'all';
 
             if (design === 'classic') {
                 // Classic: all 12 numbers, no tick marks
                 tickInterval = 'hours';
-                showNumbers = true;
+                showNumbers = 'all';
                 numberSize = 8;
                 numberOffset = 36;
                 tickThickness = 0; // no ticks in classic
@@ -2843,18 +2873,18 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 tickInterval = 'hours';
                 tickThickness = 2;
                 tickThicknessMain = 2;
-                showNumbers = false;
+                showNumbers = 'none';
             } else if (design === 'minimal') {
                 // Minimal: no ticks, no numbers
                 tickInterval = 'hours';
                 tickThickness = 0;
-                showNumbers = false;
+                showNumbers = 'none';
             } else if (design === 'dashes') {
                 // Dashes: tick marks with numbers at 12, 3, 6, 9
                 tickInterval = 'hours';
                 tickThickness = 1.5;
                 tickThicknessMain = 2;
-                showNumbers = true;
+                showNumbers = 'main';
                 numberSize = 8;
                 numberOffset = 30;
             } else if (design === 'custom') {
@@ -2864,7 +2894,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 tickThicknessMain = this.state.rxData.analogClockCustomTickThicknessMain ?? 2;
                 numberSize = this.state.rxData.analogClockCustomNumberSize ?? 8;
                 numberOffset = this.state.rxData.analogClockCustomNumberOffset ?? 30;
-                showNumbers = this.state.rxData.analogClockCustomShowNumbers ?? true;
+                showNumbers = this.state.rxData.analogClockCustomShowNumbers ?? 'all';
             }
 
             // Get tick length settings
@@ -2876,8 +2906,21 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 tickLengthMain = this.state.rxData.analogClockCustomTickLengthMain ?? 9;
             }
 
-            // Render base circle
-            const borderWidth = design === 'modern' ? 2 : design === 'minimal' ? 0.5 : 1;
+            // Render base circle with configurable ring
+            let borderWidth = 1;
+            const showRing = this.state.rxData.analogClockShowRing ?? true;
+            const ringThickness = this.state.rxData.analogClockRingThickness ?? 1;
+            
+            if (design === 'custom') {
+                // Custom design uses user-defined ring settings
+                borderWidth = showRing ? ringThickness : 0;
+            } else if (design === 'modern') {
+                borderWidth = 2;
+            } else if (design === 'minimal') {
+                borderWidth = 0.5;
+            } else {
+                borderWidth = 1;
+            }
             
             return (
                 <>
@@ -2906,17 +2949,15 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 
                                 // Determine if we should show numbers for this position
                                 let showNumberHere = false;
-                                if (showNumbers) {
-                                    if (design === 'classic') {
-                                        // Classic shows all numbers
-                                        showNumberHere = true;
-                                    } else if (design === 'dashes') {
-                                        // Dashes shows only main hour numbers
-                                        showNumberHere = isMainHour;
-                                    } else if (design === 'custom') {
-                                        // Custom shows all numbers when enabled
-                                        showNumberHere = true;
-                                    }
+                                if (showNumbers === 'all') {
+                                    // Show all 12 numbers
+                                    showNumberHere = true;
+                                } else if (showNumbers === 'main') {
+                                    // Show only main hour numbers (12, 3, 6, 9)
+                                    showNumberHere = isMainHour;
+                                } else if (showNumbers === 'none') {
+                                    // Show no numbers
+                                    showNumberHere = false;
                                 }
                                 
                                 return (

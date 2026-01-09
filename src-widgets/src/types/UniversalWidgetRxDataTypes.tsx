@@ -113,7 +113,9 @@ export interface AnalogClockRxData {
     analogClockCustomTickLengthMain: number;
     analogClockCustomNumberSize: number;
     analogClockCustomNumberOffset: number;
-    analogClockCustomShowNumbers: boolean;
+    analogClockCustomShowNumbers: 'all' | 'main' | 'none';
+    analogClockShowRing: boolean;
+    analogClockRingThickness: number;
 }
 
 export interface DialogRxData {
