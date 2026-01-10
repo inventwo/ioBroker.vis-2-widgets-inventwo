@@ -264,6 +264,56 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         {
                             name: '',
                             type: 'delimiter',
+                            hidden: 'data.dialogFullscreen',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_position',
+                            hidden: 'data.dialogFullscreen',
+                        },
+                        {
+                            name: 'dialogPosition',
+                            type: 'select',
+                            options: [
+                                { value: 'center', label: 'center' },
+                                { value: 'top', label: 'top' },
+                                { value: 'bottom', label: 'bottom' },
+                                { value: 'left', label: 'left' },
+                                { value: 'right', label: 'right' },
+                                { value: 'topLeft', label: 'top_left' },
+                                { value: 'topRight', label: 'top_right' },
+                                { value: 'bottomLeft', label: 'bottom_left' },
+                                { value: 'bottomRight', label: 'bottom_right' },
+                                { value: 'custom', label: 'custom' },
+                            ],
+                            default: 'center',
+                            label: 'position',
+                            hidden: 'data.dialogFullscreen',
+                        },
+                        {
+                            name: 'dialogPositionX',
+                            type: 'slider',
+                            min: 0,
+                            max: 1000,
+                            step: 1,
+                            default: 0,
+                            label: 'position_x',
+                            hidden: 'data.dialogFullscreen || data.dialogPosition != "custom"',
+                        },
+                        {
+                            name: 'dialogPositionY',
+                            type: 'slider',
+                            min: 0,
+                            max: 1000,
+                            step: 1,
+                            default: 0,
+                            label: 'position_y',
+                            hidden: 'data.dialogFullscreen || data.dialogPosition != "custom"',
+                        },
+                        {
+                            name: '',
+                            type: 'delimiter',
                         },
                         {
                             name: '',
@@ -1483,7 +1533,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             name: 'imageObjectPosition',
                             type: 'select',
                             options: [
-                                { value: 'none', label: '' },
+                                { value: 'none', label: 'none' },
                                 { value: 'top', label: 'top' },
                                 { value: 'bottom', label: 'bottom' },
                                 { value: 'left', label: 'left' },
@@ -2160,6 +2210,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             }, 1000);
             this.setState({ clockInterval });
         }
+
+        if (
+            this.state.rxData.type == 'nav' &&
+            this.state.rxData.view == this.props.view &&
+            Object.keys(window.vis?.viewsActiveFilter).length > 1
+        ) {
+            this.setState({ showFeedback: true });
+        }
     }
 
     componentWillUnmount(): void {
@@ -2198,6 +2256,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
     // This function is called every time when some Object State updated, but all changes lands into this.state.values too
     onStateUpdated(id: string, state: ioBroker.State): void {
+        console.log('state changed', id, state)
         if (this.state.rxData.type === 'viewInDialog' && id === this.state.rxData.oid && !this.props.editMode) {
             const val = this.convertValue(this.state.rxData.valueTrue);
             if (this.state.isMounted) {
@@ -2633,6 +2692,48 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
 
         if (this.state.rxData.type === 'viewInDialog') {
+            const dialogStyles: React.CSSProperties = {};
+            const dialogWindowStyles: React.CSSProperties = {};
+
+            if(!this.state.rxData.dialogFullscreen) {
+                switch (this.state.rxData.dialogPosition) {
+                    case 'top':
+                        dialogStyles.alignItems = 'flex-start';
+                        break;
+                    case 'bottom':
+                        dialogStyles.alignItems = 'flex-end';
+                        break;
+                    case 'left':
+                        dialogStyles.justifyContent = 'flex-start';
+                        break;
+                    case 'right':
+                        dialogStyles.justifyContent = 'flex-end';
+                        break;
+                    case 'topLeft':
+                        dialogStyles.justifyContent = 'flex-start';
+                        dialogStyles.alignItems = 'flex-start';
+                        break;
+                    case 'topRight':
+                        dialogStyles.justifyContent = 'flex-end';
+                        dialogStyles.alignItems = 'flex-start';
+                        break;
+                    case 'bottomLeft':
+                        dialogStyles.justifyContent = 'flex-start';
+                        dialogStyles.alignItems = 'flex-end';
+                        break;
+                    case 'bottomRight':
+                        dialogStyles.justifyContent = 'flex-end';
+                        dialogStyles.alignItems = 'flex-end';
+                        break;
+                    case 'custom':
+                        dialogStyles.justifyContent = 'flex-start';
+                        dialogStyles.alignItems = 'flex-start';
+                        dialogWindowStyles.left = this.valWithUnit(this.state.rxData.dialogPositionX);
+                        dialogWindowStyles.top = this.valWithUnit(this.state.rxData.dialogPositionY);
+                        break;
+                }
+            }
+
             widgetContent.push(
                 <Dialog
                     className="inventwo-dialog"
@@ -2641,6 +2742,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     fullScreen
                     sx={{
                         '& .MuiDialog-container': {
+                            ...dialogStyles,
                             '& .MuiDialog-paper': {
                                 maxWidth: !this.state.rxData.dialogFullscreen
                                     ? `${this.state.rxData.dialogWidth + (!Number.isNaN(Number(this.state.rxData.dialogWidth)) ? 'px' : '')}`
@@ -2650,11 +2752,12 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                     : '100%',
                                 background: this.state.rxData.dialogBackground,
                                 borderRadius: `
-                                ${this.state.rxData.dialogBorderRadiusTopLeft}px 
-                                ${this.state.rxData.dialogBorderRadiusTopRight}px 
-                                ${this.state.rxData.dialogBorderRadiusBottomRight}px 
-                                ${this.state.rxData.dialogBorderRadiusBottomLeft}px
-                            `,
+                                    ${this.state.rxData.dialogBorderRadiusTopLeft}px 
+                                    ${this.state.rxData.dialogBorderRadiusTopRight}px 
+                                    ${this.state.rxData.dialogBorderRadiusBottomRight}px 
+                                    ${this.state.rxData.dialogBorderRadiusBottomLeft}px
+                                `,
+                                ...dialogWindowStyles,
                             },
                             '.MuiDialogContent-root': {
                                 padding: `${this.valWithUnit(this.state.rxData.dialogPadding)}`,

@@ -140,4 +140,17 @@ export interface DialogRxData {
     dialogBorderRadiusTopRight: number;
     dialogBorderRadiusBottomRight: number;
     dialogBorderRadiusBottomLeft: number;
+    dialogPosition:
+        | 'center'
+        | 'top'
+        | 'bottom'
+        | 'left'
+        | 'right'
+        | 'topLeft'
+        | 'topRight'
+        | 'bottomLeft'
+        | 'bottomRight'
+        | 'custom';
+    dialogPositionX: number | string;
+    dialogPositionY: number | string;
 }

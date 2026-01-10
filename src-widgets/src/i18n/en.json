@@ -325,5 +325,7 @@
   "all_numbers": "All numbers (12 total)",
   "main_hours_only": "Main hours only (12, 3, 6, 9)",
   "show_ring": "Show ring",
-  "ring_thickness": "Ring thickness"
+  "ring_thickness": "Ring thickness",
+  "position_x": "Position X",
+  "position_y": "Position Y"
 }
