@@ -56,7 +56,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.5.4 (2026-01-10)
 - Added option to set dialog position (#158)
 - Fixed nav click feedback not working correctly (#41)
 
@@ -73,9 +73,6 @@ All widgets come with extensive design options to customize the look and feel to
 - Added radial slider widget (#17)
 - Added analog clock content type to universal widget (#100)
 - Changed german translation for "custom"
-
-### 0.4.2 (2025-12-22)
-- Vite downgrade
 
 ## License
 The MIT License (MIT)

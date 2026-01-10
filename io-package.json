@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.5.3",
+    "version": "0.5.4",
     "news": {
+      "0.5.4": {
+        "en": "Added option to set dialog position (#158)\nFixed nav click feedback not working correctly (#41)",
+        "de": "Option zur Einstellung der Dialogposition hinzugefügt (#158)\nFeste nav click Feedback nicht korrekt funktionieren (#41)",
+        "ru": "Добавлена опция установки диалоговой позиции (#158)\nОбратная связь с фиксированным нав-кликом работает неправильно (#41)",
+        "pt": "Opção adicionada para definir a posição da janela (# 158)\nO feedback do 'nav' fixo não está a funcionar correctamente (# 41)",
+        "nl": "Toegevoegde optie om de dialoogpositie in te stellen (#158)\nVaste nav klik feedback werkt niet correct (#41)",
+        "fr": "Ajout d'une option pour définir la position de la boîte de dialogue (#158)\nFixe nav click feedback ne fonctionne pas correctement (#41)",
+        "it": "Aggiunta opzione per impostare la posizione di dialogo (#158)\nRisposte nav click feedback non funziona correttamente (#41)",
+        "es": "Opción agregada para establecer la posición de diálogo (#158)\nReacción de clic náutico fija no funciona correctamente (#41)",
+        "pl": "Dodano opcję ustawienia pozycji okna dialogowego (# 158)\nNaprawiono nav kliknij sprzężenie zwrotne nie działa prawidłowo (# 41)",
+        "uk": "Додано можливість встановити діалогове положення (#158)\nВиправлено натискання кнопки зворотного зв'язку (#41)",
+        "zh-cn": "添加了设置对话框位置的选项( # 158)\n固定导航点击反馈不正确(# 41)"
+      },
       "0.5.3": {
         "en": "Added radial slider widget in io-package.json",
         "de": "Hinzugefügt Radial Slider Widget in io-Package. Json",
@@ -80,19 +93,6 @@
         "pl": "Dodano typ obrazka do kolumny dla widżetu tabeli (# 97)\nDodano niestandardowe wsparcie formatu datetime dla interfejsu tabeli (# 97)\nNaprawianie problemu w widżecie suwaka, gdy kroki są aktywne, ale wartość jest pusta\nZmieniona wersja federacyjna modułu do dopasowania do wersji 2.0 stabilnej",
         "uk": "Додано тип зображення до колонки для настільного віджету (#97)\nДодано користувальницький дата-центр підтримки для настільного віджету (#97)\nВиправлено проблему у віджеті слайдера, коли дії активні, але значення є порожнім\nЗмінений варіант федерації модуля, щоб відповідати в'язам 2.0 стабільний",
         "zh-cn": "将图像类型添加到表格部件的列(# 97)\n为表格部件添加自定义日期时间格式支持(# 97)\n当步骤活动但值为空时, 在滑动部件中修正发行\n更改模块 Federation 版本, 与 2.0 稳定匹配"
-      },
-      "0.4.0": {
-        "en": "Switched to TypeScript",
-        "de": "Zu TypeScript geschaltet",
-        "ru": "Переключается на TypeScript",
-        "pt": "Alternado para TypeScript",
-        "nl": "Overgeschakeld naar TypeScript",
-        "fr": "Passé à TypeScript",
-        "it": "Passato a TypeScript",
-        "es": "Cambiar a TipoScript",
-        "pl": "Przełączono na TypeScript",
-        "uk": "Перемкнено до TypeScript",
-        "zh-cn": "切换到类型脚本"
       }
     },
     "titleLang": {

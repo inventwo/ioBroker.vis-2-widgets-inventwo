@@ -1,4 +1,7 @@
 # Older changes
+## 0.4.2 (2025-12-22)
+- Vite downgrade
+
 ## 0.4.1 (2025-12-18)
 - Added image type to column for table widget (#97)
 - Added custom datetime format support for table widget (#97)
