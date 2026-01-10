@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.5.2",
+    "version": "0.5.3",
     "news": {
+      "0.5.3": {
+        "en": "Added radial slider widget in io-package.json",
+        "de": "Hinzugefügt Radial Slider Widget in io-Package. Json",
+        "ru": "Добавлен виджет радиального слайдера в io-пакет. Джонсон",
+        "pt": "Adicionado widget de controle deslizante radial no pacote io. json",
+        "nl": "Toegevoegd radial slider widget in io-package. json",
+        "fr": "Ajout d'un widget slider radial dans io-package. Json",
+        "it": "Aggiunto widget cursore radiale in io-package. J",
+        "es": "Añadido widget de deslizador radial en io-paquete. json",
+        "pl": "Dodano radialny widżet suwaka w pakiecie jo-. json",
+        "uk": "Додано радіальний слайдер віджет в io-package. свінгери",
+        "zh-cn": "在 io- package 中添加光圈滑动部件 。 贾森"
+      },
       "0.5.2": {
         "en": "Added configurable ring thickness and number visibility for analog clock (#161)",
         "de": "Hinzugefügt konfigurierbare Ringstärke und Zahlensicht für analoge Uhr (#161)",
@@ -80,19 +93,6 @@
         "pl": "Przełączono na TypeScript",
         "uk": "Перемкнено до TypeScript",
         "zh-cn": "切换到类型脚本"
-      },
-      "0.3.12": {
-        "en": "Fixed content position caused by previous version",
-        "de": "Feste Inhaltsposition durch vorherige Version",
-        "ru": "Позиция фиксированного контента, вызванная предыдущей версией",
-        "pt": "Posição de conteúdo fixa causada pela versão anterior",
-        "nl": "Vaste inhoudpositie veroorzaakt door vorige versie",
-        "fr": "Position de contenu fixe causée par la version précédente",
-        "it": "Posizione fissa dei contenuti causata dalla versione precedente",
-        "es": "Posición de contenido fija causada por la versión anterior",
-        "pl": "Stała pozycja treści spowodowana poprzednią wersją",
-        "uk": "Виправлена позиція вмісту, викликана попередньою версією",
-        "zh-cn": "上一个版本造成的固定内容位置"
       }
     },
     "titleLang": {
