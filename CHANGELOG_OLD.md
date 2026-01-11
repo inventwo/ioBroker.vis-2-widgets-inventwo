@@ -1,4 +1,9 @@
 # Older changes
+## 0.5.0 (2025-12-24)
+- Added radial slider widget (#17)
+- Added analog clock content type to universal widget (#100)
+- Changed german translation for "custom"
+
 ## 0.4.2 (2025-12-22)
 - Vite downgrade
 

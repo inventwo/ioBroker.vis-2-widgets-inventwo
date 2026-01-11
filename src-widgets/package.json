@@ -1,7 +1,7 @@
 {
     "name": "iobroker.vis-2-widgets-inventwo",
     "private": true,
-    "version": "0.5.4",
+    "version": "0.5.5",
     "type": "module",
     "dependencies": {
         "@iobroker/adapter-react-v5": "^7.7.3",

@@ -56,7 +56,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.5.5 (2026-01-11)
 - Fixed increase/decrease not working correctly for separate buttons
 
 ### 0.5.4 (2026-01-10)
@@ -71,11 +71,6 @@ All widgets come with extensive design options to customize the look and feel to
 
 ### 0.5.1 (2025-12-24)
 - Added missing translations for the previous version
-
-### 0.5.0 (2025-12-24)
-- Added radial slider widget (#17)
-- Added analog clock content type to universal widget (#100)
-- Changed german translation for "custom"
 
 ## License
 The MIT License (MIT)
