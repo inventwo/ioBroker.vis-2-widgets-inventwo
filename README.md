@@ -56,6 +56,9 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Fixed increase/decrease not working correctly for separate buttons
+
 ### 0.5.4 (2026-01-10)
 - Added option to set dialog position (#158)
 - Fixed nav click feedback not working correctly (#41)

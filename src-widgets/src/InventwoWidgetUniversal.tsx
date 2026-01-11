@@ -2568,7 +2568,11 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 }
                 // eslint-disable-next-line no-case-declarations
                 let value = this.getValue(oid);
-                value += this.convertValue(this.state.rxData.valueTrue);
+                if (this.state.rxData.mode === 'singleButton') {
+                    value += this.convertValue(this.state.rxData.valueTrue);
+                } else if (index !== null && this.state.rxData[`value${index}`]) {
+                    value += this.convertValue(this.state.rxData[`value${index}`]);
+                }
                 this.props.context.setValue(oid, value);
                 break;
             case 'http':
