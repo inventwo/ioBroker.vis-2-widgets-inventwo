@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.5.5",
+    "version": "0.5.6",
     "news": {
+      "0.5.6": {
+        "en": "Fixed issue caused by multi-views widgets and check for inside view in widget (#176)\nFixed font size and other styles not applied on switch widget (#172)",
+        "de": "Fixed Problem verursacht durch Multi-View-Widgets und überprüfen Sie nach innen Ansicht im Widget (#176)\nFeste Schriftgröße und andere nicht auf Switch Widget (#172) angewendete Stile",
+        "ru": "Исправленная проблема, вызванная виджетами с несколькими просмотрами и проверкой внутреннего вида в виджете (#176)\nРазмер фиксированного шрифта и другие стили, не применяемые в виджете переключателя (#172)",
+        "pt": "Problema corrigido causado por widgets multi-views e verifique se há visão interna no widget (# 176)\nTamanho fixo da fonte e outros estilos não aplicados no widget switch (# 172)",
+        "nl": "Vast probleem veroorzaakt door multi-views widgets en controleer op binnenweergave in widget (#176)\nVaste lettergrootte en andere stijlen niet toegepast op schakelwidget (#172)",
+        "fr": "Problème corrigé causé par les widgets multi-vues et contrôle de la vue intérieure dans le widget (#176)\nTaille de police fixe et autres styles non appliqués sur le widget de commutation (#172)",
+        "it": "Problema risolto causato da widget multi-views e controllare la visualizzazione interna in widget (#176)\nDimensioni del carattere fisso e altri stili non applicati sul widget dell'interruttore (#172)",
+        "es": "Edición fija causada por widgets multi-views y comprobar la vista interior en widget (#176)\nTamaño de fuente fijo y otros estilos no aplicados en el widget del interruptor (#172)",
+        "pl": "Naprawiono problem spowodowany przez widżety multiview i sprawdzanie widoku wewnętrznego w widgecie (# 176)\nNaprawiony rozmiar czcionki i inne style nie stosowane na widżecie przełącznika (# 172)",
+        "uk": "Виправлено проблему, викликане багато переглядів віджетів та перевірте зовнішній вигляд у віджеті (#176)\nВиправлено розмір шрифту та інші стилі, які не застосовуються на віджеті перемикання (#172)",
+        "zh-cn": "多视图部件造成的固定发行, 并检查部件中的内视图 (# 176)\n切换部件上未应用的固定字体大小和其他样式(# 172)"
+      },
       "0.5.5": {
         "en": "Fixed increase/decrease not working correctly for separate buttons",
         "de": "Behobene Zunahme/Erhöhung nicht korrekt für separate Tasten arbeiten",
@@ -80,19 +93,6 @@
         "pl": "Dodano radial slider widget (# 17)\nDodano analogowy typ zawartości zegara do uniwersalnego widgetu (# 100)\nZmieniono tłumaczenie germana na \"niestandardowe\"",
         "uk": "Додано радіальний слайдер віджет (#17)\nДодано аналоговий тип вмісту годинника в універсальний віджет (#100)\nЗмінений німецький переклад для \"кутом\"",
         "zh-cn": "添加的光圈滑动部件( # 17)\n将模拟时钟内容类型添加到通用部件(# 100)\n更改的德国语翻译为“ Custom” Name"
-      },
-      "0.4.2": {
-        "en": "Vite downgrade",
-        "de": "Vit Downgrade",
-        "ru": "Понижение рейтинга",
-        "pt": "Vite downgrade",
-        "nl": "Vite downgrade",
-        "fr": "Diminution de la teneur en vitamines",
-        "it": "Vite downgrade",
-        "es": "Actualización vita",
-        "pl": "Vite downgrade",
-        "uk": "Вайт град",
-        "zh-cn": "降级"
       }
     },
     "titleLang": {

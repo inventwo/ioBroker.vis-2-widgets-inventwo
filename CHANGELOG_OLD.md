@@ -1,4 +1,7 @@
 # Older changes
+## 0.5.1 (2025-12-24)
+- Added missing translations for the previous version
+
 ## 0.5.0 (2025-12-24)
 - Added radial slider widget (#17)
 - Added analog clock content type to universal widget (#100)

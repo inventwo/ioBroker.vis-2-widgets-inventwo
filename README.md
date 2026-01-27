@@ -56,7 +56,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.5.6 (2026-01-27)
 - Fixed issue caused by multi-views widgets and check for inside view in widget (#176)
 - Fixed font size and other styles not applied on switch widget (#172)
 
@@ -72,9 +72,6 @@ All widgets come with extensive design options to customize the look and feel to
 
 ### 0.5.2 (2026-01-09)
 - Added configurable ring thickness and number visibility for analog clock (#161)
-
-### 0.5.1 (2025-12-24)
-- Added missing translations for the previous version
 
 ## License
 The MIT License (MIT)
