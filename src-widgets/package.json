@@ -4,7 +4,7 @@
     "version": "0.5.8",
     "type": "module",
     "dependencies": {
-        "@iobroker/adapter-react-v5": "^7.7.3",
+        "@iobroker/adapter-react-v5": "^8.0.17",
         "@iobroker/types-vis-2": "^2.13.8",
         "@iobroker/vis-2-widgets-react-dev": "^4.0.4",
         "@jaames/iro": "^5.5.2",
