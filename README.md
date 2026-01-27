@@ -55,7 +55,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.5.8 (2026-01-27)
 - Fixed switch widget text alignment
 
 ### 0.5.7 (2026-01-27)
@@ -71,9 +71,6 @@ All widgets come with extensive design options to customize the look and feel to
 
 ### 0.5.3 (2026-01-10)
 - Added radial slider widget in io-package.json
-
-### 0.5.2 (2026-01-09)
-- Added configurable ring thickness and number visibility for analog clock (#161)
 
 ## License
 The MIT License (MIT)

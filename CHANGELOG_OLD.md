@@ -1,4 +1,7 @@
 # Older changes
+## 0.5.2 (2026-01-09)
+- Added configurable ring thickness and number visibility for analog clock (#161)
+
 ## 0.5.1 (2025-12-24)
 - Added missing translations for the previous version
 

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.5.7",
+    "version": "0.5.8",
     "news": {
+      "0.5.8": {
+        "en": "Fixed switch widget text alignment",
+        "de": "Fixed Switch Widget Textausrichtung",
+        "ru": "Выравнивание текста виджета с фиксированным переключателем",
+        "pt": "Corrigido o alinhamento de texto do elemento",
+        "nl": "Vaste switch widget tekstuitlijning",
+        "fr": "Alignement du texte du widget de commutation fixe",
+        "it": "Allineamento di testo del widget di interruttore fisso",
+        "es": "Ajuste del texto del widget del conmutador fijo",
+        "pl": "Stałe ustawienie tekstu widżetu",
+        "uk": "Виправлено вимкнення віджету тексту вирівнювання",
+        "zh-cn": "固定切换部件文本对齐"
+      },
       "0.5.7": {
         "en": "Fixed issue caused by multi-views widgets and check for inside view in widget (#176)\nFixed font size and other styles not applied on switch widget (#172)",
         "de": "Fixed Problem verursacht durch Multi-View-Widgets und überprüfen Sie nach innen Ansicht im Widget (#176)\nFeste Schriftgröße und andere nicht auf Switch Widget (#172) angewendete Stile",
@@ -80,19 +93,6 @@
         "pl": "Dodano brakujące tłumaczenia dla poprzedniej wersji",
         "uk": "Додано відсутні переклади для попередньої версії",
         "zh-cn": "上一个版本缺少的翻译"
-      },
-      "0.5.0": {
-        "en": "Added radial slider widget (#17)\nAdded analog clock content type to universal widget (#100)\nChanged german translation for \"custom\"",
-        "de": "Hinzugefügt Radialschieber Widget (#17)\nHinzugefügt analoge Taktinhaltsart zu universellem Widget (#100)\nGeänderte deutsche Übersetzung für \"custom\"",
-        "ru": "Добавлен виджет радиального слайдера (#17)\nДобавлен тип содержимого аналоговых часов в универсальный виджет (#100)\nИзменился немецкий перевод на «таможенный»",
-        "pt": "Adicionado widget de controle deslizante radial (# 17)\nAdicionado o tipo de conteúdo de relógio analógico ao widget universal (# 100)\nTradução alemã alterada para \"custom\"",
-        "nl": "Toegevoegd radiale schuifregelaar-widget (#17)\nAnaloge klokinhoud toegevoegd aan universele widget (#100)\nVeranderde Duitse vertaling voor \"custom\"",
-        "fr": "Ajout du widget slider radial (#17)\nAjout du type d'horloge analogique au widget universel (#100)\nTraduction allemande modifiée pour \"ustom\"",
-        "it": "Aggiunto widget cursore radiale (#17)\nAggiunto tipo di contenuto orologio analogico al widget universale (#100)\nCambiata traduzione tedesca per \"custom\"",
-        "es": "Añadido widget de deslizador radial (#17)\nAñadido tipo de contenido de reloj analógico al widget universal (#100)\nTraducción modificada alemana para \"costo\"",
-        "pl": "Dodano radial slider widget (# 17)\nDodano analogowy typ zawartości zegara do uniwersalnego widgetu (# 100)\nZmieniono tłumaczenie germana na \"niestandardowe\"",
-        "uk": "Додано радіальний слайдер віджет (#17)\nДодано аналоговий тип вмісту годинника в універсальний віджет (#100)\nЗмінений німецький переклад для \"кутом\"",
-        "zh-cn": "添加的光圈滑动部件( # 17)\n将模拟时钟内容类型添加到通用部件(# 100)\n更改的德国语翻译为“ Custom” Name"
       }
     },
     "titleLang": {
