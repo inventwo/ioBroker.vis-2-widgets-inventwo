@@ -9,7 +9,7 @@
         "@iobroker/vis-2-widgets-react-dev": "^4.0.4",
         "@jaames/iro": "^5.5.2",
         "@module-federation/vite": "^1.9.3",
-        "@mui/icons-material": "^6.5.0",
+        "@mui/icons-material": "^7.3.7",
         "@mui/material": "^6.5.0",
         "@vitejs/plugin-react": "^5.0.4",
         "hex-to-css-filter": "^6.0.0",
