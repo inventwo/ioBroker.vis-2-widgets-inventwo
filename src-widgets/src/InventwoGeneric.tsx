@@ -163,9 +163,11 @@ class InventwoGeneric<
         }
 
         // @ts-expect-error
-        const closestElementCheck = e?.target?.closest(`.inventwo-view-in-widget-wrapper, #${this.props.id}`);
-        if (closestElementCheck.classList.contains('inventwo-view-in-widget-wrapper')) {
-            return false;
+        const closestElementCheck = e?.target?.closest(`.inventwo-view-in-widget-wrapper, .vis-widget`);
+        if (closestElementCheck) {
+            if (closestElementCheck.classList.contains('inventwo-view-in-widget-wrapper')) {
+                return false;
+            }
         }
 
         return this.state.rxData.type !== 'readonly';

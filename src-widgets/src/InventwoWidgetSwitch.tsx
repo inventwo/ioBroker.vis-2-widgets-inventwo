@@ -369,6 +369,10 @@ export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, 
             },
         };
 
+        const formControlLabelStyle = {
+            '& .MuiFormControlLabel-label': this.state.rxStyle as VisRxWidgetState,
+        };
+
         return (
             <FormGroup>
                 <FormControlLabel
@@ -381,6 +385,7 @@ export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, 
                     }
                     label={isChecked ? this.state.rxData.textTrue : this.state.rxData.textFalse}
                     labelPlacement={this.state.rxData.textPosition}
+                    sx={formControlLabelStyle}
                 />
             </FormGroup>
         );

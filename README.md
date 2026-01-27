@@ -56,6 +56,10 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Fixed issue caused by multi-views widgets and check for inside view in widget (#176)
+- Fixed font size and other styles not applied on switch widget (#172)
+
 ### 0.5.5 (2026-01-11)
 - Fixed increase/decrease not working correctly for separate buttons
 
