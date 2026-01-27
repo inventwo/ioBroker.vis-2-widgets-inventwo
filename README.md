@@ -50,7 +50,6 @@ All widgets come with extensive design options to customize the look and feel to
 
 ### More will follow...
 
-
 ## Changelog
 <!--
     Placeholder for the next version (at the beginning of the line):
