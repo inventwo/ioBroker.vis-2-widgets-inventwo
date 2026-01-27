@@ -370,7 +370,19 @@ export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, 
         };
 
         const formControlLabelStyle = {
-            '& .MuiFormControlLabel-label': this.state.rxStyle as VisRxWidgetState,
+            '& .MuiFormControlLabel-label': {
+                fontSize: this.state.rxStyle!['font-size'],
+                color: this.state.rxStyle!.color,
+                textShadow: this.state.rxStyle!['text-shadow'] as string,
+                fontFamily: this.state.rxStyle!['font-family'] as string,
+                fontStyle: this.state.rxStyle!['font-style'] as string,
+                fontVariant: this.state.rxStyle!['font-variant'] as string,
+                fontWeight: this.state.rxStyle!['font-weight'],
+                lineHeight: this.state.rxStyle!['line-height'],
+                letterSpacing: this.state.rxStyle!['letter-spacing'],
+                wordSpacing: this.state.rxStyle!['word-spacing'],
+                textAlign: this.state.rxStyle!['text-align'],
+            } as unknown as VisRxWidgetState,
         };
 
         return (
