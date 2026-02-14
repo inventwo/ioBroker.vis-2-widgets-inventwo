@@ -1515,7 +1515,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 { value: 'fill', label: 'fill' },
                                 { value: 'repeat', label: 'repeat' },
                             ],
-                            default: 'none',
+                            default: '',
                             label: 'fill_type',
                             hidden: '!!data.contentStyleFromWidget || data.contentType != "image"',
                         },
