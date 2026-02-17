@@ -252,7 +252,10 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         }
 
         const value = event.target.value;
-        this.props.context.setValue(oid, value);
+        // Ensure value is the correct type (number or string based on option)
+        const typedValue = typeof value === 'number' ? value : 
+                          (!isNaN(Number(value)) ? Number(value) : value);
+        this.props.context.setValue(oid, typedValue);
     }
 
     renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
