@@ -1,7 +1,7 @@
 import React from 'react';
-import { Select, MenuItem, FormControl } from '@mui/material';
+import { Select, MenuItem, FormControl, SelectChangeEvent } from '@mui/material';
 import InventwoGeneric from './InventwoGeneric';
-import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState } from '@iobroker/types-vis-2';
+import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
 
 interface DropdownRxData {
     oid: null | string;
@@ -24,7 +24,7 @@ interface DropdownState extends VisRxWidgetState {
 }
 
 export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxData, DropdownState> {
-    constructor(props: any) {
+    constructor(props: VisRxWidgetProps) {
         super(props);
         this.state = {
             ...this.state,
@@ -37,7 +37,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         await this.loadOptions();
     }
 
-    async componentDidUpdate(prevProps: any, prevState: DropdownState): Promise<void> {
+    async componentDidUpdate(prevProps: VisRxWidgetProps, prevState: DropdownState): Promise<void> {
         const prevOid = (prevState.rxData as any).oid;
         const currentOid = (this.state.rxData as any).oid;
         if (prevOid !== currentOid) {
@@ -241,7 +241,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         return 'vis_2_widgets_inventwo_';
     }
 
-    onChange(event: any): void {
+    onChange(event: SelectChangeEvent<string | number>): void {
         if (this.props.editMode) {
             return;
         }
