@@ -4,6 +4,7 @@
   "widget_slider": "Slider",
   "widget_radial_slider": "Radial Slider",
   "widget_switch": "Switch",
+  "widget_dropdown": "Dropdown",
   "attr_group_css": "inventwo Widget Design",
   "attr_group_click_feedback": "Click feedback",
   "attr_group_states": "State",
@@ -23,6 +24,7 @@
   "attr_group_css_slider_slider_thumb": "inventwo CSS - Slider thumb",
   "attr_group_css_track": "inventwo CSS - Track",
   "attr_group_css_thumb": "inventwo CSS - Thumb",
+  "attr_group_css_dropdown": "inventwo CSS - Dropdown",
   "colors": "Colors",
   "oid": "Object ID",
   "min_value": "Min value",
@@ -327,5 +329,10 @@
   "show_ring": "Show ring",
   "ring_thickness": "Ring thickness",
   "position_x": "Position X",
-  "position_y": "Position Y"
+  "position_y": "Position Y",
+  "show_value_in_label": "Show value in label",
+  "highlight_color": "Highlight color",
+  "font_size": "Font size",
+  "border_radius": "Border radius",
+  "vis_2_widgets_inventwo_dropdown_shadow": "Dropdown shadow"
 }
