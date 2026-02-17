@@ -1,5 +1,6 @@
 import React from 'react';
-import { Select, MenuItem, FormControl, SelectChangeEvent } from '@mui/material';
+import { Select, MenuItem, FormControl } from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
 
@@ -61,9 +62,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 if (typeof states === 'object') {
                     Object.entries(states).forEach(([key, value]) => {
                         const numKey = !isNaN(Number(key)) ? Number(key) : key;
-                        const label = (this.state.rxData as any).showValue
-                            ? `${key} - ${value}`
-                            : String(value);
+                        const label = (this.state.rxData as any).showValue ? `${key} - ${value}` : String(value);
                         options.push({ value: numKey, label });
                     });
                 }
@@ -253,8 +252,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
 
         const value = event.target.value;
         // Ensure value is the correct type (number or string based on option)
-        const typedValue = typeof value === 'number' ? value : 
-                          (!isNaN(Number(value)) ? Number(value) : value);
+        const typedValue = typeof value === 'number' ? value : !isNaN(Number(value)) ? Number(value) : value;
         this.props.context.setValue(oid, typedValue);
     }
 
@@ -319,12 +317,12 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
             <FormControl fullWidth>
                 <Select
                     value={value !== undefined && value !== null ? value : ''}
-                    onChange={(e) => this.onChange(e)}
+                    onChange={e => this.onChange(e)}
                     disabled={this.props.editMode}
                     sx={selectStyles}
                     MenuProps={menuProps}
                 >
-                    {this.state.options.map((option) => (
+                    {this.state.options.map(option => (
                         <MenuItem
                             key={option.value}
                             value={option.value}
