@@ -38,6 +38,7 @@
   "attr_group_css_text": "inventwo CSS - Text",
   "attr_group_css_thumb": "inventwo CSS - Daumen",
   "attr_group_css_track": "inventwo CSS - Track",
+  "attr_group_css_dropdown": "inventwo CSS - Dropdown",
   "attr_group_css_transparency": "inventwo CSS - Transparenz",
   "attr_group_state_default": "Standardzustand",
   "attr_group_states": "Zustand",
@@ -322,6 +323,7 @@
   "vis_2_widgets_inventwo_titlebar": "Titelleiste",
   "vis_2_widgets_inventwo_titlebar_padding": "Titelleiste Abstand",
   "widget_checkbox": "Checkbox",
+  "widget_dropdown": "Dropdown",
   "widget_radial_slider": "Radialer Schieberegler",
   "widget_slider": "Schieberegler",
   "widget_switch": "Schalten",
@@ -329,5 +331,10 @@
   "widget_universal": "Universal (Schalter, Taster, Nav & mehr)",
   "width": "Breite",
   "x_offset": "X-Versatz",
-  "y_offset": "Y-Versatz"
+  "y_offset": "Y-Versatz",
+  "show_value_in_label": "Wert im Label anzeigen",
+  "highlight_color": "Hervorhebungsfarbe",
+  "font_size": "Schriftgröße",
+  "border_radius": "Rahmenradius",
+  "vis_2_widgets_inventwo_dropdown_shadow": "Dropdown-Schatten"
 }
