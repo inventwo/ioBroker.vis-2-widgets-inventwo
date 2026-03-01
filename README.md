@@ -55,6 +55,11 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+- Added new widget: Dropdown (#178)
+- Fixed issue table widget width isn't applied when header is hidden (#177)
+
 ### 0.5.8 (2026-01-27)
 - Fixed switch widget text alignment
 

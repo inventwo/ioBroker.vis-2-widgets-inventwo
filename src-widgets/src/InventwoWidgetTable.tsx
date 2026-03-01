@@ -157,7 +157,6 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
                             default: 0,
                             hidden: 'data["columnValueFormat" + index] != "number"',
                         },
-
                         {
                             name: 'columnDatetimeFormat',
                             type: 'select',
@@ -662,12 +661,17 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
                             }
                         }
 
+                        const styles: CSSProperties = {
+                            textAlign: this.state.rxData[`columnContentAlign${i}`],
+                        };
+                        if (this.state.rxData[`columnWidth${i}`]) {
+                            styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
+                        }
+
                         columns.push(
                             <StyledTableCell
                                 key={`${index}_${i}`}
-                                style={{
-                                    textAlign: this.state.rxData[`columnContentAlign${i}`],
-                                }}
+                                style={styles}
                             >
                                 {columnPrefix}
                                 {columnValue}

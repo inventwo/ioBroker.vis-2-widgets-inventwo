@@ -2256,7 +2256,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
     // This function is called every time when some Object State updated, but all changes lands into this.state.values too
     onStateUpdated(id: string, state: ioBroker.State): void {
-        console.log('state changed', id, state)
         if (this.state.rxData.type === 'viewInDialog' && id === this.state.rxData.oid && !this.props.editMode) {
             const val = this.convertValue(this.state.rxData.valueTrue);
             if (this.state.isMounted) {
@@ -2699,7 +2698,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             const dialogStyles: React.CSSProperties = {};
             const dialogWindowStyles: React.CSSProperties = {};
 
-            if(!this.state.rxData.dialogFullscreen) {
+            if (!this.state.rxData.dialogFullscreen) {
                 switch (this.state.rxData.dialogPosition) {
                     case 'top':
                         dialogStyles.alignItems = 'flex-start';

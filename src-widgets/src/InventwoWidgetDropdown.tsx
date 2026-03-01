@@ -62,7 +62,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 if (typeof states === 'object') {
                     Object.entries(states).forEach(([key, value]) => {
                         const numKey = !isNaN(Number(key)) ? Number(key) : key;
-                        const label = (this.state.rxData as any).showValue ? `${key} - ${value}` : String(value);
+                        const label = this.state.rxData.showValue ? `${key} - ${value}` : String(value);
                         options.push({ value: numKey, label });
                     });
                 }
@@ -97,6 +97,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             type: 'checkbox',
                             label: 'show_value_in_label',
                             default: true,
+                            tooltip: 'tooltip_widget_dropwown_show_value_in_label',
                         },
                     ],
                 },
@@ -269,8 +270,8 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 fontSize: `${style.fontSize}px`,
                 color: style.textColor,
                 backgroundColor: style.backgroundColor,
-                borderRadius: `${style.borderRadius}px`,
                 padding: '10px 14px',
+                borderRadius: `${style.borderRadius}px`,
             },
             '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: style.borderColor,
@@ -286,6 +287,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 color: style.textColor,
             },
             boxShadow: `${style.shadowX}px ${style.shadowY}px ${style.shadowBlur}px ${style.shadowColor}`,
+            borderRadius: `${style.borderRadius}px`,
         };
 
         const menuProps = {
@@ -318,7 +320,6 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 <Select
                     value={value !== undefined && value !== null ? value : ''}
                     onChange={e => this.onChange(e)}
-                    disabled={this.props.editMode}
                     sx={selectStyles}
                     MenuProps={menuProps}
                 >
