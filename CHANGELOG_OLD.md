@@ -1,4 +1,7 @@
 # Older changes
+## 0.5.3 (2026-01-10)
+- Added radial slider widget in io-package.json
+
 ## 0.5.2 (2026-01-09)
 - Added configurable ring thickness and number visibility for analog clock (#161)
 

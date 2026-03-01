@@ -55,8 +55,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.6.0 (2026-03-01)
 - Added new widget: Dropdown (#178)
 - Fixed issue table widget width isn't applied when header is hidden (#177)
 
@@ -73,9 +72,6 @@ All widgets come with extensive design options to customize the look and feel to
 ### 0.5.4 (2026-01-10)
 - Added option to set dialog position (#158)
 - Fixed nav click feedback not working correctly (#41)
-
-### 0.5.3 (2026-01-10)
-- Added radial slider widget in io-package.json
 
 ## License
 The MIT License (MIT)
