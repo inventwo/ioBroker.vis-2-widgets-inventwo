@@ -132,7 +132,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                         {
                             name: 'backgroundColor',
                             type: 'color',
-                            label: 'background_color',
+                            label: 'background',
                             default: 'rgba(50, 50, 50, 1)',
                             hidden: '!!data.dropdownFromWidget',
                         },

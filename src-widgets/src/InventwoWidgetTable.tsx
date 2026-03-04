@@ -1,10 +1,10 @@
 import { styled } from '@mui/material/styles';
-import { Table, TableRow, TableCell, TableContainer, TableHead, TableBody, Paper } from '@mui/material';
+import { Table, TableRow, TableCell, TableContainer, TableHead, TableBody, Paper, TableSortLabel } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
 
 import InventwoGeneric from './InventwoGeneric';
-import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState } from '@iobroker/types-vis-2';
+import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
 import type { CSSProperties } from 'react';
 import React from 'react';
 
@@ -13,6 +13,8 @@ interface TableRxData {
     countColumns: number;
     maxRows: number;
     showHead: boolean;
+    defaultSortColumn: string;
+    defaultSortOrder: 'asc' | 'desc';
     headerHeight: number | string;
     backgroundHeader: string;
     headerBorderWidth: number | string;
@@ -34,9 +36,15 @@ interface TableRxData {
     [key: `columnDatetimeFormat${number}`]: 'datetime' | 'date' | 'time';
     [key: `columnContentAlign${number}`]: React.CSSProperties['textAlign'];
     [key: `columnDatetimeFormatCustom${number}`]: string;
+    [key: `sortable${number}`]: boolean;
 }
 
-export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, VisRxWidgetState> {
+interface TableWidgetState extends VisRxWidgetState {
+    orderBy: string | null;
+    order: 'asc' | 'desc';
+}
+
+export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, TableWidgetState> {
     static getWidgetInfo(): RxWidgetInfo {
         return {
             id: 'tplInventwoWidgetTable',
@@ -72,6 +80,22 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
                             type: 'checkbox',
                             default: true,
                             label: 'show_head',
+                        },
+                        {
+                            name: 'defaultSortColumn',
+                            type: 'text',
+                            label: 'default_sort_column',
+                            tooltip: 'tooltip_default_sort_column',
+                        },
+                        {
+                            name: 'defaultSortOrder',
+                            type: 'select',
+                            options: [
+                                { value: 'asc', label: 'ascending' },
+                                { value: 'desc', label: 'descending' },
+                            ],
+                            default: 'asc',
+                            label: 'default_sort_order',
                         },
                     ],
                 },
@@ -176,6 +200,12 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
                             label: 'datetime_format_custom',
                             tooltip: 'tooltip_datetime_custom_format',
                             hidden: 'data["columnValueFormat" + index] != "datetime" || data["columnDatetimeFormat" + index] != "custom"',
+                        },
+                        {
+                            name: 'sortable',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'sortable',
                         },
                     ],
                 },
@@ -470,6 +500,85 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
         return InventwoWidgetTable.getWidgetInfo();
     }
 
+    componentDidMount(): void {
+        super.componentDidMount?.();
+
+        // Initialize default sorting if configured
+        if (this.state.rxData.defaultSortColumn && !this.state.orderBy) {
+            this.setState({
+                orderBy: this.state.rxData.defaultSortColumn,
+                order: this.state.rxData.defaultSortOrder || 'asc',
+            });
+        }
+    }
+
+    componentDidUpdate(prevProps: VisRxWidgetProps, prevState: TableWidgetState & { rxData: TableRxData }): void {
+        super.componentDidUpdate?.(prevProps, prevState);
+
+        // Check if default sort settings have changed
+        if (
+            this.state.rxData.defaultSortColumn !== prevState.rxData.defaultSortColumn ||
+            this.state.rxData.defaultSortOrder !== prevState.rxData.defaultSortOrder
+        ) {
+            // Update sorting when default settings change
+            if (this.state.rxData.defaultSortColumn) {
+                this.setState({
+                    orderBy: this.state.rxData.defaultSortColumn,
+                    order: this.state.rxData.defaultSortOrder || 'asc',
+                });
+            } else {
+                // Clear sorting if default column is removed
+                this.setState({
+                    orderBy: null,
+                    order: 'asc',
+                });
+            }
+        }
+    }
+
+    handleRequestSort = (columnKey: string): void => {
+        const isAsc = this.state.orderBy === columnKey && this.state.order === 'asc';
+        this.setState({
+            order: isAsc ? 'desc' : 'asc',
+            orderBy: columnKey,
+        });
+    };
+
+    // eslint-disable-next-line class-methods-use-this
+    sortData = (data: Record<string, any>[], orderBy: string | null, order: 'asc' | 'desc'): Record<string, any>[] => {
+        if (!orderBy) {
+            return data;
+        }
+
+        return [...data].sort((a, b) => {
+            const aValue = a[orderBy];
+            const bValue = b[orderBy];
+
+            // Handle null/undefined values
+            if (aValue == null && bValue == null) {
+                return 0;
+            }
+            if (aValue == null) {
+                return order === 'asc' ? 1 : -1;
+            }
+            if (bValue == null) {
+                return order === 'asc' ? -1 : 1;
+            }
+
+            // Compare values
+            let comparison;
+            if (typeof aValue === 'number' && typeof bValue === 'number') {
+                comparison = aValue - bValue;
+            } else if (typeof aValue === 'string' && typeof bValue === 'string') {
+                comparison = aValue.localeCompare(bValue);
+            } else {
+                comparison = String(aValue).localeCompare(String(bValue));
+            }
+
+            return order === 'asc' ? comparison : -comparison;
+        });
+    };
+
     renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
         super.renderWidgetBody(props);
 
@@ -486,6 +595,11 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
             return <div>Invalides JSON</div>;
+        }
+
+        // Sort the data if orderBy is set
+        if (json && this.state.orderBy) {
+            json = this.sortData(json, this.state.orderBy, this.state.order || 'asc');
         }
 
         const headers = [];
@@ -560,7 +674,17 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
             const countColumns = this.state.rxData.countColumns;
             if (countColumns === 0) {
                 Object.keys(json[0]).forEach((h, index) => {
-                    headers.push(<StyledTableHeaderCell key={index}>{h}</StyledTableHeaderCell>);
+                    headers.push(
+                        <StyledTableHeaderCell key={index}>
+                            <TableSortLabel
+                                active={this.state.orderBy === h}
+                                direction={this.state.orderBy === h ? this.state.order : 'asc'}
+                                onClick={() => this.handleRequestSort(h)}
+                            >
+                                {h}
+                            </TableSortLabel>
+                        </StyledTableHeaderCell>,
+                    );
                 });
             } else {
                 for (let i = 1; i <= this.state.rxData.countColumns; i++) {
@@ -569,18 +693,37 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Vi
                     if (columnTitle === null) {
                         columnTitle = Object.keys(json[0])[i - 1];
                     }
+
+                    let columnKey = this.state.rxData[`columnKey${i}`];
+                    if (!columnKey) {
+                        columnKey = Object.keys(json[0])[i - 1];
+                    }
+
+                    const isSortable = this.state.rxData[`sortable${i}`];
+
                     const styles: CSSProperties = {
                         textAlign: this.state.rxData[`columnTitleAlign${i}`],
                     };
                     if (this.state.rxData[`columnWidth${i}`]) {
                         styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
                     }
+
                     headers.push(
                         <StyledTableHeaderCell
                             key={i}
                             style={styles}
                         >
-                            {columnTitle}
+                            {isSortable ? (
+                                <TableSortLabel
+                                    active={this.state.orderBy === String(columnKey)}
+                                    direction={this.state.orderBy === String(columnKey) ? this.state.order : 'asc'}
+                                    onClick={() => this.handleRequestSort(String(columnKey))}
+                                >
+                                    {columnTitle}
+                                </TableSortLabel>
+                            ) : (
+                                columnTitle
+                            )}
                         </StyledTableHeaderCell>,
                     );
                 }
