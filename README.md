@@ -55,7 +55,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.6.1 (2026-03-04)
 - Fixed background label in editor for dropdown widget
 - Added sort option for table widget (#191)
 
@@ -72,10 +72,6 @@ All widgets come with extensive design options to customize the look and feel to
 
 ### 0.5.5 (2026-01-11)
 - Fixed increase/decrease not working correctly for separate buttons
-
-### 0.5.4 (2026-01-10)
-- Added option to set dialog position (#158)
-- Fixed nav click feedback not working correctly (#41)
 
 ## License
 The MIT License (MIT)

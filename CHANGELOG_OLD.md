@@ -1,4 +1,8 @@
 # Older changes
+## 0.5.4 (2026-01-10)
+- Added option to set dialog position (#158)
+- Fixed nav click feedback not working correctly (#41)
+
 ## 0.5.3 (2026-01-10)
 - Added radial slider widget in io-package.json
 

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "news": {
+      "0.6.1": {
+        "en": "Fixed background label in editor for dropdown widget\nAdded sort option for table widget (#191)",
+        "de": "Behobenes Hintergrundlabel im Editor für Dropdown Widget\nSortieroption für Tabelle Widget hinzugefügt (#191)",
+        "ru": "Фиксированная фоновая метка в редакторе для выпадающего виджета\nДобавлен вариант сортировки для виджета таблицы (#191)",
+        "pt": "Rótulo de fundo fixo no editor para o elemento suspenso\nOpção de ordenação adicionada para widget de tabela (# 191)",
+        "nl": "Vaste achtergrond label in editor voor dropdown widget\nSorteeroptie toegevoegd voor tabelwidget (#191)",
+        "fr": "Marque de fond fixe dans l'éditeur pour le widget déroulant\nAjout de l'option tri pour le widget de table (#191)",
+        "it": "Etichetta di sfondo fissa in editor per widget a discesa\nOpzione di selezione aggiuntiva per widget di tabella (#191)",
+        "es": "Etiqueta de fondo fija en el editor para el widget desplegable\nAñadido tipo de opción para el widget de mesa (#191)",
+        "pl": "Naprawiono etykietę tła w edytorze dla widgetu rozwijanego\nDodano opcję sortowania dla widżetu tabeli (# 191)",
+        "uk": "Фіксований фон етикетка в редакторі для випадаючого віджету\nДодано варіант сортування для настільного віджету (#191)",
+        "zh-cn": "下拉部件在编辑器中的固定背景标签\n为表格部件添加排序选项 (# 191)"
+      },
       "0.6.0": {
         "en": "Added new widget: Dropdown (#178)\nFixed issue table widget width isn't applied when header is hidden (#177)",
         "de": "Neues Widget hinzugefügt: Dropdown (#178)\nFixed Ausgabetabelle Widget Breite wird nicht angewendet, wenn Header versteckt ist (#177)",
@@ -80,19 +93,6 @@
         "pl": "Dodano radialny widżet suwaka w pakiecie jo-. json",
         "uk": "Додано радіальний слайдер віджет в io-package. свінгери",
         "zh-cn": "在 io- package 中添加光圈滑动部件 。 贾森"
-      },
-      "0.5.2": {
-        "en": "Added configurable ring thickness and number visibility for analog clock (#161)",
-        "de": "Hinzugefügt konfigurierbare Ringstärke und Zahlensicht für analoge Uhr (#161)",
-        "ru": "Добавлена настраиваемая толщина кольца и видимость номера для аналоговых часов (#161)",
-        "pt": "Adicionada espessura de anel configurável e visibilidade numérica para o relógio analógico (# 161)",
-        "nl": "Toegevoegd configureerbare ringdikte en nummerweergave voor analoge klok (#161)",
-        "fr": "Ajout d'épaisseur de bague configurable et de visibilité du nombre pour horloge analogique (#161)",
-        "it": "Aggiunto lo spessore dell'anello configurabile e la visibilità del numero per orologio analogico (#161)",
-        "es": "Se agregó el espesor del anillo configurable y la visibilidad del número para el reloj analógico (#161)",
-        "pl": "Dodano konfigurowalną grubość pierścienia i widoczność cyfrową zegara analogowego (# 161)",
-        "uk": "Додано конфігуровану товщину кільця і видимість номеру для аналогового годинника (#161)",
-        "zh-cn": "为模拟时钟添加可配置的环厚度和数字可见度(# 161)"
       }
     },
     "titleLang": {
