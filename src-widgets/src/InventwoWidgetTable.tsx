@@ -1,11 +1,11 @@
 import { styled } from '@mui/material/styles';
+import type { SxProps } from '@mui/material';
 import { Table, TableRow, TableCell, TableContainer, TableHead, TableBody, Paper, TableSortLabel } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
 
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
-import type { CSSProperties } from 'react';
 import React from 'react';
 
 interface TableRxData {
@@ -701,17 +701,18 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
 
                     const isSortable = this.state.rxData[`sortable${i}`];
 
-                    const styles: CSSProperties = {
+                    const styles: SxProps = {
                         textAlign: this.state.rxData[`columnTitleAlign${i}`],
                     };
                     if (this.state.rxData[`columnWidth${i}`]) {
                         styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
+                        styles.overflow = 'hidden';
                     }
 
                     headers.push(
                         <StyledTableHeaderCell
                             key={i}
-                            style={styles}
+                            sx={styles}
                         >
                             {isSortable ? (
                                 <TableSortLabel
@@ -802,19 +803,22 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             if (typeof columnValue === 'object' && columnValue !== null) {
                                 columnValue = JSON.stringify(columnValue);
                             }
+
+                            columnValue = <span dangerouslySetInnerHTML={{ __html: columnValue as string }}></span>;
                         }
 
-                        const styles: CSSProperties = {
+                        const styles: SxProps = {
                             textAlign: this.state.rxData[`columnContentAlign${i}`],
                         };
                         if (this.state.rxData[`columnWidth${i}`]) {
                             styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
+                            styles.overflow = 'hidden';
                         }
 
                         columns.push(
                             <StyledTableCell
                                 key={`${index}_${i}`}
-                                style={styles}
+                                sx={styles}
                             >
                                 {columnPrefix}
                                 {columnValue}
@@ -868,7 +872,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         borderRadius: 0,
                     }}
                 >
-                    <Table>
+                    <Table sx={{ tableLayout: 'fixed' }}>
                         {this.state.rxData.showHead && (
                             <TableHead>
                                 <StyledTableHeaderRow>{headers}</StyledTableHeaderRow>

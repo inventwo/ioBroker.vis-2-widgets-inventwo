@@ -2593,7 +2593,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
-    onBtnMouseDown(index: number | null, e: React.MouseEvent<HTMLDivElement>): void {
+    onBtnMouseDown(index: number | null, e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>): void {
         if (!this.isInteractionAllowed(e)) {
             return;
         }
@@ -2621,7 +2621,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
-    onBtnMouseUp(e: React.MouseEvent<HTMLDivElement>): void {
+    onBtnMouseUp(e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>): void {
         if (!this.isInteractionAllowed(e)) {
             return;
         }
@@ -2938,7 +2938,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
-    getContentAnalogClock(valueData: UniversalWidgetValueData): React.JSX.Element {
+    getContentAnalogClock(): React.JSX.Element {
         const time = this.state.currentTime;
         const hours = time.getHours() % 12;
         const minutes = time.getMinutes();
@@ -2954,6 +2954,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         const centerY = size / 2;
 
         // Clock face design rendering
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         const renderClockFace = () => {
             const faceColor = this.state.rxData.analogClockFaceColor || 'rgb(0, 0, 0)';
             const bgColor = this.state.rxData.analogClockBackgroundColor || 'rgb(255, 255, 255)';
@@ -3150,6 +3151,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         };
 
         // Render clock hand based on design
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         const renderHand = (angle: number, length: number, width: number, color: string, design: string) => {
             const rad = (angle - 90) * (Math.PI / 180);
             const x = centerX + Math.cos(rad) * length;
@@ -3269,7 +3271,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 c = this.getContentViewInWidget(valueData);
                 break;
             case 'analogClock':
-                c = this.getContentAnalogClock(valueData);
+                c = this.getContentAnalogClock();
                 break;
             default:
                 c = '';
@@ -3359,7 +3361,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     }}
                     onClick={e => this.onClick(i, e)}
                     onMouseDown={e => this.onBtnMouseDown(i, e)}
+                    onTouchStart={e => this.onBtnMouseDown(i, e)}
                     onMouseUp={e => this.onBtnMouseUp(e)}
+                    onTouchEnd={e => this.onBtnMouseUp(e)}
                 >
                     <CardContent
                         style={{

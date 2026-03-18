@@ -153,7 +153,7 @@ class InventwoGeneric<
         return `#${componentToHex(red)}${componentToHex(green)}${componentToHex(blue)}`;
     }
 
-    isInteractionAllowed(e: React.MouseEvent<HTMLDivElement>): boolean {
+    isInteractionAllowed(e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>): boolean {
         if (this.props.editMode) {
             return false;
         }

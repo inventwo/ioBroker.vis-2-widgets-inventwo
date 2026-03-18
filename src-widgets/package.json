@@ -23,6 +23,7 @@
     "scripts": {
         "start": "vite --port 4173",
         "lint": "eslint -c eslint.config.mjs",
+        "lint-fix": "eslint -c eslint.config.mjs --fix",
         "build": "tsc && vite build",
         "i18n": "node node_modules/@iobroker/vis-2-widgets-react-dev/searchI18n vis-2-widgets-react-template",
         "update-browsers": "npx browserslist@latest --update-db",
