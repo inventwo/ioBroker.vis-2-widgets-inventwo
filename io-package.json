@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "news": {
+      "0.6.2": {
+        "en": "Fixed button not working on touchscreens (#192)\nAdded HTML support for table widget cells (#196)",
+        "de": "Befestigte Schaltfläche nicht auf Touchscreens (#192)\nHTML-Unterstützung für Tabellen-Widget-Zellen hinzugefügt (#196)",
+        "ru": "Фиксированная кнопка не работает на сенсорных экранах (#192)\nДобавлена поддержка HTML для ячеек виджетов таблиц (#196)",
+        "pt": "Botão fixo que não funciona nos ecrãs tácteis (# 192)\nAdicionado suporte HTML para células de widget de tabela (# 196)",
+        "nl": "Vaste knop werkt niet op touchscreens (#192)\nHTML-ondersteuning voor tabelwidget-cellen toegevoegd (#196)",
+        "fr": "Bouton fixe ne fonctionnant pas sur les écrans tactiles (#192)\nAjout du support HTML pour les widgets de table (#196)",
+        "it": "Pulsante fisso non funzionante su touchscreen (#192)\nAggiunto supporto HTML per le celle dei widget di tabella (#196)",
+        "es": "Botón fijo que no funciona en pantallas táctiles (#192)\nSoporte HTML añadido para las células del widget de mesa (#196)",
+        "pl": "Naprawiony przycisk nie działa na ekranach dotykowych (# 192)\nDodano obsługę HTML dla komórek widget tabeli (# 196)",
+        "uk": "Виправлена кнопка не працює на сенсорних екранах (#192)\nДодано підтримку HTML для клітин віджету таблиці (#196)",
+        "zh-cn": "固定按钮不工作于触摸屏(# 192)\n为表格部件单元格添加了 HTML 支持 (# 196)"
+      },
       "0.6.1": {
         "en": "Fixed background label in editor for dropdown widget\nAdded sort option for table widget (#191)",
         "de": "Behobenes Hintergrundlabel im Editor für Dropdown Widget\nSortieroption für Tabelle Widget hinzugefügt (#191)",
@@ -80,19 +93,6 @@
         "pl": "Dodano opcję ustawienia pozycji okna dialogowego (# 158)\nNaprawiono nav kliknij sprzężenie zwrotne nie działa prawidłowo (# 41)",
         "uk": "Додано можливість встановити діалогове положення (#158)\nВиправлено натискання кнопки зворотного зв'язку (#41)",
         "zh-cn": "添加了设置对话框位置的选项( # 158)\n固定导航点击反馈不正确(# 41)"
-      },
-      "0.5.3": {
-        "en": "Added radial slider widget in io-package.json",
-        "de": "Hinzugefügt Radial Slider Widget in io-Package. Json",
-        "ru": "Добавлен виджет радиального слайдера в io-пакет. Джонсон",
-        "pt": "Adicionado widget de controle deslizante radial no pacote io. json",
-        "nl": "Toegevoegd radial slider widget in io-package. json",
-        "fr": "Ajout d'un widget slider radial dans io-package. Json",
-        "it": "Aggiunto widget cursore radiale in io-package. J",
-        "es": "Añadido widget de deslizador radial en io-paquete. json",
-        "pl": "Dodano radialny widżet suwaka w pakiecie jo-. json",
-        "uk": "Додано радіальний слайдер віджет в io-package. свінгери",
-        "zh-cn": "在 io- package 中添加光圈滑动部件 。 贾森"
       }
     },
     "titleLang": {

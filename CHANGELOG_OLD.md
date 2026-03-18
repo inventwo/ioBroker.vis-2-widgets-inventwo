@@ -1,4 +1,7 @@
 # Older changes
+## 0.5.5 (2026-01-11)
+- Fixed increase/decrease not working correctly for separate buttons
+
 ## 0.5.4 (2026-01-10)
 - Added option to set dialog position (#158)
 - Fixed nav click feedback not working correctly (#41)
