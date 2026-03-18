@@ -1,0 +1,8 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": ["/io-package.json"],
+            "url": "https://json.iobroker.net/schemas/io-package.json"
+        }
+    ]
+}
