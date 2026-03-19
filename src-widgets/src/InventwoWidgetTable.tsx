@@ -483,6 +483,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                 },
             ],
             visDefaultStyle: {
+                width: 400,
                 'overflow-x': 'visible',
                 'overflow-y': 'visible',
             },
@@ -746,6 +747,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         if (typeof v === 'object' && v !== null) {
                             v = JSON.stringify(v);
                         }
+                        v = <span dangerouslySetInnerHTML={{ __html: v as string }}></span>;
                         columns.push(<StyledTableCell key={`${index}_${indexCol}`}>{v}</StyledTableCell>);
                     });
                 } else {
