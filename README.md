@@ -55,6 +55,9 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Fixed touch triggers twice on universal state widget
+
 ### 0.6.3 (2026-03-19)
 - Fixed HTML support for table widget without configured columns
 

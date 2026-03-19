@@ -3360,10 +3360,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         boxShadow: 'none',
                     }}
                     onClick={e => this.onClick(i, e)}
-                    onMouseDown={e => this.onBtnMouseDown(i, e)}
-                    onTouchStart={e => this.onBtnMouseDown(i, e)}
-                    onMouseUp={e => this.onBtnMouseUp(e)}
-                    onTouchEnd={e => this.onBtnMouseUp(e)}
+                    onPointerDown={e => this.onBtnMouseDown(i, e)}
+                    onPointerUp={e => this.onBtnMouseUp(e)}
                 >
                     <CardContent
                         style={{
