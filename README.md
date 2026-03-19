@@ -55,7 +55,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.6.3 (2026-03-19)
 - Fixed HTML support for table widget without configured columns
 
 ### 0.6.2 (2026-03-18)
@@ -72,10 +72,6 @@ All widgets come with extensive design options to customize the look and feel to
 
 ### 0.5.8 (2026-01-27)
 - Fixed switch widget text alignment
-
-### 0.5.7 (2026-01-27)
-- Fixed issue caused by multi-views widgets and check for inside view in widget (#176)
-- Fixed font size and other styles not applied on switch widget (#172)
 
 ## License
 The MIT License (MIT)
