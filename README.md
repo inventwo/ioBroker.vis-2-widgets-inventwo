@@ -55,7 +55,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.6.4 (2026-03-19)
 - Fixed touch triggers twice on universal state widget
 
 ### 0.6.3 (2026-03-19)
@@ -72,9 +72,6 @@ All widgets come with extensive design options to customize the look and feel to
 ### 0.6.0 (2026-03-01)
 - Added new widget: Dropdown (#178)
 - Fixed issue table widget width isn't applied when header is hidden (#177)
-
-### 0.5.8 (2026-01-27)
-- Fixed switch widget text alignment
 
 ## License
 The MIT License (MIT)

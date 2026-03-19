@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.6.3",
+    "version": "0.6.4",
     "news": {
+      "0.6.4": {
+        "en": "Fixed touch triggers twice on universal state widget",
+        "de": "Feste Berührung löst zweimal auf universellem Zustand Widget",
+        "ru": "Дважды фиксированные триггеры касания на универсальном виджете состояния",
+        "pt": "Ativadores de toque fixos duas vezes no widget de estado universal",
+        "nl": "Vaste touch triggers twee keer op universele staat widget",
+        "fr": "La touche fixe déclenche deux fois sur le widget d'état universel",
+        "it": "Il tocco fisso innesca due volte su widget di stato universale",
+        "es": "Dispositivos de tacto fijo dos veces en el widget de estado universal",
+        "pl": "Naprawiono dwa razy wyzwalacze dotykowe na uniwersalnym widgecie stanu",
+        "uk": "Виправлені сенсорні тригери двічі на універсальний державний віджет",
+        "zh-cn": "在通用状态部件上两次固定触摸触发"
+      },
       "0.6.3": {
         "en": "Fixed HTML support for table widget without configured columns",
         "de": "Feste HTML-Unterstützung für Tabellen-Widget ohne konfigurierte Spalten",
@@ -80,19 +93,6 @@
         "pl": "Naprawiono problem spowodowany przez widżety multiview i sprawdzanie widoku wewnętrznego w widgecie (# 176)\nNaprawiony rozmiar czcionki i inne style nie stosowane na widżecie przełącznika (# 172)",
         "uk": "Виправлено проблему, викликане багато переглядів віджетів та перевірте зовнішній вигляд у віджеті (#176)\nВиправлено розмір шрифту та інші стилі, які не застосовуються на віджеті перемикання (#172)",
         "zh-cn": "多视图部件造成的固定发行, 并检查部件中的内视图 (# 176)\n切换部件上未应用的固定字体大小和其他样式(# 172)"
-      },
-      "0.5.5": {
-        "en": "Fixed increase/decrease not working correctly for separate buttons",
-        "de": "Behobene Zunahme/Erhöhung nicht korrekt für separate Tasten arbeiten",
-        "ru": "Фиксированное увеличение/сокращение, неправильно работающее для отдельных кнопок",
-        "pt": "Aumento/diminuição fixo não funciona corretamente para botões separados",
-        "nl": "Vaste verhoging/verlaging werkt niet goed voor afzonderlijke knoppen",
-        "fr": "Augmentation/diminution fixe ne fonctionnant pas correctement pour des boutons séparés",
-        "it": "Aumento fisso/diminuzione non funzionante correttamente per pulsanti separati",
-        "es": "Aumento/disminución fijados que no funcionan correctamente para botones separados",
-        "pl": "Naprawiono zwiększenie / zmniejszenie nieprawidłowego działania dla oddzielnych przycisków",
-        "uk": "Виправлено збільшення/виведення не працює правильно для окремих кнопок",
-        "zh-cn": "固定增减对单独的按钮不正确"
       }
     },
     "titleLang": {
