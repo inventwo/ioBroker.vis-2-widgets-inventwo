@@ -37,17 +37,32 @@ jobs:
           git add package-lock.json || true
 
       - name: Commit changes
+        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet --exit-code; then
-            echo "No lockfile changes"
-            exit 0
-          fi
+          # Stage lockfiles (safe even if missing)
           git add package-lock.json src-widgets/package-lock.json || true
-          git commit -m "chore: update package-lock.json (regenerated on ubuntu)" || true
+          # Debug: show staged files and diffs
+          echo "Staged files:" >&2
+          git diff --cached --name-only --exit-code || git diff --cached --name-only --no-pager | tee changed-files.txt
+          STAGED=$(git diff --cached --name-only)
+          if [ -z "$STAGED" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "changed_files=" >> $GITHUB_OUTPUT
+            echo "No lockfile changes"
+          else
+            git commit -m "chore: update package-lock.json (regenerated on ubuntu)" || true
+            # set outputs for CI visibility
+            echo "changed=true" >> $GITHUB_OUTPUT
+            # join file names with comma
+            CHANGED_FILES=$(echo "$STAGED" | paste -sd "," -)
+            echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
+            echo "Committed files: $CHANGED_FILES"
+          fi
 
       - name: Push branch and create PR
+        if: steps.commit.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
