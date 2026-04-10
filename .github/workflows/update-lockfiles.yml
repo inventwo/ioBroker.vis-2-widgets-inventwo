@@ -36,18 +36,15 @@ jobs:
           npm install
           git add package-lock.json || true
 
-      - name: Create branch
+      - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b update-lockfiles-${GITHUB_RUN_ID}
-
-      - name: Commit changes
-        run: |
           if git diff --quiet --exit-code; then
             echo "No lockfile changes"
             exit 0
           fi
+          git add package-lock.json src-widgets/package-lock.json || true
           git commit -m "chore: update package-lock.json (regenerated on ubuntu)" || true
 
       - name: Push branch and create PR
