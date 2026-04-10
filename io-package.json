@@ -16,19 +16,6 @@
         "uk": "Виправлені сенсорні тригери двічі на універсальний державний віджет",
         "zh-cn": "在通用状态部件上两次固定触摸触发"
       },
-      "0.6.3": {
-        "en": "Fixed HTML support for table widget without configured columns",
-        "de": "Feste HTML-Unterstützung für Tabellen-Widget ohne konfigurierte Spalten",
-        "ru": "Поддержка HTML для виджета таблицы без настроенных столбцов",
-        "pt": "Suporte em HTML fixo para widget de tabela sem colunas configuradas",
-        "nl": "Vaste HTML-ondersteuning voor tabelwidget zonder geconfigureerde kolommen",
-        "fr": "Support HTML fixe pour widget de table sans colonnes configurées",
-        "it": "Supporto HTML fisso per widget di tabella senza colonne configurate",
-        "es": "Soporte HTML fijo para el widget de mesa sin columnas configuradas",
-        "pl": "Naprawiono obsługę HTML dla widżetu tabeli bez skonfigurowanych kolumn",
-        "uk": "Виправлена підтримка HTML для настільного віджету без налаштованих стовпчиків",
-        "zh-cn": "未配置列的表格部件的固定 HTML 支持"
-      },
       "0.6.2": {
         "en": "Fixed button not working on touchscreens (#192)\nAdded HTML support for table widget cells (#196)",
         "de": "Befestigte Schaltfläche nicht auf Touchscreens (#192)\nHTML-Unterstützung für Tabellen-Widget-Zellen hinzugefügt (#196)",
