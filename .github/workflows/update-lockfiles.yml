@@ -1,0 +1,65 @@
+name: Update package-lock.json
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-lockfiles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+
+      - name: Ensure npm is up to date
+        run: npm install -g npm@9
+
+      - name: Install and update lockfile (root)
+        run: |
+          npm install
+          git add package-lock.json || true
+
+      - name: Install and update lockfile (src-widgets)
+        run: |
+          cd src-widgets
+          npm install
+          git add package-lock.json || true
+
+      - name: Create branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b update-lockfiles-$(date +%s)
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet --exit-code; then
+            echo "No lockfile changes"
+            exit 0
+          fi
+          git commit -m "chore: update package-lock.json (regenerated on ubuntu)" || true
+
+      - name: Push branch and create PR
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: chore: update package-lock.json (regenerated on ubuntu)
+          branch: update-lockfiles-${{ github.run_id }}
+          title: chore: update package-lock.json (regenerated on ubuntu)
+          body: |
+            This pull request regenerates package-lock.json files on an ubuntu runner so that
+            CI runners (linux) have the platform-specific optional dependencies present in the lockfile.
+
+            If this fixes CI, please review & merge.
+          labels: locked, automation
+
