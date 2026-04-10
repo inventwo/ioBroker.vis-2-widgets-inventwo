@@ -112,7 +112,7 @@ export default class InventwoWidgetCheckbox extends InventwoGeneric<CheckboxRxDa
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
-    // eslint-disable-next-line class-methods-use-this
+
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetCheckbox.getWidgetInfo();
     }

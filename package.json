@@ -42,7 +42,9 @@
     "release-minor": "release-script minor --yes",
     "release-major": "release-script major --yes",
     "update-packages": "npx -y npm-check-updates --upgrade && cd src-widgets && npx -y npm-check-updates --upgrade",
-    "npm": "npm i && cd src-widgets && npm i -f"
+    "npm": "npm i && cd src-widgets && npm i -f",
+    "lint": "eslint -c eslint.config.mjs",
+    "lint-fix": "eslint -c eslint.config.mjs --fix"
   },
   "bugs": {
     "url": "https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/issues"

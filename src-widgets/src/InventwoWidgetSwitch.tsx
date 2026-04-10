@@ -296,7 +296,7 @@ export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, 
         };
     }
     // Do not delete this method. It is used by vis to read the widget configuration.
-    // eslint-disable-next-line class-methods-use-this
+
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetSwitch.getWidgetInfo();
     }

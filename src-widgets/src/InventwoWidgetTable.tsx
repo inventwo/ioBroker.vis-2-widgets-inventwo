@@ -496,7 +496,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
-    // eslint-disable-next-line class-methods-use-this
+
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetTable.getWidgetInfo();
     }
@@ -545,7 +545,6 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         });
     };
 
-    // eslint-disable-next-line class-methods-use-this
     sortData = (data: Record<string, any>[], orderBy: string | null, order: 'asc' | 'desc'): Record<string, any>[] => {
         if (!orderBy) {
             return data;

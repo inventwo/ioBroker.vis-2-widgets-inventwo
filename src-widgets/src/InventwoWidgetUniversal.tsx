@@ -2244,7 +2244,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
-    // eslint-disable-next-line class-methods-use-this
+
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetUniversal.getWidgetInfo();
     }
@@ -2272,7 +2272,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return 'vis_2_widgets_inventwo_';
     }
 
-    // eslint-disable-next-line class-methods-use-this
     compare(value1: any, value2: any, operator = '==='): boolean {
         switch (operator) {
             case '===':
@@ -2827,7 +2826,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
-    // eslint-disable-next-line class-methods-use-this
     getContentIcon(valueData: UniversalWidgetValueData): React.JSX.Element | string {
         if (valueData.icon === null) {
             return '';
@@ -2883,7 +2881,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
-    // eslint-disable-next-line class-methods-use-this
     getContentHtml(valueData: UniversalWidgetValueData): React.JSX.Element {
         return (
             <div

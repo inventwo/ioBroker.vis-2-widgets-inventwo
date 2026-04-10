@@ -111,7 +111,6 @@ class InventwoGeneric<
         return trackStyle;
     }
 
-    // eslint-disable-next-line class-methods-use-this
     convertValue(value: any, defaultValue: any = null): any {
         if (value === 'true') {
             return true;
@@ -129,12 +128,10 @@ class InventwoGeneric<
         return value;
     }
 
-    // eslint-disable-next-line class-methods-use-this
     validFieldValue(value: any): boolean {
         return value !== undefined && value !== null && value !== '';
     }
 
-    // eslint-disable-next-line class-methods-use-this
     convertRgbToHex(colorStr: string): string | null {
         if (!colorStr) {
             return null;
@@ -173,12 +170,10 @@ class InventwoGeneric<
         return this.state.rxData.type !== 'readonly';
     }
 
-    // eslint-disable-next-line class-methods-use-this
     validOid(oid: string | null | undefined): boolean {
         return oid !== undefined && oid !== null && oid !== 'nothing_selected' && oid !== '';
     }
 
-    // eslint-disable-next-line class-methods-use-this
     valWithUnit(value: any): string {
         return value + (!Number.isNaN(Number(value)) ? 'px' : '');
     }

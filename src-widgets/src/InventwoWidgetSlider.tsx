@@ -410,7 +410,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
-    // eslint-disable-next-line class-methods-use-this
+
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetSlider.getWidgetInfo();
     }
