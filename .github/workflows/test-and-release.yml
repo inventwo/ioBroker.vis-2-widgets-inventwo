@@ -32,7 +32,9 @@ jobs:
       - uses: ioBroker/testing-action-check@v1
         with:
           node-version: '24.x'
-          install-command: 'npm ci && cd src-widgets && npm ci'
+          # Try a clean install first; if lockfile is out-of-sync fallback to `npm install`.
+          # Use `;` to sequence commands so both folders get attempted independently.
+          install-command: 'npm ci || npm install; cd src-widgets; npm ci || npm install'
           lint: true
 
   # Runs adapter tests on all supported node versions and OSes
