@@ -36,7 +36,8 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "node tasks",
-    "test": "mocha ./test/*.test.js",
+    "test:integration": "mocha test/widgets.test --exit",
+    "test:package": "mocha test/package.test --exit",
     "release": "release-script",
     "release-patch": "release-script patch --yes",
     "release-minor": "release-script minor --yes",
