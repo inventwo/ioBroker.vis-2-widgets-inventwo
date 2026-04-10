@@ -53,13 +53,12 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: chore: update package-lock.json (regenerated on ubuntu)
+          commit-message: 'chore: update package-lock.json (regenerated on ubuntu)'
           branch: update-lockfiles-${{ github.run_id }}
-          title: chore: update package-lock.json (regenerated on ubuntu)
+          title: 'chore: update package-lock.json (regenerated on ubuntu)'
           body: |
             This pull request regenerates package-lock.json files on an ubuntu runner so that
             CI runners (linux) have the platform-specific optional dependencies present in the lockfile.
 
             If this fixes CI, please review & merge.
-          labels: locked, automation
-
+          labels: 'locked, automation'
