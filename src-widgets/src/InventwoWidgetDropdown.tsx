@@ -56,7 +56,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         try {
             const obj = await this.props.context.socket.getObject(oid);
             if (obj?.common?.states) {
-                const states = obj.common.states;
+                const states: Record<any, any> = obj.common.states;
                 const options: Array<{ value: string | number; label: string }> = [];
 
                 if (typeof states === 'object') {

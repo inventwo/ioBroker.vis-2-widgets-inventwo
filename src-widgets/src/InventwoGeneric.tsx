@@ -2,7 +2,7 @@ import type VisRxWidget from '@iobroker/types-vis-2/visRxWidget';
 import type { VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import type React from 'react';
 
-class InventwoGeneric<
+export default class InventwoGeneric<
     RxData extends Record<string, any>,
     State extends Partial<VisRxWidgetState> = VisRxWidgetState,
 > extends (window.visRxWidget as typeof VisRxWidget)<RxData, State> {
@@ -219,5 +219,3 @@ class InventwoGeneric<
     //     });
     // }
 }
-
-export default InventwoGeneric;
