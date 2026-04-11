@@ -55,6 +55,11 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+- Changed click behavior to fix click and hold for mobile devices (#192)
+- Fixed dropdown border on focus visible even though border with is 0 (#200)
+
 ### 0.6.4 (2026-03-19)
 - Fixed touch triggers twice on universal state widget
 
