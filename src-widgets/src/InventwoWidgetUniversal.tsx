@@ -50,7 +50,7 @@ interface UniversalState extends VisRxWidgetState {
 }
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
-    private readonly refContentContainer: React.RefObject<HTMLDivElement> = React.createRef();
+    private readonly refContentContainer: React.RefObject<HTMLDivElement | null> = React.createRef();
 
     constructor(props: VisRxWidgetProps) {
         super(props);

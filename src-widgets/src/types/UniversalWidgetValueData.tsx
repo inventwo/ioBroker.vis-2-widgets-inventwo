@@ -20,7 +20,8 @@ export interface UniversalWidgetDefaultState {
 }
 
 export interface UniversalWidgetStylesStyles
-    extends UniversalWidgetTextStyles,
+    extends
+        UniversalWidgetTextStyles,
         UniversalWidgetContentStyles,
         UniversalWidgetAlignmentStyles,
         UniversalWidgetTransparencyStyles,

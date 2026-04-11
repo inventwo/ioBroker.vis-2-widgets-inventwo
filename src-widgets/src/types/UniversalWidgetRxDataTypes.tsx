@@ -13,7 +13,8 @@ import type {
 } from './UniversalWidgetValueData';
 
 export interface UniversalCompleteRxData
-    extends UniversalRxData,
+    extends
+        UniversalRxData,
         UniversalStateRxData,
         ColorPickerRxData,
         AnalogClockRxData,

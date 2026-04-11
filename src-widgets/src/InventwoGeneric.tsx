@@ -1,5 +1,5 @@
-import type VisRxWidget from '@iobroker/types-vis-2/visRxWidget';
 import type { VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
+import type VisRxWidget from '@iobroker/types-vis-2/visRxWidget';
 import type React from 'react';
 
 export default class InventwoGeneric<
