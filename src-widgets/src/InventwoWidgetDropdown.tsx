@@ -282,6 +282,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
             },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                 borderColor: style.highlightColor,
+                borderWidth: `${style.borderWidth}px`,
             },
             '& .MuiSelect-icon': {
                 color: style.textColor,
