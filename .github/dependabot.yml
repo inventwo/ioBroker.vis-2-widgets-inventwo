@@ -8,17 +8,15 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'monthly'
-      time: '04:00'
+      cron: "0 4 15 * *"
       timezone: 'Europe/Berlin'
 
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'monthly'
-      time: '04:00'
+      cron: "0 4 16 * *"
       timezone: 'Europe/Berlin'
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 15
     versioning-strategy: 'increase'
     cooldown:
       default-days: 7
@@ -26,10 +24,9 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/src-widgets'
     schedule:
-      interval: 'monthly'
-      time: '04:00'
+      cron: "0 4 17 * *"
       timezone: 'Europe/Berlin'
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 15
     versioning-strategy: 'increase'
     cooldown:
       default-days: 7
