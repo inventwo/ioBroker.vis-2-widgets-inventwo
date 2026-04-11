@@ -2500,7 +2500,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
     private onClick(index: number | null, e?: React.PointerEvent<HTMLDivElement>): void {
         const oid = this.state.rxData.oid;
         this.setState({ showFeedback: true });
-        console.log('on click')
         switch (this.state.rxData.type) {
             case 'switch':
                 if (!oid || !this.validOid(oid)) {
