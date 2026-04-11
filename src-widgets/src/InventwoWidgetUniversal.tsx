@@ -47,6 +47,8 @@ interface UniversalState extends VisRxWidgetState {
     colorPicker: iro.ColorPicker | null;
     clockInterval: null | number;
     currentTime: Date;
+    pointerDownTime: number | null;
+    pointerDownIndex: number | null;
 }
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
@@ -66,6 +68,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             colorPicker: null,
             clockInterval: null,
             currentTime: new Date(),
+            pointerDownTime: null,
+            pointerDownIndex: null,
         };
     }
 
@@ -2493,14 +2497,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return data;
     }
 
-    onClick(index: number | null, e: React.MouseEvent<HTMLDivElement>): void {
-        if (!this.isInteractionAllowed(e)) {
-            return;
-        }
-
+    private onClick(index: number | null, e?: React.PointerEvent<HTMLDivElement>): void {
         const oid = this.state.rxData.oid;
         this.setState({ showFeedback: true });
-
+        console.log('on click')
         switch (this.state.rxData.type) {
             case 'switch':
                 if (!oid || !this.validOid(oid)) {
@@ -2592,22 +2592,22 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
-    onBtnMouseDown(index: number | null, e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>): void {
+    onBtnMouseDown(index: number | null, e: React.PointerEvent<HTMLDivElement>): void {
         if (!this.isInteractionAllowed(e)) {
             return;
         }
+
+        this.setState({ pointerDownTime: Date.now(), pointerDownIndex: index });
 
         const oid = this.state.rxData.oid;
         if (!oid || !this.validOid(oid)) {
             return;
         }
-
         switch (this.state.rxData.type) {
             case 'button':
                 if (!this.state.rxData.buttonHoldValue) {
                     break;
                 }
-
                 this.setState({ previousOidValue: this.getValue(oid) });
 
                 if (this.state.rxData.mode === 'singleButton') {
@@ -2620,26 +2620,28 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
-    onBtnMouseUp(e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>): void {
+    onBtnMouseUp(e: React.PointerEvent<HTMLDivElement>): void {
         if (!this.isInteractionAllowed(e)) {
             return;
         }
 
-        const oid = this.state.rxData.oid;
-        if (!oid || !this.validOid(oid)) {
+        const index = this.state.pointerDownIndex;
+        const downTime = this.state.pointerDownTime;
+        this.setState({ pointerDownTime: null, pointerDownIndex: null });
+
+        if (downTime == null) {
             return;
         }
 
-        switch (this.state.rxData.type) {
-            case 'button':
-                if (!this.state.rxData.buttonHoldValue) {
-                    break;
-                }
-
-                this.props.context.setValue(oid, this.state.previousOidValue);
-
-                break;
+        // If it's a hold-button, handle release
+        const oid = this.state.rxData.oid;
+        if (this.state.rxData.type === 'button' && this.state.rxData.buttonHoldValue && oid && this.validOid(oid)) {
+            this.props.context.setValue(oid, this.state.previousOidValue);
+            return;
         }
+
+        // For all other types: treat pointer-up as a click
+        this.onClick(index, e);
     }
 
     renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
@@ -3355,8 +3357,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         inset: 0,
                         color: 'unset',
                         boxShadow: 'none',
+                        touchAction: 'none',
                     }}
-                    onClick={e => this.onClick(i, e)}
                     onPointerDown={e => this.onBtnMouseDown(i, e)}
                     onPointerUp={e => this.onBtnMouseUp(e)}
                 >
