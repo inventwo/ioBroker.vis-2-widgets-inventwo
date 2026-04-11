@@ -1,4 +1,8 @@
 # Older changes
+## 0.6.0 (2026-03-01)
+- Added new widget: Dropdown (#178)
+- Fixed issue table widget width isn't applied when header is hidden (#177)
+
 ## 0.5.8 (2026-01-27)
 - Fixed switch widget text alignment
 

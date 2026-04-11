@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.6.4",
+    "version": "0.6.5",
     "news": {
+      "0.6.5": {
+        "en": "Changed click behavior to fix click and hold for mobile devices (#192)\nFixed dropdown border on focus visible even though border with is 0 (#200)",
+        "de": "Geändertes Klickverhalten, um Klick zu fixieren und für mobile Geräte zu halten (#192)\nFixed Dropdown Grenze auf Fokus sichtbar, obwohl Grenze zu 0 (#200)",
+        "ru": "Изменение поведения кликов для исправления кликов и удержания для мобильных устройств (#192)\nФиксированная выпадающая граница по фокусу видна, хотя граница с 0 (#200)",
+        "pt": "Comportamento de clique alterado para corrigir clique e espera para dispositivos móveis (#192)\nBorda suspensa fixa no foco visível mesmo que a borda com é 0 (# 200)",
+        "nl": "Gewijzigd klik gedrag te repareren klik en houd voor mobiele apparaten (#192)\nVaste dropdown rand op focus zichtbaar, hoewel rand met is 0 (#200)",
+        "fr": "Changement du comportement de clic pour corriger le clic et le maintien pour les appareils mobiles (#192)\nFrontière déroulante fixe sur focus visible même si la bordure avec est 0 (#200)",
+        "it": "Cambiato comportamento click per correggere clic e tenere premuto per dispositivi mobili (#192)\nFisso bordo a discesa sul fuoco visibile anche se confine con è 0 (#200)",
+        "es": "Cambio de comportamiento de clic para fijar clic y mantener para dispositivos móviles (#192)\nFrontera desplegable fija en el foco visible aunque la frontera con es 0 (#200)",
+        "pl": "Zmienione zachowanie kliknięcia, aby naprawić kliknięcie i przytrzymaj dla urządzeń mobilnych (# 192)\nStała granica opadania na ostrość widoczna, mimo że granica z 0 (# 200)",
+        "uk": "Змінена поведінка клацання для фіксації клацання та утримання мобільних пристроїв (#192)\nВиправлено випадаючий кордон на фокус видимий, хоча кордон з є 0 (#200)",
+        "zh-cn": "更改了点击行为以固定点击和移动设备控件(# 192)\n即使边界为 0(# 200) , 仍可看到焦点上的固定下拉边框"
+      },
       "0.6.4": {
         "en": "Fixed touch triggers twice on universal state widget",
         "de": "Feste Berührung löst zweimal auf universellem Zustand Widget",
