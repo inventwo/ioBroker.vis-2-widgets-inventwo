@@ -55,6 +55,11 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Table widget added fixed header option (#234)
+- Table widget added conditional row color (#234)
+- Table widget added column filter (#234)
+
 ### 0.6.5 (2026-04-11)
 - Changed click behavior to fix click and hold for mobile devices (#192)
 - Fixed dropdown border on focus visible even though border with is 0 (#200)

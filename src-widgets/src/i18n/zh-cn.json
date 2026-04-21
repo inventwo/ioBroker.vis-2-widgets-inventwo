@@ -85,6 +85,7 @@
   "color_picker": "选色器",
   "colors": "颜色",
   "column": "柱子",
+  "column_filterable": "启用过滤器",
   "column_height": "列高度",
   "column_hidden": "隐藏列",
   "compare_by": "比较方式",

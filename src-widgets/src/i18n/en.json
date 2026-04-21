@@ -344,6 +344,7 @@
   "tooltip_widget_dropwown_show_value_in_label": "Needs page refresh to apply changes in edit mode. Shows the current value in the label of the dropdown options. If not activated, only the text will be shown.",
   "sticky_header": "Sticky header",
   "column_hidden": "Hide column",
+  "column_filterable": "Enable filter",
   "attr_group_row_color_conditions": "Row conditions",
   "attr_group_row_color_condition": "Condition",
   "count_row_color_conditions": "Number of conditions",

@@ -1,9 +1,28 @@
 import { styled } from '@mui/material/styles';
 import type { SxProps } from '@mui/material';
-import { Table, TableRow, TableCell, TableContainer, TableHead, TableBody, Paper, TableSortLabel } from '@mui/material';
+import {
+    Table,
+    TableRow,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableBody,
+    Paper,
+    TableSortLabel,
+    ClickAwayListener,
+    Checkbox,
+    List,
+    ListItem,
+    ListItemText,
+    IconButton,
+    Button,
+    Box,
+    Divider,
+    Typography,
+} from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
-
+import FilterListIcon from '@mui/icons-material/FilterList';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
 import React from 'react';
@@ -38,6 +57,7 @@ interface TableRxData {
     [key: `columnDatetimeFormatCustom${number}`]: string;
     [key: `sortable${number}`]: boolean;
     [key: `columnHidden${number}`]: boolean;
+    [key: `columnFilterable${number}`]: boolean;
     stickyHeader: boolean;
     countRowConditions: number;
     [key: `rowConditionKey${number}`]: string;
@@ -48,9 +68,18 @@ interface TableRxData {
 interface TableWidgetState extends VisRxWidgetState {
     orderBy: string | null;
     order: 'asc' | 'desc';
+    filters: Record<string, string[]>;
+    filterAnchorEl: HTMLElement | null;
+    filterButtonRect: DOMRect | null;
+    filterColumn: string | null;
+    filterColumnAllValues: string[];
+    filterColumnPendingValues: string[];
+    parentHeight: number | null;
 }
 
 export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, TableWidgetState> {
+    private wrapperRef = React.createRef<HTMLDivElement>();
+    private resizeObserver: ResizeObserver | null = null;
     static getWidgetInfo(): RxWidgetInfo {
         return {
             id: 'tplInventwoWidgetTable',
@@ -118,6 +147,12 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     indexTo: 'countColumns',
                     label: 'attr_group_columns',
                     fields: [
+                        {
+                            name: 'columnHidden',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'column_hidden',
+                        },
                         {
                             name: 'columnKey',
                             type: 'text',
@@ -220,10 +255,10 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             label: 'sortable',
                         },
                         {
-                            name: 'columnHidden',
+                            name: 'columnFilterable',
                             type: 'checkbox',
                             default: false,
-                            label: 'column_hidden',
+                            label: 'column_filterable',
                         },
                     ],
                 },
@@ -557,13 +592,28 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
     componentDidMount(): void {
         super.componentDidMount?.();
 
-        // Initialize default sorting if configured
         if (this.state.rxData.defaultSortColumn && !this.state.orderBy) {
             this.setState({
                 orderBy: this.state.rxData.defaultSortColumn,
                 order: this.state.rxData.defaultSortOrder || 'asc',
             });
         }
+
+        // Measure parent (VIS widget) height
+        const parent = this.wrapperRef.current?.parentElement;
+        if (parent) {
+            this.setState({ parentHeight: parent.clientHeight });
+            this.resizeObserver = new ResizeObserver(entries => {
+                for (const entry of entries) {
+                    this.setState({ parentHeight: entry.contentRect.height });
+                }
+            });
+            this.resizeObserver.observe(parent);
+        }
+    }
+
+    componentWillUnmount(): void {
+        this.resizeObserver?.disconnect();
     }
 
     componentDidUpdate(prevProps: VisRxWidgetProps, prevState: TableWidgetState & { rxData: TableRxData }): void {
@@ -602,12 +652,9 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         if (!orderBy) {
             return data;
         }
-
         return [...data].sort((a, b) => {
             const aValue = a[orderBy];
             const bValue = b[orderBy];
-
-            // Handle null/undefined values
             if (aValue == null && bValue == null) {
                 return 0;
             }
@@ -617,8 +664,6 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             if (bValue == null) {
                 return order === 'asc' ? -1 : 1;
             }
-
-            // Compare values
             let comparison;
             if (typeof aValue === 'number' && typeof bValue === 'number') {
                 comparison = aValue - bValue;
@@ -627,7 +672,6 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             } else {
                 comparison = String(aValue).localeCompare(String(bValue));
             }
-
             return order === 'asc' ? comparison : -comparison;
         });
     };
@@ -641,15 +685,65 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             if (!color || keyOrIndex === undefined || keyOrIndex === '') {
                 continue;
             }
-            // If keyOrIndex is a number string, treat it as a column index
             const asNumber = Number(keyOrIndex);
-            const resolvedKey =
-                !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber - 1] : keyOrIndex;
+            const resolvedKey = !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber] : keyOrIndex;
             if (resolvedKey !== undefined && String(row[resolvedKey]) === String(condValue)) {
                 return color;
             }
         }
         return undefined;
+    };
+
+    openFilterMenu = (
+        event: React.MouseEvent<HTMLElement>,
+        columnKey: string,
+        allData: Record<string, any>[],
+    ): void => {
+        const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+        const uniqueValues = Array.from(new Set(allData.map(row => String(row[columnKey] ?? '')))).sort();
+        const currentFilter = this.state.filters?.[columnKey] ?? uniqueValues;
+        this.setState({
+            filterAnchorEl: event.currentTarget,
+            filterButtonRect: rect,
+            filterColumn: columnKey,
+            filterColumnAllValues: uniqueValues,
+            filterColumnPendingValues: currentFilter,
+        });
+    };
+
+    closeFilterMenu = (): void => {
+        this.setState({ filterAnchorEl: null, filterButtonRect: null, filterColumn: null });
+    };
+
+    applyFilter = (): void => {
+        const { filterColumn, filterColumnPendingValues, filterColumnAllValues } = this.state;
+        if (!filterColumn) {
+            return;
+        }
+        const filters = { ...(this.state.filters ?? {}) };
+        // If all values selected, remove filter (= no filter)
+        if (filterColumnPendingValues.length === filterColumnAllValues.length) {
+            delete filters[filterColumn];
+        } else {
+            filters[filterColumn] = filterColumnPendingValues;
+        }
+        this.setState({ filters, filterAnchorEl: null, filterColumn: null });
+    };
+
+    togglePendingValue = (value: string): void => {
+        const current = this.state.filterColumnPendingValues;
+        const next = current.includes(value) ? current.filter(v => v !== value) : [...current, value];
+        this.setState({ filterColumnPendingValues: next });
+    };
+
+    applyDataFilters = (data: Record<string, any>[]): Record<string, any>[] => {
+        const filters = this.state.filters;
+        if (!filters || Object.keys(filters).length === 0) {
+            return data;
+        }
+        return data.filter(row =>
+            Object.entries(filters).every(([key, allowed]) => allowed.includes(String(row[key] ?? ''))),
+        );
     };
 
     renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
@@ -670,9 +764,16 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             return <div>Invalides JSON</div>;
         }
 
+        const unfilteredJson = json!;
+
         // Sort the data if orderBy is set
         if (json && this.state.orderBy) {
             json = this.sortData(json, this.state.orderBy, this.state.order || 'asc');
+        }
+
+        // Apply column filters
+        if (json) {
+            json = this.applyDataFilters(json);
         }
 
         const headers = [];
@@ -743,19 +844,38 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             },
         }));
 
-        if (json && json.length > 0) {
+        const renderFilterButton = (colKey: string): React.JSX.Element => {
+            const isActive = !!this.state.filters?.[colKey];
+            return (
+                <IconButton
+                    size="small"
+                    onClick={e => {
+                        e.stopPropagation();
+                        this.openFilterMenu(e, colKey, unfilteredJson);
+                    }}
+                    sx={{ padding: '2px', color: isActive ? 'primary.main' : 'inherit', opacity: isActive ? 1 : 0.4 }}
+                >
+                    <FilterListIcon fontSize="small" />
+                </IconButton>
+            );
+        };
+
+        if ((json && json.length > 0) || unfilteredJson.length > 0) {
+            const sourceJson = unfilteredJson.length > 0 ? unfilteredJson : json!;
             const countColumns = this.state.rxData.countColumns;
             if (countColumns === 0) {
-                Object.keys(json[0]).forEach((h, index) => {
+                Object.keys(sourceJson[0]).forEach((h, index) => {
                     headers.push(
                         <StyledTableHeaderCell key={index}>
-                            <TableSortLabel
-                                active={this.state.orderBy === h}
-                                direction={this.state.orderBy === h ? this.state.order : 'asc'}
-                                onClick={() => this.handleRequestSort(h)}
-                            >
-                                {h}
-                            </TableSortLabel>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <TableSortLabel
+                                    active={this.state.orderBy === h}
+                                    direction={this.state.orderBy === h ? this.state.order : 'asc'}
+                                    onClick={() => this.handleRequestSort(h)}
+                                >
+                                    {h}
+                                </TableSortLabel>
+                            </Box>
                         </StyledTableHeaderCell>,
                     );
                 });
@@ -768,12 +888,12 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     let columnTitle = this.state.rxData[`columnTitle${i}`];
 
                     if (columnTitle === null) {
-                        columnTitle = Object.keys(json[0])[i - 1];
+                        columnTitle = Object.keys(sourceJson[0])[i - 1];
                     }
 
                     let columnKey = this.state.rxData[`columnKey${i}`];
                     if (!columnKey) {
-                        columnKey = Object.keys(json[0])[i - 1];
+                        columnKey = Object.keys(sourceJson[0])[i - 1];
                     }
 
                     const isSortable = this.state.rxData[`sortable${i}`];
@@ -791,17 +911,28 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             key={i}
                             sx={styles}
                         >
-                            {isSortable ? (
-                                <TableSortLabel
-                                    active={this.state.orderBy === String(columnKey)}
-                                    direction={this.state.orderBy === String(columnKey) ? this.state.order : 'asc'}
-                                    onClick={() => this.handleRequestSort(String(columnKey))}
-                                >
-                                    {columnTitle}
-                                </TableSortLabel>
-                            ) : (
-                                columnTitle
-                            )}
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: this.state.rxData[`columnTitleAlign${i}`] ?? 'left',
+                                }}
+                            >
+                                {isSortable ? (
+                                    <TableSortLabel
+                                        active={this.state.orderBy === String(columnKey)}
+                                        direction={this.state.orderBy === String(columnKey) ? this.state.order : 'asc'}
+                                        onClick={() => this.handleRequestSort(String(columnKey))}
+                                    >
+                                        {columnTitle}
+                                    </TableSortLabel>
+                                ) : (
+                                    <span>{columnTitle}</span>
+                                )}
+                                {this.state.rxData[`columnFilterable${i}`]
+                                    ? renderFilterButton(String(columnKey))
+                                    : null}
+                            </Box>
                         </StyledTableHeaderCell>,
                     );
                 }
@@ -809,13 +940,13 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
 
             let maxRows = this.state.rxData.maxRows;
             if (maxRows <= 0) {
-                maxRows = json.length;
+                maxRows = json!.length;
             } else {
-                maxRows = Math.min(maxRows, json.length);
+                maxRows = Math.min(maxRows, json!.length);
             }
 
             for (let index = 0; index < maxRows; index++) {
-                const r = json[index];
+                const r = json![index];
                 const columns = [];
                 const rowColor = this.getRowColor(r);
 
@@ -839,7 +970,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         const columnPlaceholder = this.state.rxData[`columnPlaceholder${i}`];
                         const columnFormat = this.state.rxData[`columnValueFormat${i}`];
                         if (!columnKey) {
-                            columnKey = Object.keys(json[0])[i - 1];
+                            columnKey = Object.keys(sourceJson[0])[i - 1];
                         }
                         let columnValue = r[columnKey];
                         if ((columnValue === null || columnValue === '') && columnPlaceholder) {
@@ -876,9 +1007,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             columnValue = (
                                 <img
                                     src={columnValue}
-                                    style={{
-                                        width: columnWidth,
-                                    }}
+                                    style={{ width: columnWidth }}
                                     alt={columnValue}
                                 />
                             );
@@ -886,7 +1015,6 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             if (typeof columnValue === 'object' && columnValue !== null) {
                                 columnValue = JSON.stringify(columnValue);
                             }
-
                             columnValue = <span dangerouslySetInnerHTML={{ __html: columnValue as string }}></span>;
                         }
 
@@ -935,42 +1063,178 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             this.groupAttrs.attr_group_css_border_radius,
         );
 
+        const { filterAnchorEl, filterButtonRect, filterColumn, filterColumnAllValues, filterColumnPendingValues } =
+            this.state;
+        const allSelected = filterColumnPendingValues?.length === filterColumnAllValues?.length;
+        const stickyHeader = this.state.rxData.stickyHeader;
+        const parentHeight = this.state.parentHeight;
+
+        // Calculate filter box position from stored rect (works even inside CSS-transformed containers)
+        const FILTER_WIDTH = 220;
+        const FILTER_MAX_HEIGHT = 350;
+
+        // Position filter box relative to the outer wrapper div
+        const wrapperRect = this.wrapperRef.current?.getBoundingClientRect();
+        let filterLeft = filterButtonRect && wrapperRect ? filterButtonRect.left - wrapperRect.left : 0;
+        const filterTop = filterButtonRect && wrapperRect ? filterButtonRect.bottom - wrapperRect.top : 0;
+        if (filterButtonRect && wrapperRect && filterLeft + FILTER_WIDTH > wrapperRect.width) {
+            filterLeft = Math.max(0, filterLeft + filterButtonRect.width - FILTER_WIDTH);
+        }
+
+        const filterBox =
+            filterAnchorEl && filterButtonRect ? (
+                <ClickAwayListener onClickAway={this.closeFilterMenu}>
+                    <Paper
+                        elevation={8}
+                        style={{
+                            position: 'absolute',
+                            top: filterTop,
+                            left: filterLeft,
+                            zIndex: 9999,
+                            width: FILTER_WIDTH,
+                            maxHeight: FILTER_MAX_HEIGHT,
+                            display: 'flex',
+                            flexDirection: 'column',
+                        }}
+                    >
+                        <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                            <Typography
+                                variant="caption"
+                                sx={{ px: 1, fontWeight: 'bold' }}
+                            >
+                                {filterColumn}
+                            </Typography>
+                            <Divider sx={{ my: 0.5 }} />
+                            <Box sx={{ display: 'flex', gap: 0.5, px: 1, pb: 0.5 }}>
+                                <Button
+                                    size="small"
+                                    color="inherit"
+                                    onClick={() =>
+                                        this.setState({
+                                            filterColumnPendingValues: filterColumnAllValues ?? [],
+                                        })
+                                    }
+                                >
+                                    Alle
+                                </Button>
+                                <Button
+                                    size="small"
+                                    color="inherit"
+                                    onClick={() => this.setState({ filterColumnPendingValues: [] })}
+                                >
+                                    Keine
+                                </Button>
+                            </Box>
+                            <Divider sx={{ mb: 0.5 }} />
+                            <List
+                                dense
+                                disablePadding
+                                sx={{ overflowY: 'auto', flex: 1 }}
+                            >
+                                <ListItem
+                                    dense
+                                    disablePadding
+                                    sx={{ pl: 0.5 }}
+                                >
+                                    <Checkbox
+                                        size="small"
+                                        color="default"
+                                        checked={allSelected}
+                                        indeterminate={!allSelected && (filterColumnPendingValues?.length ?? 0) > 0}
+                                        onChange={() =>
+                                            this.setState({
+                                                filterColumnPendingValues: allSelected
+                                                    ? []
+                                                    : (filterColumnAllValues ?? []),
+                                            })
+                                        }
+                                    />
+                                    <ListItemText primary={<em>Alle auswählen</em>} />
+                                </ListItem>
+                                <Divider />
+                                {(filterColumnAllValues ?? []).map(val => (
+                                    <ListItem
+                                        key={val}
+                                        dense
+                                        disablePadding
+                                        sx={{ pl: 0.5 }}
+                                    >
+                                        <Checkbox
+                                            size="small"
+                                            color="default"
+                                            checked={filterColumnPendingValues?.includes(val) ?? false}
+                                            onChange={() => this.togglePendingValue(val)}
+                                        />
+                                        <ListItemText primary={val === '' ? <em>(leer)</em> : val} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                            <Divider sx={{ mt: 0.5 }} />
+                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, pt: 1 }}>
+                                <Button
+                                    size="small"
+                                    onClick={this.closeFilterMenu}
+                                    color="inherit"
+                                >
+                                    Abbrechen
+                                </Button>
+                                <Button
+                                    size="small"
+                                    variant="outlined"
+                                    color="inherit"
+                                    onClick={this.applyFilter}
+                                >
+                                    OK
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Paper>
+                </ClickAwayListener>
+            ) : null;
+
         return (
-            <div
-                style={{
-                    boxShadow: `${shadow}`,
-                    overflow: 'hidden',
-                    height: '100%',
-                    borderColor: borderStyle.borderColor,
-                    borderTopWidth: `${borderStyle.borderSizeTop}px`,
-                    borderBottomWidth: `${borderStyle.borderSizeBottom}px`,
-                    borderLeftWidth: `${borderStyle.borderSizeLeft}px`,
-                    borderRightWidth: `${borderStyle.borderSizeRight}px`,
-                    borderStyle: borderStyle.borderStyle,
-                    borderRadius: `${borderRadiusStyle.borderRadiusTopLeft}px ${borderRadiusStyle.borderRadiusTopRight}px ${borderRadiusStyle.borderRadiusBottomRight}px ${borderRadiusStyle.borderRadiusBottomLeft}px`,
-                }}
-            >
-                <TableContainer
-                    component={Paper}
+            <div style={{ position: 'relative', height: '100%' }}>
+                <div
+                    ref={this.wrapperRef}
                     style={{
-                        height: '100%',
-                        background: 'transparent',
-                        borderRadius: 0,
-                        overflowY: this.state.rxData.stickyHeader ? 'auto' : 'visible',
+                        boxShadow: `${shadow}`,
+                        overflow: 'auto',
+                        height: 'fit-content',
+                        maxHeight: '100%',
+                        width: 'fit-content',
+                        minWidth: '100%',
+                        borderColor: borderStyle.borderColor,
+                        borderTopWidth: `${borderStyle.borderSizeTop}px`,
+                        borderBottomWidth: `${borderStyle.borderSizeBottom}px`,
+                        borderLeftWidth: `${borderStyle.borderSizeLeft}px`,
+                        borderRightWidth: `${borderStyle.borderSizeRight}px`,
+                        borderStyle: borderStyle.borderStyle,
+                        borderRadius: `${borderRadiusStyle.borderRadiusTopLeft}px ${borderRadiusStyle.borderRadiusTopRight}px ${borderRadiusStyle.borderRadiusBottomRight}px ${borderRadiusStyle.borderRadiusBottomLeft}px`,
                     }}
                 >
-                    <Table
-                        stickyHeader={this.state.rxData.stickyHeader}
-                        sx={{ tableLayout: 'fixed' }}
+                    <TableContainer
+                        component={Paper}
+                        style={{
+                            height: 'auto',
+                            maxHeight: stickyHeader && parentHeight ? `${parentHeight}px` : 'none',
+                            background: 'transparent',
+                            borderRadius: 0,
+                        }}
                     >
-                        {this.state.rxData.showHead && (
-                            <TableHead>
-                                <StyledTableHeaderRow>{headers}</StyledTableHeaderRow>
-                            </TableHead>
-                        )}
-                        <TableBody>{rows}</TableBody>
-                    </Table>
-                </TableContainer>
+                        <Table
+                            stickyHeader={stickyHeader}
+                            sx={{ tableLayout: 'fixed' }}
+                        >
+                            {this.state.rxData.showHead && (
+                                <TableHead>
+                                    <StyledTableHeaderRow>{headers}</StyledTableHeaderRow>
+                                </TableHead>
+                            )}
+                            <TableBody>{rows}</TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+                {filterBox}
             </div>
         );
     }
