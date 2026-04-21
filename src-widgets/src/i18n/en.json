@@ -342,5 +342,12 @@
   "border_radius": "Border radius",
   "vis_2_widgets_inventwo_dropdown_shadow": "Dropdown shadow",
   "tooltip_widget_dropwown_show_value_in_label": "Needs page refresh to apply changes in edit mode. Shows the current value in the label of the dropdown options. If not activated, only the text will be shown.",
-  "sortable": "Sortable"
+  "sticky_header": "Sticky header",
+  "column_hidden": "Hide column",
+  "attr_group_row_color_conditions": "Row conditions",
+  "attr_group_row_color_condition": "Condition",
+  "count_row_color_conditions": "Number of conditions",
+  "row_color_condition_key": "Column key or index",
+  "row_color_condition_value": "Value",
+  "row_color_condition_color": "Row color"
 }

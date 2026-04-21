@@ -37,6 +37,12 @@ interface TableRxData {
     [key: `columnContentAlign${number}`]: React.CSSProperties['textAlign'];
     [key: `columnDatetimeFormatCustom${number}`]: string;
     [key: `sortable${number}`]: boolean;
+    [key: `columnHidden${number}`]: boolean;
+    stickyHeader: boolean;
+    countRowConditions: number;
+    [key: `rowConditionKey${number}`]: string;
+    [key: `rowConditionValue${number}`]: string;
+    [key: `rowConditionColor${number}`]: string;
 }
 
 interface TableWidgetState extends VisRxWidgetState {
@@ -80,6 +86,12 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             type: 'checkbox',
                             default: true,
                             label: 'show_head',
+                        },
+                        {
+                            name: 'stickyHeader',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'sticky_header',
                         },
                         {
                             name: 'defaultSortColumn',
@@ -206,6 +218,47 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             type: 'checkbox',
                             default: false,
                             label: 'sortable',
+                        },
+                        {
+                            name: 'columnHidden',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'column_hidden',
+                        },
+                    ],
+                },
+                {
+                    name: 'attr_group_row_color_conditions',
+                    label: 'attr_group_row_color_conditions',
+                    fields: [
+                        {
+                            name: 'countRowConditions',
+                            type: 'number',
+                            default: 0,
+                            label: 'count_row_color_conditions',
+                        },
+                    ],
+                },
+                {
+                    name: 'countRowConditions',
+                    indexFrom: 1,
+                    indexTo: 'countRowConditions',
+                    label: 'attr_group_row_color_condition',
+                    fields: [
+                        {
+                            name: 'rowConditionKey',
+                            type: 'text',
+                            label: 'row_color_condition_key',
+                        },
+                        {
+                            name: 'rowConditionValue',
+                            type: 'text',
+                            label: 'row_color_condition_value',
+                        },
+                        {
+                            name: 'rowConditionColor',
+                            type: 'color',
+                            label: 'row_color_condition_color',
                         },
                     ],
                 },
@@ -579,6 +632,25 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         });
     };
 
+    getRowColor = (row: Record<string, any>): string | undefined => {
+        const count = this.state.rxData.countRowConditions ?? 0;
+        for (let i = 1; i <= count; i++) {
+            const keyOrIndex = this.state.rxData[`rowConditionKey${i}`];
+            const condValue = this.state.rxData[`rowConditionValue${i}`];
+            const color = this.state.rxData[`rowConditionColor${i}`];
+            if (!color || keyOrIndex === undefined || keyOrIndex === '') {
+                continue;
+            }
+            // If keyOrIndex is a number string, treat it as a column index
+            const asNumber = Number(keyOrIndex);
+            const resolvedKey = !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber - 1] : keyOrIndex;
+            if (resolvedKey !== undefined && String(row[resolvedKey]) === String(condValue)) {
+                return color;
+            }
+        }
+        return undefined;
+    };
+
     renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
         super.renderWidgetBody(props);
 
@@ -688,6 +760,10 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                 });
             } else {
                 for (let i = 1; i <= this.state.rxData.countColumns; i++) {
+                    if (this.state.rxData[`columnHidden${i}`]) {
+                        continue;
+                    }
+
                     let columnTitle = this.state.rxData[`columnTitle${i}`];
 
                     if (columnTitle === null) {
@@ -740,6 +816,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             for (let index = 0; index < maxRows; index++) {
                 const r = json[index];
                 const columns = [];
+                const rowColor = this.getRowColor(r);
 
                 if (countColumns === 0) {
                     Object.values(r).forEach((v, indexCol: number) => {
@@ -751,6 +828,10 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     });
                 } else {
                     for (let i = 1; i <= this.state.rxData.countColumns; i++) {
+                        if (this.state.rxData[`columnHidden${i}`]) {
+                            continue;
+                        }
+
                         let columnKey = this.state.rxData[`columnKey${i}`];
                         const columnPrefix = this.state.rxData[`columnPrefix${i}`];
                         const columnSuffix = this.state.rxData[`columnSuffix${i}`];
@@ -832,7 +913,10 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                 rows.push(
                     <StyledTableRow
                         key={index}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        sx={{
+                            '&:last-child td, &:last-child th': { border: 0 },
+                            ...(rowColor ? { backgroundColor: `${rowColor} !important` } : {}),
+                        }}
                     >
                         {columns}
                     </StyledTableRow>,
@@ -871,9 +955,13 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         height: '100%',
                         background: 'transparent',
                         borderRadius: 0,
+                        overflowY: this.state.rxData.stickyHeader ? 'auto' : 'visible',
                     }}
                 >
-                    <Table sx={{ tableLayout: 'fixed' }}>
+                    <Table
+                        stickyHeader={this.state.rxData.stickyHeader}
+                        sx={{ tableLayout: 'fixed' }}
+                    >
                         {this.state.rxData.showHead && (
                             <TableHead>
                                 <StyledTableHeaderRow>{headers}</StyledTableHeaderRow>
