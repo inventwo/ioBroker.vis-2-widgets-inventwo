@@ -1,4 +1,8 @@
 # Older changes
+## 0.6.1 (2026-03-04)
+- Fixed background label in editor for dropdown widget
+- Added sort option for table widget (#191)
+
 ## 0.6.0 (2026-03-01)
 - Added new widget: Dropdown (#178)
 - Fixed issue table widget width isn't applied when header is hidden (#177)
