@@ -49,6 +49,7 @@ interface UniversalState extends VisRxWidgetState {
     currentTime: Date;
     pointerDownTime: number | null;
     pointerDownIndex: number | null;
+    dialogOpenTime: number | null;
 }
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
@@ -70,6 +71,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             currentTime: new Date(),
             pointerDownTime: null,
             pointerDownIndex: null,
+            dialogOpenTime: null,
         };
     }
 
@@ -2548,7 +2550,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 }
                 break;
             case 'viewInDialog':
-                this.setState({ dialogOpen: true });
+                this.setState({ dialogOpen: true, dialogOpenTime: Date.now() });
                 if (this.state.rxData.dialogCloseTimeoutSeconds && this.state.rxData.dialogCloseTimeoutSeconds > 0) {
                     const dialogCloseTimeout = setTimeout(() => {
                         this.setState({ dialogOpen: false });
@@ -2773,6 +2775,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         },
                     }}
                     onClose={(_event, reason) => {
+                        // Ignore close events that fire within 300ms of opening (touch propagation issue)
+                        if (this.state.dialogOpenTime && Date.now() - this.state.dialogOpenTime < 300) {
+                            return;
+                        }
                         if (reason && reason === 'backdropClick' && !this.state.rxData.dialogCloseOnClickOutside) {
                             return;
                         }
