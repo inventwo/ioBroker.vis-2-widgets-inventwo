@@ -643,7 +643,8 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             }
             // If keyOrIndex is a number string, treat it as a column index
             const asNumber = Number(keyOrIndex);
-            const resolvedKey = !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber - 1] : keyOrIndex;
+            const resolvedKey =
+                !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber - 1] : keyOrIndex;
             if (resolvedKey !== undefined && String(row[resolvedKey]) === String(condValue)) {
                 return color;
             }
