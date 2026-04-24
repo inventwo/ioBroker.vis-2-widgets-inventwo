@@ -1198,8 +1198,8 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     ref={this.wrapperRef}
                     style={{
                         boxShadow: `${shadow}`,
-                        overflow: 'auto',
-                        height: 'fit-content',
+                        overflow: stickyHeader ? 'hidden' : 'auto',
+                        height: stickyHeader ? '100%' : 'fit-content',
                         maxHeight: '100%',
                         width: 'fit-content',
                         minWidth: '100%',
@@ -1215,8 +1215,9 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     <TableContainer
                         component={Paper}
                         style={{
-                            height: 'auto',
-                            maxHeight: stickyHeader && parentHeight ? `${parentHeight}px` : 'none',
+                            height: stickyHeader ? '100%' : 'auto',
+                            maxHeight: stickyHeader ? '100%' : 'none',
+                            overflow: stickyHeader ? 'auto' : 'visible',
                             background: 'transparent',
                             borderRadius: 0,
                         }}

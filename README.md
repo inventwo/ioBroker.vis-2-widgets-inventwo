@@ -55,6 +55,9 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Fixed table widget fixed header not working
+
 ### 0.7.0 (2026-04-21)
 - Table widget added fixed header option (#234)
 - Table widget added conditional row color (#234)
