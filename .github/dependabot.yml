@@ -12,19 +12,9 @@ updates:
       timezone: 'Europe/Berlin'
 
   - package-ecosystem: 'npm'
-    directory: '/'
+    directories: ['**/*']
     schedule:
       cron: "0 4 16 * *"
-      timezone: 'Europe/Berlin'
-    open-pull-requests-limit: 15
-    versioning-strategy: 'increase'
-    cooldown:
-      default-days: 7
-
-  - package-ecosystem: 'npm'
-    directory: '/src-widgets'
-    schedule:
-      cron: "0 4 17 * *"
       timezone: 'Europe/Berlin'
     open-pull-requests-limit: 15
     versioning-strategy: 'increase'
