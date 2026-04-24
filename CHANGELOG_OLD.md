@@ -1,4 +1,8 @@
 # Older changes
+## 0.6.2 (2026-03-18)
+- Fixed button not working on touchscreens (#192)
+- Added HTML support for table widget cells (#196)
+
 ## 0.6.1 (2026-03-04)
 - Fixed background label in editor for dropdown widget
 - Added sort option for table widget (#191)
