@@ -1067,8 +1067,6 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             this.state;
         const allSelected = filterColumnPendingValues?.length === filterColumnAllValues?.length;
         const stickyHeader = this.state.rxData.stickyHeader;
-        const parentHeight = this.state.parentHeight;
-
         // Calculate filter box position from stored rect (works even inside CSS-transformed containers)
         const FILTER_WIDTH = 220;
         const FILTER_MAX_HEIGHT = 350;
