@@ -1,4 +1,7 @@
 # Older changes
+## 0.6.3 (2026-03-19)
+- Fixed HTML support for table widget without configured columns
+
 ## 0.6.2 (2026-03-18)
 - Fixed button not working on touchscreens (#192)
 - Added HTML support for table widget cells (#196)

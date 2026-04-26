@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.7.1",
+    "version": "0.7.2",
     "news": {
+      "0.7.2": {
+        "en": "Fix button click and hold for mobile devices (#192)",
+        "de": "Fix-Taste klicken und halten für mobile Geräte (#192)",
+        "ru": "Нажмите и удерживайте кнопку для мобильных устройств (#192)",
+        "pt": "Botão de correção clique e segure para dispositivos móveis (#192)",
+        "nl": "Klik op en houd vast voor mobiele apparaten (#192)",
+        "fr": "Correction bouton cliquez et maintenez pour les appareils mobiles (#192)",
+        "it": "Pulsante fisso cliccare e tenere premuto per i dispositivi mobili (#192)",
+        "es": "Fijar clic botón y mantener para dispositivos móviles (#192)",
+        "pl": "Napraw kliknięcie przycisku i przytrzymaj urządzenia mobilne (# 192)",
+        "uk": "Клацніть кнопку і утримуйте мобільні пристрої (#192)",
+        "zh-cn": "单击并按住移动设备的固定按钮(# 192)"
+      },
       "0.7.1": {
         "en": "Fixed table widget fixed header not working",
         "de": "Feste Tisch Widget Feste Header nicht arbeiten",
@@ -80,19 +93,6 @@
         "pl": "Naprawiono etykietę tła w edytorze dla widgetu rozwijanego\nDodano opcję sortowania dla widżetu tabeli (# 191)",
         "uk": "Фіксований фон етикетка в редакторі для випадаючого віджету\nДодано варіант сортування для настільного віджету (#191)",
         "zh-cn": "下拉部件在编辑器中的固定背景标签\n为表格部件添加排序选项 (# 191)"
-      },
-      "0.6.0": {
-        "en": "Added new widget: Dropdown (#178)\nFixed issue table widget width isn't applied when header is hidden (#177)",
-        "de": "Neues Widget hinzugefügt: Dropdown (#178)\nFixed Ausgabetabelle Widget Breite wird nicht angewendet, wenn Header versteckt ist (#177)",
-        "ru": "Добавлен новый виджет: Dropdown (#178)\nШирина виджета с фиксированной таблицей не применяется, когда заголовок скрыт (#177)",
-        "pt": "Adicionado novo elemento: Dropdown (# 178)\nA largura fixa do widget da tabela de problemas não é aplicada quando o cabeçalho está oculto (#177)",
-        "nl": "Nieuw widget toegevoegd: Dropdown (#178)\nFixed issue tabel widget breedte wordt niet toegepast wanneer header wordt verborgen (#177)",
-        "fr": "Ajout d'un nouveau widget: Dropdown (#178)\nLa largeur du widget de table d'émission fixe n'est pas appliquée lorsque l'en-tête est caché (#177)",
-        "it": "Aggiunto nuovo widget: Dropdown (#178)\nLa larghezza del widget della tabella del problema fisso non viene applicata quando l'intestazione è nascosta (#177)",
-        "es": "Añadido nuevo widget: dropdown (#178)\nEl ancho del widget de mesa fija no se aplica cuando el encabezado está oculto (#177)",
-        "pl": "Dodano nowy widget: Dropdown (# 178)\nPoprawiona szerokość tabeli emisji widget nie jest stosowana, gdy nagłówek jest ukryty (# 177)",
-        "uk": "Додано новий віджет: Dropdown (#178)\nФіксований стіл віджету ширина не застосовується при прихованні головки (#177)",
-        "zh-cn": "添加新部件: 下拉 (# 178)\n隐藏标题时不应用固定的问题表部件宽度 (# 177)"
       }
     },
     "titleLang": {

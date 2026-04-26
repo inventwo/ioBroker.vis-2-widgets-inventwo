@@ -55,7 +55,7 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.7.2 (2026-04-26)
 - Fix button click and hold for mobile devices (#192)
 
 ### 0.7.1 (2026-04-24)
@@ -72,9 +72,6 @@ All widgets come with extensive design options to customize the look and feel to
 
 ### 0.6.4 (2026-03-19)
 - Fixed touch triggers twice on universal state widget
-
-### 0.6.3 (2026-03-19)
-- Fixed HTML support for table widget without configured columns
 
 ## License
 The MIT License (MIT)
