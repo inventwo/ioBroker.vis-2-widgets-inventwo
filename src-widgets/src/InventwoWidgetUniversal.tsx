@@ -42,7 +42,6 @@ interface UniversalState extends VisRxWidgetState {
     showFeedback: boolean;
     isMounted: boolean;
     svgRef: React.RefObject<SVGSVGElement | null>;
-    previousOidValue: any;
     dialogCloseTimeout: null | number;
     colorPicker: iro.ColorPicker | null;
     clockInterval: null | number;
@@ -54,6 +53,12 @@ interface UniversalState extends VisRxWidgetState {
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
     private readonly refContentContainer: React.RefObject<HTMLDivElement | null> = React.createRef();
+    private _isHolding: boolean = false;
+    private _previousOidValue: any = null;
+    private _lastRestoredValue: any = undefined;
+    private _lastRestoredTime: number = 0;
+    private _pointerDownTime: number | null = null;
+    private _pointerDownIndex: number | null = null;
 
     constructor(props: VisRxWidgetProps) {
         super(props);
@@ -64,7 +69,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             showFeedback: false,
             isMounted: false,
             svgRef: React.createRef(),
-            previousOidValue: null,
             dialogCloseTimeout: null,
             colorPicker: null,
             clockInterval: null,
@@ -2598,7 +2602,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             return;
         }
 
-        this.setState({ pointerDownTime: Date.now(), pointerDownIndex: index });
+        this._pointerDownTime = Date.now();
+        this._pointerDownIndex = index;
+        this.setState({ pointerDownTime: this._pointerDownTime, pointerDownIndex: index });
 
         const oid = this.state.rxData.oid;
         if (!oid || !this.validOid(oid)) {
@@ -2609,7 +2615,16 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 if (!this.state.rxData.buttonHoldValue) {
                     break;
                 }
-                this.setState({ previousOidValue: this.getValue(oid) });
+                // Only save previousOidValue if not already holding (prevents overwriting on rapid clicks)
+                if (!this._isHolding) {
+                    this._isHolding = true;
+                    // ioBroker confirms setValue asynchronously - if the OID hasn't updated yet
+                    // since our last restore, use the restored value instead of the stale live value
+                    const liveValue = this.getValue(oid);
+                    const timeSinceRestore = Date.now() - this._lastRestoredTime;
+                    const useRestored = this._lastRestoredValue !== undefined && timeSinceRestore < 2000;
+                    this._previousOidValue = useRestored ? this._lastRestoredValue : liveValue;
+                }
 
                 if (this.state.rxData.mode === 'singleButton') {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
@@ -2626,8 +2641,12 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             return;
         }
 
-        const index = this.state.pointerDownIndex;
-        const downTime = this.state.pointerDownTime;
+        const index = this._pointerDownIndex;
+        const downTime = this._pointerDownTime;
+
+        // Reset synchronously immediately to prevent double-firing (pointerUp + pointerLeave)
+        this._pointerDownTime = null;
+        this._pointerDownIndex = null;
         this.setState({ pointerDownTime: null, pointerDownIndex: null });
 
         if (downTime == null) {
@@ -2637,7 +2656,15 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         // If it's a hold-button, handle release
         const oid = this.state.rxData.oid;
         if (this.state.rxData.type === 'button' && this.state.rxData.buttonHoldValue && oid && this.validOid(oid)) {
-            this.props.context.setValue(oid, this.state.previousOidValue);
+            const savedPreviousValue = this._previousOidValue;
+            this._isHolding = false;
+            this._previousOidValue = null;
+
+            // Always restore previous value on release (both short tap and long hold)
+            const restoreValue = this._lastRestoredValue !== undefined ? this._lastRestoredValue : savedPreviousValue;
+            this._lastRestoredValue = restoreValue;
+            this._lastRestoredTime = Date.now();
+            this.props.context.setValue(oid, restoreValue);
             return;
         }
 
@@ -3366,6 +3393,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     }}
                     onPointerDown={e => this.onBtnMouseDown(i, e)}
                     onPointerUp={e => this.onBtnMouseUp(e)}
+                    onPointerCancel={e => this.onBtnMouseUp(e)}
                 >
                     <CardContent
                         style={{

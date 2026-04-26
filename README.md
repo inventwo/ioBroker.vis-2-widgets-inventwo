@@ -55,6 +55,9 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Fix button click and hold for mobile devices (#192)
+
 ### 0.7.1 (2026-04-24)
 - Fixed table widget fixed header not working
 
