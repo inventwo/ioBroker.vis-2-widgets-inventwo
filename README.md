@@ -73,6 +73,8 @@ All widgets come with extensive design options to customize the look and feel to
 ### 0.6.4 (2026-03-19)
 - Fixed touch triggers twice on universal state widget
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 The MIT License (MIT)
 
