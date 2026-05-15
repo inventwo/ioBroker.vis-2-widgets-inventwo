@@ -350,5 +350,6 @@
   "count_row_color_conditions": "Number of conditions",
   "row_color_condition_key": "Column key or index",
   "row_color_condition_value": "Value",
-  "row_color_condition_color": "Row color"
+  "row_color_condition_color": "Row color",
+  "steps_inside": "Steps inside slider"
 }

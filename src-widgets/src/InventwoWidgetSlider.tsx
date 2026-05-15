@@ -22,6 +22,8 @@ interface SliderRxData {
     stepMode: 'auto' | 'custom';
     stepDisplay: number;
     customSteps: string;
+    readOnly: boolean;
+    stepsInside: boolean;
     sliderRailColor: string;
     sliderRailActiveColor: string;
     trackBarType: 'normal' | 'inverted' | false;
@@ -131,6 +133,12 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                             default: true,
                         },
                         {
+                            name: 'readOnly',
+                            type: 'checkbox',
+                            label: 'read_only',
+                            default: false,
+                        },
+                        {
                             name: '',
                             type: 'delimiter',
                         },
@@ -144,6 +152,13 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                             type: 'checkbox',
                             label: 'show_steps',
                             default: false,
+                        },
+                        {
+                            name: 'stepsInside',
+                            type: 'checkbox',
+                            label: 'steps_inside',
+                            default: false,
+                            hidden: '!data.showSteps',
                         },
                         {
                             name: 'stepMode',
@@ -311,7 +326,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                         {
                             name: 'thumbSize',
                             type: 'slider',
-                            min: 1,
+                            min: 0,
                             max: 50,
                             step: 1,
                             default: 16,
@@ -420,6 +435,8 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
 
         const minValue = this.state.rxData.minValue;
         const maxValue = this.state.rxData.maxValue;
+        const orientation = this.state.rxData.orientation;
+        const stepsInside = this.state.rxData.stepsInside;
 
         const marks = [];
         if (this.state.rxData.showMinMax) {
@@ -466,49 +483,87 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
 
         const trackBarType = trackStyle.trackBarType;
 
-        let sliderAttributes: SxProps = {
-            height: this.state.rxData.orientation === 'horizontal' ? trackStyle.trackWidth : '100%',
-            width: this.state.rxData.orientation !== 'horizontal' ? trackStyle.trackWidth : '100%',
-            '& .MuiSlider-thumb': {
-                backgroundColor: thumbStyle.sliderThumbColor, // color of thumbs
-                width: thumbStyle.thumbSize,
-                height: thumbStyle.thumbSize,
-                borderRadius: `${thumbStyle.thumbBorderRadius}%`,
-                // marginLeft: `-${thumbOffset}px`,
-                '&:before': {
-                    boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbStyle.thumbShadowColor}`,
-                },
-            },
+        // Rail (inactive) und Track (active) Farben – unterstützen direkt Gradient-Strings
+        const railColor: string =
+            trackBarType === 'normal'
+                ? trackStyle.sliderRailColor
+                : trackBarType === 'inverted'
+                  ? trackStyle.sliderRailActiveColor
+                  : '';
+        const trackColor: string =
+            trackBarType === 'normal'
+                ? trackStyle.sliderRailActiveColor
+                : trackBarType === 'inverted'
+                  ? trackStyle.sliderRailColor
+                  : '';
+        const thumbColor: string = thumbStyle.sliderThumbColor;
+
+        // Build markLabel style (font + position)
+        const markLabelFontStyle = {
+            fontSize: this.state.rxStyle!['font-size'],
+            color: this.state.rxStyle!.color,
+            textShadow: this.state.rxStyle!['text-shadow'],
+            fontFamily: this.state.rxStyle!['font-family'],
+            fontStyle: this.state.rxStyle!['font-style'],
+            fontVariant: this.state.rxStyle!['font-variant'],
+            fontWeight: this.state.rxStyle!['font-weight'],
+            lineHeight: this.state.rxStyle!['line-height'],
+            letterSpacing: this.state.rxStyle!['letter-spacing'],
+            wordSpacing: this.state.rxStyle!['word-spacing'],
+        };
+
+        let markLabelPositionStyle: Record<string, any>;
+        if (stepsInside) {
+            if (orientation === 'horizontal') {
+                markLabelPositionStyle = {
+                    top: '50%',
+                    transform: 'translateX(-50%) translateY(-50%)',
+                };
+            } else {
+                markLabelPositionStyle = {
+                    left: '50%',
+                    transform: 'translateX(-50%) translateY(50%)',
+                };
+            }
+        } else {
+            if (orientation === 'horizontal') {
+                markLabelPositionStyle = {
+                    top: (trackStyle.trackWidth ?? 10) + 20,
+                };
+            } else {
+                markLabelPositionStyle = {
+                    left: (trackStyle.trackWidth ?? 10) + 20,
+                };
+            }
+        }
+
+        const thumbSize = thumbStyle.thumbSize ?? 16;
+        const thumbHidden = thumbSize === 0;
+
+        const sliderAttributes: SxProps = {
+            height: orientation === 'horizontal' ? trackStyle.trackWidth : '100%',
+            width: orientation !== 'horizontal' ? trackStyle.trackWidth : '100%',
+            '& .MuiSlider-thumb': thumbHidden
+                ? { display: 'none' }
+                : {
+                      background: thumbColor,
+                      width: thumbSize,
+                      height: thumbSize,
+                      borderRadius: `${thumbStyle.thumbBorderRadius}%`,
+                      '&:before': {
+                          boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbStyle.thumbShadowColor}`,
+                      },
+                  },
             '& .MuiSlider-rail': {
-                backgroundColor:
-                    trackBarType === 'normal'
-                        ? trackStyle.sliderRailColor
-                        : trackBarType === 'inverted'
-                          ? trackStyle.sliderRailActiveColor
-                          : '',
-                color:
-                    trackBarType === 'normal'
-                        ? trackStyle.sliderRailColor
-                        : trackBarType === 'inverted'
-                          ? trackStyle.sliderRailActiveColor
-                          : '',
+                background: railColor,
+                color: railColor,
                 border: 'none',
                 borderRadius: `${trackStyle.trackBorderRadius}px`,
                 boxShadow: `${trackStyle.trackShadowX}px ${this.state.rxData.trackShadowY}px ${trackStyle.trackShadowBlur}px ${trackStyle.trackShadowSize}px ${trackStyle.trackShadowColor}`,
             },
             '& .MuiSlider-track': {
-                backgroundColor:
-                    trackBarType === 'normal'
-                        ? this.state.rxData.sliderRailActiveColor
-                        : trackBarType === 'inverted'
-                          ? trackStyle.sliderRailColor
-                          : '',
-                color:
-                    trackBarType === 'normal'
-                        ? this.state.rxData.sliderRailActiveColor
-                        : trackBarType === 'inverted'
-                          ? trackStyle.sliderRailColor
-                          : '',
+                background: trackColor,
+                color: trackColor,
                 border: 'none',
                 borderRadius: `${trackStyle.trackBorderRadius}px`,
             },
@@ -516,36 +571,12 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 color: trackStyle.sliderRailActiveColor,
             },
             '& .MuiSlider-markLabel': {
-                fontSize: this.state.rxStyle!['font-size'],
-                color: this.state.rxStyle!.color,
-                textShadow: this.state.rxStyle!['text-shadow'],
-                fontFamily: this.state.rxStyle!['font-family'],
-                fontStyle: this.state.rxStyle!['font-style'],
-                fontVariant: this.state.rxStyle!['font-variant'],
-                fontWeight: this.state.rxStyle!['font-weight'],
-                lineHeight: this.state.rxStyle!['line-height'],
-                letterSpacing: this.state.rxStyle!['letter-spacing'],
-                wordSpacing: this.state.rxStyle!['word-spacing'],
+                ...markLabelFontStyle,
+                ...markLabelPositionStyle,
             },
         };
 
-        if (this.state.rxData.orientation === 'horizontal') {
-            sliderAttributes = {
-                ...sliderAttributes,
-                '& .MuiSlider-markLabel': {
-                    top: trackStyle.trackWidth + 20,
-                },
-            };
-        } else {
-            sliderAttributes = {
-                ...sliderAttributes,
-                '& .MuiSlider-markLabel': {
-                    left: trackStyle.trackWidth + 20,
-                },
-            };
-        }
-
-        return (
+        const slider = (
             <Slider
                 disabled={this.props.editMode}
                 sx={sliderAttributes}
@@ -559,9 +590,19 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 value={this.state.sliderValue || 0}
                 valueLabelDisplay="auto"
                 track={trackStyle.trackBarType}
-                orientation={this.state.rxData.orientation}
+                orientation={orientation}
                 marks={marks}
             />
         );
+
+        if (this.state.rxData.readOnly) {
+            return (
+                <div style={{ pointerEvents: 'none', width: '100%', height: '100%' }}>
+                    {slider}
+                </div>
+            );
+        }
+
+        return slider;
     }
 }

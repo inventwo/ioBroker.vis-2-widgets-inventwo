@@ -352,5 +352,6 @@
   "widget_universal": "Universal (Schalter, Taster, Nav & mehr)",
   "width": "Breite",
   "x_offset": "X-Versatz",
-  "y_offset": "Y-Versatz"
+  "y_offset": "Y-Versatz",
+  "steps_inside": "Schritte im Slider"
 }
