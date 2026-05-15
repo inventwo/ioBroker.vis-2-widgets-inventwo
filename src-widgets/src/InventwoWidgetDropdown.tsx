@@ -7,6 +7,14 @@ import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetPr
 interface DropdownRxData {
     oid: null | string;
     showValue: boolean;
+    showText: boolean;
+    readOnly: boolean;
+    title: string;
+    backgroundOid: string | null;
+    countBgConditions: number;
+    [key: `bgConditionValue${number}`]: string;
+    [key: `bgConditionOperator${number}`]: string;
+    [key: `bgConditionColor${number}`]: string;
     fontSize: number;
     textColor: string;
     backgroundColor: string;
@@ -14,6 +22,8 @@ interface DropdownRxData {
     borderColor: string;
     borderWidth: number;
     borderRadius: number;
+    titleFontSize: number;
+    titleColor: string;
     shadowX: number;
     shadowY: number;
     shadowBlur: number;
@@ -39,15 +49,15 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
     }
 
     async componentDidUpdate(prevProps: VisRxWidgetProps, prevState: DropdownState): Promise<void> {
-        const prevOid = (prevState.rxData as any).oid;
-        const currentOid = (this.state.rxData as any).oid;
-        if (prevOid !== currentOid) {
+        const prev = prevState.rxData as any;
+        const curr = this.state.rxData as any;
+        if (prev.oid !== curr.oid || prev.showValue !== curr.showValue || prev.showText !== curr.showText) {
             await this.loadOptions();
         }
     }
 
     async loadOptions(): Promise<void> {
-        const oid = (this.state.rxData as any).oid;
+        const oid = this.state.rxData.oid;
         if (!this.validOid(oid) || !oid) {
             this.setState({ options: [] });
             return;
@@ -59,10 +69,20 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 const states: Record<any, any> = obj.common.states;
                 const options: Array<{ value: string | number; label: string }> = [];
 
+                const showVal = this.state.rxData.showValue !== false; // default true (backward compat)
+                const showTxt = this.state.rxData.showText !== false; // default true
+
                 if (typeof states === 'object') {
                     Object.entries(states).forEach(([key, value]) => {
                         const numKey = !isNaN(Number(key)) ? Number(key) : key;
-                        const label = this.state.rxData.showValue ? `${key} - ${value}` : String(value);
+                        let label: string;
+                        if (showVal && showTxt) {
+                            label = `${key} - ${value}`;
+                        } else if (showVal && !showTxt) {
+                            label = String(key);
+                        } else {
+                            label = String(value); // showTxt=true or fallback
+                        }
                         options.push({ value: numKey, label });
                     });
                 }
@@ -75,6 +95,52 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
             console.error('Error loading dropdown options:', error);
             this.setState({ options: [] });
         }
+    }
+
+    compareValues(a: any, b: any, op: string): boolean {
+        const numA = a !== '' && !isNaN(Number(a)) ? Number(a) : a;
+        const numB = b !== '' && !isNaN(Number(b)) ? Number(b) : b;
+        switch (op) {
+            case '===':
+                return numA == numB;
+            case '!=':
+                return numA != numB;
+            case '>':
+                return numA > numB;
+            case '<':
+                return numA < numB;
+            case '>=':
+                return numA >= numB;
+            case '<=':
+                return numA <= numB;
+            default:
+                return String(a) === String(b);
+        }
+    }
+
+    getEffectiveBackground(defaultBg: string): string {
+        const count = this.state.rxData.countBgConditions ?? 0;
+        if (count === 0) {
+            return defaultBg;
+        }
+
+        const bgOid = this.validOid(this.state.rxData.backgroundOid)
+            ? this.state.rxData.backgroundOid
+            : this.state.rxData.oid;
+        const bgValue = this.getValue(bgOid);
+
+        for (let i = 1; i <= count; i++) {
+            const op = this.state.rxData[`bgConditionOperator${i}`] ?? '===';
+            const condValue = this.state.rxData[`bgConditionValue${i}`];
+            const color = this.state.rxData[`bgConditionColor${i}`];
+            if (!color) {
+                continue;
+            }
+            if (this.compareValues(bgValue, condValue, op)) {
+                return color;
+            }
+        }
+        return defaultBg;
     }
 
     static getWidgetInfo(): RxWidgetInfo {
@@ -98,6 +164,72 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             label: 'show_value_in_label',
                             default: true,
                             tooltip: 'tooltip_widget_dropwown_show_value_in_label',
+                        },
+                        {
+                            name: 'showText',
+                            type: 'checkbox',
+                            label: 'show_text',
+                            default: true,
+                        },
+                        {
+                            name: 'readOnly',
+                            type: 'checkbox',
+                            label: 'read_only',
+                            default: false,
+                        },
+                        {
+                            name: 'title',
+                            type: 'text',
+                            label: 'title',
+                        },
+                    ],
+                },
+                {
+                    name: 'attr_group_dropdown_bg_conditions',
+                    label: 'attr_group_dropdown_bg_conditions',
+                    fields: [
+                        {
+                            name: 'backgroundOid',
+                            type: 'id',
+                            label: 'background_oid',
+                        },
+                        {
+                            name: 'countBgConditions',
+                            type: 'number',
+                            default: 0,
+                            label: 'count_row_color_conditions',
+                        },
+                    ],
+                },
+                {
+                    name: 'countBgConditions',
+                    indexFrom: 1,
+                    indexTo: 'countBgConditions',
+                    label: 'attr_group_row_color_condition',
+                    fields: [
+                        {
+                            name: 'bgConditionOperator',
+                            type: 'select',
+                            options: [
+                                { value: '===', label: 'equal' },
+                                { value: '!=', label: 'not_equal' },
+                                { value: '>', label: 'greater' },
+                                { value: '<', label: 'lower' },
+                                { value: '>=', label: 'greater_equal' },
+                                { value: '<=', label: 'lower_equal' },
+                            ],
+                            default: '===',
+                            label: 'comparison_operator',
+                        },
+                        {
+                            name: 'bgConditionValue',
+                            type: 'text',
+                            label: 'value',
+                        },
+                        {
+                            name: 'bgConditionColor',
+                            type: 'color',
+                            label: 'background',
                         },
                     ],
                 },
@@ -176,6 +308,28 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             hidden: '!!data.dropdownFromWidget',
                         },
                         {
+                            name: 'titleFontSize',
+                            type: 'slider',
+                            min: 8,
+                            max: 48,
+                            step: 1,
+                            default: 12,
+                            label: 'title_font_size',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'titleColor',
+                            type: 'color',
+                            label: 'title_color',
+                            default: 'rgba(180, 180, 180, 1)',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: '',
+                            type: 'delimiter',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
                             name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_dropdown_shadow',
@@ -246,13 +400,12 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
             return;
         }
 
-        const oid = (this.state.rxData as any).oid;
+        const oid = this.state.rxData.oid;
         if (!this.validOid(oid) || !oid) {
             return;
         }
 
         const value = event.target.value;
-        // Ensure value is the correct type (number or string based on option)
         const typedValue = typeof value === 'number' ? value : !isNaN(Number(value)) ? Number(value) : value;
         this.props.context.setValue(oid, typedValue);
     }
@@ -260,17 +413,80 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
     renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
         super.renderWidgetBody(props);
 
-        const oid = (this.state.rxData as any).oid;
+        const oid = this.state.rxData.oid;
         const value = this.getValue(oid);
 
         const style = this.getStyle('dropdownFromWidget', this.groupAttrs.attr_group_css_dropdown);
+        const effectiveBg = this.getEffectiveBackground(style.backgroundColor);
+
+        const title = this.state.rxData.title;
+        const readOnly = this.state.rxData.readOnly;
+
+        // Find label for current value
+        const currentOption = this.state.options.find(o => String(o.value) === String(value));
+        const displayLabel = currentOption
+            ? currentOption.label
+            : value !== undefined && value !== null
+              ? String(value)
+              : '';
+
+        const titleElement = title ? (
+            <div
+                style={{
+                    fontSize: `${style.titleFontSize ?? 12}px`,
+                    color: style.titleColor ?? 'rgba(180,180,180,1)',
+                    marginBottom: '4px',
+                    lineHeight: 1.2,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    flexShrink: 0,
+                }}
+            >
+                {title}
+            </div>
+        ) : null;
+
+        const shadow = `${style.shadowX}px ${style.shadowY}px ${style.shadowBlur}px ${style.shadowColor}`;
+
+        if (readOnly) {
+            return (
+                <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
+                    {titleElement}
+                    <div
+                        style={{
+                            flex: 1,
+                            fontSize: `${style.fontSize}px`,
+                            color: style.textColor,
+                            background: effectiveBg,
+                            padding: '0 14px',
+                            borderRadius: `${style.borderRadius}px`,
+                            border: `${style.borderWidth ?? 1}px solid ${style.borderColor}`,
+                            boxShadow: shadow,
+                            display: 'flex',
+                            alignItems: 'center',
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap' as const,
+                            textOverflow: 'ellipsis',
+                        }}
+                    >
+                        {displayLabel}
+                    </div>
+                </div>
+            );
+        }
 
         const selectStyles = {
+            height: '100%',
             '& .MuiSelect-select': {
                 fontSize: `${style.fontSize}px`,
                 color: style.textColor,
-                backgroundColor: style.backgroundColor,
-                padding: '10px 14px',
+                background: effectiveBg,
+                padding: '0 14px',
+                height: '100% !important',
+                boxSizing: 'border-box',
+                display: 'flex',
+                alignItems: 'center',
                 borderRadius: `${style.borderRadius}px`,
             },
             '& .MuiOutlinedInput-notchedOutline': {
@@ -287,8 +503,6 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
             '& .MuiSelect-icon': {
                 color: style.textColor,
             },
-            boxShadow: `${style.shadowX}px ${style.shadowY}px ${style.shadowBlur}px ${style.shadowColor}`,
-            borderRadius: `${style.borderRadius}px`,
         };
 
         const menuProps = {
@@ -296,7 +510,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 style: {
                     maxHeight: 400,
                     backgroundColor: style.backgroundColor,
-                    boxShadow: `${style.shadowX}px ${style.shadowY}px ${style.shadowBlur}px ${style.shadowColor}`,
+                    boxShadow: shadow,
                 },
             },
         };
@@ -317,24 +531,42 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         };
 
         return (
-            <FormControl fullWidth>
-                <Select
-                    value={value !== undefined && value !== null ? value : ''}
-                    onChange={e => this.onChange(e)}
-                    sx={selectStyles}
-                    MenuProps={menuProps}
+            <div
+                style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'visible' }}
+            >
+                {titleElement}
+                <div
+                    style={{
+                        flex: 1,
+                        boxShadow: shadow,
+                        borderRadius: `${style.borderRadius}px`,
+                        overflow: 'visible',
+                    }}
                 >
-                    {this.state.options.map(option => (
-                        <MenuItem
-                            key={option.value}
-                            value={option.value}
-                            sx={menuItemStyles}
+                    <FormControl
+                        fullWidth
+                        style={{ height: '100%' }}
+                    >
+                        <Select
+                            disabled={this.props.editMode}
+                            value={value !== undefined && value !== null ? value : ''}
+                            onChange={e => this.onChange(e)}
+                            sx={selectStyles}
+                            MenuProps={menuProps}
                         >
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+                            {this.state.options.map(option => (
+                                <MenuItem
+                                    key={option.value}
+                                    value={option.value}
+                                    sx={menuItemStyles}
+                                >
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </div>
+            </div>
         );
     }
 }

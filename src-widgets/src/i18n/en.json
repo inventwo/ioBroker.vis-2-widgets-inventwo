@@ -351,5 +351,10 @@
   "row_color_condition_key": "Column key or index",
   "row_color_condition_value": "Value",
   "row_color_condition_color": "Row color",
-  "steps_inside": "Steps inside slider"
+  "steps_inside": "Steps inside slider",
+  "show_text": "Show text",
+  "attr_group_dropdown_bg_conditions": "Background conditions",
+  "background_oid": "Background OID",
+  "title_font_size": "Title font size",
+  "title_color": "Title color"
 }

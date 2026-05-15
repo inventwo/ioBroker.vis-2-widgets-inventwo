@@ -353,5 +353,10 @@
   "width": "Breite",
   "x_offset": "X-Versatz",
   "y_offset": "Y-Versatz",
-  "steps_inside": "Schritte im Slider"
+  "steps_inside": "Schritte im Slider",
+  "show_text": "Text anzeigen",
+  "attr_group_dropdown_bg_conditions": "Hintergrundfarb-Bedingungen",
+  "background_oid": "Hintergrund-Datenpunkt",
+  "title_font_size": "Titel Schriftgröße",
+  "title_color": "Titelfarbe"
 }
