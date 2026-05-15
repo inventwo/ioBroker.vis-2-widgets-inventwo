@@ -55,6 +55,12 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+- Slider widget: added read-only mode, gradient support for colors and an option to place steps inside the slider bar (#244)
+- Dropdown widget: added conditional background color (#198), read-only mode (#201) and option to show value without text (#201)
+- Table widget: added multi-column sort (#234)
+
 ### 0.7.2 (2026-04-26)
 - Fix button click and hold for mobile devices (#192)
 
