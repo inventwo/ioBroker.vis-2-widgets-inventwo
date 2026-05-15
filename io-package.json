@@ -156,7 +156,8 @@
           "InventwoWidgetSwitch",
           "InventwoWidgetCheckbox",
           "InventwoWidgetTable",
-          "InventwoWidgetDropdown"
+          "InventwoWidgetDropdown",
+          "InventwoWidgetMarquee"
         ]
       }
     },

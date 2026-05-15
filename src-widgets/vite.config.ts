@@ -23,6 +23,7 @@ const config = {
                 './InventwoWidgetCheckbox': './src/InventwoWidgetCheckbox',
                 './InventwoWidgetTable': './src/InventwoWidgetTable',
                 './InventwoWidgetDropdown': './src/InventwoWidgetDropdown',
+                './InventwoWidgetMarquee': './src/InventwoWidgetMarquee',
                 './translations': './src/translations',
             },
             remotes: {},

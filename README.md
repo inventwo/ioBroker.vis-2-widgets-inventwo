@@ -55,6 +55,9 @@ All widgets come with extensive design options to customize the look and feel to
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Marquee widget: new scrolling text widget with configurable speed, direction, loop count, gap and pause-on-hover
+
 ### 0.8.0 (2026-05-15)
 - Slider widget: added read-only mode, gradient support for colors and an option to place steps inside the slider bar (#244)
 - Dropdown widget: added conditional background color (#198), read-only mode (#201) and option to show value without text (#201)
