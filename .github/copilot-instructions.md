@@ -142,6 +142,22 @@ Erlaubt, Styling-Attribute von einem anderen Widget zu erben:
 
 ---
 
+## Changelog (README.md)
+
+- Wichtige Änderungen (neue Features, Breaking Changes, größere Bugfixes) **immer** in der `README.md` im Abschnitt `## Changelog` unter `### **WORK IN PROGRESS**` aufnehmen.
+- Falls der Platzhalter noch nicht vorhanden ist, diesen vor dem neuesten Versionseintrag einfügen:
+  ```markdown
+  <!--
+      Placeholder for the next version (at the beginning of the line):
+      ### **WORK IN PROGRESS**
+  -->
+  ### **WORK IN PROGRESS**
+  - Beschreibung der Änderung
+  ```
+- Einträge werden bei Release in eine konkrete Versionsnummer umgewandelt.
+
+---
+
 ## Neues Widget hinzufügen – Checkliste
 
 1. **Neue Datei** `src-widgets/src/InventwoWidgetFoo.tsx` anlegen (von `InventwoGeneric` erben).
