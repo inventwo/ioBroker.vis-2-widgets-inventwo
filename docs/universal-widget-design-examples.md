@@ -7,7 +7,7 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Übersicht
 
-![Preview Designs](img/preview_univseral_design_examples.png)
+![Preview Designs](../img/preview_univseral_design_examples.png)
 
 | # | Design | Hintergrund | Rahmen | Ecken | Schatten | Stil |
 |---|---|---|---|---|---|---|
