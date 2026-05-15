@@ -39,14 +39,14 @@ Color picker
 
 ![Preview Checkbox](img/preview_checkbox.png)
 
-### Widget—Table
+### Widget - Table
 
 ![Preview Table](img/preview_table.png)
 
 ### Design
 All widgets come with extensive design options to customize the look and feel to your needs.
-
-![Preview Customization](img/preview_css_customization.png)
+For more see [here](./docs/universal-widget-design-examples.md).
+![Preview Customization](img/preview_univseral_design_examples.png)
 
 ### More will follow...
 
