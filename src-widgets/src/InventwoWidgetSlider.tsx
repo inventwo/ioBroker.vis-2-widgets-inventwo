@@ -596,11 +596,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
         );
 
         if (this.state.rxData.readOnly) {
-            return (
-                <div style={{ pointerEvents: 'none', width: '100%', height: '100%' }}>
-                    {slider}
-                </div>
-            );
+            return <div style={{ pointerEvents: 'none', width: '100%', height: '100%' }}>{slider}</div>;
         }
 
         return slider;
