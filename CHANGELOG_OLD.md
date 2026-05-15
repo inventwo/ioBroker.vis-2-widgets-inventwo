@@ -1,4 +1,9 @@
 # Older changes
+## 0.6.4 (2026-03-19)
+- Fixed touch triggers twice on universal state widget
+
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## 0.6.3 (2026-03-19)
 - Fixed HTML support for table widget without configured columns
 

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.7.2",
+    "version": "0.8.0",
     "news": {
+      "0.8.0": {
+        "en": "Slider widget: added read-only mode, gradient support for colors and an option to place steps inside the slider bar (#244)\nDropdown widget: added conditional background color (#198), read-only mode (#201) and option to show value without text (#201)\nTable widget: added multi-column sort (#234)",
+        "de": "Slider Widget: hinzugefügtes Einlesemodus, Gradientenunterstützung für Farben und eine Möglichkeit, Schritte innerhalb der Schiebeleiste (#244) zu platzieren\nDropdown Widget: addiert bedingte Hintergrundfarbe (#198), Nur lesen Modus (#201) und Option, um Wert ohne Text anzuzeigen (#201)\nTabelle Widget: Mehrsäulensort hinzugefügt (#234)",
+        "ru": "Виджет слайдера: добавлен режим только для чтения, поддержка градиента для цветов и возможность размещения шагов внутри панели слайдера (#244)\nВиджет Dropdown: добавлен условный цвет фона (#198), режим чтения (#201) и опция отображения значения без текста (#201)\nВиджет таблицы: добавлен многоколонный сорт (#234)",
+        "pt": "Widget Slider: modo de leitura adicionado, suporte gradiente para cores e uma opção para colocar passos dentro da barra deslizante (# 244)\nWidget suspenso: cor de fundo condicional adicionada (# 198), modo somente leitura (# 201) e opção para mostrar valor sem texto (# 201)\nItem da tabela: foi adicionada a ordenação multi- colunas (# 234)",
+        "nl": "Slider-widget: alleen-lezen modus toegevoegd, kleurverloopondersteuning en een optie om stappen in de schuifbalk te plaatsen (#244)\nDropdown widget: voorwaardelijke achtergrondkleur (#198) toegevoegd, alleen-lezen modus (#201) en optie om waarde te tonen zonder tekst (#201)\nTabel-widget: multi-kolom-sorteer (#234) toegevoegd",
+        "fr": "Widget Slider: ajouté mode lecture seule, support de dégradé pour les couleurs et une option pour placer les étapes à l'intérieur de la barre de curseur (#244)\nWidget déroulant : ajout de la couleur de fond conditionnelle (#198), mode lecture seule (#201) et option pour afficher la valeur sans texte (#201)\nWidget de table: ajout d'un tri multicolonne (#234)",
+        "it": "Widget Slider: aggiunta di sola lettura, supporto gradiente per i colori e un'opzione per posizionare i passaggi all'interno della barra cursore (#244)\nWidget di discesa: aggiunto colore di sfondo condizionale (#198), modalità di sola lettura (#201) e opzione per mostrare il valore senza testo (#201)\nWidget della tabella: aggiunto multi-colonna (#234)",
+        "es": "Widget deslizante: modo solo lectura añadido, soporte gradiente para colores y una opción para colocar pasos dentro de la barra deslizante (#244)\nWidget desplegable: añadido color de fondo condicional (#198), modo solo lectura (#201) y opción para mostrar valor sin texto (#201)\nWidget de mesa: añadido multi-columna (#234)",
+        "pl": "Widget suwaka: dodany tryb tylko do odczytu, wsparcie gradientu kolorów i możliwość umieszczenia kroków wewnątrz paska suwaka (# 244)\nWidget Dropdown: dodany kolor tła warunkowego (# 198), tryb tylko do odczytu (# 201) i opcja wyświetlania wartości bez tekstu (# 201)\nWidget tabeli: dodany wielokolumnowy sort (# 234)",
+        "uk": "Slider віджет: додано режим зчитування, градієнтовне забезпечення кольорів і варіант для розміщення кроків всередині планки (#244)\nВидалити віджет: додано умовний фоновий колір (#198), режим читання (#201) і можливість показати значення без тексту (#201)\nНастільний віджет: додано багатоколірний сорт (#234)",
+        "zh-cn": "滑动部件: 添加只读模式, 颜色的梯度支持和将步骤放置在滑动栏中的选项( # 244)\n下拉部件: 添加有条件的背景颜色 (# 198), 仅读模式 (# 201) 和不显示文本的选项 (# 201)\n表格部件: 添加多列类型 (# 234)"
+      },
       "0.7.2": {
         "en": "Fix button click and hold for mobile devices (#192)",
         "de": "Fix-Taste klicken und halten für mobile Geräte (#192)",
@@ -80,19 +93,6 @@
         "pl": "Naprawiony przycisk nie działa na ekranach dotykowych (# 192)\nDodano obsługę HTML dla komórek widget tabeli (# 196)",
         "uk": "Виправлена кнопка не працює на сенсорних екранах (#192)\nДодано підтримку HTML для клітин віджету таблиці (#196)",
         "zh-cn": "固定按钮不工作于触摸屏(# 192)\n为表格部件单元格添加了 HTML 支持 (# 196)"
-      },
-      "0.6.1": {
-        "en": "Fixed background label in editor for dropdown widget\nAdded sort option for table widget (#191)",
-        "de": "Behobenes Hintergrundlabel im Editor für Dropdown Widget\nSortieroption für Tabelle Widget hinzugefügt (#191)",
-        "ru": "Фиксированная фоновая метка в редакторе для выпадающего виджета\nДобавлен вариант сортировки для виджета таблицы (#191)",
-        "pt": "Rótulo de fundo fixo no editor para o elemento suspenso\nOpção de ordenação adicionada para widget de tabela (# 191)",
-        "nl": "Vaste achtergrond label in editor voor dropdown widget\nSorteeroptie toegevoegd voor tabelwidget (#191)",
-        "fr": "Marque de fond fixe dans l'éditeur pour le widget déroulant\nAjout de l'option tri pour le widget de table (#191)",
-        "it": "Etichetta di sfondo fissa in editor per widget a discesa\nOpzione di selezione aggiuntiva per widget di tabella (#191)",
-        "es": "Etiqueta de fondo fija en el editor para el widget desplegable\nAñadido tipo de opción para el widget de mesa (#191)",
-        "pl": "Naprawiono etykietę tła w edytorze dla widgetu rozwijanego\nDodano opcję sortowania dla widżetu tabeli (# 191)",
-        "uk": "Фіксований фон етикетка в редакторі для випадаючого віджету\nДодано варіант сортування для настільного віджету (#191)",
-        "zh-cn": "下拉部件在编辑器中的固定背景标签\n为表格部件添加排序选项 (# 191)"
       }
     },
     "titleLang": {
