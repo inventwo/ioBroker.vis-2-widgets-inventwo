@@ -19,6 +19,25 @@ export interface UniversalWidgetDefaultState {
     innerShadowColor: string;
 }
 
+export type ShapeType =
+    | 'rectangle'
+    | 'triangle'
+    | 'diamond'
+    | 'pentagon'
+    | 'hexagon'
+    | 'heptagon'
+    | 'octagon'
+    | 'star'
+    | 'custom';
+
+export interface UniversalWidgetShapeStyles {
+    shape: ShapeType;
+    shapeRotation: number;
+    shapeCornerRadius: number;
+    /** Polygon points in clip-path notation, e.g. "40% 0%, 100% 50%, 40% 100%, 0% 50%" */
+    shapeCustomPath: string;
+}
+
 export interface UniversalWidgetStylesStyles
     extends
         UniversalWidgetTextStyles,
@@ -30,7 +49,8 @@ export interface UniversalWidgetStylesStyles
         UniversalWidgetBorderStyles,
         UniversalWidgetOuterShadowStyles,
         UniversalWidgetInnerShadowStyles,
-        UniversalWidgetClickFeedbackStyles {}
+        UniversalWidgetClickFeedbackStyles,
+        UniversalWidgetShapeStyles {}
 
 export interface UniversalWidgetStyles extends UniversalWidgetDefaultState {
     contentSize: number | string;

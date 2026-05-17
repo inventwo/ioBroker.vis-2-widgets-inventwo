@@ -8,6 +8,7 @@ import type {
     UniversalWidgetDefaultState,
     UniversalWidgetInnerShadowStyles,
     UniversalWidgetOuterShadowStyles,
+    UniversalWidgetShapeStyles,
     UniversalWidgetTextStyles,
     UniversalWidgetTransparencyStyles,
 } from './UniversalWidgetValueData';
@@ -28,7 +29,8 @@ export interface UniversalCompleteRxData
         UniversalWidgetTransparencyStyles,
         UniversalWidgetOuterShadowStyles,
         UniversalWidgetInnerShadowStyles,
-        UniversalWidgetClickFeedbackStyles {}
+        UniversalWidgetClickFeedbackStyles,
+        UniversalWidgetShapeStyles {}
 
 export interface UniversalRxData {
     oid: null | string;

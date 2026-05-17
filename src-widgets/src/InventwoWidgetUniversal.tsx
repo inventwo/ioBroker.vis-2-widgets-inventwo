@@ -20,6 +20,7 @@ import type {
     UniversalWidgetContentStyles,
     UniversalWidgetInnerShadowStyles,
     UniversalWidgetOuterShadowStyles,
+    UniversalWidgetShapeStyles,
     UniversalWidgetSpacingStyles,
     UniversalWidgetStyles,
     UniversalWidgetStylesStyles,
@@ -1939,6 +1940,76 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     ],
                 },
 
+                {
+                    name: 'attr_group_css_shape',
+                    label: 'attr_group_css_shape',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'shapeStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
+                            name: 'shape',
+                            type: 'select',
+                            options: [
+                                { value: 'rectangle', label: 'rectangle' },
+                                { value: 'triangle', label: 'triangle' },
+                                { value: 'diamond', label: 'diamond' },
+                                { value: 'pentagon', label: 'pentagon' },
+                                { value: 'hexagon', label: 'hexagon' },
+                                { value: 'heptagon', label: 'heptagon' },
+                                { value: 'octagon', label: 'octagon' },
+                                { value: 'star', label: 'star' },
+                                { value: 'custom', label: 'custom' },
+                            ],
+                            default: 'rectangle',
+                            label: 'shape',
+                            hidden: '!!data.shapeStyleFromWidget',
+                        },
+                        {
+                            name: 'shapeCustomPath',
+                            type: 'text',
+                            label: 'shape_custom_path',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape != "custom"',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_shape_custom_hint',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape != "custom"',
+                        },
+                        {
+                            name: 'shapeRotation',
+                            type: 'slider',
+                            min: 0,
+                            max: 359,
+                            step: 1,
+                            default: 0,
+                            label: 'shape_rotation',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape == "rectangle" || data.shape == "custom" || !data.shape',
+                        },
+                        {
+                            name: 'shapeCornerRadius',
+                            type: 'slider',
+                            min: 0,
+                            max: 30,
+                            step: 0.5,
+                            default: 0,
+                            label: 'shape_corner_radius',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape == "rectangle" || !data.shape',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_shape_hint',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape == "rectangle" || !data.shape',
+                        },
+                    ],
+                },
+
                 // check here all possible types https://github.com/ioBroker/ioBroker.vis/blob/react/src/src/Attributes/Widget/SCHEMA.md
             ],
             visDefaultStyle: {
@@ -2433,6 +2504,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 'clickFeedbackFromWidget',
                 this.groupAttrs.attr_group_click_feedback,
             ) as UniversalWidgetClickFeedbackStyles),
+            ...(this.getStyle(
+                'shapeStyleFromWidget',
+                this.groupAttrs.attr_group_css_shape,
+            ) as UniversalWidgetShapeStyles),
         };
 
         if (this.state.showFeedback && !this.state.rxData.clickThrough) {
@@ -3333,11 +3408,512 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
+    // ── Shape helpers ──────────────────────────────────────────────────────────
+
+    private computePolygonPoints(sides: number, rotation: number): Array<[number, number]> {
+        const cx = 50;
+        const cy = 50;
+        const r = 50;
+        const pts: Array<[number, number]> = [];
+        for (let i = 0; i < sides; i++) {
+            const angle = ((i * 360) / sides + rotation - 90) * (Math.PI / 180);
+            pts.push([cx + r * Math.cos(angle), cy + r * Math.sin(angle)]);
+        }
+        return pts;
+    }
+
+    private computeStarPoints(rotation: number): Array<[number, number]> {
+        const cx = 50;
+        const cy = 50;
+        const outerR = 50;
+        // inner radius for a regular 5-pointed star
+        const innerR = outerR * (Math.sin((18 * Math.PI) / 180) / Math.sin((54 * Math.PI) / 180));
+        const numPoints = 5;
+        const pts: Array<[number, number]> = [];
+        for (let i = 0; i < numPoints * 2; i++) {
+            const angle = ((i * 180) / numPoints + rotation - 90) * (Math.PI / 180);
+            const r = i % 2 === 0 ? outerR : innerR;
+            pts.push([cx + r * Math.cos(angle), cy + r * Math.sin(angle)]);
+        }
+        return pts;
+    }
+
+    private getShapePoints(shape: string, rotation: number): Array<[number, number]> | null {
+        switch (shape) {
+            case 'triangle':
+                return this.computePolygonPoints(3, rotation);
+            case 'diamond':
+                return this.computePolygonPoints(4, rotation);
+            case 'pentagon':
+                return this.computePolygonPoints(5, rotation);
+            case 'hexagon':
+                return this.computePolygonPoints(6, rotation);
+            case 'heptagon':
+                return this.computePolygonPoints(7, rotation);
+            case 'octagon':
+                return this.computePolygonPoints(8, rotation);
+            case 'star':
+                return this.computeStarPoints(rotation);
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Parses a user-supplied polygon path string in clip-path notation into SVG coordinate points.
+     * Accepts formats like:
+     *   "40% 0%, 100% 50%, 40% 100%, 0% 50%"   (with % signs)
+     *   "40 0, 100 50, 40 100, 0 50"            (without % signs, values 0–100)
+     * Returns null when the input is empty or cannot be parsed (≥3 valid points required).
+     */
+    private parseCustomPath(pathStr: string): Array<[number, number]> | null {
+        if (!pathStr?.trim()) {
+            return null;
+        }
+        const pairs = pathStr
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean);
+        const points: Array<[number, number]> = [];
+        for (const pair of pairs) {
+            const parts = pair.split(/\s+/).filter(Boolean);
+            if (parts.length < 2) {
+                return null;
+            }
+            // Strip optional % suffix – values are already in 0–100 range (= SVG viewBox units)
+            const x = parseFloat(parts[0].replace('%', ''));
+            const y = parseFloat(parts[1].replace('%', ''));
+            if (isNaN(x) || isNaN(y)) {
+                return null;
+            }
+            points.push([x, y]);
+        }
+        return points.length >= 3 ? points : null;
+    }
+
+    private getClipPath(shape: string, rotation: number): string {
+        const pts = this.getShapePoints(shape, rotation);
+        if (!pts) {
+            return '';
+        }
+        return `polygon(${pts.map(([x, y]) => `${x.toFixed(2)}% ${y.toFixed(2)}%`).join(', ')})`;
+    }
+
+    private getSvgPolygonPoints(shape: string, rotation: number): string {
+        const pts = this.getShapePoints(shape, rotation);
+        if (!pts) {
+            return '';
+        }
+        return pts.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(' ');
+    }
+
+    private getStrokeDashArray(borderStyle: string | undefined, borderSize: number): string | undefined {
+        switch (borderStyle) {
+            case 'dashed':
+                return `${borderSize * 5} ${borderSize * 3}`;
+            case 'dotted':
+                return `${borderSize} ${borderSize * 2}`;
+            default:
+                return undefined;
+        }
+    }
+
+    /**
+     * Builds an SVG path string (0–100 coordinate space) for a regular polygon with
+     * optional rounded corners using quadratic Bézier curves.
+     */
+    private computeRoundedPolygonPath(points: Array<[number, number]>, radius: number): string {
+        const n = points.length;
+        if (radius <= 0) {
+            return `M ${points.map(([x, y]) => `${x.toFixed(3)},${y.toFixed(3)}`).join(' L ')} Z`;
+        }
+        const corners = points.map((curr, idx) => {
+            const prev = points[(idx - 1 + n) % n];
+            const next = points[(idx + 1) % n];
+            const v1: [number, number] = [prev[0] - curr[0], prev[1] - curr[1]];
+            const len1 = Math.hypot(v1[0], v1[1]);
+            const v2: [number, number] = [next[0] - curr[0], next[1] - curr[1]];
+            const len2 = Math.hypot(v2[0], v2[1]);
+            const r = Math.min(radius, len1 / 2, len2 / 2);
+            return {
+                vertex: curr,
+                pIn: [curr[0] + (v1[0] / len1) * r, curr[1] + (v1[1] / len1) * r] as [number, number],
+                pOut: [curr[0] + (v2[0] / len2) * r, curr[1] + (v2[1] / len2) * r] as [number, number],
+            };
+        });
+        let d = `M ${corners[0].pIn[0].toFixed(3)},${corners[0].pIn[1].toFixed(3)}`;
+        for (let i = 0; i < n; i++) {
+            const c = corners[i];
+            const nextC = corners[(i + 1) % n];
+            d += ` Q ${c.vertex[0].toFixed(3)},${c.vertex[1].toFixed(3)} ${c.pOut[0].toFixed(3)},${c.pOut[1].toFixed(3)}`;
+            d += ` L ${nextC.pIn[0].toFixed(3)},${nextC.pIn[1].toFixed(3)}`;
+        }
+        d += ' Z';
+        return d;
+    }
+
+    /** Scales every numeric value in an SVG path string from the 0–100 space to the 0–1 space. */
+    private scalePathTo01(pathD: string): string {
+        return pathD.replace(/-?\d+\.?\d*/g, match => (parseFloat(match) / 100).toFixed(5));
+    }
+
+    // ── Polygon card renderer ──────────────────────────────────────────────────
+
+    buildPolygonCard(
+        valueData: UniversalWidgetValueData,
+        i: number | null,
+        content: React.JSX.Element | string,
+        shape: string,
+    ): React.JSX.Element {
+        const rotation = valueData.styles.shapeRotation ?? 0;
+        const cornerRadius = valueData.styles.shapeCornerRadius ?? 0;
+        // For 'custom' shapes the user provides raw polygon points; all other shapes are computed.
+        const points =
+            shape === 'custom'
+                ? this.parseCustomPath(valueData.styles.shapeCustomPath ?? '')
+                : this.getShapePoints(shape, rotation);
+
+        if (!points || points.length === 0) {
+            // Fallback to rectangle card when shape cannot be computed (e.g. empty/invalid custom path).
+            // We must NOT call buildCard with the original valueData here because buildCard would
+            // see shape='custom' again and call buildPolygonCard → infinite recursion.
+            // Force shape='rectangle' so buildCard takes the rectangle branch directly.
+            const fallbackData = {
+                ...valueData,
+                styles: { ...valueData.styles, shape: 'rectangle' as const },
+            };
+            return this.buildCard(fallbackData, i, content);
+        }
+
+        // SVG path in 0–100 coordinate space (matches viewBox="0 0 100 100")
+        const pathD = this.computeRoundedPolygonPath(points, cornerRadius);
+        // Same path in 0–1 space for clipPathUnits="objectBoundingBox"
+        const pathD01 = this.scalePathTo01(pathD);
+
+        // Outer shadow: separate SVG layer behind the background.
+        // Uses feMorphology(dilate) for size/spread and feGaussianBlur for blur, both as SVG filter
+        // primitives applied to the shadow path directly – no CSS blur() which would just fade the
+        // clipped polygon instead of expanding it.
+        // blur=0 AND size=0 → no filter → purely hard shadow polygon (like box-shadow blur:0 spread:0).
+        const outerShadowX = valueData.styles.outerShadowX ?? 0;
+        const outerShadowY = valueData.styles.outerShadowY ?? 0;
+        const outerShadowBlurValue = valueData.styles.outerShadowBlur ?? 0;
+        const outerShadowSizeValue = valueData.styles.outerShadowSize ?? 0;
+        const hasOuterShadow =
+            !!valueData.outerShadowColor &&
+            (outerShadowBlurValue > 0 || outerShadowSizeValue > 0 || outerShadowX !== 0 || outerShadowY !== 0);
+
+        // Inner shadow: computed via SVG filter (feFlood / feComposite "outside-bleed" technique)
+        const innerShadowX = valueData.styles.innerShadowX ?? 0;
+        const innerShadowY = valueData.styles.innerShadowY ?? 0;
+        const innerShadowBlur = valueData.styles.innerShadowBlur ?? 0;
+        const innerShadowSize = valueData.styles.innerShadowSize ?? 0;
+        const hasInnerShadow =
+            !!valueData.innerShadowColor &&
+            (innerShadowBlur > 0 || innerShadowSize > 0 || innerShadowX !== 0 || innerShadowY !== 0);
+        // stdDeviation=0 causes feGaussianBlur to silently discard output in some browsers → skip it entirely
+        const innerShadowStdDev = (innerShadowBlur + innerShadowSize) / 2;
+        // result name for the step feeding into the final feComposite (might skip blur step)
+        const innerShadowBlurResult = innerShadowStdDev > 0 ? 'shadow-blur' : 'shadow-offset';
+
+        // Border via SVG path stroke overlay
+        const borderSize = Math.max(
+            valueData.styles.borderSizeTop ?? 0,
+            valueData.styles.borderSizeBottom ?? 0,
+            valueData.styles.borderSizeLeft ?? 0,
+            valueData.styles.borderSizeRight ?? 0,
+        );
+        const showBorder =
+            borderSize > 0 &&
+            !!valueData.borderColor &&
+            valueData.styles.borderStyle !== 'none' &&
+            !!valueData.styles.borderStyle;
+        const strokeDashArray = this.getStrokeDashArray(valueData.styles.borderStyle as string | undefined, borderSize);
+
+        // Unique IDs scoped to this widget instance (and button index for separated-buttons mode)
+        const widgetId = (this.props.id ?? 'w').replace(/[^a-zA-Z0-9]/g, '_');
+        const suffix = i !== null ? `_${i}` : '';
+        // CSS clip-path reference (objectBoundingBox → scales with the HTML element)
+        const clipId = `inventwo_cp_${widgetId}${suffix}`;
+        // SVG clip-path for foreignObject (userSpaceOnUse → same coordinate space as the viewBox)
+        const clipIdSvg = `inventwo_cp_svg_${widgetId}${suffix}`;
+        const innerShadowFilterId = `inventwo_is_${widgetId}${suffix}`;
+        const outerShadowFilterId = `inventwo_os_${widgetId}${suffix}`;
+
+        return (
+            <div
+                key={i !== null ? i : ''}
+                style={{
+                    width: i === null ? '100%' : undefined,
+                    height: i === null ? '100%' : undefined,
+                    flex: i !== null ? `0 0 ${this.state.rxData.buttonSize}px` : undefined,
+                    position: 'relative',
+                }}
+            >
+                {/*
+                 * Outer shadow layer – rendered first (= visually behind everything else).
+                 * A separate SVG with the polygon path + SVG filter:
+                 *  – feMorphology(dilate) expands the shadow polygon outward (= "Größe" / spread)
+                 *  – feGaussianBlur softens the edges (= "Verwischen" / blur)
+                 *  – CSS transform handles the pixel-exact x/y offset
+                 * No filter at all when blur=0 AND size=0 → hard shadow.
+                 */}
+                {hasOuterShadow && (
+                    <svg
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            overflow: 'visible',
+                            pointerEvents: 'none',
+                            transform:
+                                outerShadowX !== 0 || outerShadowY !== 0
+                                    ? `translate(${outerShadowX}px, ${outerShadowY}px)`
+                                    : undefined,
+                        }}
+                        viewBox="0 0 100 100"
+                        preserveAspectRatio="none"
+                    >
+                        {(outerShadowBlurValue > 0 || outerShadowSizeValue > 0) && (
+                            <defs>
+                                <filter
+                                    id={outerShadowFilterId}
+                                    x="-50%"
+                                    y="-50%"
+                                    width="200%"
+                                    height="200%"
+                                >
+                                    {/* Dilate first to expand the shadow outward (spread / Größe) */}
+                                    {outerShadowSizeValue > 0 && (
+                                        <feMorphology
+                                            in="SourceGraphic"
+                                            operator="dilate"
+                                            radius={outerShadowSizeValue}
+                                            result="dilated"
+                                        />
+                                    )}
+                                    {/* Then blur; skip entirely when blur=0 so we get hard edges */}
+                                    {outerShadowBlurValue > 0 && (
+                                        <feGaussianBlur
+                                            in={outerShadowSizeValue > 0 ? 'dilated' : 'SourceGraphic'}
+                                            stdDeviation={outerShadowBlurValue}
+                                        />
+                                    )}
+                                </filter>
+                            </defs>
+                        )}
+                        <path
+                            d={pathD}
+                            fill={valueData.outerShadowColor || 'transparent'}
+                            filter={
+                                outerShadowBlurValue > 0 || outerShadowSizeValue > 0
+                                    ? `url(#${outerShadowFilterId})`
+                                    : undefined
+                            }
+                        />
+                    </svg>
+                )}
+                {/*
+                 * Background SVG
+                 * – defines clip paths (objectBoundingBox for HTML, userSpaceOnUse for SVG)
+                 * – defines the inner shadow filter (SVG primitives, polygon-aware)
+                 * – renders background via <foreignObject> so CSS `background` is used,
+                 *   which supports linear-gradient / radial-gradient strings
+                 */}
+                <svg
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'visible',
+                        pointerEvents: 'none',
+                    }}
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="none"
+                >
+                    <defs>
+                        {/* For CSS clip-path on the interactive content div (HTML context) */}
+                        <clipPath
+                            id={clipId}
+                            clipPathUnits="objectBoundingBox"
+                        >
+                            <path d={pathD01} />
+                        </clipPath>
+                        {/* For SVG clip-path attribute on foreignObject (SVG userSpace context) */}
+                        <clipPath id={clipIdSvg}>
+                            <path d={pathD} />
+                        </clipPath>
+
+                        {/* Inner shadow filter: "outside bleed" technique
+                            Applied to a separate <path> element (not the foreignObject) so that
+                            SourceAlpha correctly reflects the polygon shape – not the bounding rectangle.
+                            SVG processes filters BEFORE clip-path, so applying to foreignObject would
+                            cause SourceAlpha to always be a rectangle. Using a dedicated path avoids this.
+                            The filter outputs ONLY the shadow (no feMerge with SourceGraphic) so the
+                            path's own fill is fully replaced by the transparent shadow overlay.
+                            1. Flood white → composite OUT with SourceAlpha → get the area outside the shape
+                            2. Offset + blur → the outside region bleeds inward
+                            3. Composite IN with SourceAlpha → keep only what is inside the shape
+                            4. Color it → output shadow only (no merge with SourceGraphic)             */}
+                        {hasInnerShadow && (
+                            <filter
+                                id={innerShadowFilterId}
+                                x="-50%"
+                                y="-50%"
+                                width="200%"
+                                height="200%"
+                            >
+                                <feFlood
+                                    floodColor="white"
+                                    floodOpacity={1}
+                                    result="inverted-flood"
+                                />
+                                <feComposite
+                                    in="inverted-flood"
+                                    in2="SourceAlpha"
+                                    operator="out"
+                                    result="outside"
+                                />
+                                <feOffset
+                                    in="outside"
+                                    dx={innerShadowX}
+                                    dy={innerShadowY}
+                                    result="shadow-offset"
+                                />
+                                {/* Skip feGaussianBlur entirely when stdDeviation=0 – some browsers
+                                    discard all output when stdDeviation is exactly 0 instead of
+                                    treating it as a pass-through, which would make the shadow invisible. */}
+                                {innerShadowStdDev > 0 && (
+                                    <feGaussianBlur
+                                        in="shadow-offset"
+                                        stdDeviation={innerShadowStdDev}
+                                        result="shadow-blur"
+                                    />
+                                )}
+                                <feComposite
+                                    in={innerShadowBlurResult}
+                                    in2="SourceAlpha"
+                                    operator="in"
+                                    result="shadow-inner"
+                                />
+                                <feFlood
+                                    floodColor={valueData.innerShadowColor ?? 'black'}
+                                    result="shadow-color"
+                                />
+                                <feComposite
+                                    in="shadow-color"
+                                    in2="shadow-inner"
+                                    operator="in"
+                                />
+                            </filter>
+                        )}
+                    </defs>
+
+                    {/* The background polygon.
+                        Uses <foreignObject> so that CSS `background` is the rendering property,
+                        which fully supports linear-gradient / radial-gradient strings.
+                        The clip-path attribute clips the foreignObject to the polygon outline.
+                        No filter here – see the inner shadow <path> below. */}
+                    <foreignObject
+                        x="0"
+                        y="0"
+                        width="100"
+                        height="100"
+                        clipPath={`url(#${clipIdSvg})`}
+                        opacity={valueData.styles.backgroundOpacity}
+                    >
+                        {/* div must be in the HTML namespace; React handles the namespace switch automatically */}
+                        <div
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                background: valueData.background || 'transparent',
+                            }}
+                        />
+                    </foreignObject>
+
+                    {/* Inner shadow overlay: the filter is applied to a <path> whose SourceAlpha
+                        naturally matches the polygon shape. SVG filters run before clip-path, so
+                        using foreignObject+clipPath would always produce a rectangular SourceAlpha.
+                        The filter outputs ONLY the shadow (last primitive = output, no feMerge),
+                        so the path's fill is entirely replaced by the transparent shadow image. */}
+                    {hasInnerShadow && (
+                        <path
+                            d={pathD}
+                            fill="black"
+                            filter={`url(#${innerShadowFilterId})`}
+                        />
+                    )}
+                </svg>
+
+                {/* Interactive content layer – clipped to the polygon via <clipPath> */}
+                <div
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        clipPath: `url(#${clipId})`,
+                        opacity: valueData.styles.contentOpacity,
+                        cursor: this.state.rxData.type !== 'readonly' ? 'pointer' : undefined,
+                        touchAction: 'none',
+                        color: 'unset',
+                    }}
+                    onPointerDown={e => this.onBtnMouseDown(i, e)}
+                    onPointerUp={e => this.onBtnMouseUp(e)}
+                    onPointerCancel={e => this.onBtnMouseUp(e)}
+                >
+                    <div
+                        style={{
+                            padding: `${valueData.styles.paddingTop ?? 10}px ${valueData.styles.paddingRight ?? 10}px ${valueData.styles.paddingBottom ?? 10}px ${valueData.styles.paddingLeft ?? 10}px`,
+                            boxSizing: 'border-box',
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    >
+                        {content}
+                    </div>
+                </div>
+
+                {/* SVG border overlay – uses the same rounded path; vector-effect keeps stroke width in screen pixels */}
+                {showBorder && (
+                    <svg
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            overflow: 'visible',
+                            pointerEvents: 'none',
+                        }}
+                        viewBox="0 0 100 100"
+                        preserveAspectRatio="none"
+                    >
+                        <path
+                            d={pathD}
+                            fill="none"
+                            stroke={valueData.borderColor || undefined}
+                            strokeWidth={borderSize}
+                            strokeDasharray={strokeDashArray}
+                            strokeLinecap={valueData.styles.borderStyle === 'dotted' ? 'round' : 'butt'}
+                            vectorEffect="non-scaling-stroke"
+                        />
+                    </svg>
+                )}
+            </div>
+        );
+    }
+
     buildCard(
         valueData: UniversalWidgetValueData,
         i: number | null,
         content: React.JSX.Element | string,
     ): React.JSX.Element {
+        const shape = valueData.styles.shape ?? 'rectangle';
+        if (shape && shape !== 'rectangle') {
+            return this.buildPolygonCard(valueData, i, content, shape);
+        }
+
         let shadow = '';
         if (valueData.outerShadowColor) {
             shadow += `${valueData.styles.outerShadowX}px ${valueData.styles.outerShadowY}px ${valueData.styles.outerShadowBlur}px ${valueData.styles.outerShadowSize}px ${valueData.outerShadowColor}`;

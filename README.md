@@ -81,6 +81,33 @@ Every aspect of the widget is customizable:
 
 For detailed design examples see [here](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/docs/universal-widget-design-examples.md).
 
+### Polygon shapes
+
+Widgets are not limited to rectangles. The **Shape** setting lets you choose from built-in polygon forms or define a fully custom outline:
+
+| Shape | Description |
+|-------|-------------|
+| Rectangle | Default — standard rectangular card |
+| Triangle | Equilateral triangle |
+| Diamond | 4-sided rotated square |
+| Pentagon | 5-sided polygon |
+| Hexagon | 6-sided polygon — perfect for honeycomb layouts |
+| Heptagon | 7-sided polygon |
+| Octagon | 8-sided polygon |
+| Star | 5-pointed star |
+| **Custom** | Any polygon — enter clip-path points manually |
+
+![Preview Shapes](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_shapes.png)
+
+**Additional shape options:**
+- **Rotation** (0–359°) — rotate any built-in polygon to any angle
+- **Corner radius** (0–30) — rounds all vertices uniformly using Bézier curves; works for every shape including custom
+- **Custom polygon points** — comma-separated `X% Y%` pairs in clockwise order, e.g. `40% 0%, 100% 50%, 40% 100%, 0% 50%` · Create paths visually at [https://bennettfeely.com/clippy/](https://bennettfeely.com/clippy/)
+
+All existing features — inner/outer shadow, border, gradient backgrounds, click feedback — work with every shape.
+
+> **Example:** Hexagonal honeycomb dashboard → [docs/example-views/hexagonal-view.md](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/docs/example-views/hexagonal-view.md)
+
 ---
 
 ## Widget - Slider
@@ -226,6 +253,9 @@ Renders a bullet-point list from a single text value — either from a data poin
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Universal Widget: Add polygon shape support (triangle, diamond, pentagon, hexagon, heptagon, octagon, star) with configurable rotation and corner radius
+
 ### 0.9.0 (2026-05-17)
 - Added document with example designs for universal widget
 - Marquee widget: new scrolling text widget with configurable speed, direction, loop count, gap and pause-on-hover (#5)
