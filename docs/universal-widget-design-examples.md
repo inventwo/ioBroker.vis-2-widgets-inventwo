@@ -1,40 +1,40 @@
-# Universal Widget – Designvorschläge
+# Universal Widget – Design Examples
 
-Hier sind 15 verschiedene Designvorschläge für das **Universal Widget** (Typ: `switch`, Modus: `singleButton`).  
-Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt werden.
+15 different design presets for the **Universal Widget** (type: `switch`, mode: `singleButton`).  
+The JSON snippets can be imported directly into ioBroker vis-2 via the Import dialog.
 
 ---
 
-## Übersicht
+## Overview
 
-![Preview Designs](../img/preview_univseral_design_examples.png)
+![Preview Designs](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_univseral_design_examples.png)
 
-| # | Design | Hintergrund | Rahmen | Ecken | Schatten | Stil |
+| # | Design | Background | Border | Corners | Shadow | Style |
 |---|---|---|---|---|---|---|
-| 1 | **Modern Minimal** | Weiß | Unten 3 px, Indigo | 10 px, gleich | Subtil | Flach, klar |
-| 2 | **Cyberpunk Neon** | Fast Schwarz | 1 px, Cyan | Eckig, 0 px | Neon-Glow | Futuristisch |
-| 3 | **Retro Classic** | Beige/Tan | 3 px, Dunkelbraun | 2 px | Hart-Offset | Nostalgisch |
-| 4 | **Abstract Gradient** | Magenta→Violett→Cyan | Keiner | Diagonal | Farbiger Soft | Künstlerisch |
-| 5 | **Neumorphism** | Hellgrau | Keiner | 16 px, gleich | Dunkel + Hell | Soft, taktil |
-| 6 | **Dark Material** | Dunkel-Blaugrau | Links 3 px, Teal | 8 px, gleich | Elevation | VS-Code-Stil |
-| 7 | **Glassmorphism** | Weiß 15 % Opazität | 1 px, Weiß 30 % | 14 px, gleich | Frost | Transparent |
-| 8 | **Military Tactical** | Olivgrün | 2 px, Khaki | 0 px, scharf | Hart-Offset | Funktional |
-| 9 | **Bubblegum / Candy** | Hot Pink | Keiner | 55 px, Pill | Pink-Glow | Verspielt |
-| 10 | **Terminal / Matrix** | Schwarz | 1 px, Grün gestrichelt | 0 px | Grün-Glow | Hacker |
-| 11 | **Corporate Blue** | Navy | Keiner | 6 px | Subtil | Professionell |
-| 12 | **Sunset Warm** | Orange→Pink→Gelb | Keiner | 18 px | Warm-Glow | Warm, lebendig |
-| 13 | **Dark Luxury Gold** | Fast Schwarz (warm) | 1 px, Gold | 4 px | Gold-Schimmer | Edel, elegant |
-| 14 | **Ice / Arctic** | Eisblau | 1 px, Hellblau | 12 px | Kühl, hauchzart | Frisch, klar |
-| 15 | **Brutalist** | Signalgelb | 4 px, Schwarz | 0 px | Hart, Schwarz | Krass, raw |
+| 1 | **Modern Minimal** | White | Bottom 3 px, Indigo | 10 px, uniform | Subtle | Flat, clean |
+| 2 | **Cyberpunk Neon** | Near Black | 1 px, Cyan | Sharp, 0 px | Neon glow | Futuristic |
+| 3 | **Retro Classic** | Beige/Tan | 3 px, Dark brown | 2 px | Hard offset | Nostalgic |
+| 4 | **Abstract Gradient** | Magenta→Violet→Cyan | None | Diagonal | Coloured soft | Artistic |
+| 5 | **Neumorphism** | Light grey | None | 16 px, uniform | Dark + Light | Soft, tactile |
+| 6 | **Dark Material** | Dark blue-grey | Left 3 px, Teal | 8 px, uniform | Elevation | VS Code style |
+| 7 | **Glassmorphism** | White 15 % opacity | 1 px, White 30 % | 14 px, uniform | Frosted | Transparent |
+| 8 | **Military Tactical** | Olive green | 2 px, Khaki | 0 px, sharp | Hard offset | Functional |
+| 9 | **Bubblegum / Candy** | Hot pink | None | 55 px, pill | Pink glow | Playful |
+| 10 | **Terminal / Matrix** | Black | 1 px, Green dashed | 0 px | Green glow | Hacker |
+| 11 | **Corporate Blue** | Navy | None | 6 px | Subtle | Professional |
+| 12 | **Sunset Warm** | Orange→Pink→Yellow | None | 18 px | Warm glow | Warm, vivid |
+| 13 | **Dark Luxury Gold** | Near Black (warm) | 1 px, Gold | 4 px | Gold shimmer | Elegant, luxury |
+| 14 | **Ice / Arctic** | Ice blue | 1 px, Light blue | 12 px | Cool, delicate | Fresh, clear |
+| 15 | **Brutalist** | Signal yellow | 4 px, Black | 0 px | Hard, Black | Bold, raw |
 
 ---
 
 ## Design 1 – Modern Minimal
 
-**Konzept:** Klarer, aufgeräumter Look mit weißem Hintergrund und einem Indigo-Akzent als unterer Randlinie. Runde Ecken, kein Schnickschnack.
+**Concept:** Clean, uncluttered look with a white background and an Indigo accent as the bottom border line. Rounded corners, no fuss.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -121,11 +121,7 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
       "innerShadowSize": 0,
       "innerShadowColor": "rgba(0,0,0,0)",
       "background": "rgba(255, 255, 255, 1)",
-      "text": "Hallo",
-      "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0yMiA2YzAtMS4xLS45LTItMi0ySDRjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoMTZjMS4xIDAgMi0uOSAyLTJWNnptLTIgMGwtOCA1bC04LTVoMTZ6bTAgMTJINFY4bDggNWw4LTV2MTB6Ii8+PC9zdmc+",
-      "invertOrder": false,
-      "innerShadowColor": "rgba(0,0,0,0)",
-      "borderColor": "rgba(79, 70, 229, 1)",
+      "text": "Hello",
       "textColor": "rgba(30, 30, 30, 1)",
       "contentColor": "rgba(79, 70, 229, 1)",
       "compareBy1": "default",
@@ -159,10 +155,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 2 – Cyberpunk Neon
 
-**Konzept:** Dunkler, fast schwarzer Hintergrund mit leuchtendem Cyan-Neon. Scharfe, eckige Kanten (kein Border-Radius). Glühender Außenschatten simuliert den Neon-Effekt. Wirkung: futuristisch, digital, dystopisch.
+**Concept:** Dark, near-black background with a glowing cyan neon. Sharp, angular edges (no border radius). A glowing outer shadow simulates the neon effect. Vibe: futuristic, digital, dystopian.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -286,10 +282,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 3 – Retro Classic
 
-**Konzept:** Warme Erdtöne, dicker Rahmen, kaum abgerundete Ecken. Harter Schlagschatten ohne Weichzeichnung (Offset, aber kein Blur) erinnert an gedruckte Knöpfe aus den 80ern. Wirkung: altmodisch, robust, nostalgisch.
+**Concept:** Warm earth tones, thick border, barely rounded corners. A hard drop shadow without blur (offset, no blur) is reminiscent of printed buttons from the 80s. Vibe: old-school, robust, nostalgic.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -413,10 +409,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 4 – Abstract Gradient
 
-**Konzept:** Fetter Farbverlauf von Magenta über Violett nach Cyan – diagonal. Organisch-asymmetrische Ecken (diagonal gegenüberliegende Seiten sind groß/klein). Kein Rand, nur der Verlauf selbst wirkt. Wirkung: künstlerisch, lebendig, modern-abstrakt.
+**Concept:** Bold gradient from magenta through violet to cyan — diagonally. Organic, asymmetric corners (diagonally opposite sides are large/small). No border, only the gradient itself does the work. Vibe: artistic, vivid, modern-abstract.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -540,12 +536,12 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 5 – Neumorphism / Soft UI
 
-**Konzept:** Heller, einfarbiger Hintergrund (hellgrau). Zwei Schatten simulieren eine plastische Erhebung: ein dunkler Schatten unten-rechts (Außenschatten) und ein heller Eindruckschatten oben-links (Innenschatten). Kein Rand. Wirkung: weich, physisch, taktil, aktuell.
+**Concept:** Light, solid background (light grey). Two shadows simulate a plastic elevation: a dark shadow at the bottom-right (outer shadow) and a light inset shadow at the top-left (inner shadow). No border. Vibe: soft, physical, tactile, contemporary.
 
-> **Hinweis:** Damit der Effekt funktioniert, sollte die **Dashboard-/View-Hintergrundfarbe** ebenfalls `rgba(224, 229, 236, 1)` sein, damit Widget und Hintergrund nahtlos ineinander übergehen.
+> **Note:** For the effect to work, the **dashboard / view background color** should also be `rgba(224, 229, 236, 1)` so the widget and background blend seamlessly.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -669,10 +665,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 6 – Dark Material
 
-**Konzept:** Inspiriert vom Material Design Dark Mode. Dunkler Blaugrau-Hintergrund, Teal-Akzentfarbe als linke Randlinie (wie VS Code Aktivitätsleiste). Wirkung: modern, entwicklerorientiert, professionell-dunkel.
+**Concept:** Inspired by Material Design dark mode. Dark blue-grey background, teal accent colour as a left border line (like the VS Code activity bar). Vibe: modern, developer-oriented, professional-dark.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -785,12 +781,12 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 7 – Glassmorphism
 
-**Konzept:** Milchglas-Effekt durch halbtransparenten weißen Hintergrund (15 % Opazität) kombiniert mit weißem Rand (30 %). Wirkung: modern, leicht, transparent – am besten auf einem farbigen oder Bildschirmhintergrund.
+**Concept:** Frosted-glass effect through a semi-transparent white background (15 % opacity) combined with a white border (30 %). Vibe: modern, light, transparent — best placed on a colourful or image-based background.
 
-> **Hinweis:** Funktioniert am besten auf einem farbigen oder gemusterten View-Hintergrund, damit der Transparenz-Effekt sichtbar wird.
+> **Note:** Works best on a colourful or patterned view background so the transparency effect becomes visible.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -903,10 +899,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 8 – Military Tactical
 
-**Konzept:** Olivgrüner Hintergrund, khakifarbener Rand, scharfe Ecken. Harter Schlagschatten, keine Weichzeichnung. Minimalistisch-funktional wie ein Feldgerät. Wirkung: militärisch, rau, zuverlässig.
+**Concept:** Olive green background, khaki border, sharp corners. Hard drop shadow, no blur. Minimalist and functional like field equipment. Vibe: military, rugged, reliable.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -1019,10 +1015,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 9 – Bubblegum / Candy
 
-**Konzept:** Knalliges Hot-Pink, vollrunde Pillen-Form (55 px Radius), kein Rand, weicher rosa Glow. Wirkung: verspielt, fröhlich, kindlich-bunt. Passt zu Kinderzimmer-Dashboards oder Fun-Projekten.
+**Concept:** Bold hot-pink, fully rounded pill shape (55 px radius), no border, soft pink glow. Vibe: playful, cheerful, candy-coloured. Perfect for children's room dashboards or fun projects.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -1135,10 +1131,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 10 – Terminal / Matrix
 
-**Konzept:** Schwarzer Hintergrund, Matrix-Grün (`#00ff41`), gestrichelter Rand – wie ein altes Computerterminal oder die ikonische Matrix-Szene. Wirkung: hackerisch, digital-nostalgisch, minimalistisch-bedrohlich.
+**Concept:** Black background, Matrix green (`#00ff41`), dashed border — like an old computer terminal or the iconic Matrix scene. Vibe: hacker, digitally nostalgic, minimalist-ominous.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -1251,10 +1247,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 11 – Corporate Blue
 
-**Konzept:** Seriöses Navy-Blau, weißer Text, dezenter Schatten, leicht abgerundete Ecken. Kein ablenkendes Detail. Wirkung: professionell, vertrauenswürdig, Unternehmens-Dashboard.
+**Concept:** Serious navy blue, white text, subtle shadow, slightly rounded corners. No distracting detail. Vibe: professional, trustworthy, enterprise dashboard.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -1367,10 +1363,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 12 – Sunset Warm
 
-**Konzept:** Warmer Farbverlauf von Korallrot über Orange nach Gelb. Weiße Schrift und Icons, abgerundete Ecken, sanfter warmer Glow. Wirkung: einladend, lebendig, freudig – ideal für Wohn- oder Terrassen-Dashboard.
+**Concept:** Warm gradient from coral-red through orange to yellow. White text and icons, rounded corners, soft warm glow. Vibe: inviting, vivid, joyful — ideal for living room or patio dashboards.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -1483,10 +1479,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 13 – Dark Luxury Gold
 
-**Konzept:** Fast schwarzer, warm getönter Hintergrund mit Goldakzenten (Rand, Text, Icon). Dezenter goldener Glanz durch Außenschatten. Wirkung: edel, luxuriös, hochwertig – ideal für Premium-Dashboards.
+**Concept:** Near-black, warm-tinted background with gold accents (border, text, icon). Subtle golden sheen via outer shadow. Vibe: elegant, luxurious, premium — perfect for high-end dashboards.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -1599,10 +1595,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 14 – Ice / Arctic
 
-**Konzept:** Kühles Eisblau, heller Hintergrund, dezente blaue Umrandung, hauchzarter Schatten. Alles strahlt Ruhe und Kälte aus. Wirkung: frisch, klar, sachlich – gut für Klima- oder Temperatur-Dashboards.
+**Concept:** Cool ice blue, light background, subtle blue border, barely-there shadow. Everything radiates calm and coldness. Vibe: fresh, clear, factual — great for climate or temperature dashboards.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [
@@ -1715,10 +1711,10 @@ Die JSONs können direkt in ioBroker vis-2 über den Import-Dialog eingefügt we
 
 ## Design 15 – Brutalist
 
-**Konzept:** Signalgelber Hintergrund, 4 px schwarzer Vollrahmen, keinerlei Abrundung, harter schwarzer Schlagschatten ohne Blur. Maximaler Kontrast, null Kompromisse. Wirkung: provokant, laut, mutig – Kunst-Dashboard oder Alarmanzeige.
+**Concept:** Signal yellow background, 4 px solid black border, zero rounding, hard black drop shadow without any blur. Maximum contrast, zero compromise. Vibe: provocative, loud, bold — art dashboard or alarm display.
 
 <details>
-<summary>📋 JSON anzeigen / kopieren</summary>
+<summary>📋 Show / copy JSON</summary>
 
 ```json
 [

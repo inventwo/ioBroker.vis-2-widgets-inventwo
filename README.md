@@ -79,7 +79,7 @@ Every aspect of the widget is customizable:
 ![Preview CSS Customization](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_css_customization.png)
 ![Preview Design Examples](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_univseral_design_examples.png)
 
-For detailed design examples see [here](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/master/docs/universal-widget-design-examples.md).
+For detailed design examples see [here](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/docs/universal-widget-design-examples.md).
 
 ---
 
