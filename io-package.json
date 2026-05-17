@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.8.0",
+    "version": "0.9.0",
     "news": {
+      "0.9.0": {
+        "en": "Added document with example designs for universal widget\nMarquee widget: new scrolling text widget with configurable speed, direction, loop count, gap and pause-on-hover (#5)\nDropdown widget: optional conditional background color on title, configurable title padding (top, bottom, left, right) (#246)\nValue List widget: new widget that renders a bullet-point list from a text value (datapoint or manual), with configurable separator, bullet type, colors, spacing and padding (#2)",
+        "de": "Hinzugefügt Dokument mit Beispiel-Designs für universelles Widget\nMarquee Widget: neues Scrolling Text Widget mit konfigurierbaren Geschwindigkeit, Richtung, Schleifenzahl, Lücke und Pause-on-hover (#5)\nDropdown Widget: optionale bedingte Hintergrundfarbe auf Titel, konfigurierbare Titelpolsterung (oben, unten, links, rechts) (#246)\nWertliste Widget: neues Widget, das eine Punktliste aus einem Textwert (Datenpunkt oder Handbuch) mit konfigurierbarem Separator, Kugeltyp, Farben, Abstand und Polsterung (#2) macht",
+        "ru": "Добавлен документ с примерами конструкций для универсального виджета\nВиджет Marquee: новый виджет текста прокрутки с настраиваемой скоростью, направлением, количеством циклов, зазором и паузой на ходу (#5)\nВиджет Dropdown: дополнительный условный цвет фона на заголовке, настраиваемая прокладка заголовка (верхняя, нижняя, левая, правая) (#246)\nВиджет списка значений: новый виджет, который отображает список точек пули из значения текста (точка данных или руководство), с настраиваемым разделителем, типом пули, цветами, расстоянием и набивкой (#2)",
+        "pt": "Documento adicionado com desenhos de exemplo para widget universal\nWidget Marquee: novo widget de texto de rolagem com velocidade configurável, direção, contagem de loops, gap e pause-on-hover (# 5)\nWidget suspenso: cor condicional opcional de fundo no título, revestimento de título configurável (topo, inferior, esquerda, direita) (# 246)\nWidget Lista de Valores: novo widget que renderiza uma lista de pontos de bala de um valor de texto (ponto de dados ou manual), com separador configurável, tipo de bala, cores, espaçamento e enchimento (#2)",
+        "nl": "Document toegevoegd met voorbeeldontwerpen voor universele widget\nMarquee-widget: nieuwe scrollende tekstwidget met configureerbare snelheid, richting, loopaantal, spatie en pauze-on-hover (#5)\nDropdown widget: optionele voorwaardelijke achtergrondkleur op titel, configureerbare titelvulling (boven, onder, links, rechts) (#246)\nValue List-widget: nieuw widget dat een bullet-point-lijst maakt van een tekstwaarde (datapoint of manual), met configureerbare separator, bullet type, kleuren, spatie en padding (#2)",
+        "fr": "Ajout de document avec des modèles d'exemple pour widget universel\nWidget Marquee: nouveau widget texte défilant avec vitesse configurable, direction, nombre de boucles, gap et pause-on-hover (#5)\nWidget déroulant : couleur d'arrière-plan conditionnelle facultative sur le titre, rembourrage configurable du titre (en haut, en bas, à gauche, à droite) (#246)\nWidget de la liste des valeurs : nouveau widget qui rend une liste de points de puce à partir d'une valeur texte (datapoint ou manuel), avec séparateur configurable, type de puce, couleurs, espacement et rembourrage (#2)",
+        "it": "Aggiunto documento con esempi disegni per widget universale\nWidget Marquee: nuovo widget di testo di scorrimento con velocità configurabile, direzione, conteggio loop, gap e pausa-on-hover (#5)\nWidget di discesa: opzionale colore di sfondo condizionale sul titolo, imbottitura del titolo configurabile (top, bottom, left, right) (#246)\nValore Lista widget: nuovo widget che rende un elenco di punta di proiettile da un valore di testo (datapoint o manuale), con separatore configurabile, tipo di proiettile, colori, spaziatura e imbottitura (#2)",
+        "es": "Documento añadido con diseños de ejemplo para el widget universal\nWidget de marquee: nuevo widget de texto de desplazamiento con velocidad configurable, dirección, cuenta de bucle, brecha y pausa (#5)\nWidget desplegable: opcional color de fondo condicional en el título, relleno de título configurable (top, bottom, left, right) (#246)\nWidget de lista de valores: nuevo widget que hace una lista de puntos de bala de un valor de texto (dista o manual), con separador configurable, tipo de bala, colores, espaciamiento y relleno (#2)",
+        "pl": "Dodano dokument z przykładowymi wzorami uniwersalnego widgetu\nWidget Marquee: nowy widget tekstu przewijania z konfigurowalną prędkością, kierunkiem, liczbą pętli, luką i pause- on- hover (# 5)\nWidget Dropdown: opcjonalny warunkowy kolor tła na tytule, konfigurowalne pasmo tytułowe (top, bottom, left, right) (# 246)\nWidget Value List: nowy widget, który tworzy listę bullet- point z wartości tekstowej (punkt danych lub instrukcja), z konfigurowalnym separatorem, typem pocisku, kolorami, odstępem i wyściełaniem (# 2)",
+        "uk": "Додано документ з прикладами дизайну для універсального віджету\nMarquee віджет: новий прокручувальний текстовий віджет з можливістю настроювання швидкості, напрямок, кількість петлі, проміжок і пауза-на-перегін (#5)\nВипадковий віджет: опціональний умовний колір фону на заголовку, настроюється назва наповнювача (верхній, нижній, лівий, правий) (#246)\nValue List віджет: новий віджет, який надає список точок кульок з текстового значення (тариф або інструкція), з настроєним сепаратором, типом кулі, кольором, інтервалом та наповнювачем (#2)",
+        "zh-cn": "添加带有通用部件示例设计的文档\nMarquee 部件: 具有可配置速度、 方向、 循环计数、 空隙和悬浮的新的滚动文本部件 (# 5)\n下拉部件: 标题上的可选条件背景颜色, 可配置标题粘贴( 上, 下, 左, 右) (# 246)\n值列表部件:从文本值(数据点或手动)中生成一个项目点列表的新部件,其中包含可配置的分隔符,项目符号类型,颜色,间隔和补丁(# 2)"
+      },
       "0.8.0": {
         "en": "Slider widget: added read-only mode, gradient support for colors and an option to place steps inside the slider bar (#244)\nDropdown widget: added conditional background color (#198), read-only mode (#201) and option to show value without text (#201)\nTable widget: added multi-column sort (#234)",
         "de": "Slider Widget: hinzugefügtes Einlesemodus, Gradientenunterstützung für Farben und eine Möglichkeit, Schritte innerhalb der Schiebeleiste (#244) zu platzieren\nDropdown Widget: addiert bedingte Hintergrundfarbe (#198), Nur lesen Modus (#201) und Option, um Wert ohne Text anzuzeigen (#201)\nTabelle Widget: Mehrsäulensort hinzugefügt (#234)",
@@ -80,19 +93,6 @@
         "pl": "Naprawiono dwa razy wyzwalacze dotykowe na uniwersalnym widgecie stanu",
         "uk": "Виправлені сенсорні тригери двічі на універсальний державний віджет",
         "zh-cn": "在通用状态部件上两次固定触摸触发"
-      },
-      "0.6.2": {
-        "en": "Fixed button not working on touchscreens (#192)\nAdded HTML support for table widget cells (#196)",
-        "de": "Befestigte Schaltfläche nicht auf Touchscreens (#192)\nHTML-Unterstützung für Tabellen-Widget-Zellen hinzugefügt (#196)",
-        "ru": "Фиксированная кнопка не работает на сенсорных экранах (#192)\nДобавлена поддержка HTML для ячеек виджетов таблиц (#196)",
-        "pt": "Botão fixo que não funciona nos ecrãs tácteis (# 192)\nAdicionado suporte HTML para células de widget de tabela (# 196)",
-        "nl": "Vaste knop werkt niet op touchscreens (#192)\nHTML-ondersteuning voor tabelwidget-cellen toegevoegd (#196)",
-        "fr": "Bouton fixe ne fonctionnant pas sur les écrans tactiles (#192)\nAjout du support HTML pour les widgets de table (#196)",
-        "it": "Pulsante fisso non funzionante su touchscreen (#192)\nAggiunto supporto HTML per le celle dei widget di tabella (#196)",
-        "es": "Botón fijo que no funciona en pantallas táctiles (#192)\nSoporte HTML añadido para las células del widget de mesa (#196)",
-        "pl": "Naprawiony przycisk nie działa na ekranach dotykowych (# 192)\nDodano obsługę HTML dla komórek widget tabeli (# 196)",
-        "uk": "Виправлена кнопка не працює на сенсорних екранах (#192)\nДодано підтримку HTML для клітин віджету таблиці (#196)",
-        "zh-cn": "固定按钮不工作于触摸屏(# 192)\n为表格部件单元格添加了 HTML 支持 (# 196)"
       }
     },
     "titleLang": {

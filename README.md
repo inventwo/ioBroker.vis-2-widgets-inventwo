@@ -55,7 +55,7 @@ For more see [here](./docs/universal-widget-design-examples.md).
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.9.0 (2026-05-17)
 - Added document with example designs for universal widget
 - Marquee widget: new scrolling text widget with configurable speed, direction, loop count, gap and pause-on-hover (#5)
 - Dropdown widget: optional conditional background color on title, configurable title padding (top, bottom, left, right) (#246)
@@ -76,10 +76,6 @@ For more see [here](./docs/universal-widget-design-examples.md).
 - Table widget added fixed header option (#234)
 - Table widget added conditional row color (#234)
 - Table widget added column filter (#234)
-
-### 0.6.5 (2026-04-11)
-- Changed click behavior to fix click and hold for mobile devices (#192)
-- Fixed dropdown border on focus visible even though border with is 0 (#200)
 
 ## License
 The MIT License (MIT)

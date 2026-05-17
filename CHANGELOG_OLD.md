@@ -1,4 +1,8 @@
 # Older changes
+## 0.6.5 (2026-04-11)
+- Changed click behavior to fix click and hold for mobile devices (#192)
+- Fixed dropdown border on focus visible even though border with is 0 (#200)
+
 ## 0.6.4 (2026-03-19)
 - Fixed touch triggers twice on universal state widget
 
