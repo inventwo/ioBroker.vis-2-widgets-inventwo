@@ -23,13 +23,17 @@ Various widgets for switching, navigating and more.
 
 ![Preview AnalogClock](img/preview_content_type_clock_analog.png)
 
-Color picker
+Color picker (HEX, HEX 8, RGB, Hsl, Hsv, Cie)
 
 ![Preview Colorpicker](img/preview_colorpicker.png)
 
 ### Widget - Slider
 
 ![Preview Slider](img/preview_sliders.png)
+
+### Widget - Radial Slider
+
+![Preview Radial Slider](src-widgets/public/img/vis-widget-inventwo-radial-slider.png)
 
 ### Widget - Switches
 
@@ -42,6 +46,16 @@ Color picker
 ### Widget - Table
 
 ![Preview Table](img/preview_table.png)
+
+### Widget - Dropdown
+
+![Preview Dropdown](src-widgets/public/img/vis-widget-inventwo-dropdown.png)
+
+### Widget - Marquee
+(image preview wip)
+
+### Widget - Value List
+(image preview wip)
 
 ### Design
 All widgets come with extensive design options to customize the look and feel to your needs.
