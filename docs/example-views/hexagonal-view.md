@@ -58,6 +58,9 @@ honeycombs interlock seamlessly.
 
 ## JSON
 
+<details>
+<summary>📋 Show / copy JSON</summary>
+
 ```json
 [
   {
@@ -622,6 +625,8 @@ honeycombs interlock seamlessly.
   }
 ]
 ```
+
+</details>
 
 ---
 

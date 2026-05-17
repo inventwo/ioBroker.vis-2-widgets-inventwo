@@ -106,7 +106,8 @@ Widgets are not limited to rectangles. The **Shape** setting lets you choose fro
 
 All existing features — inner/outer shadow, border, gradient backgrounds, click feedback — work with every shape.
 
-> **Example:** Hexagonal honeycomb dashboard → [docs/example-views/hexagonal-view.md](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/docs/example-views/hexagonal-view.md)
+> **Example:** Hexagonal honeycomb dashboard → [docs/example-views/hexagonal-view.md](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/docs/example-views/hexagonal-view.md)  
+> **Example:** Rectangular dashboard → [docs/example-views/rectangle-view.md](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/docs/example-views/rectangle-view.md)
 
 ---
 
