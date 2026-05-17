@@ -254,7 +254,7 @@ Renders a bullet-point list from a single text value — either from a data poin
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.0.0 (2026-05-17)
 - Universal Widget: Add polygon shape support (triangle, diamond, pentagon, hexagon, heptagon, octagon, star) with configurable rotation and corner radius
 
 ### 0.9.0 (2026-05-17)
@@ -273,13 +273,6 @@ Renders a bullet-point list from a single text value — either from a data poin
 
 ### 0.7.1 (2026-04-24)
 - Fixed table widget fixed header not working
-
-### 0.7.0 (2026-04-21)
-- Table widget added fixed header option (#234)
-- Table widget added conditional row color (#234)
-- Table widget added column filter (#234)
-
----
 
 ## License
 The MIT License (MIT)

@@ -1,4 +1,11 @@
 # Older changes
+## 0.7.0 (2026-04-21)
+- Table widget added fixed header option (#234)
+- Table widget added conditional row color (#234)
+- Table widget added column filter (#234)
+
+---
+
 ## 0.6.5 (2026-04-11)
 - Changed click behavior to fix click and hold for mobile devices (#192)
 - Fixed dropdown border on focus visible even though border with is 0 (#200)

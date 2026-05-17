@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "0.9.0",
+    "version": "1.0.0",
     "news": {
+      "1.0.0": {
+        "en": "Universal Widget: Add polygon shape support (triangle, diamond, pentagon, hexagon, heptagon, octagon, star) with configurable rotation and corner radius",
+        "de": "Universal Widget: Fügen Sie Polygon-Form-Unterstützung (Dreieck, Diamant, Pentagon, Hexagon, Heptagon, Oktgon, Stern) mit konfigurierbaren Rotation und Eckradius hinzu",
+        "ru": "Универсальный виджет: Добавить поддержку формы многоугольника (треугольник, алмаз, пятиугольник, шестиугольник, гептагон, восьмиугольник, звезда) с настраиваемым вращением и радиусом угла",
+        "pt": "Widget Universal: Adicionar suporte em forma de polígono (triângulo, diamante, pentágono, heptagon, octagon, estrela) com rotação configurável e raio de canto",
+        "nl": "Universele widget: Voeg veelhoekige ondersteuning (driehoek, diamant, vijfhoek, zeshoek, heptagon, achthoek, ster) met instelbare rotatie en hoekradius",
+        "fr": "Widget universel: Ajouter un support en polygone (triangle, diamant, pentagone, hexagone, heptagone, octogone, étoile) avec rotation configurable et rayon d'angle",
+        "it": "Universal Widget: Aggiungi supporto forma poligonale (triangolo, diamante, pentagono, esagono, eptagono, ottagono, stella) con rotazione configurabile e raggio d'angolo",
+        "es": "Widget universal: Añadir soporte de forma de polígono (triángulo, diamante, pentágono, hexágono, octagon, estrella) con rotación configurable y radio de esquina",
+        "pl": "Universal Widget: Dodaj poligon wsparcia kształtu (trójkąt, diament, pentagon, sześciokąt, heptagon, ośmiokąt, gwiazda) z konfigurowalną rotacją i promieniem narożnym",
+        "uk": "Універсальний віджет: Додати полігонну форму підтримки (трикутник, діамант, петагон, шестигран, шестикутник, восьмикутник, зірка) з настроєним обертанням і радіусом кута",
+        "zh-cn": "通用元件: 添加多边形形状支持( 三角形, 菱形, 五角形, 六角形, 七角形, 八角形, 恒星) , 可配置旋转和角半径"
+      },
       "0.9.0": {
         "en": "Added document with example designs for universal widget\nMarquee widget: new scrolling text widget with configurable speed, direction, loop count, gap and pause-on-hover (#5)\nDropdown widget: optional conditional background color on title, configurable title padding (top, bottom, left, right) (#246)\nValue List widget: new widget that renders a bullet-point list from a text value (datapoint or manual), with configurable separator, bullet type, colors, spacing and padding (#2)",
         "de": "Hinzugefügt Dokument mit Beispiel-Designs für universelles Widget\nMarquee Widget: neues Scrolling Text Widget mit konfigurierbaren Geschwindigkeit, Richtung, Schleifenzahl, Lücke und Pause-on-hover (#5)\nDropdown Widget: optionale bedingte Hintergrundfarbe auf Titel, konfigurierbare Titelpolsterung (oben, unten, links, rechts) (#246)\nWertliste Widget: neues Widget, das eine Punktliste aus einem Textwert (Datenpunkt oder Handbuch) mit konfigurierbarem Separator, Kugeltyp, Farben, Abstand und Polsterung (#2) macht",
@@ -80,19 +93,6 @@
         "pl": "Zmienione zachowanie kliknięcia, aby naprawić kliknięcie i przytrzymaj dla urządzeń mobilnych (# 192)\nStała granica opadania na ostrość widoczna, mimo że granica z 0 (# 200)",
         "uk": "Змінена поведінка клацання для фіксації клацання та утримання мобільних пристроїв (#192)\nВиправлено випадаючий кордон на фокус видимий, хоча кордон з є 0 (#200)",
         "zh-cn": "更改了点击行为以固定点击和移动设备控件(# 192)\n即使边界为 0(# 200) , 仍可看到焦点上的固定下拉边框"
-      },
-      "0.6.4": {
-        "en": "Fixed touch triggers twice on universal state widget",
-        "de": "Feste Berührung löst zweimal auf universellem Zustand Widget",
-        "ru": "Дважды фиксированные триггеры касания на универсальном виджете состояния",
-        "pt": "Ativadores de toque fixos duas vezes no widget de estado universal",
-        "nl": "Vaste touch triggers twee keer op universele staat widget",
-        "fr": "La touche fixe déclenche deux fois sur le widget d'état universel",
-        "it": "Il tocco fisso innesca due volte su widget di stato universale",
-        "es": "Dispositivos de tacto fijo dos veces en el widget de estado universal",
-        "pl": "Naprawiono dwa razy wyzwalacze dotykowe na uniwersalnym widgecie stanu",
-        "uk": "Виправлені сенсорні тригери двічі на універсальний державний віджет",
-        "zh-cn": "在通用状态部件上两次固定触摸触发"
       }
     },
     "titleLang": {
