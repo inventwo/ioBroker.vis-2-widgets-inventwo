@@ -24,6 +24,11 @@ interface DropdownRxData {
     borderRadius: number;
     titleFontSize: number;
     titleColor: string;
+    titleBgFromCondition: boolean;
+    titlePaddingTop: number;
+    titlePaddingBottom: number;
+    titlePaddingLeft: number;
+    titlePaddingRight: number;
     shadowX: number;
     shadowY: number;
     shadowBlur: number;
@@ -325,6 +330,53 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             hidden: '!!data.dropdownFromWidget',
                         },
                         {
+                            name: 'titleBgFromCondition',
+                            type: 'checkbox',
+                            label: 'title_bg_from_condition',
+                            default: false,
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'titlePaddingTop',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 2,
+                            label: 'title_padding_top',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'titlePaddingBottom',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 4,
+                            label: 'title_padding_bottom',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'titlePaddingLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'title_padding_left',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'titlePaddingRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'title_padding_right',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
                             name: '',
                             type: 'delimiter',
                             hidden: '!!data.dropdownFromWidget',
@@ -435,12 +487,16 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 style={{
                     fontSize: `${style.titleFontSize ?? 12}px`,
                     color: style.titleColor ?? 'rgba(180,180,180,1)',
-                    marginBottom: '4px',
+                    paddingTop: `${style.titlePaddingTop ?? 2}px`,
+                    paddingBottom: `${style.titlePaddingBottom ?? 4}px`,
+                    paddingLeft: `${style.titlePaddingLeft ?? 0}px`,
+                    paddingRight: `${style.titlePaddingRight ?? 0}px`,
                     lineHeight: 1.2,
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     flexShrink: 0,
+                    ...(style.titleBgFromCondition ? { background: effectiveBg } : {}),
                 }}
             >
                 {title}
