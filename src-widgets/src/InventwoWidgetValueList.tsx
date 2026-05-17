@@ -183,9 +183,7 @@ class InventwoWidgetValueList extends InventwoGeneric<ValueListRxData, ValueList
 
         const rxData = this.state.rxData;
 
-        const rawText = this.validOid(rxData.oid)
-            ? String(this.getValue(rxData.oid) ?? '')
-            : (rxData.manualText ?? '');
+        const rawText = this.validOid(rxData.oid) ? String(this.getValue(rxData.oid) ?? '') : (rxData.manualText ?? '');
 
         const rawSeparator = rxData.separator ?? ',';
         const separator = InventwoWidgetValueList.resolveSeparator(rawSeparator);
