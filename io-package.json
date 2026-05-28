@@ -168,8 +168,7 @@
     "tier": 3,
     "licenseInformation": {
       "license": "MIT",
-      "type": "free",
-      "link": "https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/master/LICENSE"
+      "type": "free"
     }
   },
   "native": {},
