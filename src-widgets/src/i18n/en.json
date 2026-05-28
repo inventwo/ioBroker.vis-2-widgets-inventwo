@@ -325,6 +325,7 @@
   "vis_2_widgets_inventwo_border_radius": "Border radius",
   "vis_2_widgets_inventwo_close_button": "Close button",
   "vis_2_widgets_inventwo_titlebar": "Title bar",
+  "vis_2_widgets_inventwo_titlebar_padding": "Title bar padding",
   "titlebar_padding": "Title bar padding",
   "hide": "Hide",
   "close_after_x_seconds": "Close after x seconds",
