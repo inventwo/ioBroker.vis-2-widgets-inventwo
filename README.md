@@ -274,6 +274,8 @@ Renders a bullet-point list from a single text value — either from a data poin
 ### 0.7.1 (2026-04-24)
 - Fixed table widget fixed header not working
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 The MIT License (MIT)
 
