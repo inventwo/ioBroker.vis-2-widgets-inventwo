@@ -51,12 +51,15 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - uses: browser-actions/setup-chrome@latest
+        id: setup-chrome
       - uses: ioBroker/testing-action-adapter@v1
         env:
-          PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer-cache
+          PUPPETEER_SKIP_DOWNLOAD: 'true'
+          PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
         with:
           build: true
-          install-command: 'npm ci || npm install; rm -rf "$PUPPETEER_CACHE_DIR"; npx puppeteer browsers install chrome; cd src-widgets; npm ci || npm install'
+          install-command: 'npm ci || npm install; cd src-widgets; npm ci || npm install'
           os: ${{ matrix.os }}
           node-version: ${{ matrix.node-version }}
 
