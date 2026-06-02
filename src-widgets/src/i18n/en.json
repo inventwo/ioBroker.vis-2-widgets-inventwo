@@ -74,6 +74,7 @@
   "text": "Text",
   "icon": "Icon",
   "image": "Image",
+  "ip_address": "IP address",
   "text_html": "Text html",
   "view_in_widget": "View in widget",
   "content_color": "Content color",

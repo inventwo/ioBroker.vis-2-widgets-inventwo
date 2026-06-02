@@ -59,7 +59,7 @@ interface TableRxData {
     [key: `columnPrefix${number}`]: string;
     [key: `columnSuffix${number}`]: string;
     [key: `columnPlaceholder${number}`]: string;
-    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime' | 'image';
+    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime' | 'image' | 'ip';
     [key: `columnNumberDecimals${number}`]: number;
     [key: `columnDatetimeFormat${number}`]: 'datetime' | 'date' | 'time';
     [key: `columnContentAlign${number}`]: React.CSSProperties['textAlign'];
@@ -83,6 +83,12 @@ interface TableWidgetState extends VisRxWidgetState {
     filterColumnAllValues: string[];
     filterColumnPendingValues: string[];
     parentHeight: number | null;
+}
+
+function ipToNumber(ip: string): number {
+    const parts = ip.split('.').map(Number);
+    if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) return 0;
+    return ((parts[0] * 256 + parts[1]) * 256 + parts[2]) * 256 + parts[3];
 }
 
 export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, TableWidgetState> {
@@ -275,6 +281,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                                 { value: 'number', label: 'Number' },
                                 { value: 'datetime', label: 'datetime' },
                                 { value: 'image', label: 'image' },
+                                { value: 'ip', label: 'ip_address' },
                             ],
                             default: 'text',
                             label: 'format',
@@ -747,7 +754,11 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         }
     };
 
-    sortData = (data: Record<string, any>[], sortCriteria: SortCriterion[]): Record<string, any>[] => {
+    sortData = (
+        data: Record<string, any>[],
+        sortCriteria: SortCriterion[],
+        columnFormats: Record<string, string> = {},
+    ): Record<string, any>[] => {
         if (!sortCriteria || sortCriteria.length === 0) {
             return data;
         }
@@ -762,6 +773,8 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     comparison = 1;
                 } else if (bValue == null) {
                     comparison = -1;
+                } else if (columnFormats[criterion.key] === 'ip') {
+                    comparison = ipToNumber(String(aValue)) - ipToNumber(String(bValue));
                 } else if (typeof aValue === 'number' && typeof bValue === 'number') {
                     comparison = aValue - bValue;
                 } else if (typeof aValue === 'string' && typeof bValue === 'string') {
@@ -869,7 +882,20 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
 
         // Sort the data
         if (json && this.state.sortCriteria?.length) {
-            json = this.sortData(json, this.state.sortCriteria);
+            const columnFormats: Record<string, string> = {};
+            const colCount = this.state.rxData.countColumns ?? 0;
+            const autoKeys = json.length > 0 ? Object.keys(json[0]) : [];
+            for (let i = 1; i <= colCount; i++) {
+                let key = this.state.rxData[`columnKey${i}`];
+                if (!key) {
+                    key = autoKeys[i - 1];
+                }
+                const fmt = this.state.rxData[`columnValueFormat${i}`];
+                if (key && fmt) {
+                    columnFormats[String(key)] = fmt;
+                }
+            }
+            json = this.sortData(json, this.state.sortCriteria, columnFormats);
         }
 
         // Apply column filters
