@@ -34,7 +34,7 @@ jobs:
           node-version: '24.x'
           # Try a clean install first; if lockfile is out-of-sync fallback to `npm install`.
           # Use `;` to sequence commands so both folders get attempted independently.
-          install-command: 'npm ci || npm install; cd src-widgets; npm ci || npm install'
+          install-command: 'npm ci || npm install; npx -y @puppeteer/browsers install chrome@stable; cd src-widgets; npm ci || npm install'
           lint: true
 
   # Runs adapter tests on all supported node versions and OSes
@@ -55,7 +55,7 @@ jobs:
       - uses: ioBroker/testing-action-adapter@v1
         with:
           build: true
-          install-command: 'npm ci || npm install; cd src-widgets; npm ci || npm install'
+          install-command: 'npm ci || npm install; npx -y @puppeteer/browsers install chrome@stable; cd src-widgets; npm ci || npm install'
           os: ${{ matrix.os }}
           node-version: ${{ matrix.node-version }}
 
