@@ -46,8 +46,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 22.x, 24.x ]
-        # temp removed windows and mac because issues with python
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest, windows-latest ]
 
     runs-on: ${{ matrix.os }}
 
@@ -55,50 +54,9 @@ jobs:
       - uses: ioBroker/testing-action-adapter@v1
         with:
           build: true
-          install-command: 'npm ci || npm install; npx -y @puppeteer/browsers install chrome@stable; cd src-widgets; npm ci || npm install'
+          install-command: 'npm ci || npm install; npx puppeteer browsers install chrome; cd src-widgets; npm ci || npm install'
           os: ${{ matrix.os }}
           node-version: ${{ matrix.node-version }}
-
-#  adapter-tests:
-#    needs: [check-and-lint]
-#    if: contains(github.event.head_commit.message, '[skip ci]') == false
-#
-#    runs-on: ${{ matrix.os }}
-#    strategy:
-#      matrix:
-#        node-version: [22.x, 24.x]
-#        # temp removed windows and mac because issues with python
-#        os: [ubuntu-latest, windows-latest, macos-latest]
-#
-#    steps:
-#      - uses: actions/checkout@v6
-#
-#      - name: Use Node.js ${{ matrix.node-version }}
-#        uses: actions/setup-node@v6
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#
-#      - name: Install macos distutils
-#        if: matrix.os == 'macos-latest'
-#        run: python3 --version
-#
-#      - name: Install Dependencies
-#        run: npm i
-#
-#      - name: Build
-#        run: npm run build
-#
-#      - name: Run local tests
-#        run: npm test
-#
-#      - name: Archive screenshots
-#        if: always()
-#        # if: failure()
-#        uses: actions/upload-artifact@v7
-#        with:
-#          name: my-artifacts-${{ strategy.job-index }}
-#          path: tmp/screenshots/**/*.png
-#          retention-days: 3
 
   # Deploys the final package to NPM
   deploy:
