@@ -11,6 +11,88 @@ import type {
 } from '@iobroker/types-vis-2';
 import React from 'react';
 
+function splitOutsideParens(str: string): string[] {
+    const parts: string[] = [];
+    let depth = 0;
+    let current = '';
+    for (const ch of str) {
+        if (ch === '(') depth++;
+        else if (ch === ')') depth--;
+        if (ch === ',' && depth === 0) {
+            parts.push(current.trim());
+            current = '';
+        } else {
+            current += ch;
+        }
+    }
+    if (current.trim()) parts.push(current.trim());
+    return parts;
+}
+
+function cssGradientToSvgDef(
+    colorValue: string,
+    id: string,
+    size: number,
+): { def: React.JSX.Element; strokeRef: string } | null {
+    const trimmed = colorValue?.trim() ?? '';
+    const match = trimmed.match(/^linear-gradient\((.+)\)$/s);
+    if (!match) return null;
+
+    const parts = splitOutsideParens(match[1]);
+    let startIdx = 0;
+    let angle = 180;
+
+    const firstPart = parts[0]?.trim();
+    if (firstPart && /^-?\d+(\.\d+)?deg$/i.test(firstPart)) {
+        angle = parseFloat(firstPart);
+        startIdx = 1;
+    }
+
+    const stops: Array<{ color: string; position: number }> = [];
+    for (let i = startIdx; i < parts.length; i++) {
+        const part = parts[i].trim();
+        const stopMatch = part.match(/^(.*?)\s+(-?\d+(?:\.\d+)?)%\s*$/);
+        if (stopMatch) {
+            stops.push({ color: stopMatch[1].trim(), position: parseFloat(stopMatch[2]) / 100 });
+        } else {
+            stops.push({ color: part, position: -1 });
+        }
+    }
+
+    if (stops.length === 0) return null;
+    if (stops[0].position === -1) stops[0].position = 0;
+    if (stops[stops.length - 1].position === -1) stops[stops.length - 1].position = 1;
+    for (let i = 1; i < stops.length - 1; i++) {
+        if (stops[i].position === -1) {
+            let nextSet = i + 1;
+            while (nextSet < stops.length && stops[nextSet].position === -1) nextSet++;
+            stops[i].position =
+                stops[i - 1].position +
+                ((stops[nextSet].position - stops[i - 1].position) * (i - (i - 1))) / (nextSet - (i - 1));
+        }
+    }
+
+    const rad = (angle * Math.PI) / 180;
+    const cx = size / 2;
+    const cy = size / 2;
+    const halfLen = (size * Math.SQRT2) / 2;
+
+    const x1 = cx - Math.sin(rad) * halfLen;
+    const y1 = cy + Math.cos(rad) * halfLen;
+    const x2 = cx + Math.sin(rad) * halfLen;
+    const y2 = cy - Math.cos(rad) * halfLen;
+
+    const def = (
+        <linearGradient key={id} id={id} gradientUnits="userSpaceOnUse" x1={x1} y1={y1} x2={x2} y2={y2}>
+            {stops.map((stop, idx) => (
+                <stop key={idx} offset={`${stop.position * 100}%`} stopColor={stop.color} />
+            ))}
+        </linearGradient>
+    );
+
+    return { def, strokeRef: `url(#${id})` };
+}
+
 interface RadialSliderRxData {
     oid: null | string;
     minValue: number;
@@ -544,6 +626,15 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
         const activePath = this.describeArc(centerX, centerY, radius, startAngle, currentAngle);
         const thumbPosition = this.polarToCartesian(centerX, centerY, radius, currentAngle);
 
+        const trackGradient = cssGradientToSvgDef(trackStyle.trackColor, 'radialTrackColorGradient', size);
+        const trackActiveGradient = cssGradientToSvgDef(
+            trackStyle.trackActiveColor,
+            'radialTrackActiveColorGradient',
+            size,
+        );
+        const trackStroke = trackGradient ? trackGradient.strokeRef : trackStyle.trackColor;
+        const trackActiveStroke = trackActiveGradient ? trackActiveGradient.strokeRef : trackStyle.trackActiveColor;
+
         const containerStyle: SxProps = {
             width: '100%',
             height: '100%',
@@ -567,11 +658,17 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                     height={size}
                     style={{ overflow: 'visible' }}
                 >
+                    {(trackGradient || trackActiveGradient) && (
+                        <defs>
+                            {trackGradient?.def}
+                            {trackActiveGradient?.def}
+                        </defs>
+                    )}
                     {/* Background track */}
                     <path
                         d={trackPath}
                         fill="none"
-                        stroke={trackStyle.trackColor}
+                        stroke={trackStroke}
                         strokeWidth={trackStyle.trackWidth}
                         strokeLinecap="round"
                         style={{
@@ -582,7 +679,7 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                     <path
                         d={activePath}
                         fill="none"
-                        stroke={trackStyle.trackActiveColor}
+                        stroke={trackActiveStroke}
                         strokeWidth={trackStyle.trackWidth}
                         strokeLinecap="round"
                     />
