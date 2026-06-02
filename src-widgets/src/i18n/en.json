@@ -45,6 +45,7 @@
   "x_offset": "X offset",
   "y_offset": "Y offset",
   "blur": "Blur",
+  "spread": "Spread",
   "size": "Size",
   "shadow_color": "Shadow color",
   "slider_thumb_color": "Slider thumb color",

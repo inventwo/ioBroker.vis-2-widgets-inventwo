@@ -32,6 +32,7 @@ interface DropdownRxData {
     shadowX: number;
     shadowY: number;
     shadowBlur: number;
+    shadowSpread: number;
     shadowColor: string;
 }
 
@@ -418,6 +419,16 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             hidden: '!!data.dropdownFromWidget',
                         },
                         {
+                            name: 'shadowSpread',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'spread',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
                             name: 'shadowColor',
                             type: 'color',
                             default: 'rgba(0, 0, 0, 0.5)',
@@ -503,7 +514,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
             </div>
         ) : null;
 
-        const shadow = `${style.shadowX}px ${style.shadowY}px ${style.shadowBlur}px ${style.shadowColor}`;
+        const shadow = `${style.shadowX}px ${style.shadowY}px ${style.shadowBlur}px ${style.shadowSpread ?? 0}px ${style.shadowColor}`;
 
         if (readOnly) {
             return (
