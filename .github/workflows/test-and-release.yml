@@ -56,7 +56,7 @@ jobs:
           PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer-cache
         with:
           build: true
-          install-command: 'npm ci || npm install; npx puppeteer browsers install chrome; cd src-widgets; npm ci || npm install'
+          install-command: 'npm ci || npm install; rm -rf "$PUPPETEER_CACHE_DIR"; npx puppeteer browsers install chrome; cd src-widgets; npm ci || npm install'
           os: ${{ matrix.os }}
           node-version: ${{ matrix.node-version }}
 
