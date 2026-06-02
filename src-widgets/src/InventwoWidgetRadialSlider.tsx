@@ -16,8 +16,11 @@ function splitOutsideParens(str: string): string[] {
     let depth = 0;
     let current = '';
     for (const ch of str) {
-        if (ch === '(') depth++;
-        else if (ch === ')') depth--;
+        if (ch === '(') {
+            depth++;
+        } else if (ch === ')') {
+            depth--;
+        }
         if (ch === ',' && depth === 0) {
             parts.push(current.trim());
             current = '';
@@ -25,7 +28,9 @@ function splitOutsideParens(str: string): string[] {
             current += ch;
         }
     }
-    if (current.trim()) parts.push(current.trim());
+    if (current.trim()) {
+        parts.push(current.trim());
+    }
     return parts;
 }
 
@@ -36,7 +41,9 @@ function cssGradientToSvgDef(
 ): { def: React.JSX.Element; strokeRef: string } | null {
     const trimmed = colorValue?.trim() ?? '';
     const match = trimmed.match(/^linear-gradient\((.+)\)$/s);
-    if (!match) return null;
+    if (!match) {
+        return null;
+    }
 
     const parts = splitOutsideParens(match[1]);
     let startIdx = 0;
@@ -59,13 +66,21 @@ function cssGradientToSvgDef(
         }
     }
 
-    if (stops.length === 0) return null;
-    if (stops[0].position === -1) stops[0].position = 0;
-    if (stops[stops.length - 1].position === -1) stops[stops.length - 1].position = 1;
+    if (stops.length === 0) {
+        return null;
+    }
+    if (stops[0].position === -1) {
+        stops[0].position = 0;
+    }
+    if (stops[stops.length - 1].position === -1) {
+        stops[stops.length - 1].position = 1;
+    }
     for (let i = 1; i < stops.length - 1; i++) {
         if (stops[i].position === -1) {
             let nextSet = i + 1;
-            while (nextSet < stops.length && stops[nextSet].position === -1) nextSet++;
+            while (nextSet < stops.length && stops[nextSet].position === -1) {
+                nextSet++;
+            }
             stops[i].position =
                 stops[i - 1].position +
                 ((stops[nextSet].position - stops[i - 1].position) * (i - (i - 1))) / (nextSet - (i - 1));
@@ -83,9 +98,21 @@ function cssGradientToSvgDef(
     const y2 = cy - Math.cos(rad) * halfLen;
 
     const def = (
-        <linearGradient key={id} id={id} gradientUnits="userSpaceOnUse" x1={x1} y1={y1} x2={x2} y2={y2}>
+        <linearGradient
+            key={id}
+            id={id}
+            gradientUnits="userSpaceOnUse"
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+        >
             {stops.map((stop, idx) => (
-                <stop key={idx} offset={`${stop.position * 100}%`} stopColor={stop.color} />
+                <stop
+                    key={idx}
+                    offset={`${stop.position * 100}%`}
+                    stopColor={stop.color}
+                />
             ))}
         </linearGradient>
     );

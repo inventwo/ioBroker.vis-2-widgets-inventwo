@@ -87,7 +87,9 @@ interface TableWidgetState extends VisRxWidgetState {
 
 function ipToNumber(ip: string): number {
     const parts = ip.split('.').map(Number);
-    if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) return 0;
+    if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) {
+        return 0;
+    }
     return ((parts[0] * 256 + parts[1]) * 256 + parts[2]) * 256 + parts[3];
 }
 
