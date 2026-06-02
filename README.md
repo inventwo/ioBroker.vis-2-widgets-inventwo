@@ -13,6 +13,8 @@
 
 A collection of highly customizable widgets for **ioBroker vis 2.0** — built for users who want full control over the look and feel of their dashboards. Every widget comes with extensive styling options and integrates seamlessly with ioBroker data points.
 
+📖 **[User Documentation](docs/README.md)** — detailed guides for all widgets, settings and examples.
+
 ---
 
 ## Widgets
@@ -254,6 +256,11 @@ Renders a bullet-point list from a single text value — either from a data poin
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Radial Slider: Support gradient colors for rail and active rail
+- Dropdown: Added shadow spread option
+- Table: Added ip-address column format for correct sorting
+
 ### 1.0.0 (2026-05-17)
 - Universal Widget: Add polygon shape support (triangle, diamond, pentagon, hexagon, heptagon, octagon, star) with configurable rotation and corner radius
 
