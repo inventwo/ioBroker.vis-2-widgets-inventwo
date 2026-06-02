@@ -52,6 +52,8 @@ jobs:
 
     steps:
       - uses: ioBroker/testing-action-adapter@v1
+        env:
+          PUPPETEER_CACHE_DIR: ${{ runner.temp }}/puppeteer-cache
         with:
           build: true
           install-command: 'npm ci || npm install; npx puppeteer browsers install chrome; cd src-widgets; npm ci || npm install'
