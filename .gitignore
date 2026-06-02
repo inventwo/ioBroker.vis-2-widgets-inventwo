@@ -6,3 +6,4 @@ src-widgets/build
 src-widgets/.__mf__temp
 .commitinfo
 src-widgets/.mf/
+/.claude/settings.local.json
