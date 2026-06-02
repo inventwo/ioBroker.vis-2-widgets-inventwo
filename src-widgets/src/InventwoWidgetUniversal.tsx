@@ -3628,7 +3628,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             !!valueData.borderColor &&
             valueData.styles.borderStyle !== 'none' &&
             !!valueData.styles.borderStyle;
-        const strokeDashArray = this.getStrokeDashArray(valueData.styles.borderStyle as string | undefined, borderSize);
+        const strokeDashArray = this.getStrokeDashArray(valueData.styles.borderStyle, borderSize);
 
         // Unique IDs scoped to this widget instance (and button index for separated-buttons mode)
         const widgetId = (this.props.id ?? 'w').replace(/[^a-zA-Z0-9]/g, '_');

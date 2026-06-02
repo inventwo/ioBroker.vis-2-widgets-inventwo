@@ -212,7 +212,7 @@ class InventwoWidgetValueList extends InventwoGeneric<ValueListRxData, ValueList
             boxSizing: 'border-box',
             padding: padding ? `${padding}px` : undefined,
             fontFamily: (this.state.rxStyle?.['font-family'] as string) ?? undefined,
-            fontWeight: (this.state.rxStyle?.['font-weight'] as string) ?? undefined,
+            fontWeight: this.state.rxStyle?.['font-weight'] ?? undefined,
             fontStyle: (this.state.rxStyle?.['font-style'] as string) ?? undefined,
         };
 

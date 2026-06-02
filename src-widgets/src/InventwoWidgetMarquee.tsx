@@ -237,13 +237,13 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
 
         const handleMouseEnter = pauseOnHover
             ? (e: React.MouseEvent<HTMLSpanElement>): void => {
-                  (e.currentTarget as HTMLSpanElement).style.animationPlayState = 'paused';
+                  e.currentTarget.style.animationPlayState = 'paused';
               }
             : undefined;
 
         const handleMouseLeave = pauseOnHover
             ? (e: React.MouseEvent<HTMLSpanElement>): void => {
-                  (e.currentTarget as HTMLSpanElement).style.animationPlayState = 'running';
+                  e.currentTarget.style.animationPlayState = 'running';
               }
             : undefined;
 

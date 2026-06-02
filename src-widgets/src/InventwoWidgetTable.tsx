@@ -800,7 +800,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         columnKey: string,
         allData: Record<string, any>[],
     ): void => {
-        const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+        const rect = event.currentTarget.getBoundingClientRect();
         const uniqueValues = Array.from(new Set(allData.map(row => String(row[columnKey] ?? '')))).sort();
         const currentFilter = this.state.filters?.[columnKey] ?? uniqueValues;
         this.setState({
