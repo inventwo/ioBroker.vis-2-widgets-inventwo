@@ -410,5 +410,6 @@
   "title_padding_top": "Title padding top",
   "title_padding_bottom": "Title padding bottom",
   "title_padding_left": "Title padding left",
-  "title_padding_right": "Title padding right"
+  "title_padding_right": "Title padding right",
+  "attr_group_sorting": "Sorting"
 }

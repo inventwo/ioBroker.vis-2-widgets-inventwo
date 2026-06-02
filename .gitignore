@@ -2,7 +2,7 @@
 node_modules
 src-widgets/node_modules
 src-widgets/build
-widgets
+/widgets
 src-widgets/.__mf__temp
 .commitinfo
 src-widgets/.mf/

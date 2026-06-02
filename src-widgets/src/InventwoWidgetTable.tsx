@@ -130,6 +130,13 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             default: false,
                             label: 'sticky_header',
                         },
+                    ],
+                },
+
+                {
+                    name: 'attr_group_sorting',
+                    label: 'attr_group_sorting',
+                    fields: [
                         {
                             name: 'defaultSortColumn',
                             type: 'text',

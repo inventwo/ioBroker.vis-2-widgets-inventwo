@@ -1,0 +1,164 @@
+# Table Widget
+
+The Table Widget displays data from an ioBroker datapoint as a formatted table. The datapoint must contain a **JSON array** — a list of objects where each object represents one row. This is perfect for showing sensor readings, device lists, history logs, or any structured data that an adapter writes as JSON.
+
+![Table Widget](../img/widget-table.png)
+
+---
+
+## How to Add the Widget
+
+1. Drag **Table** from the **inventwo design** widget list onto your view.
+2. Click **Object ID** and select a datapoint that contains a JSON array (see the data format section below).
+3. The table renders automatically with one column per JSON key.
+4. To customize columns (titles, widths, formatting), increase **Count columns** and configure each column.
+
+---
+
+## Expected Data Format
+
+The datapoint must contain a JSON array of objects. Each object is one row, and each key becomes a column.
+
+```json
+[
+  { "name": "Living Room", "temp": 21.3, "humidity": 58 },
+  { "name": "Kitchen",     "temp": 22.1, "humidity": 62 },
+  { "name": "Bedroom",     "temp": 19.8, "humidity": 55 }
+]
+```
+
+If the datapoint value is not valid JSON, the table shows an error message.
+
+---
+
+## Settings
+
+### Common
+
+| Setting | What it does |
+|---------|-------------|
+| **Object ID** | The datapoint containing the JSON array. |
+| **Count columns** | Number of manually configured columns. Set to **0** for automatic columns (all keys shown in the order they appear in the JSON). Increase this to configure each column individually. |
+| **Max rows** | Maximum number of rows to display. Set to **0** to show all rows. |
+| **Show head** | Shows or hides the header row with column titles. |
+| **Sticky header** | When enabled, the header row stays visible while you scroll through many rows. |
+
+---
+
+### Sorting
+
+| Setting | What it does |
+|---------|-------------|
+| **Default sort column** | The column key to sort by when the table first loads. |
+| **Default sort order** | **Ascending** or **Descending**. |
+| **Multi-column sorting** | Enables sorting by multiple columns at once. Click a column header to add it to the sort order. Click again to reverse direction. Click a third time to remove that column from sorting. The number badge on the header shows the sort priority. |
+| **Number of default sort columns** | *(Multi-sort only)* How many default sort columns to configure. |
+
+Users can click column headers at runtime to change the sort order (if **Sortable** is enabled for that column).
+
+---
+
+### Column settings (per column)
+
+When **Count columns** is greater than 0, each column has these settings:
+
+| Setting | What it does |
+|---------|-------------|
+| **Hide column** | Hides this column from the table without removing its configuration. |
+| **Key** | The JSON property name to display in this column, e.g. `temp`. If left empty, the column uses the key at that position in the JSON. |
+| **Title** | Column header label. If empty, the JSON key name is used. |
+| **Width** | Fixed column width in pixels (0 = automatic). |
+| **Prefix** | Text added before the cell value, e.g. `~`. |
+| **Suffix** | Text added after the cell value, e.g. ` °C`. |
+| **Placeholder** | Text shown when the cell value is empty or null. |
+| **Title align** | Alignment of the column header: Left, Center, Right. |
+| **Content align** | Alignment of the cell values: Left, Center, Right. |
+| **Format** | How the value is displayed: **Text** (plain), **Number** (with decimal places), **Datetime** (date/time formatting), **Image** (renders a URL as an image). |
+| **Decimals** | *(Number format only)* Number of decimal places. |
+| **Datetime format** | *(Datetime format only)* **Datetime** (date and time), **Date** (date only), **Time** (time only), **Custom format** (enter your own pattern). |
+| **Custom format** | *(Custom datetime only)* Format pattern — see the token table below. |
+| **Sortable** | Adds a sort arrow to this column's header that users can click. |
+| **Enable filter** | Adds a filter icon to this column's header. Clicking it opens a checklist to show/hide rows by value. |
+
+#### Custom Datetime Format Tokens
+
+| Token | Meaning | Example |
+|-------|---------|---------|
+| `YYYY` | 4-digit year | `2025` |
+| `YY` | 2-digit year | `25` |
+| `MM` | Month (with leading zero) | `07` |
+| `M` | Month (no leading zero) | `7` |
+| `DD` | Day (with leading zero) | `04` |
+| `D` | Day (no leading zero) | `4` |
+| `hh` | Hours (with leading zero) | `09` |
+| `h` | Hours (no leading zero) | `9` |
+| `mm` | Minutes (with leading zero) | `05` |
+| `ss` | Seconds (with leading zero) | `00` |
+| `sss` | Milliseconds | `123` |
+
+Example: `DD.MM.YYYY hh:mm` → `04.07.2025 09:05`
+
+---
+
+### Row color conditions
+
+You can automatically change a row's background color based on the value of a specific cell. This is great for highlighting critical or noteworthy rows.
+
+| Setting | What it does |
+|---------|-------------|
+| **Number of conditions** | How many color rules to add. |
+| **Column key or index** | The JSON key name, or a column index (0-based) to evaluate. |
+| **Value** | The value to match against. |
+| **Row color** | The background color for matching rows. |
+
+The first matching condition wins. All other row colors (odd/even alternating) are overridden by a matching condition.
+
+---
+
+### inventwo — Table
+
+| Setting | What it does |
+|---------|-------------|
+| **Background header** | Background color of the header row. |
+| **Background odd row** | Background color of odd-numbered rows (1st, 3rd, ...). |
+| **Background even row** | Background color of even-numbered rows (2nd, 4th, ...). |
+| **Header height** | Height of the header row in pixels. |
+| **Column height** | Height of each data row in pixels. |
+| **Thickness header** | Bottom border thickness of the header row. |
+| **Color header** | Bottom border color of the header row. |
+| **Thickness** | Bottom border thickness of each data row. |
+| **Color** | Bottom border color of data rows. |
+
+---
+
+### inventwo — Border radius
+
+Rounds the corners of the table container. Set individually for top-left, top-right, bottom-right, and bottom-left. Use **From widget** to copy from another Table Widget.
+
+---
+
+### inventwo — Border
+
+Adds an outer border around the table container. Set border style (solid, dashed, dotted, etc.), size per side, and color. Use **From widget** to copy from another Table Widget.
+
+---
+
+### inventwo — Outer shadow
+
+Adds a drop shadow around the table container. Set X offset, Y offset, blur, size, and color. Use **From widget** to copy from another Table Widget.
+
+---
+
+## Tips
+
+- **Start with auto columns:** Leave **Count columns** at 0 first to see the raw data. Then increase it to take control of titles, order, and formatting.
+- **Temperature with unit:** Set column **Format** to **Number**, **Decimals** to 1, and **Suffix** to ` °C` — the cell will show `21.3 °C`.
+- **Image column:** If a JSON property contains a URL to an image, set the column **Format** to **Image** and the cell will render the image directly.
+- **Sorting by default:** Enter the JSON key in **Default sort column** (e.g. `temp`) to pre-sort the table when the view loads.
+
+---
+
+## See Also
+
+- [Dropdown Widget](dropdown-widget.md) — for selecting from a list of predefined values
+- [Value List Widget](value-list-widget.md) — for simple bullet-point lists from text values

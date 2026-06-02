@@ -46,6 +46,7 @@
   "attr_group_dropdown_bg_conditions": "Фоновые условия",
   "attr_group_row_color_condition": "Состояние",
   "attr_group_row_color_conditions": "Условия строки",
+  "attr_group_sorting": "Сортировка",
   "attr_group_state_default": "Состояние по умолчанию",
   "attr_group_states": "Состояние",
   "attr_group_type_view_in_dialog": "Тип — просмотр в диалоговом окне",
