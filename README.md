@@ -256,7 +256,7 @@ Renders a bullet-point list from a single text value — either from a data poin
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.2.0 (2026-06-02)
 - Radial Slider: Support gradient colors for rail and active rail
 - Dropdown: Added shadow spread option
 - Table: Added ip-address column format for correct sorting

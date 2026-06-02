@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "news": {
+      "1.2.0": {
+        "en": "Radial Slider: Support gradient colors for rail and active rail\nDropdown: Added shadow spread option\nTable: Added ip-address column format for correct sorting",
+        "de": "Radialschieber: Unterstützung Gradienten Farben für Schiene und aktive Schiene\nDropdown: Option zur Schattenverteilung hinzugefügt\nTabelle: Hinzugefügt ip-address Spaltenformat für die korrekte Sortierung",
+        "ru": "Радиальный слайдер: поддержка градиентных цветов для рельсов и активных рельсов\nDropdown: Добавлена опция распространения теней\nТаблица: Добавлен формат колонки с ip-адресом для правильной сортировки",
+        "pt": "Radial Slider: Cor do gradiente de suporte para trilho e trilho ativo\nDropdown: Adicionada opção de espalhamento de sombra\nTabela: Adicionado formato de coluna ip-endereço para classificação correta",
+        "nl": "Radial Slider: Ondersteuning kleurverloop voor rail en actieve rail\nDropdown: optie voor schaduwspreiding toegevoegd\nTabel: Toegevoegd ip-adres kolomformaat voor correcte sorteren",
+        "fr": "Slider radial: Couleurs de gradient de support pour rail et rail actif\nDropdown: Ajout de l'option de propagation de l'ombre\nTableau: Ajout du format de colonne ip-address pour le tri correct",
+        "it": "Radial Slider: Supporta colori sfumati per rotaia e rotaia attiva\nDropdown: opzione di diffusione dell'ombra aggiunta\nTabella: Aggiunto formato della colonna ip-address per la corretta selezione",
+        "es": "Radial Slider: Soporte de colores gradientes para raíles y raíles activos\nDesplazamiento: opción de propagación de sombras agregada\nTabla: Formato de columna ip-address para la clasificación correcta",
+        "pl": "Rajski suwak: Wsparcie gradientowe kolory dla szyny i aktywnych szyn\nUpadek: Dodano opcję rozszerzania cienia\nTabela: Dodano format kolumny adresowej dla prawidłowego sortowania",
+        "uk": "Радіальний Slider: Підтримка градієнтних кольорів для залізничної та активної рейки\nВипадок: Додана опція розподілу тіней\nТаблиця: Додано формат стовпчика ip-address для коректного сортування",
+        "zh-cn": "辐射滑动器:支持铁路和主动铁路的梯度颜色\n下拉: 添加阴影扩展选项\n表: 为正确排序而添加的 ip- address 列格式"
+      },
       "1.0.0": {
         "en": "Universal Widget: Add polygon shape support (triangle, diamond, pentagon, hexagon, heptagon, octagon, star) with configurable rotation and corner radius",
         "de": "Universal Widget: Fügen Sie Polygon-Form-Unterstützung (Dreieck, Diamant, Pentagon, Hexagon, Heptagon, Oktgon, Stern) mit konfigurierbaren Rotation und Eckradius hinzu",
