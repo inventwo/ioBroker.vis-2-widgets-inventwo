@@ -28,6 +28,9 @@
   "attr_group_css_dropdown": "inventwo - Dropdown",
   "colors": "Colors",
   "oid": "Object ID",
+  "oid_color_1_tooltip": "RGB: Red (0–255) | HSL: Hue (0–360°) | HSV: Hue (0–360°)",
+  "oid_color_2_tooltip": "RGB: Green (0–255) | HSL: Saturation (0–100%) | HSV: Saturation (0–100%)",
+  "oid_color_3_tooltip": "RGB: Blue (0–255) | HSL: Lightness (0–100%) | HSV: Value (0–100%)",
   "min_value": "Min value",
   "max_value": "Max value",
   "step": "Step",
@@ -413,5 +416,7 @@
   "title_padding_bottom": "Title padding bottom",
   "title_padding_left": "Title padding left",
   "title_padding_right": "Title padding right",
-  "attr_group_sorting": "Sorting"
+  "attr_group_sorting": "Sorting",
+  "components": "Components",
+  "layout_size": "Layout & size"
 }

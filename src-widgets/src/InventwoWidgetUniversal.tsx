@@ -949,18 +949,21 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             type: 'id',
                             hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
                             label: 'oid_value_1',
+                            tooltip: 'oid_color_1_tooltip',
                         },
                         {
                             name: 'colorPickerOid2',
                             type: 'id',
                             hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
                             label: 'oid_value_2',
+                            tooltip: 'oid_color_2_tooltip',
                         },
                         {
                             name: 'colorPickerOid3',
                             type: 'id',
                             hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
                             label: 'oid_value_3',
+                            tooltip: 'oid_color_3_tooltip',
                         },
                         {
                             name: '',
