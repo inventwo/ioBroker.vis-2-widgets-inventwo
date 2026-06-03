@@ -260,6 +260,7 @@ Renders a bullet-point list from a single text value — either from a data poin
 - Slider: Added configurable value label display (always/on drag/never) and step marks position (above/below)
 - Universal: Added "Disable click when active" option per state
 - Universal: Fixed color picker components not updating when toggled in the editor
+- Added links to widget documentation in widget settings
 
 ### 1.2.0 (2026-06-02)
 - Radial Slider: Support gradient colors for rail and active rail
