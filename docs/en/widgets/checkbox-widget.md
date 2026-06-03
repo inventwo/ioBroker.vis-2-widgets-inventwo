@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../de/widgets/checkbox-widget.md)
+
 # Checkbox Widget
 
 The Checkbox Widget displays a standard checkbox that toggles a datapoint between two values. Like the Switch Widget, you define what "checked" and "unchecked" mean — so it works with booleans, numbers, or any other value pair.

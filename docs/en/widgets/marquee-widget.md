@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../de/widgets/marquee-widget.md)
+
 # Marquee Widget
 
 The Marquee Widget displays text that continuously scrolls across the widget area — like a classic ticker or news banner. The text can come from an ioBroker datapoint (e.g. a status message, sensor value, or notification) or you can type it in manually.

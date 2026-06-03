@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../de/widgets/dropdown-widget.md)
+
 # Dropdown Widget
 
 The Dropdown Widget shows a selectable list of options and writes the chosen value back to a datapoint. The options are loaded automatically from the ioBroker object definition — no manual list maintenance needed. This is ideal for selecting modes, scenes, fan speeds, or any datapoint that has a fixed list of allowed values defined in its object.

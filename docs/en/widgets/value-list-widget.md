@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../de/widgets/value-list-widget.md)
+
 # Value List Widget
 
 The Value List Widget takes a text value — from a datapoint or typed in manually — splits it into individual items, and displays them as a formatted bullet list. This is useful for showing comma-separated or newline-separated values in a readable layout.

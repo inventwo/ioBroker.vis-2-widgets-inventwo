@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../de/index.md)
+
 # inventwo Widgets for ioBroker VIS 2 — User Guide
 
 Welcome to the inventwo widget documentation. This guide explains how to use each widget in the VIS 2 editor to build your own smart home dashboards.

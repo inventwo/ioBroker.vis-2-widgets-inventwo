@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../de/widgets/switch-widget.md)
+
 # Switch Widget
 
 The Switch Widget displays a classic toggle switch that turns a datapoint on or off. You define which value counts as "on" and which as "off" — so it works with boolean datapoints (`true`/`false`) as well as numeric ones (`0`/`1`) or any other pair of values.

@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../de/widgets/slider-widget.md)
+
 # Slider Widget
 
 The Slider Widget lets users set a numeric value by dragging a handle along a track. It works horizontally or vertically and is ideal for controlling dimmers, thermostats, blinds, volume, or any other numeric datapoint.

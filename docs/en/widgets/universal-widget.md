@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../de/widgets/universal-widget.md)
+
 # Universal Widget
 
 The Universal Widget is the most versatile widget in the inventwo set. It combines **interaction behavior**, **visual content**, and **state-based styling** in one tile. Use it when you want a single, consistent-looking tile that reacts to your datapoint — changing its icon, color, text, or shape depending on the value.

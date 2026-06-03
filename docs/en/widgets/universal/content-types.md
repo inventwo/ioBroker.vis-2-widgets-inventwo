@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../../de/widgets/universal/content-types.md)
+
 # Universal Widget — Content Types
 
 The **Content type** setting (in the **Common** group) defines what is shown inside the Universal Widget tile. The content and its appearance can be configured separately for each state.

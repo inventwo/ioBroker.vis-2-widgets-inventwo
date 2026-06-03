@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../../de/widgets/universal/interaction-types.md)
+
 # Universal Widget — Interaction Types
 
 The **Type** setting in the **Common** group defines what happens when a user clicks the Universal Widget tile. Choose the type that matches your use case.

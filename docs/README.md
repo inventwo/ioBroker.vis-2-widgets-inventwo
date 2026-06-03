@@ -8,6 +8,7 @@ The widgets let you build fully styled dashboards — buttons, sliders, tables, 
 
 | Language | Link |
 |----------|------|
-| English  | [docs/en/](en/index.md) |
+| English  | [en/index.md](en/index.md) |
+| Deutsch  | [de/index.md](de/index.md) |
 
-> More languages are planned. Contributions are welcome.
+> Weitere Sprachen sind geplant. Beiträge sind willkommen. / More languages are planned. Contributions are welcome.

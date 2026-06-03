@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../de/widgets/radial-slider-widget.md)
+
 # Radial Slider Widget
 
 The Radial Slider Widget is a circular arc dial for numeric datapoints. It works like the regular Slider Widget, but the user drags around a circular track instead of along a straight line. It is perfect for thermostat tiles, volume knobs, or any control where a round dial fits the design.

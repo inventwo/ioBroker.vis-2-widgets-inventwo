@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../de/widgets/table-widget.md)
+
 # Table Widget
 
 The Table Widget displays data from an ioBroker datapoint as a formatted table. The datapoint must contain a **JSON array** — a list of objects where each object represents one row. This is perfect for showing sensor readings, device lists, history logs, or any structured data that an adapter writes as JSON.

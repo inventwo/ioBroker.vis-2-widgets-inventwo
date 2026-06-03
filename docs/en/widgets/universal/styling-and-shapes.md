@@ -1,3 +1,5 @@
+> 🌐 **English** | [Deutsch](../../../de/widgets/universal/styling-and-shapes.md)
+
 # Universal Widget — Styling and Shapes
 
 The Universal Widget has a rich set of styling options, all configured directly in the VIS 2 editor sidebar. Styles are organized into named groups. Most groups have a **From widget** field that lets you copy settings from another Universal Widget.
