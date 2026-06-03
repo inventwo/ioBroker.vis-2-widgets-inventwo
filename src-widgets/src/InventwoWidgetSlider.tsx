@@ -18,12 +18,14 @@ interface SliderRxData {
     step: number;
     showMinMax: boolean;
     orientation: 'horizontal' | 'vertical';
+    valueLabelDisplay: 'auto' | 'on' | 'off';
     showSteps: boolean;
+    stepsInside: boolean;
+    stepsAbove: boolean;
     stepMode: 'auto' | 'custom';
     stepDisplay: number;
     customSteps: string;
     readOnly: boolean;
-    stepsInside: boolean;
     sliderRailColor: string;
     sliderRailActiveColor: string;
     trackBarType: 'normal' | 'inverted' | false;
@@ -139,6 +141,17 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                             default: false,
                         },
                         {
+                            name: 'valueLabelDisplay',
+                            type: 'select',
+                            options: [
+                                { value: 'auto', label: 'value_label_auto' },
+                                { value: 'on', label: 'value_label_always' },
+                                { value: 'off', label: 'value_label_off' },
+                            ],
+                            default: 'auto',
+                            label: 'value_label_display',
+                        },
+                        {
                             name: '',
                             type: 'delimiter',
                         },
@@ -159,6 +172,14 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                             label: 'steps_inside',
                             default: false,
                             hidden: '!data.showSteps',
+                        },
+                        {
+                            name: 'stepsAbove',
+                            type: 'checkbox',
+                            label: 'steps_above',
+                            default: false,
+                            tooltip: 'steps_above_tooltip',
+                            hidden: '!data.showSteps || data.stepsInside',
                         },
                         {
                             name: 'stepMode',
@@ -433,10 +454,11 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
     renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
         super.renderWidgetBody(props);
 
-        const minValue = this.state.rxData.minValue;
-        const maxValue = this.state.rxData.maxValue;
+        const minValue = Number(this.state.rxData.minValue);
+        const maxValue = Number(this.state.rxData.maxValue);
         const orientation = this.state.rxData.orientation;
         const stepsInside = this.state.rxData.stepsInside;
+        const stepsAbove = this.state.rxData.stepsAbove;
 
         const marks = [];
         if (this.state.rxData.showMinMax) {
@@ -452,8 +474,8 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
 
         if (this.state.rxData.showSteps) {
             if (this.state.rxData.stepMode === 'auto') {
-                const stepDisplay = this.state.rxData.stepDisplay;
-                if (stepDisplay > 0 && minValue && maxValue && stepDisplay) {
+                const stepDisplay = Number(this.state.rxData.stepDisplay);
+                if (stepDisplay > 0 && maxValue > minValue) {
                     for (let i = minValue + stepDisplay; i < maxValue; i += stepDisplay) {
                         marks.push({
                             value: parseFloat(i.toFixed(2).replace(/[.,]00$/, '')),
@@ -488,14 +510,14 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
             trackBarType === 'normal'
                 ? trackStyle.sliderRailColor
                 : trackBarType === 'inverted'
-                  ? trackStyle.sliderRailActiveColor
-                  : '';
+                    ? trackStyle.sliderRailActiveColor
+                    : '';
         const trackColor: string =
             trackBarType === 'normal'
                 ? trackStyle.sliderRailActiveColor
                 : trackBarType === 'inverted'
-                  ? trackStyle.sliderRailColor
-                  : '';
+                    ? trackStyle.sliderRailColor
+                    : '';
         const thumbColor: string = thumbStyle.sliderThumbColor;
 
         // Build markLabel style (font + position)
@@ -525,6 +547,20 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                     transform: 'translateX(-50%) translateY(50%)',
                 };
             }
+        } else if (stepsAbove) {
+            if (orientation === 'horizontal') {
+                // Position marks above the slider track
+                markLabelPositionStyle = {
+                    top: 'auto',
+                    bottom: (trackStyle.trackWidth ?? 10) + 20,
+                };
+            } else {
+                // Position marks to the left of the vertical slider
+                markLabelPositionStyle = {
+                    left: 'auto',
+                    right: (trackStyle.trackWidth ?? 10) + 20,
+                };
+            }
         } else {
             if (orientation === 'horizontal') {
                 markLabelPositionStyle = {
@@ -546,14 +582,14 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
             '& .MuiSlider-thumb': thumbHidden
                 ? { display: 'none' }
                 : {
-                      background: thumbColor,
-                      width: thumbSize,
-                      height: thumbSize,
-                      borderRadius: `${thumbStyle.thumbBorderRadius}%`,
-                      '&:before': {
-                          boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbStyle.thumbShadowColor}`,
-                      },
-                  },
+                    background: thumbColor,
+                    width: thumbSize,
+                    height: thumbSize,
+                    borderRadius: `${thumbStyle.thumbBorderRadius}%`,
+                    '&:before': {
+                        boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbStyle.thumbShadowColor}`,
+                    },
+                },
             '& .MuiSlider-rail': {
                 background: railColor,
                 color: railColor,
@@ -584,11 +620,11 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 onChangeCommitted={(e, val) =>
                     this.setState({ sliderValue: val as number }, () => this.onChange(e, val))
                 }
-                min={this.state.rxData.minValue}
-                max={this.state.rxData.maxValue}
-                step={this.state.rxData.step}
+                min={minValue}
+                max={maxValue}
+                step={Number(this.state.rxData.step)}
                 value={this.state.sliderValue || 0}
-                valueLabelDisplay="auto"
+                valueLabelDisplay={this.state.rxData.valueLabelDisplay ?? 'auto'}
                 track={trackStyle.trackBarType}
                 orientation={orientation}
                 marks={marks}

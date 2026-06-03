@@ -257,6 +257,7 @@ Renders a bullet-point list from a single text value — either from a data poin
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+- Slider: Added configurable value label display (always/on drag/never) and step marks position (above/below)
 - Universal: Added "Disable click when active" option per state
 - Universal: Fixed color picker components not updating when toggled in the editor
 
