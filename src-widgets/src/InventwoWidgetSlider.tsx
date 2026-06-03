@@ -512,14 +512,14 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
             trackBarType === 'normal'
                 ? trackStyle.sliderRailColor
                 : trackBarType === 'inverted'
-                    ? trackStyle.sliderRailActiveColor
-                    : '';
+                  ? trackStyle.sliderRailActiveColor
+                  : '';
         const trackColor: string =
             trackBarType === 'normal'
                 ? trackStyle.sliderRailActiveColor
                 : trackBarType === 'inverted'
-                    ? trackStyle.sliderRailColor
-                    : '';
+                  ? trackStyle.sliderRailColor
+                  : '';
         const thumbColor: string = thumbStyle.sliderThumbColor;
 
         // Build markLabel style (font + position)
@@ -584,14 +584,14 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
             '& .MuiSlider-thumb': thumbHidden
                 ? { display: 'none' }
                 : {
-                    background: thumbColor,
-                    width: thumbSize,
-                    height: thumbSize,
-                    borderRadius: `${thumbStyle.thumbBorderRadius}%`,
-                    '&:before': {
-                        boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbStyle.thumbShadowColor}`,
-                    },
-                },
+                      background: thumbColor,
+                      width: thumbSize,
+                      height: thumbSize,
+                      borderRadius: `${thumbStyle.thumbBorderRadius}%`,
+                      '&:before': {
+                          boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbStyle.thumbShadowColor}`,
+                      },
+                  },
             '& .MuiSlider-rail': {
                 background: railColor,
                 color: railColor,

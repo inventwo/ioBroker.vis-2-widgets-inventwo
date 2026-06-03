@@ -2429,16 +2429,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             }
             compareValue = this.convertValue(compareValue);
 
-            const isNavBtn =
-                (compareBy === 'default' && this.state.rxData.type === 'nav') || compareBy === 'view';
+            const isNavBtn = (compareBy === 'default' && this.state.rxData.type === 'nav') || compareBy === 'view';
 
             if (isNavBtn) {
                 const isActive =
                     (this.state.rxData.mode === 'singleButton' &&
                         this.state.rxData.countStates === 1 &&
                         this.state.rxData.view === this.props.view) ||
-                    (this.state.rxData.countStates > 1 &&
-                        this.state.rxData[`view${i}`] === this.props.view);
+                    (this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.view);
                 if (isActive) {
                     return true;
                 }
