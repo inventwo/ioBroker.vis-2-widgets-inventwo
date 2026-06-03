@@ -3,6 +3,7 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState } from '@iobroker/types-vis-2';
+import { createDocsLinkField } from './utils/docLinkField';
 
 interface SwitchRxData {
     oid: null | string;
@@ -24,6 +25,7 @@ export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, 
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/switch-widget.md') as any,
                         {
                             name: 'oid',
                             type: 'id',

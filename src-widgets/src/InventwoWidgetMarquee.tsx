@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
+import { createDocsLinkField } from './utils/docLinkField';
 
 interface MarqueeRxData {
     oid: null | string;
@@ -105,6 +106,7 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/marquee-widget.md') as any,
                         {
                             name: 'oid',
                             type: 'id',

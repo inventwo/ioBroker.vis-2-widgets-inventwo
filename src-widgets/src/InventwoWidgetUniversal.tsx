@@ -10,6 +10,7 @@ import iro from '@jaames/iro';
 import './assets/inventwo.css';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
+import { createDocsLinkField } from './utils/docLinkField';
 import type { ColorPickerProps } from '@jaames/iro/dist/ColorPicker';
 import type { UniversalCompleteRxData } from './types/UniversalWidgetRxDataTypes';
 import type {
@@ -92,6 +93,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/universal-widget.md') as any,
                         {
                             name: 'type',
                             type: 'select',

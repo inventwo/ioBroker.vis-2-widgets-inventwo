@@ -10,6 +10,7 @@ import type {
     RxRenderWidgetProps,
 } from '@iobroker/types-vis-2';
 import React from 'react';
+import { createDocsLinkField } from './utils/docLinkField';
 
 interface SliderRxData {
     oid: null | string;
@@ -68,6 +69,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/slider-widget.md') as any,
                         {
                             name: 'oid',
                             type: 'id',

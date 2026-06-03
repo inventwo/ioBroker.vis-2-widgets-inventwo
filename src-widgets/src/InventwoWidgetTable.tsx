@@ -26,6 +26,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
 import React from 'react';
+import { createDocsLinkField } from './utils/docLinkField';
 
 interface SortCriterion {
     key: string;
@@ -106,6 +107,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/table-widget.md') as any,
                         {
                             name: 'oid',
                             type: 'id',

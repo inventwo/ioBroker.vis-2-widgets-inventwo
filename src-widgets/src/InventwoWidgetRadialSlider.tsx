@@ -10,6 +10,7 @@ import type {
     RxRenderWidgetProps,
 } from '@iobroker/types-vis-2';
 import React from 'react';
+import { createDocsLinkField } from './utils/docLinkField';
 
 function splitOutsideParens(str: string): string[] {
     const parts: string[] = [];
@@ -182,6 +183,7 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/radial-slider-widget.md') as any,
                         {
                             name: 'oid',
                             type: 'id',

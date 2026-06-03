@@ -3,6 +3,7 @@ import { Select, MenuItem, FormControl } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
+import { createDocsLinkField } from './utils/docLinkField';
 
 interface DropdownRxData {
     oid: null | string;
@@ -159,6 +160,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/dropdown-widget.md') as any,
                         {
                             name: 'oid',
                             type: 'id',

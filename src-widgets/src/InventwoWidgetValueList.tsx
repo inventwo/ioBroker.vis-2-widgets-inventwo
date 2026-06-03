@@ -1,6 +1,7 @@
 import React from 'react';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
+import { createDocsLinkField } from './utils/docLinkField';
 
 interface ValueListRxData {
     oid: null | string;
@@ -41,6 +42,7 @@ class InventwoWidgetValueList extends InventwoGeneric<ValueListRxData, ValueList
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/value-list-widget.md') as any,
                         {
                             name: 'oid',
                             type: 'id',
