@@ -20,8 +20,8 @@ Das Universal Widget ist das vielseitigste Widget im inventwo-Set. Es kombiniert
 ## Schnellstart
 
 1. Ziehe **Universal (Switch, Button, Nav, Image & more)** aus der Widget-Liste **inventwo design** auf deine Ansicht.
-2. Wähle einen **Type** — das ist die wichtigste Einstellung und legt fest, was beim Klick auf die Kachel passiert. Siehe [Interaktionstypen](universal/interaction-types.md).
-3. Klicke auf **Object ID** und wähle den Datenpunkt aus (wenn dein Typ einen Wert liest oder schreibt).
+2. Wähle einen **Typ** — das ist die wichtigste Einstellung und legt fest, was beim Klick auf die Kachel passiert. Siehe [Interaktionstypen](universal/interaction-types.md).
+3. Klicke auf **Objekt-ID** und wähle den Datenpunkt aus (wenn dein Typ einen Wert liest oder schreibt).
 4. Wähle einen **Content type**, um festzulegen, was in der Kachel angezeigt wird (Icon, Bild, Text, eingebettete Ansicht usw.). Siehe [Inhaltstypen](universal/content-types.md).
 5. Konfiguriere den Standardzustand in der Gruppe **Default state** — Hintergrund, Farben, Text, Icon.
 6. Füge weitere Zustände in den **State**-Gruppen hinzu, um das Aussehen der Kachel je nach Datenpunktwert zu ändern.
@@ -31,10 +31,10 @@ Das Universal Widget ist das vielseitigste Widget im inventwo-Set. Es kombiniert
 
 ## Grundkonzepte
 
-### Type (Interaktionsverhalten)
+### Typ (Interaktionsverhalten)
 Was passiert, wenn du auf die Kachel klickst. Optionen: Switch, Button, Nav, Read only, View in dialog, Increase/decrease value, Send HTTP request. → [Detaillierte Erklärung](universal/interaction-types.md)
 
-### Mode
+### Modus
 - **Single button**: Eine Kachel, die jeweils einen einzelnen Zustand anzeigt.
 - **Separated buttons**: Jeder Zustand wird als eigene anklickbare Schaltfläche dargestellt, nebeneinander angeordnet. Nützlich für Mehrfach-Optionsauswahlen (ähnlich wie die frühere Radio-Button-Liste).
 
@@ -46,8 +46,8 @@ Der **Default state** (Zustand 1) wird immer angezeigt, wenn keine andere Zustan
 ### Content Type (Inhaltstyp)
 Was innerhalb der Kachel gerendert wird. Optionen: Icon, Image, Text/HTML, View in widget, Color picker, Analog clock. → [Detaillierte Erklärung](universal/content-types.md)
 
-### From Widget (Stil-Wiederverwendung)
-Die meisten Style-Gruppen haben ein **From widget**-Feld. Wähle ein anderes Universal Widget aus, und alle Einstellungen dieser Gruppe werden von dort übernommen. So hältst du viele Kacheln optisch konsistent, ohne jede einzeln konfigurieren zu müssen.
+### Vom Widget (Stil-Wiederverwendung)
+Die meisten Style-Gruppen haben ein **Vom Widget**-Feld. Wähle ein anderes Universal Widget aus, und alle Einstellungen dieser Gruppe werden von dort übernommen. So hältst du viele Kacheln optisch konsistent, ohne jede einzeln konfigurieren zu müssen.
 
 ---
 

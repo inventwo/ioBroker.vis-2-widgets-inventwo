@@ -2,7 +2,7 @@
 
 # Universal Widget — Inhaltstypen
 
-Die **Content type**-Einstellung (in der Gruppe **Common**) legt fest, was innerhalb der Universal-Widget-Kachel angezeigt wird. Der Inhalt und sein Aussehen können für jeden Zustand separat konfiguriert werden.
+Die **Inhaltstyp**-Einstellung (in der Gruppe **Common**) legt fest, was innerhalb der Universal-Widget-Kachel angezeigt wird. Der Inhalt und sein Aussehen können für jeden Zustand separat konfiguriert werden.
 
 ![Übersicht der Inhaltstypen](../../../en/img/preview_content_types.png)
 
@@ -17,14 +17,14 @@ Die **Content type**-Einstellung (in der Gruppe **Common**) legt fest, was inner
 ![Icon-Inhaltstyp](../../../en/img/preview_content_icon.png)
 
 **Einstellungen pro Zustand (in den Gruppen Default state / State):**
-- **Icon** — Das Icon, das in diesem Zustand angezeigt wird, auswählen.
-- **Content color** — Die Einfärbe-Farbe, die in diesem Zustand auf das Icon angewendet wird.
-- **Content color true** — *(Separated buttons / True-Wert-Zustand)* Einfärbe-Farbe für den aktiven Zustand.
+- **Symbol** — Das Icon, das in diesem Zustand angezeigt wird, auswählen.
+- **Inhaltsfarbe** — Die Einfärbe-Farbe, die in diesem Zustand auf das Icon angewendet wird.
+- **Inhaltsfarbe wahr** — *(Separated buttons / True-Wert-Zustand)* Einfärbe-Farbe für den aktiven Zustand.
 
-**Inhalts-Styling (in der Gruppe "inventwo - Content"):**
-- **Content size** — Größe des Icons in Pixeln oder als Prozentsatz der Kachel.
-- **Rotation** — Das Icon um einen beliebigen Winkel drehen.
-- **Mirror** — Das Icon horizontal spiegeln.
+**Inhalts-Styling (in der Gruppe "inventwo - Inhalt"):**
+- **Inhaltsgröße** — Größe des Icons in Pixeln oder als Prozentsatz der Kachel.
+- **Drehung** — Das Icon um einen beliebigen Winkel drehen.
+- **Spiegel** — Das Icon horizontal spiegeln.
 
 ---
 
@@ -37,11 +37,11 @@ Die **Content type**-Einstellung (in der Gruppe **Common**) legt fest, was inner
 ![Image-Inhaltstyp](../../../en/img/preview_content_image.png)
 
 **Einstellungen pro Zustand:**
-- **Image** — URL oder Pfad zur Bilddatei für diesen Zustand.
-- **Image true** — Bild, das im aktiven/True-Zustand verwendet wird (für Switch-Kacheln).
+- **Bild** — URL oder Pfad zur Bilddatei für diesen Zustand.
+- **Bild wahr** — Bild, das im aktiven/True-Zustand verwendet wird (für Switch-Kacheln).
 
-**Bild-Styling (in der Gruppe "inventwo - Content"):**
-- **Fill type** — Wie das Bild den Kachelbereich füllt:
+**Bild-Styling (in der Gruppe "inventwo - Inhalt"):**
+- **Fülltyp** — Wie das Bild den Kachelbereich füllt:
   - **Contain** — Das Bild passt vollständig in die Kachel (kann leere Bereiche hinterlassen).
   - **Cover** — Das Bild füllt die Kachel vollständig aus (kann Ränder beschneiden).
   - **Fill** — Das Bild wird gestreckt, um die Kachel genau auszufüllen.
@@ -60,7 +60,7 @@ Die **Content type**-Einstellung (in der Gruppe **Common**) legt fest, was inner
 
 **Einstellungen pro Zustand:**
 - **Text** — Der Text- oder HTML-Inhalt für diesen Zustand. Du kannst `<b>`, `<i>`, `<span style="...">` und ähnliche Tags verwenden.
-- **Text true** — Textinhalt für den aktiven/True-Zustand.
+- **Text wahr** — Textinhalt für den aktiven/True-Zustand.
 
 **Textstyling** wird durch die Gruppe **inventwo - Text** gesteuert (Schriftgröße, -stärke, Ausrichtung, Dekoration, Abstände).
 
@@ -75,11 +75,11 @@ Die **Content type**-Einstellung (in der Gruppe **Common**) legt fest, was inner
 **Funktionsweise:** Wähle einen VIS-Ansichtsnamen aus, und er wird innerhalb der Kachel gerendert.
 
 **Einstellungen pro Zustand:**
-- **View in widget** — Die VIS-Ansicht, die in diesem Zustand eingebettet wird.
-- **View in widget true** — Eingebettete Ansicht im aktiven/True-Zustand.
+- **Im Widget anzeigen** — Die VIS-Ansicht, die in diesem Zustand eingebettet wird.
+- **Im Widget anzeigen true** — Eingebettete Ansicht im aktiven/True-Zustand.
 
 **Inhalts-Styling:**
-- **Scale to fit** — Skaliert die eingebettete Ansicht herunter, um in die Kachel zu passen. Aktiviere dies, wenn die eingebettete Ansicht größer als die Kachelgröße ist.
+- **Passend skalieren** — Skaliert die eingebettete Ansicht herunter, um in die Kachel zu passen. Aktiviere dies, wenn die eingebettete Ansicht größer als die Kachelgröße ist.
 
 ---
 
@@ -95,25 +95,25 @@ Die **Content type**-Einstellung (in der Gruppe **Common**) legt fest, was inner
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Object ID (color picker)** | Haupt-Datenpunkt, in den die Farbe geschrieben wird (im Format deines Farbmodells). |
-| **Oid value 1 / 2 / 3** | Zusätzliche Datenpunkte für einzelne Farbkomponenten (z. B. R, G, B separat). |
-| **Color model** | Das Format des geschriebenen Werts: **HSV**, **HSL**, **RGB**, **CIE**, **Hex**, **Hex 8** (Hex mit Alpha). |
-| **Show wheel** | Zeigt das kreisförmige Farbrad an. |
-| **Show box** | Zeigt die Farb-/Sättigungsbox an. |
-| **Show hue** | Zeigt den Farbton-Schieberegler an. |
-| **Show Saturation** | Zeigt den Sättigungs-Schieberegler an. |
-| **Show value** | Zeigt den Helligkeit-(Wert-)Schieberegler an. |
-| **Show red / green / blue** | Zeigt die einzelnen R-, G-, B-Schieberegler an. |
-| **Show Alpha** | Zeigt den Deckkraft-/Alpha-Schieberegler an. |
-| **Show kelvin** | Zeigt den Farbtemperatur-(Kelvin-)Schieberegler an. |
-| **Width** | Breite des Farbwählers in Pixeln. |
-| **Handle size** | Größe der Farbwähler-Griffe. |
-| **Handle margin** | Abstand um die Griffe herum. |
-| **Components space** | Vertikaler Abstand zwischen den Farbwähler-Komponenten. |
-| **Border width / Border color** | Fügt einen Rahmen um die Farbwähler-Komponenten hinzu. |
-| **Direction** | Layout-Richtung: **Horizontal** oder **Vertical**. |
+| **Objekt-ID (Farbauswahl)** | Haupt-Datenpunkt, in den die Farbe geschrieben wird (im Format deines Farbmodells). |
+| **Oid-Wert 1 / 2 / 3** | Zusätzliche Datenpunkte für einzelne Farbkomponenten (z. B. R, G, B separat). |
+| **Farbmodell** | Das Format des geschriebenen Werts: **HSV**, **HSL**, **RGB**, **CIE**, **Hex**, **Hex 8** (Hex mit Alpha). |
+| **Rad anzeigen** | Zeigt das kreisförmige Farbrad an. |
+| **Box anzeigen** | Zeigt die Farb-/Sättigungsbox an. |
+| **Farbton anzeigen** | Zeigt den Farbton-Schieberegler an. |
+| **Sättigung anzeigen** | Zeigt den Sättigungs-Schieberegler an. |
+| **Wert anzeigen** | Zeigt den Helligkeit-(Wert-)Schieberegler an. |
+| **Rot / Grün / Blau anzeigen** | Zeigt die einzelnen R-, G-, B-Schieberegler an. |
+| **Alpha anzeigen** | Zeigt den Deckkraft-/Alpha-Schieberegler an. |
+| **Kelvin anzeigen** | Zeigt den Farbtemperatur-(Kelvin-)Schieberegler an. |
+| **Breite** | Breite des Farbwählers in Pixeln. |
+| **Griffgröße** | Größe der Farbwähler-Griffe. |
+| **Griffrand** | Abstand um die Griffe herum. |
+| **Komponentenbereich** | Vertikaler Abstand zwischen den Farbwähler-Komponenten. |
+| **Rahmenbreite / Randfarbe** | Fügt einen Rahmen um die Farbwähler-Komponenten hinzu. |
+| **Richtung** | Layout-Richtung: **Horizontal** oder **Vertical**. |
 
-**Tipp für RGB-Lichter:** Setze **Color model** auf **Hex** und verbinde **Object ID (color picker)** mit dem Farb-Datenpunkt deines Lichtadapters. Aktiviere nur die Steuerelemente, die dein Licht unterstützt — z. B. nur das Rad für den Farbton und den Value-Schieberegler für die Helligkeit.
+**Tipp für RGB-Lichter:** Setze **Farbmodell** auf **Hex** und verbinde **Objekt-ID (Farbauswahl)** mit dem Farb-Datenpunkt deines Lichtadapters. Aktiviere nur die Steuerelemente, die dein Licht unterstützt — z. B. nur das Rad für den Farbton und den Wert-Schieberegler für die Helligkeit.
 
 ---
 
@@ -132,36 +132,36 @@ Die **Content type**-Einstellung (in der Gruppe **Common**) legt fest, was inner
 | Einstellung | Beschreibung |
 |-------------|--------------|
 | **Design** | Zifferblatt-Stil: **Classic** (Zahlen + lange Striche), **Modern** (minimalistische Striche), **Minimal** (sehr klar, keine Zahlen), **Dashes** (nur Strichmarkierungen), **Custom** (Striche und Zahlen manuell konfigurieren). |
-| **Face color** | Farbe der Zifferblatt-Elemente (Striche, Zahlen). |
-| **Background color** | Füllfarbe hinter dem Zifferblatt. |
+| **Zifferblatt-Farbe** | Farbe der Zifferblatt-Elemente (Striche, Zahlen). |
+| **Hintergrundfarbe** | Füllfarbe hinter dem Zifferblatt. |
 
 **Benutzerdefinierte Zifferblatt-Einstellungen** (nur wenn **Design** auf **Custom** gesetzt ist):
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Tick interval** | Welche Markierungen angezeigt werden: **Hours only** (nur Stunden), **Both** (Stunden und Minuten). |
-| **Tick thickness** | Dicke der Minutenmarkierungen. |
-| **Main tick thickness** | Dicke der Stundenmarkierungen. |
-| **Tick length** | Länge der Minutenmarkierungen. |
-| **Main tick length** | Länge der Stundenmarkierungen. |
-| **Show numbers** | Welche Zahlen angezeigt werden: **All numbers** (alle 12), **Main hours only** (12, 3, 6, 9), **None**. |
-| **Number size** | Schriftgröße der Stundenzahlen. |
-| **Number offset** | Abstand der Zahlen von den Strichmarkierungen. |
+| **Strichintervall** | Welche Markierungen angezeigt werden: **Hours only** (nur Stunden), **Both** (Stunden und Minuten). |
+| **Strichstärke** | Dicke der Minutenmarkierungen. |
+| **Hauptstrichstärke** | Dicke der Stundenmarkierungen. |
+| **Strichlänge** | Länge der Minutenmarkierungen. |
+| **Hauptstrichlänge** | Länge der Stundenmarkierungen. |
+| **Zahlen anzeigen** | Welche Zahlen angezeigt werden: **All numbers** (alle 12), **Main hours only** (12, 3, 6, 9), **None**. |
+| **Zahlengröße** | Schriftgröße der Stundenzahlen. |
+| **Zahlenabstand** | Abstand der Zahlen von den Strichmarkierungen. |
 
 **Uhrenring:**
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Show ring** | Zeichnet einen Kreis um das gesamte Zifferblatt. |
-| **Ring thickness** | Dicke des Rings. |
+| **Ring anzeigen** | Zeichnet einen Kreis um das gesamte Zifferblatt. |
+| **Ringdicke** | Dicke des Rings. |
 
 **Zeiger** (Stunden, Minuten, Sekunden — jeweils unabhängig):
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Show** | Ob dieser Zeiger sichtbar ist. |
+| **Anzeigen** | Ob dieser Zeiger sichtbar ist. |
 | **Design** | Zeiger-Stil: **Classic** (Standard-Verjüngungszeiger), **Modern** (dünner rechteckiger Zeiger), **Arrow** (Pfeilspitzenform). |
-| **Color** | Farbe dieses Zeigers. |
+| **Farbe** | Farbe dieses Zeigers. |
 
 ---
 

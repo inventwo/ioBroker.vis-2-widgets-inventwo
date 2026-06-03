@@ -11,9 +11,9 @@ Das Checkbox Widget zeigt eine Standard-Checkbox an, die einen Datenpunkt zwisch
 ## Widget hinzufügen
 
 1. Ziehe **Checkbox** aus der Widget-Liste **inventwo design** auf deine Ansicht.
-2. Klicke in der Seitenleiste auf **Object ID** und wähle deinen Datenpunkt aus.
-3. Setze **Value true** (aktivierter Zustand) und **Value false** (deaktivierter Zustand).
-4. Gib optional eine Beschriftung in **Text false** / **Text true** ein und wähle ihre Position.
+2. Klicke in der Seitenleiste auf **Objekt-ID** und wähle deinen Datenpunkt aus.
+3. Setze **Wert true** (aktivierter Zustand) und **Wert false** (deaktivierter Zustand).
+4. Gib optional eine Beschriftung in **Text falsch** / **Text wahr** ein und wähle ihre Position.
 
 ---
 
@@ -23,29 +23,29 @@ Das Checkbox Widget zeigt eine Standard-Checkbox an, die einen Datenpunkt zwisch
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Object ID** | Der Datenpunkt, den diese Checkbox liest und schreibt. |
-| **Value true** | Wird in den Datenpunkt geschrieben, wenn die Checkbox aktiviert wird. Leer lassen, um `true` zu verwenden. |
-| **Value false** | Wird in den Datenpunkt geschrieben, wenn die Checkbox deaktiviert wird. Leer lassen, um `false` zu verwenden. |
-| **Text false** | Beschriftung, die angezeigt wird, wenn die Checkbox deaktiviert ist. Leer lassen für keine Beschriftung. |
-| **Text true** | Beschriftung, die angezeigt wird, wenn die Checkbox aktiviert ist. Leer lassen für keine Beschriftung. |
-| **Text position** | Wo die Beschriftung erscheint: **End** (rechts, Standard), **Start** (links), **Top** oder **Bottom**. |
+| **Objekt-ID** | Der Datenpunkt, den diese Checkbox liest und schreibt. |
+| **Wert true** | Wird in den Datenpunkt geschrieben, wenn die Checkbox aktiviert wird. Leer lassen, um `true` zu verwenden. |
+| **Wert false** | Wird in den Datenpunkt geschrieben, wenn die Checkbox deaktiviert wird. Leer lassen, um `false` zu verwenden. |
+| **Text falsch** | Beschriftung, die angezeigt wird, wenn die Checkbox deaktiviert ist. Leer lassen für keine Beschriftung. |
+| **Text wahr** | Beschriftung, die angezeigt wird, wenn die Checkbox aktiviert ist. Leer lassen für keine Beschriftung. |
+| **Textposition** | Wo die Beschriftung erscheint: **End** (rechts, Standard), **Start** (links), **Top** oder **Bottom**. |
 
 ---
 
-### inventwo — Style
+### inventwo - Stil
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **From widget** | Alle Style-Einstellungen von einem anderen Checkbox Widget kopieren. |
-| **Box color** | Farbe des Checkbox-Rahmens und Icons, wenn deaktiviert. |
-| **Box color active** | Farbe der Checkbox, wenn aktiviert (Füllung und Icon). |
-| **Box size** | Größe der Checkbox in Pixeln (0–50). Standard: 24 px. |
+| **Vom Widget** | Alle Style-Einstellungen von einem anderen Checkbox Widget kopieren. |
+| **Boxfarbe** | Farbe des Checkbox-Rahmens und Icons, wenn deaktiviert. |
+| **Boxfarbe aktiv** | Farbe der Checkbox, wenn aktiviert (Füllung und Icon). |
+| **Boxgröße** | Größe der Checkbox in Pixeln (0–50). Standard: 24 px. |
 
 ---
 
 ## Tipps
 
-- **Einheitliches Styling:** Verwende **From widget**, um die Farb- und Größeneinstellungen von einem Master-Checkbox-Widget zu kopieren, damit alle Checkboxen auf deinem Dashboard gleich aussehen.
+- **Einheitliches Styling:** Verwende **Vom Widget**, um die Farb- und Größeneinstellungen von einem Master-Checkbox-Widget zu kopieren, damit alle Checkboxen auf deinem Dashboard gleich aussehen.
 - **Schrift und Textfarbe:** Schriftfamilie, -größe und -farbe der Beschriftung werden über die Standard-VIS-Widget-CSS-Einstellungen gesteuert, nicht über die inventwo-Einstellungen.
 
 ---

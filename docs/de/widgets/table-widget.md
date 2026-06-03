@@ -11,9 +11,9 @@ Das Table Widget zeigt Daten aus einem ioBroker-Datenpunkt als formatierte Tabel
 ## Widget hinzufügen
 
 1. Ziehe **Table** aus der Widget-Liste **inventwo design** auf deine Ansicht.
-2. Klicke auf **Object ID** und wähle einen Datenpunkt aus, der ein JSON-Array enthält (siehe den Abschnitt zum Datenformat weiter unten).
+2. Klicke auf **Objekt-ID** und wähle einen Datenpunkt aus, der ein JSON-Array enthält (siehe den Abschnitt zum Datenformat weiter unten).
 3. Die Tabelle wird automatisch mit einer Spalte pro JSON-Schlüssel gerendert.
-4. Um Spalten anzupassen (Titel, Breiten, Formatierung), erhöhe **Count columns** und konfiguriere jede Spalte.
+4. Um Spalten anzupassen (Titel, Breiten, Formatierung), erhöhe **Spalten zählen** und konfiguriere jede Spalte.
 
 ---
 
@@ -39,11 +39,11 @@ Wenn der Datenpunktwert kein gültiges JSON ist, zeigt die Tabelle eine Fehlerme
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Object ID** | Der Datenpunkt, der das JSON-Array enthält. |
-| **Count columns** | Anzahl der manuell konfigurierten Spalten. Bei **0** werden Spalten automatisch erzeugt (alle Schlüssel in der Reihenfolge, in der sie im JSON erscheinen). Erhöhe diesen Wert, um jede Spalte individuell zu konfigurieren. |
-| **Max rows** | Maximale Anzahl der anzuzeigenden Zeilen. Bei **0** werden alle Zeilen angezeigt. |
-| **Show head** | Zeigt oder versteckt die Kopfzeile mit den Spaltentiteln. |
-| **Sticky header** | Bei Aktivierung bleibt die Kopfzeile beim Durchscrollen vieler Zeilen sichtbar. |
+| **Objekt-ID** | Der Datenpunkt, der das JSON-Array enthält. |
+| **Spalten zählen** | Anzahl der manuell konfigurierten Spalten. Bei **0** werden Spalten automatisch erzeugt (alle Schlüssel in der Reihenfolge, in der sie im JSON erscheinen). Erhöhe diesen Wert, um jede Spalte individuell zu konfigurieren. |
+| **Max. Zeilen** | Maximale Anzahl der anzuzeigenden Zeilen. Bei **0** werden alle Zeilen angezeigt. |
+| **Kopf anzeigen** | Zeigt oder versteckt die Kopfzeile mit den Spaltentiteln. |
+| **Klebriger Header** | Bei Aktivierung bleibt die Kopfzeile beim Durchscrollen vieler Zeilen sichtbar. |
 
 ---
 
@@ -51,36 +51,36 @@ Wenn der Datenpunktwert kein gültiges JSON ist, zeigt die Tabelle eine Fehlerme
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Default sort column** | Der Spalten-Schlüssel, nach dem beim ersten Laden der Tabelle sortiert wird. |
-| **Default sort order** | **Ascending** (aufsteigend) oder **Descending** (absteigend). |
-| **Multi-column sorting** | Ermöglicht das Sortieren nach mehreren Spalten gleichzeitig. Klicke auf einen Spalten-Header, um ihn zur Sortierreihenfolge hinzuzufügen. Nochmals klicken kehrt die Richtung um. Ein dritter Klick entfernt die Spalte aus der Sortierung. Das Zahlen-Badge auf dem Header zeigt die Sortierpriorität. |
-| **Number of default sort columns** | *(Nur Multi-Sort)* Anzahl der Standard-Sortierspalten, die konfiguriert werden sollen. |
+| **Standard-Sortierspalte** | Der Spalten-Schlüssel, nach dem beim ersten Laden der Tabelle sortiert wird. |
+| **Standard-Sortierreihenfolge** | **Ascending** (aufsteigend) oder **Descending** (absteigend). |
+| **Mehrspaltensortierung** | Ermöglicht das Sortieren nach mehreren Spalten gleichzeitig. Klicke auf einen Spalten-Header, um ihn zur Sortierreihenfolge hinzuzufügen. Nochmals klicken kehrt die Richtung um. Ein dritter Klick entfernt die Spalte aus der Sortierung. Das Zahlen-Badge auf dem Header zeigt die Sortierpriorität. |
+| **Anzahl Standardsortierungen** | *(Nur Multi-Sort)* Anzahl der Standard-Sortierspalten, die konfiguriert werden sollen. |
 
-Benutzer können zur Laufzeit auf Spalten-Header klicken, um die Sortierreihenfolge zu ändern (wenn **Sortable** für diese Spalte aktiviert ist).
+Benutzer können zur Laufzeit auf Spalten-Header klicken, um die Sortierreihenfolge zu ändern (wenn **Sortierbar** für diese Spalte aktiviert ist).
 
 ---
 
 ### Spalteneinstellungen (pro Spalte)
 
-Wenn **Count columns** größer als 0 ist, hat jede Spalte folgende Einstellungen:
+Wenn **Spalten zählen** größer als 0 ist, hat jede Spalte folgende Einstellungen:
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Hide column** | Versteckt diese Spalte in der Tabelle, ohne ihre Konfiguration zu entfernen. |
-| **Key** | Der JSON-Eigenschaftsname, der in dieser Spalte angezeigt wird, z. B. `temp`. Wenn leer, verwendet die Spalte den Schlüssel an dieser Position im JSON. |
-| **Title** | Beschriftung des Spalten-Headers. Wenn leer, wird der JSON-Schlüsselname verwendet. |
-| **Width** | Feste Spaltenbreite in Pixeln (0 = automatisch). |
-| **Prefix** | Text, der vor dem Zellenwert hinzugefügt wird, z. B. `~`. |
+| **Spalte ausblenden** | Versteckt diese Spalte in der Tabelle, ohne ihre Konfiguration zu entfernen. |
+| **Schlüssel** | Der JSON-Eigenschaftsname, der in dieser Spalte angezeigt wird, z. B. `temp`. Wenn leer, verwendet die Spalte den Schlüssel an dieser Position im JSON. |
+| **Titel** | Beschriftung des Spalten-Headers. Wenn leer, wird der JSON-Schlüsselname verwendet. |
+| **Breite** | Feste Spaltenbreite in Pixeln (0 = automatisch). |
+| **Präfix** | Text, der vor dem Zellenwert hinzugefügt wird, z. B. `~`. |
 | **Suffix** | Text, der nach dem Zellenwert hinzugefügt wird, z. B. ` °C`. |
-| **Placeholder** | Text, der angezeigt wird, wenn der Zellenwert leer oder null ist. |
-| **Title align** | Ausrichtung des Spalten-Headers: Left, Center, Right. |
-| **Content align** | Ausrichtung der Zellenwerte: Left, Center, Right. |
+| **Platzhalter** | Text, der angezeigt wird, wenn der Zellenwert leer oder null ist. |
+| **Titel ausrichten** | Ausrichtung des Spalten-Headers: Left, Center, Right. |
+| **Inhalt ausrichten** | Ausrichtung der Zellenwerte: Left, Center, Right. |
 | **Format** | Wie der Wert angezeigt wird: **Text** (einfach), **Number** (mit Dezimalstellen), **Datetime** (Datum/Uhrzeit-Formatierung), **Image** (rendert eine URL als Bild), **IP address** (behandelt den Wert als IPv4-Adresse für korrekte numerische Sortierung). |
-| **Decimals** | *(Nur Number-Format)* Anzahl der Dezimalstellen. |
-| **Datetime format** | *(Nur Datetime-Format)* **Datetime** (Datum und Uhrzeit), **Date** (nur Datum), **Time** (nur Uhrzeit), **Custom format** (eigenes Muster eingeben). |
-| **Custom format** | *(Nur Custom Datetime)* Formatmuster — siehe Token-Tabelle unten. |
-| **Sortable** | Fügt dem Spalten-Header einen Sortier-Pfeil hinzu, auf den Benutzer klicken können. |
-| **Enable filter** | Fügt dem Spalten-Header ein Filter-Icon hinzu. Ein Klick öffnet eine Checkliste zum Ein-/Ausblenden von Zeilen nach Wert. |
+| **Dezimalstellen** | *(Nur Number-Format)* Anzahl der Dezimalstellen. |
+| **Datum/Uhrzeit Format** | *(Nur Datetime-Format)* **Datetime** (Datum und Uhrzeit), **Date** (nur Datum), **Time** (nur Uhrzeit), **Custom format** (eigenes Muster eingeben). |
+| **Benutzerdefiniertes Format** | *(Nur Custom Datetime)* Formatmuster — siehe Token-Tabelle unten. |
+| **Sortierbar** | Fügt dem Spalten-Header einen Sortier-Pfeil hinzu, auf den Benutzer klicken können. |
+| **Filter aktivieren** | Fügt dem Spalten-Header ein Filter-Icon hinzu. Ein Klick öffnet eine Checkliste zum Ein-/Ausblenden von Zeilen nach Wert. |
 
 #### Tokens für benutzerdefinierte Datetime-Formate
 
@@ -108,55 +108,55 @@ Du kannst die Hintergrundfarbe einer Zeile automatisch je nach dem Wert einer be
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Number of conditions** | Anzahl der Farbregeln, die hinzugefügt werden sollen. |
-| **Column key or index** | Der JSON-Schlüsselname oder ein (0-basierter) Spaltenindex zur Auswertung. |
-| **Value** | Der Wert, gegen den verglichen wird. |
-| **Row color** | Die Hintergrundfarbe für übereinstimmende Zeilen. |
+| **Anzahl der Bedingungen** | Anzahl der Farbregeln, die hinzugefügt werden sollen. |
+| **Spaltenschlüssel oder Index** | Der JSON-Schlüsselname oder ein (0-basierter) Spaltenindex zur Auswertung. |
+| **Wert** | Der Wert, gegen den verglichen wird. |
+| **Zeilenfarbe** | Die Hintergrundfarbe für übereinstimmende Zeilen. |
 
 Die erste zutreffende Bedingung gewinnt. Alle anderen Zeilenfarben (ungerade/gerade im Wechsel) werden von einer zutreffenden Bedingung überschrieben.
 
 ---
 
-### inventwo — Table
+### inventwo - Table
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Background header** | Hintergrundfarbe der Kopfzeile. |
-| **Background odd row** | Hintergrundfarbe ungerader Zeilen (1., 3., ...). |
-| **Background even row** | Hintergrundfarbe gerader Zeilen (2., 4., ...). |
-| **Header height** | Höhe der Kopfzeile in Pixeln. |
-| **Column height** | Höhe jeder Datenzeile in Pixeln. |
-| **Thickness header** | Dicke des unteren Rahmens der Kopfzeile. |
-| **Color header** | Farbe des unteren Rahmens der Kopfzeile. |
-| **Thickness** | Dicke des unteren Rahmens jeder Datenzeile. |
-| **Color** | Farbe des unteren Rahmens der Datenzeilen. |
+| **Hintergrundkopfzeile** | Hintergrundfarbe der Kopfzeile. |
+| **Hintergrund ungerade Zeile** | Hintergrundfarbe ungerader Zeilen (1., 3., ...). |
+| **Hintergrund gerade Zeile** | Hintergrundfarbe gerader Zeilen (2., 4., ...). |
+| **Headerhöhe** | Höhe der Kopfzeile in Pixeln. |
+| **Säulenhöhe** | Höhe jeder Datenzeile in Pixeln. |
+| **Dicke Kopfzeile** | Dicke des unteren Rahmens der Kopfzeile. |
+| **Farbe Kopfzeile** | Farbe des unteren Rahmens der Kopfzeile. |
+| **Dicke** | Dicke des unteren Rahmens jeder Datenzeile. |
+| **Farbe** | Farbe des unteren Rahmens der Datenzeilen. |
 
 ---
 
-### inventwo — Border radius
+### inventwo - Rahmenradius
 
-Rundet die Ecken des Tabellen-Containers ab. Kann für oben links, oben rechts, unten rechts und unten links individuell eingestellt werden. Mit **From widget** von einem anderen Table Widget kopieren.
-
----
-
-### inventwo — Border
-
-Fügt einen äußeren Rahmen um den Tabellen-Container hinzu. Rahmenstil (solid, dashed, dotted usw.), Größe pro Seite und Farbe einstellen. Mit **From widget** von einem anderen Table Widget kopieren.
+Rundet die Ecken des Tabellen-Containers ab. Kann für oben links, oben rechts, unten rechts und unten links individuell eingestellt werden. Mit **Vom Widget** von einem anderen Table Widget kopieren.
 
 ---
 
-### inventwo — Outer shadow
+### inventwo - Rahmen
 
-Fügt einen Schlagschatten um den Tabellen-Container hinzu. X-Offset, Y-Offset, Unschärfe, Größe und Farbe einstellen. Mit **From widget** von einem anderen Table Widget kopieren.
+Fügt einen äußeren Rahmen um den Tabellen-Container hinzu. Rahmenstil (solid, dashed, dotted usw.), Größe pro Seite und Farbe einstellen. Mit **Vom Widget** von einem anderen Table Widget kopieren.
+
+---
+
+### inventwo - Äußerer Schatten
+
+Fügt einen Schlagschatten um den Tabellen-Container hinzu. X-Offset, Y-Offset, Unschärfe, Größe und Farbe einstellen. Mit **Vom Widget** von einem anderen Table Widget kopieren.
 
 ---
 
 ## Tipps
 
-- **Mit automatischen Spalten beginnen:** Lass **Count columns** zunächst auf 0, um die Rohdaten zu sehen. Erhöhe dann den Wert, um Titel, Reihenfolge und Formatierung zu steuern.
-- **Temperatur mit Einheit:** Setze **Format** auf **Number**, **Decimals** auf 1 und **Suffix** auf ` °C` — die Zelle zeigt dann `21.3 °C` an.
+- **Mit automatischen Spalten beginnen:** Lass **Spalten zählen** zunächst auf 0, um die Rohdaten zu sehen. Erhöhe dann den Wert, um Titel, Reihenfolge und Formatierung zu steuern.
+- **Temperatur mit Einheit:** Setze **Format** auf **Number**, **Dezimalstellen** auf 1 und **Suffix** auf ` °C` — die Zelle zeigt dann `21.3 °C` an.
 - **Bildspalte:** Wenn eine JSON-Eigenschaft eine URL zu einem Bild enthält, setze **Format** auf **Image**, und die Zelle rendert das Bild direkt.
-- **Standardsortierung:** Trage den JSON-Schlüssel in **Default sort column** ein (z. B. `temp`), um die Tabelle beim Laden der Ansicht vorzusortieren.
+- **Standardsortierung:** Trage den JSON-Schlüssel in **Standard-Sortierspalte** ein (z. B. `temp`), um die Tabelle beim Laden der Ansicht vorzusortieren.
 
 ---
 
