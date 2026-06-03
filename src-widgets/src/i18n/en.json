@@ -326,6 +326,7 @@
   "color_header": "Color header",
   "thickness": "Thickness",
   "click_through": "Click through",
+  "disable_click_when_active": "Disable click when active",
   "vis_2_widgets_inventwo_row_border": "Row border",
   "vis_2_widgets_inventwo_border_radius": "Border radius",
   "vis_2_widgets_inventwo_close_button": "Close button",

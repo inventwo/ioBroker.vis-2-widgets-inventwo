@@ -57,6 +57,7 @@ export interface UniversalStateRxData {
     [key: `value${number}`]: any;
     [key: `oid${number}`]: null | string;
     [key: `view${number}`]: string;
+    [key: `disableClickWhenActive${number}`]: boolean;
     [key: `icon${number}`]: string;
     [key: `image${number}`]: string;
     [key: `text${number}`]: string;

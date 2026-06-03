@@ -730,6 +730,13 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             hidden: '(data.type != "nav" && data["compareBy" + index] != "view") || data["compareBy" + index] == "value"',
                         },
                         {
+                            name: 'disableClickWhenActive',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'disable_click_when_active',
+                            hidden: 'data.type == "readonly"',
+                        },
+                        {
                             name: '',
                             type: 'delimiter',
                         },
@@ -2134,7 +2141,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 };
                 // @ts-expect-error
                 const colorPicker = new iro.ColorPicker(el, colorPickerProps);
-                this.setState({ colorPicker: colorPicker });
+                this.setState({ colorPicker });
 
                 colorPicker.on('input:change', (color: iro.Color) => {
                     const colorModel = this.state.rxData.colorPickerColorModel;
@@ -2186,13 +2193,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     }
                 });
 
-                void this.setColorPickerColor();
+                void this.setColorPickerColor(colorPicker);
             }
         }
     }
 
-    async setColorPickerColor(): Promise<void> {
-        if (!this.state.colorPicker) {
+    async setColorPickerColor(colorPickerInstance?: iro.ColorPicker): Promise<void> {
+        const picker = colorPickerInstance ?? this.state.colorPicker;
+        if (!picker) {
             return;
         }
         const colorModel = this.state.rxData.colorPickerColorModel;
@@ -2212,27 +2220,27 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         switch (colorModel) {
             case 'hex':
                 if (color && /^#([A-Fa-f0-9]{3}$)|([A-Fa-f0-9]{6}$)/.test(color)) {
-                    this.state.colorPicker.color.hexString = color;
+                    picker.color.hexString = color;
                 } else {
-                    this.state.colorPicker.color.hexString = '#ffffff';
+                    picker.color.hexString = '#ffffff';
                 }
                 break;
             case 'hex8':
                 if (color && /^#([A-Fa-f0-9]{8}$)/.test(color)) {
-                    this.state.colorPicker.color.hex8String = color;
+                    picker.color.hex8String = color;
                 } else {
-                    this.state.colorPicker.color.hexString = '#ffffffff';
+                    picker.color.hexString = '#ffffffff';
                 }
                 break;
             case 'rgb':
                 if (color1 !== undefined && color2 !== undefined && color3 !== undefined) {
-                    this.state.colorPicker.color.rgb = {
+                    picker.color.rgb = {
                         r: color1,
                         g: color2,
                         b: color3,
                     };
                 } else {
-                    this.state.colorPicker.color.rgb = {
+                    picker.color.rgb = {
                         r: 255,
                         g: 255,
                         b: 255,
@@ -2241,13 +2249,13 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 break;
             case 'hsl':
                 if (color1 !== undefined && color2 !== undefined && color3 !== undefined) {
-                    this.state.colorPicker.color.hsl = {
+                    picker.color.hsl = {
                         h: color1,
                         s: color2,
                         l: color3,
                     };
                 } else {
-                    this.state.colorPicker.color.hsl = {
+                    picker.color.hsl = {
                         h: 330,
                         s: 0,
                         l: 100,
@@ -2256,13 +2264,13 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 break;
             case 'hsv':
                 if (color1 !== undefined && color2 !== undefined && color3 !== undefined) {
-                    this.state.colorPicker.color.hsv = {
+                    picker.color.hsv = {
                         h: color1,
                         s: color2,
                         v: color3,
                     };
                 } else {
-                    this.state.colorPicker.color.hsv = {
+                    picker.color.hsv = {
                         h: 0,
                         s: 0,
                         v: 100,
@@ -2310,7 +2318,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
-    componentDidUpdate(_prevProps: any, prevState: { dialogOpen: any }): void {
+    componentDidUpdate(_prevProps: any, prevState: UniversalState): void {
+        super.componentDidUpdate?.(_prevProps, prevState as any);
+
         if (prevState.dialogOpen && !this.state.dialogOpen && this.state.dialogCloseTimeout) {
             clearTimeout(this.state.dialogCloseTimeout);
         }
@@ -2374,6 +2384,78 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             default:
                 return false;
         }
+    }
+
+    /**
+     * Returns true when clicking the button/state identified by `index` should be blocked
+     * because its "disable click when active" option is set and the state is currently active.
+     *
+     * @param index – null for singleButton mode, 1-based number for separatedButtons mode
+     */
+    isClickDisabled(index: number | null): boolean {
+        if (index !== null) {
+            // separatedButtons: button i is disabled when flagged AND currently active (its value matches)
+            if (!this.state.rxData[`disableClickWhenActive${index}`]) {
+                return false;
+            }
+            const oid = this.state.rxData.oid;
+            if (!oid || !this.validOid(oid)) {
+                return false;
+            }
+            const currentValue = this.getValue(oid);
+            const buttonValue = this.convertValue(this.state.rxData[`value${index}`]);
+            return currentValue === buttonValue;
+        }
+
+        // singleButton: iterate states, find the first matching one, check its flag
+        for (let i = 1; i <= this.state.rxData.countStates; i++) {
+            if (!this.state.rxData[`disableClickWhenActive${i}`]) {
+                continue;
+            }
+
+            let compareBy = this.state.rxData[`compareBy${i}`];
+            if (compareBy === undefined || compareBy === null) {
+                compareBy = 'default';
+            }
+            let comparisonOperator = this.state.rxData[`comparisonOperator${i}`];
+            if (comparisonOperator === undefined || comparisonOperator === null) {
+                comparisonOperator = '===';
+            }
+            let compareValue = this.state.rxData.valueTrue;
+            if (this.state.rxData[`value${i}`] !== undefined && this.state.rxData[`value${i}`] !== null) {
+                compareValue = this.state.rxData[`value${i}`];
+            }
+            compareValue = this.convertValue(compareValue);
+
+            const isNavBtn =
+                (compareBy === 'default' && this.state.rxData.type === 'nav') || compareBy === 'view';
+
+            if (isNavBtn) {
+                const isActive =
+                    (this.state.rxData.mode === 'singleButton' &&
+                        this.state.rxData.countStates === 1 &&
+                        this.state.rxData.view === this.props.view) ||
+                    (this.state.rxData.countStates > 1 &&
+                        this.state.rxData[`view${i}`] === this.props.view);
+                if (isActive) {
+                    return true;
+                }
+            } else {
+                let oid: string | null = null;
+                if (this.validOid(this.state.rxData[`oid${i}`])) {
+                    oid = this.state.rxData[`oid${i}`];
+                } else if (this.validOid(this.state.rxData.oid)) {
+                    oid = this.state.rxData.oid;
+                }
+                if (oid) {
+                    const value = this.getValue(oid);
+                    if (this.compare(value, compareValue, comparisonOperator)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     getValueData(index: number | null = null): UniversalWidgetValueData {
@@ -2582,6 +2664,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
     }
 
     private onClick(index: number | null, e?: React.PointerEvent<HTMLDivElement>): void {
+        if (this.isClickDisabled(index)) {
+            return;
+        }
         const oid = this.state.rxData.oid;
         this.setState({ showFeedback: true });
         switch (this.state.rxData.type) {
@@ -2677,6 +2762,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
     onBtnMouseDown(index: number | null, e: React.PointerEvent<HTMLDivElement>): void {
         if (!this.isInteractionAllowed(e)) {
+            return;
+        }
+        if (this.isClickDisabled(index)) {
             return;
         }
 
@@ -3858,7 +3946,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         inset: 0,
                         clipPath: `url(#${clipId})`,
                         opacity: valueData.styles.contentOpacity,
-                        cursor: this.state.rxData.type !== 'readonly' ? 'pointer' : undefined,
+                        cursor:
+                            this.state.rxData.type === 'readonly' || this.isClickDisabled(i)
+                                ? 'not-allowed'
+                                : 'pointer',
                         touchAction: 'none',
                         color: 'unset',
                     }}
@@ -3960,7 +4051,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 />
                 <Card
                     style={{
-                        cursor: this.state.rxData.type !== 'readonly' ? 'pointer' : '',
+                        cursor:
+                            this.state.rxData.type === 'readonly' || this.isClickDisabled(i)
+                                ? 'not-allowed'
+                                : 'pointer',
                         background: 'transparent',
                         borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
                         opacity: valueData.styles.contentOpacity,
