@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "news": {
+      "1.3.0": {
+        "en": "Slider: Added configurable value label display (always/on drag/never) and step marks position (above/below)\nUniversal: Added \"Disable click when active\" option per state\nUniversal: Fixed color picker components not updating when toggled in the editor\nAdded links to widget documentation in widget settings",
+        "de": "Slider: Hinzufügen von konfigurierbaren Wert-Etiketten-Display (immer/auf Drag/never) und Schrittmarken Position (oben/unten)\nUniversal: Hinzugefügt \"Disable click when active\" Option pro Staat\nUniversal: Feste Farbwähler-Komponenten, die nicht aktualisiert werden, wenn im Editor gelinkt\nLinks zu Widget-Dokumentation in Widget-Einstellungen hinzugefügt",
+        "ru": "Слайдер: Добавлен настраиваемый дисплей с меткой ценности (всегда / на перетаскивании / никогда) и положение маркировки шага (выше / ниже)\nUniversal: Добавлена опция «Отключить клик при активации» в каждом состоянии\nУниверсальный: фиксированные компоненты для выбора цвета не обновляются при переключении в редакторе\nДобавлены ссылки на документацию виджета в настройках виджета",
+        "pt": "Slider: Tela de etiquetas de valor configurável adicionada (sempre/em arrastar/nunca) e posição de marcas de passo (acima/abaixo)\nUniversal: Adicionado \"Desativar clique quando ativo\" opção por estado\nUniversal: Componentes fixos de seleção de cores não atualizados quando alternados no editor\nAdicionaram links para a documentação do widget na configuração do widget",
+        "nl": "Slider: Toevoegen configureerbare waarde label display (altijd/op drag/nooit) en stap markeringen positie (boven/onder)\nUniverseel: Toegevoegd \"Uitschakelen klik wanneer actief\" optie per staat\nUniverseel: Vaste kleur picker componenten niet bijwerken wanneer in de editor is aangeschakeld\nLinks naar widget-documentatie toegevoegd in widget-instellingen",
+        "fr": "Slider: Ajout de l'affichage des valeurs configurables (toujours/sur glisser/jamais) et des marques d'étape (en haut/en bas)\nUniversal: Ajout de l'option « Désactiver le clic quand actif » par état\nUniversal: Composants de sélection de couleurs fixes non mis à jour lors de la mise à jour dans l'éditeur\nAjout de liens vers la documentation de widget dans les paramètres de widget",
+        "it": "Slider: Aggiunta visualizzazione dell'etichetta del valore configurabile (sempre/on drag/never) e posizione dei segni di passaggio (sopra/sotto)\nUniversale: Aggiunto \"Disable click when active\" opzione per stato\nUniversale: Componenti del raccoglitore di colori fissi che non aggiornano quando si attivano nell'editor\nAggiunto link alla documentazione dei widget nelle impostazioni dei widget",
+        "es": "Slider: Añadido configurable valor label display (always/on drag/never) and step marks position (above/below)\nUniversal: Añadido \"Deshable click when active\" opción por estado\nUniversal: Los componentes fijados para el color de la máquina no se actualizan cuando se mueven en el editor\nAñadidos a la documentación del widget en la configuración del widget",
+        "pl": "Slider: Dodano konfigurowalny wyświetlacz etykiety wartości (zawsze / na przeciąganiu / nigdy) i położenie znaków stopu (powyżej / poniżej)\nUniversal: Dodano \"Wyłącz kliknięcie po aktywnym\"\nUniversal: Naprawiono elementy pickera kolorów nie aktualizujące się podczas przełączania w edytorze\nDodano linki do dokumentacji widget w ustawieniach widget",
+        "uk": "Slider: Додано конфігураційне відображення етикетки (посередині / на перетягування / ніж) і позиція міток (вище / світіння)\nУніверсальний: Додано \"Вимкнути клацання при активному\" варіанті на стан\nУніверсальні: Фіксовані компоненти кольорового маркеру не оновлюються при підключенні до редактора\nДодано посилання на документацію віджету в налаштуваннях віджету",
+        "zh-cn": "滑动器: 添加可配置值标签显示( 总是/永远拖动/永远拖动) 和步号位置( 上/下)\n通用: 添加“ 活动时单击禁用” 选项\n通用: 在编辑器中切换时不更新固定的采色器组件\n在部件设置中添加到部件文档的链接"
+      },
       "1.2.0": {
         "en": "Radial Slider: Support gradient colors for rail and active rail\nDropdown: Added shadow spread option\nTable: Added ip-address column format for correct sorting",
         "de": "Radialschieber: Unterstützung Gradienten Farben für Schiene und aktive Schiene\nDropdown: Option zur Schattenverteilung hinzugefügt\nTabelle: Hinzugefügt ip-address Spaltenformat für die korrekte Sortierung",
@@ -80,19 +93,6 @@
         "pl": "Stała tabela widget stałe nagłówka nie działa",
         "uk": "Фіксований настільний віджет фіксований заголовок не працює",
         "zh-cn": "固定表格部件固定页眉不工作"
-      },
-      "0.7.0": {
-        "en": "Table widget added fixed header option (#234)\nTable widget added conditional row color (#234)\nTable widget added column filter (#234)",
-        "de": "Tabelle Widget hinzugefügt feste Header Option (#234)\nTabelle Widget hinzugefügt bedingte Zeilenfarbe (#234)\nTabelle Widget hinzugefügt Spaltenfilter (#234)",
-        "ru": "Настольный виджет добавлен фиксированный вариант заголовка (#234)\nВ виджет таблицы добавлен условный цвет строки (#234)\nНастольный виджет с добавленным фильтром колонок (#234)",
-        "pt": "Item de tabela adicionado opção de cabeçalho fixo (# 234)\nItem de tabela adicionado cor condicional da linha (# 234)\nItem de tabela adicionado filtro de coluna (# 234)",
-        "nl": "Tabel widget toegevoegd vaste header optie (#234)\nTabel widget toegevoegd voorwaardelijke rijkleur (#234)\nTabel widget toegevoegd kolomfilter (#234)",
-        "fr": "Widget de table ajouté option en-tête fixe (#234)\nWidget de table ajouté couleur de ligne conditionnelle (#234)\nWidget de table ajouté filtre de colonne (#234)",
-        "it": "Pulsante aggiunto opzione intestazione fissa (#234)\nWidget tabella aggiunto colore riga condizionale (#234)\nPulsante aggiunto filtro colonna (#234)",
-        "es": "Tabla widget añadido opción de encabezado fijo (#234)\nTable widget added conditional row color (#234)\nFiltro de columna (#234)",
-        "pl": "Widżet tabeli dodano stałą opcję nagłówka (# 234)\nTabela widget dodany warunkowy kolor wiersza (# 234)\nName",
-        "uk": "Настільний віджет додано фіксований варіант заголовка (#234)\nНастільний віджет додано умовний колір рядків (#234)\nНастільний віджет додано колонний фільтр (#234)",
-        "zh-cn": "表格部件添加了固定页眉选项 (# 234)\n表格部件添加了条件行颜色( # 234)\n表格部件添加列过滤器 (# 234)"
       }
     },
     "titleLang": {

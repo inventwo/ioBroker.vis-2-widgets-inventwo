@@ -256,7 +256,7 @@ Renders a bullet-point list from a single text value — either from a data poin
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.3.0 (2026-06-03)
 - Slider: Added configurable value label display (always/on drag/never) and step marks position (above/below)
 - Universal: Added "Disable click when active" option per state
 - Universal: Fixed color picker components not updating when toggled in the editor
@@ -280,29 +280,3 @@ Renders a bullet-point list from a single text value — either from a data poin
 - Slider widget: added read-only mode, gradient support for colors and an option to place steps inside the slider bar (#244)
 - Dropdown widget: added conditional background color (#198), read-only mode (#201) and option to show value without text (#201)
 - Table widget: added multi-column sort (#234)
-
-### 0.7.2 (2026-04-26)
-- Fix button click and hold for mobile devices (#192)
-
-[Older changelogs can be found there](CHANGELOG_OLD.md)## License
-The MIT License (MIT)
-
-Copyright (c) 2025-2026 jkvarel <jk@inventwo.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
