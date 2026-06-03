@@ -75,7 +75,7 @@ Each condition has:
 | **Title color** | Color of the title label. |
 | **Apply conditional background to title** | When enabled, the title area's background color also changes to match the active background condition color. |
 | **Title padding top/bottom/left/right** | Spacing around the title label. |
-| **Dropdown shadow** | Drop shadow for the dropdown box. Set X offset, Y offset, blur, and color. |
+| **Dropdown shadow** | Drop shadow for the dropdown box. Set X offset, Y offset, blur, spread, and color. |
 
 ---
 

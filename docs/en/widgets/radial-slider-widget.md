@@ -39,8 +39,8 @@ The Radial Slider Widget is a circular arc dial for numeric datapoints. It works
 | Setting | What it does |
 |---------|-------------|
 | **From widget** | Copy all track settings from another Radial Slider Widget. |
-| **Track color** | Color of the background arc (the full arc that is not yet reached). |
-| **Track active color** | Color of the filled arc (the part from Start to the current value). |
+| **Track color** | Color of the background arc (the full arc that is not yet reached). Supports gradient strings, e.g. `linear-gradient(90deg, #aaa, #444)`. |
+| **Track active color** | Color of the filled arc (the part from Start to the current value). Also supports gradient strings. |
 | **Track width** | Thickness of the arc in pixels. Default: 10. |
 | **Track shadow** | Drop shadow on the background arc. Set X offset, Y offset, blur, and color. |
 

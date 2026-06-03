@@ -73,7 +73,7 @@ When **Count columns** is greater than 0, each column has these settings:
 | **Placeholder** | Text shown when the cell value is empty or null. |
 | **Title align** | Alignment of the column header: Left, Center, Right. |
 | **Content align** | Alignment of the cell values: Left, Center, Right. |
-| **Format** | How the value is displayed: **Text** (plain), **Number** (with decimal places), **Datetime** (date/time formatting), **Image** (renders a URL as an image). |
+| **Format** | How the value is displayed: **Text** (plain), **Number** (with decimal places), **Datetime** (date/time formatting), **Image** (renders a URL as an image), **IP address** (treats the value as an IPv4 address for correct numeric sorting). |
 | **Decimals** | *(Number format only)* Number of decimal places. |
 | **Datetime format** | *(Datetime format only)* **Datetime** (date and time), **Date** (date only), **Time** (time only), **Custom format** (enter your own pattern). |
 | **Custom format** | *(Custom datetime only)* Format pattern — see the token table below. |

@@ -14,6 +14,7 @@ The **Default state** group and each numbered **State** group define what the ti
 - **Border color**
 - **Outer / inner shadow colors**
 - **Content blink interval** (flashing speed in ms — 0 = no blinking)
+- **Disable click when active** — when enabled for a state, clicking the tile is ignored while that state is currently active. Useful for navigation tiles (prevents re-clicking the already active view) or multi-option selectors (prevents writing the same value again). Not available for the **Read only** type.
 - The icon, image, text, or embedded view to show
 
 The **inventwo Widget Design** group (shown when you click on the state groups) is where these per-state colors are configured.

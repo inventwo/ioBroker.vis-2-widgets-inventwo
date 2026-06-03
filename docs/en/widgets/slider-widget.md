@@ -30,12 +30,19 @@ The Slider Widget lets users set a numeric value by dragging a handle along a tr
 | **Show min max** | Shows the minimum and maximum values as labels at both ends of the slider. |
 | **Read only** | When enabled, the slider displays the current value but cannot be dragged. Useful for read-only gauges. |
 
+#### Value Label
+
+| Setting | What it does |
+|---------|-------------|
+| **Value label display** | When the current value is shown above the thumb: **On drag (default)** — only while dragging; **Always** — permanently visible; **Never** — never shown. |
+
 #### Step Marks
 
 | Setting | What it does |
 |---------|-------------|
 | **Show steps** | Displays tick marks along the slider rail. |
 | **Steps inside slider** | Places tick marks inside the rail instead of below/beside it. |
+| **Show step marks above / left** | *(Only when steps are not inside)* Positions tick marks above the track (horizontal) or to the left (vertical) instead of below/right. |
 | **Step mode** | **Auto**: marks are placed at a regular interval you specify. **Custom**: you enter the exact positions manually. |
 | **Step display** | *(Auto mode only)* The interval between marks. For example, with Min=0, Max=100, and Step display=25, marks appear at 0, 25, 50, 75, and 100. |
 | **Custom steps** | *(Custom mode only)* Comma-separated values for mark positions, e.g. `0,20,50,80,100`. |
