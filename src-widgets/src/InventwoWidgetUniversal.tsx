@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, CardContent, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import { Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
-import { Icon } from '@iobroker/adapter-react-v5';
+import { I18n, Icon } from '@iobroker/adapter-react-v5';
 
 import { hexToCSSFilter } from 'hex-to-css-filter';
 import iro from '@jaames/iro';
@@ -51,6 +51,10 @@ interface UniversalState extends VisRxWidgetState {
     pointerDownTime: number | null;
     pointerDownIndex: number | null;
     dialogOpenTime: number | null;
+    navPasswordDialogOpen: boolean;
+    navPasswordInput: string;
+    navPasswordError: boolean;
+    navPendingIndex: number | null;
 }
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
@@ -78,6 +82,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             pointerDownTime: null,
             pointerDownIndex: null,
             dialogOpenTime: null,
+            navPasswordDialogOpen: false,
+            navPasswordInput: '',
+            navPasswordError: false,
+            navPendingIndex: null,
         };
     }
 
@@ -161,6 +169,30 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             type: 'views',
                             label: 'view',
                             hidden: '(data.type != "nav" && data.type != "viewInDialog") || data.mode == "separatedButtons"',
+                        },
+                        {
+                            name: 'navPasswordEnabled',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'nav_password_enabled',
+                            hidden: 'data.type !== "nav"',
+                        },
+                        {
+                            name: 'navPasswordType',
+                            type: 'select',
+                            options: [
+                                { value: 'password', label: 'password_input' },
+                                { value: 'pin', label: 'pin' },
+                            ],
+                            default: 'password',
+                            label: 'nav_password_type',
+                            hidden: 'data.type !== "nav" || !data.navPasswordEnabled',
+                        },
+                        {
+                            name: 'navPassword',
+                            type: 'text',
+                            label: 'nav_password',
+                            hidden: 'data.type !== "nav" || !data.navPasswordEnabled',
                         },
                         {
                             name: 'valueFalse',
@@ -816,6 +848,17 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             label: 'content_blink_interval',
                         },
                         {
+                            name: 'contentMirror',
+                            type: 'select',
+                            options: [
+                                { value: '', label: 'mirror_inherit' },
+                                { value: 'true', label: 'mirror_on' },
+                                { value: 'false', label: 'mirror_off' },
+                            ],
+                            default: '',
+                            label: 'mirror',
+                        },
+                        {
                             name: '',
                             type: 'delimiter',
                         },
@@ -940,6 +983,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 { value: 'hex', label: 'hex' },
                                 { value: 'hex8', label: 'hex_8' },
                                 { value: 'rgb', label: 'rgb' },
+                                { value: 'rgbScaled', label: 'rgb_scaled' },
                                 { value: 'hsl', label: 'hsl' },
                                 { value: 'hsv', label: 'hsv' },
                                 { value: 'cie', label: 'cie' },
@@ -950,29 +994,36 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         {
                             name: 'colorPickerOid',
                             type: 'id',
-                            hidden: 'data.colorPickerColorModel === "rgb" || data.colorPickerColorModel === "hsl" || data.colorPickerColorModel === "hsv"',
+                            hidden: 'data.colorPickerColorModel === "rgb" || data.colorPickerColorModel === "rgbScaled" || data.colorPickerColorModel === "hsl" || data.colorPickerColorModel === "hsv"',
                             label: 'oid',
                         },
                         {
                             name: 'colorPickerOid1',
                             type: 'id',
-                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
+                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "rgbScaled" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
                             label: 'oid_value_1',
                             tooltip: 'oid_color_1_tooltip',
                         },
                         {
                             name: 'colorPickerOid2',
                             type: 'id',
-                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
+                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "rgbScaled" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
                             label: 'oid_value_2',
                             tooltip: 'oid_color_2_tooltip',
                         },
                         {
                             name: 'colorPickerOid3',
                             type: 'id',
-                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
+                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "rgbScaled" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
                             label: 'oid_value_3',
                             tooltip: 'oid_color_3_tooltip',
+                        },
+                        {
+                            name: 'colorPickerRgbMaxValue',
+                            type: 'number',
+                            default: 1023,
+                            label: 'max_value',
+                            hidden: 'data.colorPickerColorModel !== "rgbScaled"',
                         },
                         {
                             name: '',
@@ -2170,6 +2221,28 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 this.props.context.setValue(this.state.rxData.colorPickerOid3, color.rgb.b);
                             }
                             break;
+                        case 'rgbScaled': {
+                            const maxValue = this.state.rxData.colorPickerRgbMaxValue ?? 1023;
+                            if (this.state.rxData.colorPickerOid1) {
+                                this.props.context.setValue(
+                                    this.state.rxData.colorPickerOid1,
+                                    Math.round((color.rgb.r / 255) * maxValue),
+                                );
+                            }
+                            if (this.state.rxData.colorPickerOid2) {
+                                this.props.context.setValue(
+                                    this.state.rxData.colorPickerOid2,
+                                    Math.round((color.rgb.g / 255) * maxValue),
+                                );
+                            }
+                            if (this.state.rxData.colorPickerOid3) {
+                                this.props.context.setValue(
+                                    this.state.rxData.colorPickerOid3,
+                                    Math.round((color.rgb.b / 255) * maxValue),
+                                );
+                            }
+                            break;
+                        }
                         case 'hsl':
                             if (this.state.rxData.colorPickerOid1) {
                                 this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsl.h);
@@ -2249,6 +2322,19 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     };
                 }
                 break;
+            case 'rgbScaled': {
+                const maxValue = this.state.rxData.colorPickerRgbMaxValue ?? 1023;
+                if (color1 !== undefined && color2 !== undefined && color3 !== undefined) {
+                    picker.color.rgb = {
+                        r: Math.round((color1 / maxValue) * 255),
+                        g: Math.round((color2 / maxValue) * 255),
+                        b: Math.round((color3 / maxValue) * 255),
+                    };
+                } else {
+                    picker.color.rgb = { r: 255, g: 255, b: 255 };
+                }
+                break;
+            }
             case 'hsl':
                 if (color1 !== undefined && color2 !== undefined && color3 !== undefined) {
                     picker.color.hsl = {
@@ -2462,6 +2548,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         let oid = null;
         let value = null;
         let data: UniversalWidgetStyles | null = null;
+        let matchedStateIndex: number | null = index;
 
         if (index === null) {
             for (let i = 1; i <= this.state.rxData.countStates; i++) {
@@ -2505,6 +2592,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     (isNavBtn && this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.view)
                 ) {
                     data = this.getStateData(i);
+                    matchedStateIndex = i;
                     break;
                 }
             }
@@ -2595,6 +2683,15 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             ) as UniversalWidgetShapeStyles),
         };
 
+        if (matchedStateIndex !== null) {
+            const perStateMirror = this.state.rxData[`contentMirror${matchedStateIndex}`];
+            if (perStateMirror === 'true') {
+                dataWithStyles.styles.contentMirror = true;
+            } else if (perStateMirror === 'false') {
+                dataWithStyles.styles.contentMirror = false;
+            }
+        }
+
         if (this.state.showFeedback && !this.state.rxData.clickThrough) {
             dataWithStyles = this.replaceWithClickFeedbackData(dataWithStyles);
         }
@@ -2663,6 +2760,29 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return data;
     }
 
+    private doNavigation(index: number | null): void {
+        if (this.state.rxData.mode === 'singleButton') {
+            if (this.state.rxData.view) {
+                window.vis.changeView(this.state.rxData.view, this.state.rxData.view);
+            }
+        } else if (index !== null) {
+            if (this.state.rxData[`view${index}`]) {
+                window.vis.changeView(this.state.rxData[`view${index}`], this.state.rxData[`view${index}`]);
+            }
+        }
+    }
+
+    private confirmNavPassword(): void {
+        if (this.state.navPasswordInput === this.state.rxData.navPassword) {
+            const pendingIndex = this.state.navPendingIndex;
+            this.setState({ navPasswordDialogOpen: false, navPasswordInput: '', navPasswordError: false }, () => {
+                this.doNavigation(pendingIndex);
+            });
+        } else {
+            this.setState({ navPasswordError: true, navPasswordInput: '' });
+        }
+    }
+
     private onClick(index: number | null, e?: React.PointerEvent<HTMLDivElement>): void {
         if (this.isClickDisabled(index)) {
             return;
@@ -2706,15 +2826,17 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     return;
                 }
 
-                if (this.state.rxData.mode === 'singleButton') {
-                    if (this.state.rxData.view) {
-                        window.vis.changeView(this.state.rxData.view, this.state.rxData.view);
-                    }
-                } else if (index !== null) {
-                    if (this.state.rxData[`view${index}`]) {
-                        window.vis.changeView(this.state.rxData[`view${index}`], this.state.rxData[`view${index}`]);
-                    }
+                if (this.state.rxData.navPasswordEnabled && this.state.rxData.navPassword) {
+                    this.setState({
+                        navPasswordDialogOpen: true,
+                        navPasswordInput: '',
+                        navPasswordError: false,
+                        navPendingIndex: index,
+                    });
+                    return;
                 }
+
+                this.doNavigation(index);
                 break;
             case 'viewInDialog':
                 this.setState({ dialogOpen: true, dialogOpenTime: Date.now() });
@@ -2886,6 +3008,120 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 >
                     {content}
                 </div>,
+            );
+        }
+
+        if (this.state.rxData.type === 'nav' && this.state.rxData.navPasswordEnabled) {
+            const isPinMode = this.state.rxData.navPasswordType === 'pin';
+            const closeDialog = (): void =>
+                this.setState({ navPasswordDialogOpen: false, navPasswordInput: '', navPasswordError: false });
+
+            const dialogTitle = isPinMode
+                ? I18n.t('vis_2_widgets_inventwo_nav_pin_dialog_title')
+                : I18n.t('vis_2_widgets_inventwo_nav_password_dialog_title');
+
+            widgetContent.push(
+                <Dialog
+                    key="nav-password-dialog"
+                    open={this.state.navPasswordDialogOpen}
+                    onClose={closeDialog}
+                >
+                    <DialogTitle>{dialogTitle}</DialogTitle>
+                    <DialogContent>
+                        {isPinMode ? (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    gap: 8,
+                                    padding: '4px 8px',
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        fontSize: 28,
+                                        letterSpacing: 14,
+                                        minHeight: 44,
+                                        textAlign: 'center',
+                                        color: this.state.navPasswordError ? '#d32f2f' : 'inherit',
+                                    }}
+                                >
+                                    {this.state.navPasswordInput.length > 0
+                                        ? '●'.repeat(this.state.navPasswordInput.length)
+                                        : ' '}
+                                </div>
+                                {this.state.navPasswordError && (
+                                    <div style={{ color: '#d32f2f', fontSize: 13, marginTop: -4 }}>
+                                        {I18n.t('vis_2_widgets_inventwo_nav_password_wrong')}
+                                    </div>
+                                )}
+                                {[['1','2','3'],['4','5','6'],['7','8','9'],['C','0','⌫']].map(
+                                    (row, ri) => (
+                                        <div key={ri} style={{ display: 'flex', gap: 8 }}>
+                                            {row.map(key => (
+                                                <Button
+                                                    key={key}
+                                                    variant="outlined"
+                                                    sx={{ minWidth: 64, height: 56, fontSize: 20, fontWeight: 'bold' }}
+                                                    onClick={() => {
+                                                        if (key === '⌫') {
+                                                            this.setState(prev => ({
+                                                                navPasswordInput: prev.navPasswordInput.slice(0, -1),
+                                                                navPasswordError: false,
+                                                            }));
+                                                        } else if (key === 'C') {
+                                                            this.setState({ navPasswordInput: '', navPasswordError: false });
+                                                        } else {
+                                                            this.setState(prev => ({
+                                                                navPasswordInput: prev.navPasswordInput + key,
+                                                                navPasswordError: false,
+                                                            }));
+                                                        }
+                                                    }}
+                                                >
+                                                    {key}
+                                                </Button>
+                                            ))}
+                                        </div>
+                                    ),
+                                )}
+                            </div>
+                        ) : (
+                            <TextField
+                                autoFocus
+                                type="password"
+                                fullWidth
+                                variant="outlined"
+                                size="small"
+                                value={this.state.navPasswordInput}
+                                error={this.state.navPasswordError}
+                                helperText={
+                                    this.state.navPasswordError
+                                        ? I18n.t('vis_2_widgets_inventwo_nav_password_wrong')
+                                        : undefined
+                                }
+                                onChange={e =>
+                                    this.setState({ navPasswordInput: e.target.value, navPasswordError: false })
+                                }
+                                onKeyDown={e => {
+                                    if (e.key === 'Enter') {
+                                        this.confirmNavPassword();
+                                    }
+                                }}
+                                sx={{ mt: 1 }}
+                            />
+                        )}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeDialog}>
+                            {I18n.t('vis_2_widgets_inventwo_nav_password_cancel')}
+                        </Button>
+                        <Button variant="contained" onClick={() => this.confirmNavPassword()}>
+                            {I18n.t('vis_2_widgets_inventwo_nav_password_confirm')}
+                        </Button>
+                    </DialogActions>
+                </Dialog>,
             );
         }
 

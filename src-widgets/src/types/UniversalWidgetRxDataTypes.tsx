@@ -49,6 +49,9 @@ export interface UniversalRxData {
     clickThrough: boolean;
     dialogCloseTimeoutSeconds: number;
     direction: 'row' | 'column';
+    navPasswordEnabled: boolean;
+    navPasswordType: 'password' | 'pin';
+    navPassword: string;
 }
 
 export interface UniversalStateRxData {
@@ -65,6 +68,7 @@ export interface UniversalStateRxData {
     [key: `viewInWidget${number}`]: string;
     [key: `contentBlinkInterval${number}`]: number;
     [key: `contentSize${number}`]: string;
+    [key: `contentMirror${number}`]: '' | 'true' | 'false';
     [key: `iconTrue${number}`]: string;
     [key: `imageTrue${number}`]: string;
     [key: `textTrue${number}`]: string;
@@ -90,11 +94,12 @@ export interface ColorPickerRxData {
     colorPickerDirection: ColorPickerProps['layoutDirection'];
     colorPickerBorderWidth: ColorPickerProps['borderWidth'];
     colorPickerBorderColor: ColorPickerProps['borderColor'];
-    colorPickerColorModel: 'hsv' | 'hsl' | 'rgb' | 'cie' | 'hex' | 'hex8';
+    colorPickerColorModel: 'hsv' | 'hsl' | 'rgb' | 'rgbScaled' | 'cie' | 'hex' | 'hex8';
     colorPickerOid: string | null;
     colorPickerOid1: string | null;
     colorPickerOid2: string | null;
     colorPickerOid3: string | null;
+    colorPickerRgbMaxValue: number;
 }
 
 export interface AnalogClockRxData {

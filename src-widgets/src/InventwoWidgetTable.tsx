@@ -60,8 +60,12 @@ interface TableRxData {
     [key: `columnPrefix${number}`]: string;
     [key: `columnSuffix${number}`]: string;
     [key: `columnPlaceholder${number}`]: string;
-    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime' | 'image' | 'ip';
+    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime' | 'image' | 'ip' | 'boolean';
+    [key: `columnBooleanCheckedColor${number}`]: string;
+    [key: `columnBooleanUncheckedColor${number}`]: string;
     [key: `columnNumberDecimals${number}`]: number;
+    [key: `columnDecimalSeparator${number}`]: string;
+    [key: `columnThousandSeparator${number}`]: string;
     [key: `columnDatetimeFormat${number}`]: 'datetime' | 'date' | 'time';
     [key: `columnContentAlign${number}`]: React.CSSProperties['textAlign'];
     [key: `columnDatetimeFormatCustom${number}`]: string;
@@ -71,8 +75,11 @@ interface TableRxData {
     stickyHeader: boolean;
     countRowConditions: number;
     [key: `rowConditionKey${number}`]: string;
+    [key: `rowConditionOperator${number}`]: '===' | '!=' | '>' | '<' | '>=' | '<=';
     [key: `rowConditionValue${number}`]: string;
     [key: `rowConditionColor${number}`]: string;
+    [key: `rowConditionValueColor${number}`]: string;
+    [key: `rowConditionColumnValueColor${number}`]: string;
 }
 
 interface TableWidgetState extends VisRxWidgetState {
@@ -283,6 +290,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             options: [
                                 { value: 'text', label: 'Text' },
                                 { value: 'number', label: 'Number' },
+                                { value: 'boolean', label: 'boolean' },
                                 { value: 'datetime', label: 'datetime' },
                                 { value: 'image', label: 'image' },
                                 { value: 'ip', label: 'ip_address' },
@@ -291,10 +299,36 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             label: 'format',
                         },
                         {
+                            name: 'columnBooleanCheckedColor',
+                            type: 'color',
+                            label: 'boolean_checked_color',
+                            hidden: 'data["columnValueFormat" + index] != "boolean"',
+                        },
+                        {
+                            name: 'columnBooleanUncheckedColor',
+                            type: 'color',
+                            label: 'boolean_unchecked_color',
+                            hidden: 'data["columnValueFormat" + index] != "boolean"',
+                        },
+                        {
                             name: 'columnNumberDecimals',
                             type: 'number',
                             label: 'decimals',
                             default: 0,
+                            hidden: 'data["columnValueFormat" + index] != "number"',
+                        },
+                        {
+                            name: 'columnDecimalSeparator',
+                            type: 'text',
+                            label: 'decimal_separator',
+                            tooltip: 'tooltip_decimal_separator',
+                            hidden: 'data["columnValueFormat" + index] != "number"',
+                        },
+                        {
+                            name: 'columnThousandSeparator',
+                            type: 'text',
+                            label: 'thousand_separator',
+                            tooltip: 'tooltip_thousand_separator',
                             hidden: 'data["columnValueFormat" + index] != "number"',
                         },
                         {
@@ -355,6 +389,20 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             label: 'row_color_condition_key',
                         },
                         {
+                            name: 'rowConditionOperator',
+                            type: 'select',
+                            options: [
+                                { value: '===', label: 'equal' },
+                                { value: '!=', label: 'not_equal' },
+                                { value: '>', label: 'greater' },
+                                { value: '<', label: 'lower' },
+                                { value: '>=', label: 'greater_equal' },
+                                { value: '<=', label: 'lower_equal' },
+                            ],
+                            default: '===',
+                            label: 'comparison_operator',
+                        },
+                        {
                             name: 'rowConditionValue',
                             type: 'text',
                             label: 'row_color_condition_value',
@@ -363,6 +411,16 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             name: 'rowConditionColor',
                             type: 'color',
                             label: 'row_color_condition_color',
+                        },
+                        {
+                            name: 'rowConditionValueColor',
+                            type: 'color',
+                            label: 'row_color_condition_value_color',
+                        },
+                        {
+                            name: 'rowConditionColumnValueColor',
+                            type: 'color',
+                            label: 'row_color_condition_column_value_color',
                         },
                     ],
                 },
@@ -794,22 +852,47 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         });
     };
 
-    getRowColor = (row: Record<string, any>): string | undefined => {
+    getConditionColors = (
+        row: Record<string, any>,
+    ): { rowColor?: string; valueColor?: string; columnValueColor?: string; conditionColumnKey?: string } => {
         const count = this.state.rxData.countRowConditions ?? 0;
         for (let i = 1; i <= count; i++) {
             const keyOrIndex = this.state.rxData[`rowConditionKey${i}`];
-            const condValue = this.state.rxData[`rowConditionValue${i}`];
-            const color = this.state.rxData[`rowConditionColor${i}`];
-            if (!color || keyOrIndex === undefined || keyOrIndex === '') {
+            const rowColor = this.state.rxData[`rowConditionColor${i}`];
+            const valueColor = this.state.rxData[`rowConditionValueColor${i}`];
+            const columnValueColor = this.state.rxData[`rowConditionColumnValueColor${i}`];
+            if ((keyOrIndex === undefined || keyOrIndex === '') || (!rowColor && !valueColor && !columnValueColor)) {
                 continue;
             }
+            const condValue = this.state.rxData[`rowConditionValue${i}`];
             const asNumber = Number(keyOrIndex);
-            const resolvedKey = !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber] : keyOrIndex;
-            if (resolvedKey !== undefined && String(row[resolvedKey]) === String(condValue)) {
-                return color;
+            const resolvedKey =
+                !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber] : keyOrIndex;
+            const operator = this.state.rxData[`rowConditionOperator${i}`] ?? '===';
+            const rawValue = row[resolvedKey];
+            const numA = Number(rawValue);
+            const numB = Number(condValue);
+            const canCompareNumeric = !isNaN(numA) && !isNaN(numB) && operator !== '===' && operator !== '!=';
+            const a = canCompareNumeric ? numA : String(rawValue);
+            const b = canCompareNumeric ? numB : String(condValue);
+            const matches =
+                operator === '===' ? a === b :
+                operator === '!=' ? a !== b :
+                operator === '>' ? a > b :
+                operator === '<' ? a < b :
+                operator === '>=' ? a >= b :
+                operator === '<=' ? a <= b :
+                false;
+            if (resolvedKey !== undefined && matches) {
+                return {
+                    rowColor: rowColor || undefined,
+                    valueColor: valueColor || undefined,
+                    columnValueColor: columnValueColor || undefined,
+                    conditionColumnKey: resolvedKey,
+                };
             }
         }
-        return undefined;
+        return {};
     };
 
     openFilterMenu = (
@@ -1121,7 +1204,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             for (let index = 0; index < maxRows; index++) {
                 const r = json![index];
                 const columns = [];
-                const rowColor = this.getRowColor(r);
+                const { rowColor, valueColor, columnValueColor, conditionColumnKey } = this.getConditionColors(r);
 
                 if (countColumns === 0) {
                     Object.values(r).forEach((v, indexCol: number) => {
@@ -1149,11 +1232,26 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         if ((columnValue === null || columnValue === '') && columnPlaceholder) {
                             columnValue = columnPlaceholder;
                         } else if (columnFormat === 'number') {
-                            const formatter = new Intl.NumberFormat(navigator.language, {
-                                minimumFractionDigits: this.state.rxData[`columnNumberDecimals${i}`] ?? 0,
-                                maximumFractionDigits: this.state.rxData[`columnNumberDecimals${i}`] ?? 0,
-                            });
-                            columnValue = formatter.format(columnValue);
+                            const decimals = this.state.rxData[`columnNumberDecimals${i}`] ?? 0;
+                            const decimalSep = this.state.rxData[`columnDecimalSeparator${i}`];
+                            const thousandSep = this.state.rxData[`columnThousandSeparator${i}`];
+                            const hasCustomSep = decimalSep !== undefined && decimalSep !== null && decimalSep !== '';
+                            const hasThousandSep = thousandSep !== undefined && thousandSep !== null;
+                            if (hasCustomSep || hasThousandSep) {
+                                const fixedStr = Number(columnValue).toFixed(decimals);
+                                const parts = fixedStr.split('.');
+                                if (hasThousandSep && thousandSep !== '') {
+                                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSep);
+                                }
+                                const sep = hasCustomSep ? decimalSep : '.';
+                                columnValue = decimals > 0 ? parts.join(sep) : parts[0];
+                            } else {
+                                const formatter = new Intl.NumberFormat(navigator.language, {
+                                    minimumFractionDigits: decimals,
+                                    maximumFractionDigits: decimals,
+                                });
+                                columnValue = formatter.format(columnValue);
+                            }
                         } else if (columnFormat === 'datetime') {
                             if (columnValue) {
                                 const datetimeFormat = this.state.rxData[`columnDatetimeFormat${i}`];
@@ -1170,6 +1268,26 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                                     );
                                 }
                             }
+                        } else if (columnFormat === 'boolean') {
+                            const boolVal =
+                                columnValue === true ||
+                                columnValue === 1 ||
+                                String(columnValue).toLowerCase() === 'true' ||
+                                columnValue === '1';
+                            const checkedColor = this.state.rxData[`columnBooleanCheckedColor${i}`];
+                            const uncheckedColor = this.state.rxData[`columnBooleanUncheckedColor${i}`];
+                            columnValue = (
+                                <Checkbox
+                                    checked={boolVal}
+                                    tabIndex={-1}
+                                    sx={{
+                                        pointerEvents: 'none',
+                                        padding: 0,
+                                        ...(uncheckedColor ? { color: uncheckedColor } : {}),
+                                        ...(checkedColor ? { '&.Mui-checked': { color: checkedColor } } : {}),
+                                    }}
+                                />
+                            );
                         } else if (columnFormat == 'image') {
                             let columnWidth = this.state.rxData[`columnWidth${i}`];
                             if (!columnWidth || columnWidth === 0) {
@@ -1191,8 +1309,14 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             columnValue = <span dangerouslySetInnerHTML={{ __html: columnValue as string }}></span>;
                         }
 
+                        const resolvedColumnKey = columnKey
+                            ? String(columnKey)
+                            : String(Object.keys(sourceJson[0])[i - 1] ?? '');
+                        const isConditionColumn = !!columnValueColor && conditionColumnKey === resolvedColumnKey;
                         const styles: SxProps = {
                             textAlign: this.state.rxData[`columnContentAlign${i}`],
+                            ...(valueColor ? { color: `${valueColor} !important` } : {}),
+                            ...(isConditionColumn ? { color: `${columnValueColor} !important` } : {}),
                         };
                         if (this.state.rxData[`columnWidth${i}`]) {
                             styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
