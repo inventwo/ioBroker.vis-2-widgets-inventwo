@@ -861,13 +861,12 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             const rowColor = this.state.rxData[`rowConditionColor${i}`];
             const valueColor = this.state.rxData[`rowConditionValueColor${i}`];
             const columnValueColor = this.state.rxData[`rowConditionColumnValueColor${i}`];
-            if ((keyOrIndex === undefined || keyOrIndex === '') || (!rowColor && !valueColor && !columnValueColor)) {
+            if (keyOrIndex === undefined || keyOrIndex === '' || (!rowColor && !valueColor && !columnValueColor)) {
                 continue;
             }
             const condValue = this.state.rxData[`rowConditionValue${i}`];
             const asNumber = Number(keyOrIndex);
-            const resolvedKey =
-                !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber] : keyOrIndex;
+            const resolvedKey = !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber] : keyOrIndex;
             const operator = this.state.rxData[`rowConditionOperator${i}`] ?? '===';
             const rawValue = row[resolvedKey];
             const numA = Number(rawValue);
@@ -876,13 +875,19 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             const a = canCompareNumeric ? numA : String(rawValue);
             const b = canCompareNumeric ? numB : String(condValue);
             const matches =
-                operator === '===' ? a === b :
-                operator === '!=' ? a !== b :
-                operator === '>' ? a > b :
-                operator === '<' ? a < b :
-                operator === '>=' ? a >= b :
-                operator === '<=' ? a <= b :
-                false;
+                operator === '==='
+                    ? a === b
+                    : operator === '!='
+                      ? a !== b
+                      : operator === '>'
+                        ? a > b
+                        : operator === '<'
+                          ? a < b
+                          : operator === '>='
+                            ? a >= b
+                            : operator === '<='
+                              ? a <= b
+                              : false;
             if (resolvedKey !== undefined && matches) {
                 return {
                     rowColor: rowColor || undefined,

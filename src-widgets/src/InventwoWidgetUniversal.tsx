@@ -1,5 +1,15 @@
 import React from 'react';
-import { Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
+import {
+    Button,
+    Card,
+    CardContent,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    TextField,
+} from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
 import { I18n, Icon } from '@iobroker/adapter-react-v5';
@@ -3056,36 +3066,45 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                         {I18n.t('vis_2_widgets_inventwo_nav_password_wrong')}
                                     </div>
                                 )}
-                                {[['1','2','3'],['4','5','6'],['7','8','9'],['C','0','⌫']].map(
-                                    (row, ri) => (
-                                        <div key={ri} style={{ display: 'flex', gap: 8 }}>
-                                            {row.map(key => (
-                                                <Button
-                                                    key={key}
-                                                    variant="outlined"
-                                                    sx={{ minWidth: 64, height: 56, fontSize: 20, fontWeight: 'bold' }}
-                                                    onClick={() => {
-                                                        if (key === '⌫') {
-                                                            this.setState(prev => ({
-                                                                navPasswordInput: prev.navPasswordInput.slice(0, -1),
-                                                                navPasswordError: false,
-                                                            }));
-                                                        } else if (key === 'C') {
-                                                            this.setState({ navPasswordInput: '', navPasswordError: false });
-                                                        } else {
-                                                            this.setState(prev => ({
-                                                                navPasswordInput: prev.navPasswordInput + key,
-                                                                navPasswordError: false,
-                                                            }));
-                                                        }
-                                                    }}
-                                                >
-                                                    {key}
-                                                </Button>
-                                            ))}
-                                        </div>
-                                    ),
-                                )}
+                                {[
+                                    ['1', '2', '3'],
+                                    ['4', '5', '6'],
+                                    ['7', '8', '9'],
+                                    ['C', '0', '⌫'],
+                                ].map((row, ri) => (
+                                    <div
+                                        key={ri}
+                                        style={{ display: 'flex', gap: 8 }}
+                                    >
+                                        {row.map(key => (
+                                            <Button
+                                                key={key}
+                                                variant="outlined"
+                                                sx={{ minWidth: 64, height: 56, fontSize: 20, fontWeight: 'bold' }}
+                                                onClick={() => {
+                                                    if (key === '⌫') {
+                                                        this.setState(prev => ({
+                                                            navPasswordInput: prev.navPasswordInput.slice(0, -1),
+                                                            navPasswordError: false,
+                                                        }));
+                                                    } else if (key === 'C') {
+                                                        this.setState({
+                                                            navPasswordInput: '',
+                                                            navPasswordError: false,
+                                                        });
+                                                    } else {
+                                                        this.setState(prev => ({
+                                                            navPasswordInput: prev.navPasswordInput + key,
+                                                            navPasswordError: false,
+                                                        }));
+                                                    }
+                                                }}
+                                            >
+                                                {key}
+                                            </Button>
+                                        ))}
+                                    </div>
+                                ))}
                             </div>
                         ) : (
                             <TextField
@@ -3114,10 +3133,11 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         )}
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={closeDialog}>
-                            {I18n.t('vis_2_widgets_inventwo_nav_password_cancel')}
-                        </Button>
-                        <Button variant="contained" onClick={() => this.confirmNavPassword()}>
+                        <Button onClick={closeDialog}>{I18n.t('vis_2_widgets_inventwo_nav_password_cancel')}</Button>
+                        <Button
+                            variant="contained"
+                            onClick={() => this.confirmNavPassword()}
+                        >
                             {I18n.t('vis_2_widgets_inventwo_nav_password_confirm')}
                         </Button>
                     </DialogActions>
