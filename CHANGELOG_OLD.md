@@ -1,4 +1,9 @@
 # Older changes
+## 0.8.0 (2026-05-15)
+- Slider widget: added read-only mode, gradient support for colors and an option to place steps inside the slider bar (#244)
+- Dropdown widget: added conditional background color (#198), read-only mode (#201) and option to show value without text (#201)
+- Table widget: added multi-column sort (#234)
+
 ## 0.7.2 (2026-04-26)
 - Fix button click and hold for mobile devices (#192)
 
