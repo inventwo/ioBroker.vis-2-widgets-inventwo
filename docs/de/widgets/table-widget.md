@@ -75,8 +75,12 @@ Wenn **Spalten zählen** größer als 0 ist, hat jede Spalte folgende Einstellun
 | **Platzhalter** | Text, der angezeigt wird, wenn der Zellenwert leer oder null ist. |
 | **Titel ausrichten** | Ausrichtung des Spalten-Headers: Left, Center, Right. |
 | **Inhalt ausrichten** | Ausrichtung der Zellenwerte: Left, Center, Right. |
-| **Format** | Wie der Wert angezeigt wird: **Text** (einfach), **Number** (mit Dezimalstellen), **Datetime** (Datum/Uhrzeit-Formatierung), **Image** (rendert eine URL als Bild), **IP address** (behandelt den Wert als IPv4-Adresse für korrekte numerische Sortierung). |
+| **Format** | Wie der Wert angezeigt wird: **Text** (einfach), **Number** (mit Dezimalstellen), **Boolean** (zeigt eine schreibgeschützte Checkbox an), **Datetime** (Datum/Uhrzeit-Formatierung), **Image** (rendert eine URL als Bild), **IP-Adresse** (behandelt den Wert als IPv4-Adresse für korrekte numerische Sortierung). |
 | **Dezimalstellen** | *(Nur Number-Format)* Anzahl der Dezimalstellen. |
+| **Dezimaltrennzeichen** | *(Nur Number-Format)* Zeichen für die Dezimaltrennung, z. B. `.` oder `,`. Leer lassen für den Browser-Standard. |
+| **Tausendertrennzeichen** | *(Nur Number-Format)* Zeichen für die Tausendertrennung, z. B. `,` oder `.`. Leer lassen für kein Trennzeichen. |
+| **Farbe (aktiviert)** | *(Nur Boolean-Format)* Farbe der Checkbox, wenn der Wert wahr ist. |
+| **Farbe (deaktiviert)** | *(Nur Boolean-Format)* Farbe der Checkbox, wenn der Wert falsch ist. |
 | **Datum/Uhrzeit Format** | *(Nur Datetime-Format)* **Datetime** (Datum und Uhrzeit), **Date** (nur Datum), **Time** (nur Uhrzeit), **Custom format** (eigenes Muster eingeben). |
 | **Benutzerdefiniertes Format** | *(Nur Custom Datetime)* Formatmuster — siehe Token-Tabelle unten. |
 | **Sortierbar** | Fügt dem Spalten-Header einen Sortier-Pfeil hinzu, auf den Benutzer klicken können. |
@@ -110,8 +114,11 @@ Du kannst die Hintergrundfarbe einer Zeile automatisch je nach dem Wert einer be
 |-------------|--------------|
 | **Anzahl der Bedingungen** | Anzahl der Farbregeln, die hinzugefügt werden sollen. |
 | **Spaltenschlüssel oder Index** | Der JSON-Schlüsselname oder ein (0-basierter) Spaltenindex zur Auswertung. |
+| **Vergleichsoperator** | Art des Vergleichs: **Gleich**, **Nicht gleich**, **Größer**, **Untere**, **Größer gleich**, **Untere gleich**. |
 | **Wert** | Der Wert, gegen den verglichen wird. |
-| **Zeilenfarbe** | Die Hintergrundfarbe für übereinstimmende Zeilen. |
+| **Zeilenfarbe** | Hintergrundfarbe, die auf die gesamte übereinstimmende Zeile angewendet wird. |
+| **Wertfarbe (ganze Zeile)** | Textfarbe, die auf alle Zellen der übereinstimmenden Zeile angewendet wird. |
+| **Wertfarbe (nur Spalte)** | Textfarbe, die nur auf die Zelle in der Bedingungsspalte angewendet wird. |
 
 Die erste zutreffende Bedingung gewinnt. Alle anderen Zeilenfarben (ungerade/gerade im Wechsel) werden von einer zutreffenden Bedingung überschrieben.
 

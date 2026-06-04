@@ -43,6 +43,9 @@ Die **Typ**-Einstellung in der Gruppe **Common** legt fest, was passiert, wenn e
 **Einstellungen:**
 - **Sicht** — Die VIS-Ansicht, die beim Klick geöffnet wird. (Sichtbar, wenn nicht im **Separated buttons**-Modus.)
 - **Wert true** — Optional. Wenn gesetzt, verwendet der Zustandsvergleich dieses Werts, um zu erkennen, wann die Zielansicht die aktuell aktive ist (für visuelle Hervorhebung).
+- **Passwortschutz** — Wenn aktiviert, muss der Benutzer vor der Navigation ein Passwort oder eine PIN eingeben.
+- **Eingabetyp** — Wähle zwischen **Password** (verdeckte Texteingabe) und **PIN** (numerisches PIN-Feld).
+- **Passwort / PIN** — Das Passwort oder die PIN, die der Benutzer zur Bestätigung eingeben muss.
 
 **Tipp:** Konfiguriere einen zweiten Zustand, der zutrifft, wenn die Zielansicht aktiv ist (Vergleich nach Ansicht oder Wert), und gib ihm eine andere Hintergrund-/Rahmenfarbe. Damit wird die aktive Raumkachel in deiner Navigationsleiste hervorgehoben.
 

@@ -97,7 +97,8 @@ The **Content type** setting (in the **Common** group) defines what is shown ins
 |---------|-------------|
 | **Object ID (color picker)** | Main datapoint to write the color to (in the format matching your color model). |
 | **Oid value 1 / 2 / 3** | Additional datapoints for individual color components (e.g. R, G, B separately). |
-| **Color model** | The format of the value written: **HSV**, **HSL**, **RGB**, **CIE**, **Hex**, **Hex 8** (hex with alpha). |
+| **Color model** | The format of the value written: **HSV**, **HSL**, **RGB**, **RGB (Scaled)**, **CIE**, **Hex**, **Hex 8** (hex with alpha). |
+| **Max value** | *(RGB (Scaled) only)* The maximum value for each R, G, B channel. Default: 1023. Use this for 10-bit controllers (0–1023) or any device that does not accept standard 0–255 values. |
 | **Show wheel** | Shows the circular color wheel. |
 | **Show box** | Shows the color/saturation box. |
 | **Show hue** | Shows the hue slider. |

@@ -43,6 +43,9 @@ The **Type** setting in the **Common** group defines what happens when a user cl
 **Settings:**
 - **View** — The VIS view to open on click. (Visible when not in **Separated buttons** mode.)
 - **Value true** — Optional. If set, the tile's state comparison uses this value to detect when the target view is the currently active one (for visual highlighting).
+- **Password protection** — When enabled, the user must enter a password or PIN before the navigation is executed.
+- **Input type** — Choose between **Password** (masked text input) and **PIN** (numeric PIN pad).
+- **Password / PIN** — The password or PIN the user must enter to confirm navigation.
 
 **Tip:** Configure a second state that matches when the target view is active (compare by view or by value) and give it a different background/border color. This highlights the active room tile in your navigation bar.
 

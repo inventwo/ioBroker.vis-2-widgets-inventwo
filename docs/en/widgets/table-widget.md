@@ -75,8 +75,12 @@ When **Count columns** is greater than 0, each column has these settings:
 | **Placeholder** | Text shown when the cell value is empty or null. |
 | **Title align** | Alignment of the column header: Left, Center, Right. |
 | **Content align** | Alignment of the cell values: Left, Center, Right. |
-| **Format** | How the value is displayed: **Text** (plain), **Number** (with decimal places), **Datetime** (date/time formatting), **Image** (renders a URL as an image), **IP address** (treats the value as an IPv4 address for correct numeric sorting). |
+| **Format** | How the value is displayed: **Text** (plain), **Number** (with decimal places), **Boolean** (renders a read-only checkbox), **Datetime** (date/time formatting), **Image** (renders a URL as an image), **IP address** (treats the value as an IPv4 address for correct numeric sorting). |
 | **Decimals** | *(Number format only)* Number of decimal places. |
+| **Decimal separator** | *(Number format only)* Character used to separate decimals, e.g. `.` or `,`. Leave empty to use the browser locale default. |
+| **Thousand separator** | *(Number format only)* Character used to separate thousands, e.g. `,` or `.`. Leave empty for no separator. |
+| **Color (checked)** | *(Boolean format only)* Color of the checkbox when the value is truthy. |
+| **Color (unchecked)** | *(Boolean format only)* Color of the checkbox when the value is falsy. |
 | **Datetime format** | *(Datetime format only)* **Datetime** (date and time), **Date** (date only), **Time** (time only), **Custom format** (enter your own pattern). |
 | **Custom format** | *(Custom datetime only)* Format pattern — see the token table below. |
 | **Sortable** | Adds a sort arrow to this column's header that users can click. |
@@ -110,8 +114,11 @@ You can automatically change a row's background color based on the value of a sp
 |---------|-------------|
 | **Number of conditions** | How many color rules to add. |
 | **Column key or index** | The JSON key name, or a column index (0-based) to evaluate. |
-| **Value** | The value to match against. |
-| **Row color** | The background color for matching rows. |
+| **Comparison operator** | How to compare: **Equal**, **Not equal**, **Greater**, **Less**, **Greater equal**, **Less equal**. |
+| **Value** | The value to compare against. |
+| **Row color** | Background color applied to the entire matching row. |
+| **Value color (whole row)** | Text color applied to all cells in the matching row. |
+| **Value color (column only)** | Text color applied only to the cell in the condition column. |
 
 The first matching condition wins. All other row colors (odd/even alternating) are overridden by a matching condition.
 

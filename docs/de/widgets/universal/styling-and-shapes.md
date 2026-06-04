@@ -17,6 +17,7 @@ Die Gruppe **Default state** und jede nummerierte **State**-Gruppe legen fest, w
 - **Äußere / innere Schatten**-Farben
 - **Inhaltsblinkintervall** (Blinkgeschwindigkeit in ms — 0 = kein Blinken)
 - **Klick deaktivieren wenn aktiv** — Wenn für einen Zustand aktiviert, wird ein Klick auf die Kachel ignoriert, solange dieser Zustand aktuell aktiv ist. Nützlich für Navigationskacheln (verhindert erneutes Klicken auf die bereits aktive Ansicht) oder Mehrfach-Optionsselektoren (verhindert das erneute Schreiben desselben Werts). Nicht verfügbar für den Typ **Read only**.
+- **Spiegel** — Zustandsabhängige Spiegel-Überschreibung: **Standard (von Inhalt)** verwendet die globale Einstellung aus der Inhalt-Stilgruppe; **Ja** erzwingt gespiegelten Inhalt in diesem Zustand; **Nein** erzwingt nicht gespiegelten Inhalt.
 - Das Icon, Bild, den Text oder die eingebettete Ansicht, die angezeigt werden soll
 
 Die Gruppe **inventwo Widget Design** (erscheint beim Klicken auf die Zustandsgruppen) ist der Ort, wo diese Farben pro Zustand konfiguriert werden.

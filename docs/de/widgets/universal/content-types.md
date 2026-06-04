@@ -97,7 +97,8 @@ Die **Inhaltstyp**-Einstellung (in der Gruppe **Common**) legt fest, was innerha
 |-------------|--------------|
 | **Objekt-ID (Farbauswahl)** | Haupt-Datenpunkt, in den die Farbe geschrieben wird (im Format deines Farbmodells). |
 | **Oid-Wert 1 / 2 / 3** | Zusätzliche Datenpunkte für einzelne Farbkomponenten (z. B. R, G, B separat). |
-| **Farbmodell** | Das Format des geschriebenen Werts: **HSV**, **HSL**, **RGB**, **CIE**, **Hex**, **Hex 8** (Hex mit Alpha). |
+| **Farbmodell** | Das Format des geschriebenen Werts: **HSV**, **HSL**, **RGB**, **RGB (Skaliert)**, **CIE**, **Hex**, **Hex 8** (Hex mit Alpha). |
+| **Maximalwert** | *(Nur RGB (Skaliert))* Der Maximalwert für jeden R-, G-, B-Kanal. Standard: 1023. Verwende dies für 10-Bit-Controller (0–1023) oder Geräte, die keine Standard-0–255-Werte akzeptieren. |
 | **Rad anzeigen** | Zeigt das kreisförmige Farbrad an. |
 | **Box anzeigen** | Zeigt die Farb-/Sättigungsbox an. |
 | **Farbton anzeigen** | Zeigt den Farbton-Schieberegler an. |
