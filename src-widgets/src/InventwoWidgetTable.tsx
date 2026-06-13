@@ -104,33 +104,51 @@ function tokenizeFormula(formula: string): string[] | null {
     const tokens: string[] = [];
     let i = 0;
     while (i < formula.length) {
-        if (/\s/.test(formula[i])) { i++; continue; }
+        if (/\s/.test(formula[i])) {
+            i++;
+            continue;
+        }
         // Number literal (integer or decimal)
         if (/\d/.test(formula[i]) || (formula[i] === '.' && /\d/.test(formula[i + 1] ?? ''))) {
             let num = '';
-            while (i < formula.length && /[\d.]/.test(formula[i])) num += formula[i++];
+            while (i < formula.length && /[\d.]/.test(formula[i])) {
+                num += formula[i++];
+            }
             tokens.push(num);
             continue;
         }
         // Identifier (JSON key)
         if (/[a-zA-Z_$]/.test(formula[i])) {
             let id = '';
-            while (i < formula.length && /[a-zA-Z0-9_$]/.test(formula[i])) id += formula[i++];
+            while (i < formula.length && /[a-zA-Z0-9_$]/.test(formula[i])) {
+                id += formula[i++];
+            }
             tokens.push(id);
             continue;
         }
         // ** must be checked before *
-        if (formula[i] === '*' && formula[i + 1] === '*') { tokens.push('**'); i += 2; continue; }
-        if ('+-*/%()'.includes(formula[i])) { tokens.push(formula[i++]); continue; }
+        if (formula[i] === '*' && formula[i + 1] === '*') {
+            tokens.push('**');
+            i += 2;
+            continue;
+        }
+        if ('+-*/%()'.includes(formula[i])) {
+            tokens.push(formula[i++]);
+            continue;
+        }
         return null; // unknown character → invalid formula
     }
     return tokens;
 }
 
 function evaluateFormula(formula: string, row: Record<string, any>): number | null {
-    if (!formula?.trim()) return null;
+    if (!formula?.trim()) {
+        return null;
+    }
     const tokens = tokenizeFormula(formula.trim());
-    if (!tokens) return null;
+    if (!tokens) {
+        return null;
+    }
 
     let pos = 0;
     const peek = (): string | null => (pos < tokens.length ? tokens[pos] : null);
@@ -138,14 +156,21 @@ function evaluateFormula(formula: string, row: Record<string, any>): number | nu
 
     function parsePrimary(): number {
         const t = peek();
-        if (t === null) return NaN;
+        if (t === null) {
+            return NaN;
+        }
         if (t === '(') {
             consume();
             const v = parseAdditive();
-            if (peek() === ')') consume();
+            if (peek() === ')') {
+                consume();
+            }
             return v;
         }
-        if (/^[\d.]+$/.test(t)) { consume(); return parseFloat(t); }
+        if (/^[\d.]+$/.test(t)) {
+            consume();
+            return parseFloat(t);
+        }
         if (/^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(t)) {
             consume();
             const val = row[t];
@@ -155,14 +180,23 @@ function evaluateFormula(formula: string, row: Record<string, any>): number | nu
     }
 
     function parseUnary(): number {
-        if (peek() === '-') { consume(); return -parsePrimary(); }
-        if (peek() === '+') { consume(); return parsePrimary(); }
+        if (peek() === '-') {
+            consume();
+            return -parsePrimary();
+        }
+        if (peek() === '+') {
+            consume();
+            return parsePrimary();
+        }
         return parsePrimary();
     }
 
     function parsePower(): number {
         const base = parseUnary();
-        if (peek() === '**') { consume(); return Math.pow(base, parsePower()); }
+        if (peek() === '**') {
+            consume();
+            return Math.pow(base, parsePower());
+        }
         return base;
     }
 
@@ -171,9 +205,13 @@ function evaluateFormula(formula: string, row: Record<string, any>): number | nu
         while (peek() === '*' || peek() === '/' || peek() === '%') {
             const op = consume();
             const right = parsePower();
-            if (op === '*') left *= right;
-            else if (op === '/') left = right !== 0 ? left / right : NaN;
-            else left %= right;
+            if (op === '*') {
+                left *= right;
+            } else if (op === '/') {
+                left = right !== 0 ? left / right : NaN;
+            } else {
+                left %= right;
+            }
         }
         return left;
     }
@@ -842,6 +880,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
 
     // Do not delete this method. It is used by vis to read the widget configuration.
 
+    // eslint-disable-next-line class-methods-use-this
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetTable.getWidgetInfo();
     }
@@ -946,6 +985,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         }
     };
 
+    // eslint-disable-next-line class-methods-use-this
     sortData = (
         data: Record<string, any>[],
         sortCriteria: SortCriterion[],
@@ -1378,7 +1418,9 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         const columnFormula = this.state.rxData[`columnFormula${i}`];
                         if (columnFormula) {
                             const formulaResult = evaluateFormula(columnFormula, r);
-                            if (formulaResult !== null) columnValue = formulaResult;
+                            if (formulaResult !== null) {
+                                columnValue = formulaResult;
+                            }
                         }
                         if ((columnValue === null || columnValue === '') && columnPlaceholder) {
                             columnValue = columnPlaceholder;

@@ -2448,6 +2448,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
     // Do not delete this method. It is used by vis to read the widget configuration.
 
+    // eslint-disable-next-line class-methods-use-this
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetUniversal.getWidgetInfo();
     }
@@ -2475,6 +2476,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return 'vis_2_widgets_inventwo_';
     }
 
+    // eslint-disable-next-line class-methods-use-this
     compare(value1: any, value2: any, operator = '==='): boolean {
         switch (operator) {
             case '===':
@@ -3293,6 +3295,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
+    // eslint-disable-next-line class-methods-use-this
     getContentIcon(valueData: UniversalWidgetValueData): React.JSX.Element | string {
         if (valueData.icon === null) {
             return '';
@@ -3348,6 +3351,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
+    // eslint-disable-next-line class-methods-use-this
     getContentHtml(valueData: UniversalWidgetValueData): React.JSX.Element {
         return (
             <div
@@ -3768,6 +3772,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
     // ── Shape helpers ──────────────────────────────────────────────────────────
 
+    // eslint-disable-next-line class-methods-use-this
     private computePolygonPoints(sides: number, rotation: number): Array<[number, number]> {
         const cx = 50;
         const cy = 50;
@@ -3780,6 +3785,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return pts;
     }
 
+    // eslint-disable-next-line class-methods-use-this
     private computeStarPoints(rotation: number): Array<[number, number]> {
         const cx = 50;
         const cy = 50;
@@ -3824,6 +3830,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
      *   "40 0, 100 50, 40 100, 0 50"            (without % signs, values 0–100)
      * Returns null when the input is empty or cannot be parsed (≥3 valid points required).
      */
+    // eslint-disable-next-line class-methods-use-this
     private parseCustomPath(pathStr: string): Array<[number, number]> | null {
         if (!pathStr?.trim()) {
             return null;
@@ -3865,6 +3872,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return pts.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(' ');
     }
 
+    // eslint-disable-next-line class-methods-use-this
     private getStrokeDashArray(borderStyle: string | undefined, borderSize: number): string | undefined {
         switch (borderStyle) {
             case 'dashed':
@@ -3880,6 +3888,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
      * Builds an SVG path string (0–100 coordinate space) for a regular polygon with
      * optional rounded corners using quadratic Bézier curves.
      */
+    // eslint-disable-next-line class-methods-use-this
     private computeRoundedPolygonPath(points: Array<[number, number]>, radius: number): string {
         const n = points.length;
         if (radius <= 0) {
@@ -3911,6 +3920,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
     }
 
     /** Scales every numeric value in an SVG path string from the 0–100 space to the 0–1 space. */
+    // eslint-disable-next-line class-methods-use-this
     private scalePathTo01(pathD: string): string {
         return pathD.replace(/-?\d+\.?\d*/g, match => (parseFloat(match) / 100).toFixed(5));
     }
@@ -3926,7 +3936,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         overrideCornerRadius?: number,
     ): React.JSX.Element {
         const rotation = valueData.styles.shapeRotation ?? 0;
-        const cornerRadius = overrideCornerRadius ?? (valueData.styles.shapeCornerRadius ?? 0);
+        const cornerRadius = overrideCornerRadius ?? valueData.styles.shapeCornerRadius ?? 0;
         // For 'custom' shapes the user provides raw polygon points; all other shapes are computed.
         const points =
             overridePoints ??
@@ -4284,10 +4294,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             const br = valueData.styles.borderRadiusBottomRight ?? 0;
             const bl = valueData.styles.borderRadiusBottomLeft ?? 0;
             const chamferedPoints: Array<[number, number]> = [
-                [tl, 0], [100 - tr, 0],
-                [100, tr], [100, 100 - br],
-                [100 - br, 100], [bl, 100],
-                [0, 100 - bl], [0, tl],
+                [tl, 0],
+                [100 - tr, 0],
+                [100, tr],
+                [100, 100 - br],
+                [100 - br, 100],
+                [bl, 100],
+                [0, 100 - bl],
+                [0, tl],
             ];
             return this.buildPolygonCard(valueData, i, content, 'chamfered', chamferedPoints, 0);
         }

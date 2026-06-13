@@ -149,6 +149,7 @@ class InventwoWidgetValueList extends InventwoGeneric<ValueListRxData, ValueList
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
+    // eslint-disable-next-line class-methods-use-this
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetValueList.getWidgetInfo();
     }

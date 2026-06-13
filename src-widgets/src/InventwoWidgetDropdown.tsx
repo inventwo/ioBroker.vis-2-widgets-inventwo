@@ -104,6 +104,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         }
     }
 
+    // eslint-disable-next-line class-methods-use-this
     compareValues(a: any, b: any, op: string): boolean {
         const numA = a !== '' && !isNaN(Number(a)) ? Number(a) : a;
         const numB = b !== '' && !isNaN(Number(b)) ? Number(b) : b;
@@ -452,6 +453,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
 
     // Do not delete this method. It is used by vis to read the widget configuration.
 
+    // eslint-disable-next-line class-methods-use-this
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetDropdown.getWidgetInfo();
     }
