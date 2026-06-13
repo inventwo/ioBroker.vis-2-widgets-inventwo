@@ -256,6 +256,10 @@ Renders a bullet-point list from a single text value — either from a data poin
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Table Widget: Added "URL" column format – cell values are rendered as clickable links with configurable target (`_blank`, `_self`, `_parent`, `_top`)
+- Table Widget: Added "Sum row" option – enables a double top border above the last row to visually separate a totals/summary row
+
 ### 1.4.0 (2026-06-04)
 - Universal Widget: Added "RGB (Scaled)" color model for the color picker – supports configurable value ranges (e.g. 0–1023 for 10-bit RGB controllers)
 - Universal Widget: Added optional password/PIN protection for navigation buttons

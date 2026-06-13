@@ -60,7 +60,8 @@ interface TableRxData {
     [key: `columnPrefix${number}`]: string;
     [key: `columnSuffix${number}`]: string;
     [key: `columnPlaceholder${number}`]: string;
-    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime' | 'image' | 'ip' | 'boolean';
+    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime' | 'image' | 'ip' | 'boolean' | 'url';
+    [key: `columnUrlTarget${number}`]: '_self' | '_blank' | '_parent' | '_top';
     [key: `columnBooleanCheckedColor${number}`]: string;
     [key: `columnBooleanUncheckedColor${number}`]: string;
     [key: `columnNumberDecimals${number}`]: number;
@@ -73,6 +74,7 @@ interface TableRxData {
     [key: `columnHidden${number}`]: boolean;
     [key: `columnFilterable${number}`]: boolean;
     stickyHeader: boolean;
+    showSumRow: boolean;
     countRowConditions: number;
     [key: `rowConditionKey${number}`]: string;
     [key: `rowConditionOperator${number}`]: '===' | '!=' | '>' | '<' | '>=' | '<=';
@@ -146,6 +148,12 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             type: 'checkbox',
                             default: false,
                             label: 'sticky_header',
+                        },
+                        {
+                            name: 'showSumRow',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'show_sum_row',
                         },
                     ],
                 },
@@ -294,9 +302,23 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                                 { value: 'datetime', label: 'datetime' },
                                 { value: 'image', label: 'image' },
                                 { value: 'ip', label: 'ip_address' },
+                                { value: 'url', label: 'url' },
                             ],
                             default: 'text',
                             label: 'format',
+                        },
+                        {
+                            name: 'columnUrlTarget',
+                            type: 'select',
+                            options: [
+                                { value: '_blank', label: 'new_tab' },
+                                { value: '_self', label: 'same_tab' },
+                                { value: '_parent', label: 'parent_frame' },
+                                { value: '_top', label: 'top_frame' },
+                            ],
+                            default: '_blank',
+                            label: 'url_target',
+                            hidden: 'data["columnValueFormat" + index] != "url"',
                         },
                         {
                             name: 'columnBooleanCheckedColor',
@@ -1089,6 +1111,14 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             },
         }));
 
+        const StyledSumRowTableCell = styled(StyledTableCell)(() => ({
+            [`&.${tableCellClasses.root}`]: {
+                borderBottomStyle: 'double',
+                borderBottomWidth: '3px',
+                borderBottomColor: this.state.rxData.rowBorderColor || 'currentColor',
+            },
+        }));
+
         const StyledTableRow = styled(TableRow)(() => ({
             '&:nth-of-type(odd)': {
                 backgroundColor: this.state.rxData.backgroundOddRow,
@@ -1211,13 +1241,16 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                 const columns = [];
                 const { rowColor, valueColor, columnValueColor, conditionColumnKey } = this.getConditionColors(r);
 
+                const isSumRow = this.state.rxData.showSumRow && index === maxRows - 2;
+                const SumAwareTableCell = isSumRow ? StyledSumRowTableCell : StyledTableCell;
+
                 if (countColumns === 0) {
                     Object.values(r).forEach((v, indexCol: number) => {
                         if (typeof v === 'object' && v !== null) {
                             v = JSON.stringify(v);
                         }
                         v = <span dangerouslySetInnerHTML={{ __html: v as string }}></span>;
-                        columns.push(<StyledTableCell key={`${index}_${indexCol}`}>{v}</StyledTableCell>);
+                        columns.push(<SumAwareTableCell key={`${index}_${indexCol}`}>{v}</SumAwareTableCell>);
                     });
                 } else {
                     for (let i = 1; i <= this.state.rxData.countColumns; i++) {
@@ -1307,6 +1340,20 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                                     alt={columnValue}
                                 />
                             );
+                        } else if (columnFormat === 'url') {
+                            const urlTarget = this.state.rxData[`columnUrlTarget${i}`] ?? '_blank';
+                            const href = String(columnValue ?? '');
+                            columnValue = href ? (
+                                <a
+                                    href={href}
+                                    target={urlTarget}
+                                    rel={urlTarget === '_blank' ? 'noopener noreferrer' : undefined}
+                                    style={{ color: 'inherit' }}
+                                    onClick={e => e.stopPropagation()}
+                                >
+                                    {href}
+                                </a>
+                            ) : null;
                         } else {
                             if (typeof columnValue === 'object' && columnValue !== null) {
                                 columnValue = JSON.stringify(columnValue);
@@ -1329,14 +1376,14 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         }
 
                         columns.push(
-                            <StyledTableCell
+                            <SumAwareTableCell
                                 key={`${index}_${i}`}
                                 sx={styles}
                             >
                                 {columnPrefix}
                                 {columnValue}
                                 {columnSuffix}
-                            </StyledTableCell>,
+                            </SumAwareTableCell>,
                         );
                     }
                 }
