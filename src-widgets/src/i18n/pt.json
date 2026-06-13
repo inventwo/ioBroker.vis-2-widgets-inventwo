@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "Nota: O raio da borda é ignorado para formas poligonais. Use 'Raio de canto' para arredondar cantos.",
   "vis_2_widgets_inventwo_titlebar": "Barra de título",
   "vis_2_widgets_inventwo_titlebar_padding": "Preenchimento da barra de título",
+  "vis_2_widgets_inventwo_widget_shadow": "Sombra do widget",
   "widget_checkbox": "Caixa de seleção",
   "widget_dropdown": "Suspenso",
   "widget_marquee": "Marquise",

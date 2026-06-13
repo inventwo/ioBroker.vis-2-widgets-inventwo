@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "Nota: il raggio del bordo viene ignorato per le forme poligonali. Utilizzare 'Raggio angolo' per arrotondare gli angoli.",
   "vis_2_widgets_inventwo_titlebar": "Barra del titolo",
   "vis_2_widgets_inventwo_titlebar_padding": "Imbottitura della barra del titolo",
+  "vis_2_widgets_inventwo_widget_shadow": "Ombra del widget",
   "widget_checkbox": "Casella di controllo",
   "widget_dropdown": "Cadere in picchiata",
   "widget_marquee": "Tendone",

@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "Примітка. Для багатокутників радіус межі ігнорується. Використовуйте «Радіус кута», щоб округлити кути.",
   "vis_2_widgets_inventwo_titlebar": "Рядок заголовка",
   "vis_2_widgets_inventwo_titlebar_padding": "Заповнення рядка заголовка",
+  "vis_2_widgets_inventwo_widget_shadow": "Тінь віджета",
   "widget_checkbox": "Прапорець",
   "widget_dropdown": "спадний список",
   "widget_marquee": "Шатер",

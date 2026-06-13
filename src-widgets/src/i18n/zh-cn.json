@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "注意：多边形形状的边界半径被忽略。使用“圆角半径”来圆角。",
   "vis_2_widgets_inventwo_titlebar": "标题栏",
   "vis_2_widgets_inventwo_titlebar_padding": "标题栏内边距",
+  "vis_2_widgets_inventwo_widget_shadow": "小部件阴影",
   "widget_checkbox": "复选框",
   "widget_dropdown": "下拉菜单",
   "widget_marquee": "跑马灯",

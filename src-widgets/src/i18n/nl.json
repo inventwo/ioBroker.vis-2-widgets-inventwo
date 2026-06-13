@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "Opmerking: Randradius wordt genegeerd voor polygoonvormen. Gebruik 'Hoekradius' om hoeken af ​​te ronden.",
   "vis_2_widgets_inventwo_titlebar": "Titelbalk",
   "vis_2_widgets_inventwo_titlebar_padding": "Opvulling van de titelbalk",
+  "vis_2_widgets_inventwo_widget_shadow": "Widgetschaduw",
   "widget_checkbox": "Selectievakje",
   "widget_dropdown": "Dropdownmenu",
   "widget_marquee": "Feesttent",

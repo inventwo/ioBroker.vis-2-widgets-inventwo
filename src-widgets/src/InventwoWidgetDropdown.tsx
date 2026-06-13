@@ -35,6 +35,11 @@ interface DropdownRxData {
     shadowBlur: number;
     shadowSpread: number;
     shadowColor: string;
+    widgetShadowX: number;
+    widgetShadowY: number;
+    widgetShadowBlur: number;
+    widgetShadowSpread: number;
+    widgetShadowColor: string;
 }
 
 interface DropdownState extends VisRxWidgetState {
@@ -438,6 +443,64 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             label: 'shadow_color',
                             hidden: '!!data.dropdownFromWidget',
                         },
+                        {
+                            name: '',
+                            type: 'delimiter',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_widget_shadow',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'widgetShadowX',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'x_offset',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'widgetShadowY',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'y_offset',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'widgetShadowBlur',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'blur',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'widgetShadowSpread',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'spread',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
+                        {
+                            name: 'widgetShadowColor',
+                            type: 'color',
+                            default: 'rgba(0, 0, 0, 0.5)',
+                            label: 'shadow_color',
+                            hidden: '!!data.dropdownFromWidget',
+                        },
                     ],
                 },
             ],
@@ -520,9 +583,22 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
 
         const shadow = `${style.shadowX}px ${style.shadowY}px ${style.shadowBlur}px ${style.shadowSpread ?? 0}px ${style.shadowColor}`;
 
+        const widgetShadow =
+            style.widgetShadowX || style.widgetShadowY || style.widgetShadowBlur || style.widgetShadowSpread
+                ? `${style.widgetShadowX ?? 0}px ${style.widgetShadowY ?? 0}px ${style.widgetShadowBlur ?? 0}px ${style.widgetShadowSpread ?? 0}px ${style.widgetShadowColor ?? 'rgba(0,0,0,0.5)'}`
+                : undefined;
+
         if (readOnly) {
             return (
-                <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        height: '100%',
+                        boxShadow: widgetShadow,
+                    }}
+                >
                     {titleElement}
                     <div
                         style={{
@@ -548,6 +624,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         }
 
         const selectStyles = {
+            borderRadius: `${style.borderRadius}px`,
             height: '100%',
             '& .MuiSelect-select': {
                 fontSize: `${style.fontSize}px`,
@@ -603,7 +680,14 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
 
         return (
             <div
-                style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', overflow: 'visible' }}
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'visible',
+                    boxShadow: widgetShadow,
+                }}
             >
                 {titleElement}
                 <div

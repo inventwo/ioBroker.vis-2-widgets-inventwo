@@ -262,6 +262,7 @@ Renders a bullet-point list from a single text value — either from a data poin
 - Universal Widget: Added "Corner style" option in the border radius group – switch between "Rounded" (existing behavior) and "Chamfered (bevel)" which cuts corners at 45° using the existing radius values as the bevel size
 - Table Widget: Added "Formula" field per column – compute a cell value from row fields using arithmetic expressions (e.g. `price * qty`, `value * 100`); supports `+`, `-`, `*`, `/`, `%`, `**` and parentheses; result is then processed by the existing format settings
 - Slider Widget: Added "Title" field – optional heading displayed above the slider to describe what it controls; added "Unit" field – appended to all displayed values (min/max labels, step marks, value tooltip)
+- Dropdown Widget: Fixed border radius not being applied to the visible border outline; added "Widget shadow" – a separate drop shadow for the entire widget container independent of the dropdown box shadow
 
 ### 1.4.0 (2026-06-04)
 - Universal Widget: Added "RGB (Scaled)" color model for the color picker – supports configurable value ranges (e.g. 0–1023 for 10-bit RGB controllers)

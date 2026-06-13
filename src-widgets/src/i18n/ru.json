@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "Примечание. Радиус границы игнорируется для многоугольных фигур. Используйте «Радиус угла», чтобы закруглить углы.",
   "vis_2_widgets_inventwo_titlebar": "Строка заголовка",
   "vis_2_widgets_inventwo_titlebar_padding": "Заполнение заголовка",
+  "vis_2_widgets_inventwo_widget_shadow": "Тень виджета",
   "widget_checkbox": "Флажок",
   "widget_dropdown": "Падать",
   "widget_marquee": "Шатер",

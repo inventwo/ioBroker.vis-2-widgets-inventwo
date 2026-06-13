@@ -77,7 +77,8 @@ Jede Bedingung hat:
 | **Titelfarbe** | Farbe des Titel-Labels. |
 | **Hintergrundfarbe aus Bedingung auf Titel anwenden** | Bei Aktivierung ändert sich auch die Hintergrundfarbe des Titelbereichs entsprechend der aktiven Hintergrundbedingungsfarbe. |
 | **Titel Abstand oben/unten/links/rechts** | Abstand um das Titel-Label herum. |
-| **Dropdown-Schatten** | Schlagschatten für das Dropdown-Feld. X-Offset, Y-Offset, Unschärfe, Streuung und Farbe einstellen. |
+| **Dropdown-Schatten** | Schlagschatten für das Dropdown-Auswahlfeld und das geöffnete Menü. X-Offset, Y-Offset, Unschärfe, Streuung und Farbe einstellen. |
+| **Widget-Schatten** | Schlagschatten für den gesamten Widget-Container (inkl. Titelbereich). X-Offset, Y-Offset, Unschärfe, Streuung und Farbe einstellen. Alle Werte sind standardmäßig 0 (kein Schatten). |
 
 ---
 

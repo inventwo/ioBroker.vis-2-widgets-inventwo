@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "Remarque : Le rayon de la bordure est ignoré pour les formes polygonales. Utilisez « Rayon de coin » pour arrondir les coins.",
   "vis_2_widgets_inventwo_titlebar": "Barre de titre",
   "vis_2_widgets_inventwo_titlebar_padding": "Remplissage de la barre de titre",
+  "vis_2_widgets_inventwo_widget_shadow": "Ombre du widget",
   "widget_checkbox": "Cocher",
   "widget_dropdown": "Dérouler",
   "widget_marquee": "Chapiteau",

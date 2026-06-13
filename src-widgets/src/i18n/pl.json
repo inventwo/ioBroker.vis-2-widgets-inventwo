@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "Uwaga: Promień obramowania jest ignorowany w przypadku kształtów wielokątnych. Użyj opcji „Promień narożnika”, aby zaokrąglić narożniki.",
   "vis_2_widgets_inventwo_titlebar": "Pasek tytułu",
   "vis_2_widgets_inventwo_titlebar_padding": "Wypełnienie paska tytułu",
+  "vis_2_widgets_inventwo_widget_shadow": "Cień widgetu",
   "widget_checkbox": "Pole wyboru",
   "widget_dropdown": "Lista rozwijana",
   "widget_marquee": "Duży namiot",

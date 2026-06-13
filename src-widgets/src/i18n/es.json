@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "Nota: El radio del borde se ignora para las formas poligonales. Utilice 'Radio de esquina' para redondear esquinas.",
   "vis_2_widgets_inventwo_titlebar": "barra de título",
   "vis_2_widgets_inventwo_titlebar_padding": "Relleno de la barra de título",
+  "vis_2_widgets_inventwo_widget_shadow": "Sombra del widget",
   "widget_checkbox": "Caja",
   "widget_dropdown": "Menú desplegable",
   "widget_marquee": "Marquesina",

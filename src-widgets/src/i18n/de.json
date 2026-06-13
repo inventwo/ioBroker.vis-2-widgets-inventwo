@@ -454,6 +454,7 @@
   "vis_2_widgets_inventwo_shape_hint": "Hinweis: Rahmenradius wird bei Polygon-Formen ignoriert. Verwende \"Eckenradius\" um die Ecken abzurunden.",
   "vis_2_widgets_inventwo_titlebar": "Titelleiste",
   "vis_2_widgets_inventwo_titlebar_padding": "Titelleiste Abstand",
+  "vis_2_widgets_inventwo_widget_shadow": "Widget-Schatten",
   "widget_checkbox": "Checkbox",
   "widget_dropdown": "Dropdown",
   "widget_marquee": "Lauftext",
