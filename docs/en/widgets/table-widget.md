@@ -69,6 +69,7 @@ When **Count columns** is greater than 0, each column has these settings:
 |---------|-------------|
 | **Hide column** | Hides this column from the table without removing its configuration. |
 | **Key** | The JSON property name to display in this column, e.g. `temp`. If left empty, the column uses the key at that position in the JSON. |
+| **Formula** | Optional arithmetic expression computed from the row's JSON fields. When set, the result replaces the key's raw value. JSON keys are used directly as variables, e.g. `price * qty` or `value * 100`. Supported operators: `+` `-` `*` `/` `%` `**` and parentheses `()`. The result is then processed by the **Format** setting (e.g. rounded as a number). |
 | **Title** | Column header label. If empty, the JSON key name is used. |
 | **Width** | Fixed column width in pixels (0 = automatic). |
 | **Prefix** | Text added before the cell value, e.g. `~`. |

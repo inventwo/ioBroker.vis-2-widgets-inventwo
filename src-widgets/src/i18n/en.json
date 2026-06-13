@@ -1,5 +1,7 @@
 {
   "set_label": "inventwo design",
+  "column_formula": "Formula",
+  "tooltip_column_formula": "Calculate from row JSON keys, e.g. \"price * qty\" or \"value * 100\". Allowed operators: + - * / % **. JSON keys are used directly as variables. When a formula is set, the value of the key field is ignored.",
   "corner_style": "Corner style",
   "corner_style_rounded": "Rounded",
   "corner_style_chamfered": "Chamfered (bevel)",

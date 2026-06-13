@@ -73,6 +73,7 @@ interface TableRxData {
     [key: `sortable${number}`]: boolean;
     [key: `columnHidden${number}`]: boolean;
     [key: `columnFilterable${number}`]: boolean;
+    [key: `columnFormula${number}`]: string;
     stickyHeader: boolean;
     showSumRow: boolean;
     countRowConditions: number;
@@ -94,6 +95,107 @@ interface TableWidgetState extends VisRxWidgetState {
     filterColumnPendingValues: string[];
     parentHeight: number | null;
 }
+
+// ── Safe formula evaluator (no eval) ─────────────────────────────────────────
+// Supports: +  -  *  /  %  **  ( )  numeric literals  JSON-key identifiers
+// Identifiers are resolved against the current data row; unknown keys → NaN.
+
+function tokenizeFormula(formula: string): string[] | null {
+    const tokens: string[] = [];
+    let i = 0;
+    while (i < formula.length) {
+        if (/\s/.test(formula[i])) { i++; continue; }
+        // Number literal (integer or decimal)
+        if (/\d/.test(formula[i]) || (formula[i] === '.' && /\d/.test(formula[i + 1] ?? ''))) {
+            let num = '';
+            while (i < formula.length && /[\d.]/.test(formula[i])) num += formula[i++];
+            tokens.push(num);
+            continue;
+        }
+        // Identifier (JSON key)
+        if (/[a-zA-Z_$]/.test(formula[i])) {
+            let id = '';
+            while (i < formula.length && /[a-zA-Z0-9_$]/.test(formula[i])) id += formula[i++];
+            tokens.push(id);
+            continue;
+        }
+        // ** must be checked before *
+        if (formula[i] === '*' && formula[i + 1] === '*') { tokens.push('**'); i += 2; continue; }
+        if ('+-*/%()'.includes(formula[i])) { tokens.push(formula[i++]); continue; }
+        return null; // unknown character → invalid formula
+    }
+    return tokens;
+}
+
+function evaluateFormula(formula: string, row: Record<string, any>): number | null {
+    if (!formula?.trim()) return null;
+    const tokens = tokenizeFormula(formula.trim());
+    if (!tokens) return null;
+
+    let pos = 0;
+    const peek = (): string | null => (pos < tokens.length ? tokens[pos] : null);
+    const consume = (): string => tokens[pos++];
+
+    function parsePrimary(): number {
+        const t = peek();
+        if (t === null) return NaN;
+        if (t === '(') {
+            consume();
+            const v = parseAdditive();
+            if (peek() === ')') consume();
+            return v;
+        }
+        if (/^[\d.]+$/.test(t)) { consume(); return parseFloat(t); }
+        if (/^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(t)) {
+            consume();
+            const val = row[t];
+            return val !== undefined && val !== null && val !== '' ? Number(val) : NaN;
+        }
+        return NaN;
+    }
+
+    function parseUnary(): number {
+        if (peek() === '-') { consume(); return -parsePrimary(); }
+        if (peek() === '+') { consume(); return parsePrimary(); }
+        return parsePrimary();
+    }
+
+    function parsePower(): number {
+        const base = parseUnary();
+        if (peek() === '**') { consume(); return Math.pow(base, parsePower()); }
+        return base;
+    }
+
+    function parseMultiplicative(): number {
+        let left = parsePower();
+        while (peek() === '*' || peek() === '/' || peek() === '%') {
+            const op = consume();
+            const right = parsePower();
+            if (op === '*') left *= right;
+            else if (op === '/') left = right !== 0 ? left / right : NaN;
+            else left %= right;
+        }
+        return left;
+    }
+
+    function parseAdditive(): number {
+        let left = parseMultiplicative();
+        while (peek() === '+' || peek() === '-') {
+            const op = consume();
+            const right = parseMultiplicative();
+            left = op === '+' ? left + right : left - right;
+        }
+        return left;
+    }
+
+    try {
+        const result = parseAdditive();
+        return Number.isFinite(result) ? result : null;
+    } catch {
+        return null;
+    }
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 function ipToNumber(ip: string): number {
     const parts = ip.split('.').map(Number);
@@ -240,6 +342,12 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             name: 'columnKey',
                             type: 'text',
                             label: 'key',
+                        },
+                        {
+                            name: 'columnFormula',
+                            type: 'text',
+                            label: 'column_formula',
+                            tooltip: 'tooltip_column_formula',
                         },
                         {
                             name: 'columnTitle',
@@ -1267,6 +1375,11 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             columnKey = Object.keys(sourceJson[0])[i - 1];
                         }
                         let columnValue = r[columnKey];
+                        const columnFormula = this.state.rxData[`columnFormula${i}`];
+                        if (columnFormula) {
+                            const formulaResult = evaluateFormula(columnFormula, r);
+                            if (formulaResult !== null) columnValue = formulaResult;
+                        }
                         if ((columnValue === null || columnValue === '') && columnPlaceholder) {
                             columnValue = columnPlaceholder;
                         } else if (columnFormat === 'number') {

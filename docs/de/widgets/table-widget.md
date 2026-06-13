@@ -69,6 +69,7 @@ Wenn **Spalten zählen** größer als 0 ist, hat jede Spalte folgende Einstellun
 |-------------|--------------|
 | **Spalte ausblenden** | Versteckt diese Spalte in der Tabelle, ohne ihre Konfiguration zu entfernen. |
 | **Schlüssel** | Der JSON-Eigenschaftsname, der in dieser Spalte angezeigt wird, z. B. `temp`. Wenn leer, verwendet die Spalte den Schlüssel an dieser Position im JSON. |
+| **Formel** | Optionaler Rechenausdruck, der aus den JSON-Feldern der Zeile berechnet wird. Wenn gesetzt, ersetzt das Ergebnis den rohen Wert des Schlüssels. JSON-Schlüssel werden direkt als Variablen verwendet, z. B. `preis * menge` oder `wert * 100`. Unterstützte Operatoren: `+` `-` `*` `/` `%` `**` und Klammern `()`. Das Ergebnis wird anschließend durch die **Format**-Einstellung weiterverarbeitet (z. B. als Zahl gerundet). |
 | **Titel** | Beschriftung des Spalten-Headers. Wenn leer, wird der JSON-Schlüsselname verwendet. |
 | **Breite** | Feste Spaltenbreite in Pixeln (0 = automatisch). |
 | **Präfix** | Text, der vor dem Zellenwert hinzugefügt wird, z. B. `~`. |
