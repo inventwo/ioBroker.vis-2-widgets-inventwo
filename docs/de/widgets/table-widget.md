@@ -44,6 +44,7 @@ Wenn der Datenpunktwert kein gültiges JSON ist, zeigt die Tabelle eine Fehlerme
 | **Max. Zeilen** | Maximale Anzahl der anzuzeigenden Zeilen. Bei **0** werden alle Zeilen angezeigt. |
 | **Kopf anzeigen** | Zeigt oder versteckt die Kopfzeile mit den Spaltentiteln. |
 | **Klebriger Header** | Bei Aktivierung bleibt die Kopfzeile beim Durchscrollen vieler Zeilen sichtbar. |
+| **Summenzeile** | Bei Aktivierung wird unterhalb der vorletzten Zeile eine doppelte Trennlinie gezeichnet, die die letzte Zeile optisch als Summen- oder Ergebniszeile hervorhebt. |
 
 ---
 
@@ -75,7 +76,8 @@ Wenn **Spalten zählen** größer als 0 ist, hat jede Spalte folgende Einstellun
 | **Platzhalter** | Text, der angezeigt wird, wenn der Zellenwert leer oder null ist. |
 | **Titel ausrichten** | Ausrichtung des Spalten-Headers: Left, Center, Right. |
 | **Inhalt ausrichten** | Ausrichtung der Zellenwerte: Left, Center, Right. |
-| **Format** | Wie der Wert angezeigt wird: **Text** (einfach), **Number** (mit Dezimalstellen), **Boolean** (zeigt eine schreibgeschützte Checkbox an), **Datetime** (Datum/Uhrzeit-Formatierung), **Image** (rendert eine URL als Bild), **IP-Adresse** (behandelt den Wert als IPv4-Adresse für korrekte numerische Sortierung). |
+| **Format** | Wie der Wert angezeigt wird: **Text** (einfach), **Number** (mit Dezimalstellen), **Boolean** (zeigt eine schreibgeschützte Checkbox an), **Datetime** (Datum/Uhrzeit-Formatierung), **Image** (rendert eine URL als Bild), **URL** (rendert den Wert als anklickbaren Link), **IP-Adresse** (behandelt den Wert als IPv4-Adresse für korrekte numerische Sortierung). |
+| **Link-Ziel** | *(Nur URL-Format)* Wo der Link geöffnet wird: **Neues Tab** (`_blank`), **Gleiches Tab** (`_self`), **Übergeordnetes Frame** (`_parent`), **Oberstes Frame** (`_top`). |
 | **Dezimalstellen** | *(Nur Number-Format)* Anzahl der Dezimalstellen. |
 | **Dezimaltrennzeichen** | *(Nur Number-Format)* Zeichen für die Dezimaltrennung, z. B. `.` oder `,`. Leer lassen für den Browser-Standard. |
 | **Tausendertrennzeichen** | *(Nur Number-Format)* Zeichen für die Tausendertrennung, z. B. `,` oder `.`. Leer lassen für kein Trennzeichen. |
@@ -163,6 +165,8 @@ Fügt einen Schlagschatten um den Tabellen-Container hinzu. X-Offset, Y-Offset, 
 - **Mit automatischen Spalten beginnen:** Lass **Spalten zählen** zunächst auf 0, um die Rohdaten zu sehen. Erhöhe dann den Wert, um Titel, Reihenfolge und Formatierung zu steuern.
 - **Temperatur mit Einheit:** Setze **Format** auf **Number**, **Dezimalstellen** auf 1 und **Suffix** auf ` °C` — die Zelle zeigt dann `21.3 °C` an.
 - **Bildspalte:** Wenn eine JSON-Eigenschaft eine URL zu einem Bild enthält, setze **Format** auf **Image**, und die Zelle rendert das Bild direkt.
+- **Linkspalte:** Wenn eine JSON-Eigenschaft eine URL enthält, setze **Format** auf **URL**, um einen anklickbaren Link anzuzeigen. Mit **Link-Ziel** steuerst du, ob der Link in einem neuen oder dem gleichen Tab öffnet.
+- **Summenzeile:** Lege deine Gesamtwerte als letzte Zeile im JSON-Array ab und aktiviere **Summenzeile**, um sie mit einer doppelten Linie abzutrennen.
 - **Standardsortierung:** Trage den JSON-Schlüssel in **Standard-Sortierspalte** ein (z. B. `temp`), um die Tabelle beim Laden der Ansicht vorzusortieren.
 
 ---

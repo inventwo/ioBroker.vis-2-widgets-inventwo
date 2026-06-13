@@ -44,6 +44,7 @@ If the datapoint value is not valid JSON, the table shows an error message.
 | **Max rows** | Maximum number of rows to display. Set to **0** to show all rows. |
 | **Show head** | Shows or hides the header row with column titles. |
 | **Sticky header** | When enabled, the header row stays visible while you scroll through many rows. |
+| **Sum row** | When enabled, a double bottom border is drawn below the second-to-last row, visually separating the last row as a totals or summary row. |
 
 ---
 
@@ -75,7 +76,8 @@ When **Count columns** is greater than 0, each column has these settings:
 | **Placeholder** | Text shown when the cell value is empty or null. |
 | **Title align** | Alignment of the column header: Left, Center, Right. |
 | **Content align** | Alignment of the cell values: Left, Center, Right. |
-| **Format** | How the value is displayed: **Text** (plain), **Number** (with decimal places), **Boolean** (renders a read-only checkbox), **Datetime** (date/time formatting), **Image** (renders a URL as an image), **IP address** (treats the value as an IPv4 address for correct numeric sorting). |
+| **Format** | How the value is displayed: **Text** (plain), **Number** (with decimal places), **Boolean** (renders a read-only checkbox), **Datetime** (date/time formatting), **Image** (renders a URL as an image), **URL** (renders the value as a clickable link), **IP address** (treats the value as an IPv4 address for correct numeric sorting). |
+| **Link target** | *(URL format only)* Where the link opens: **New tab** (`_blank`), **Same tab** (`_self`), **Parent frame** (`_parent`), **Top frame** (`_top`). |
 | **Decimals** | *(Number format only)* Number of decimal places. |
 | **Decimal separator** | *(Number format only)* Character used to separate decimals, e.g. `.` or `,`. Leave empty to use the browser locale default. |
 | **Thousand separator** | *(Number format only)* Character used to separate thousands, e.g. `,` or `.`. Leave empty for no separator. |
@@ -163,6 +165,8 @@ Adds a drop shadow around the table container. Set X offset, Y offset, blur, siz
 - **Start with auto columns:** Leave **Count columns** at 0 first to see the raw data. Then increase it to take control of titles, order, and formatting.
 - **Temperature with unit:** Set column **Format** to **Number**, **Decimals** to 1, and **Suffix** to ` °C` — the cell will show `21.3 °C`.
 - **Image column:** If a JSON property contains a URL to an image, set the column **Format** to **Image** and the cell will render the image directly.
+- **Link column:** If a JSON property contains a URL, set the column **Format** to **URL** to render a clickable link. Use **Link target** to control whether the link opens in a new tab or the same tab.
+- **Sum row:** Put your totals as the last row in the JSON array and enable **Sum row** to separate it with a double line.
 - **Sorting by default:** Enter the JSON key in **Default sort column** (e.g. `temp`) to pre-sort the table when the view loads.
 
 ---
