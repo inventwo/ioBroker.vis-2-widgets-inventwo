@@ -256,7 +256,7 @@ Renders a bullet-point list from a single text value — either from a data poin
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.5.0 (2026-06-13)
 - Table Widget: Added "URL" column format for clickable links with configurable target
 - Table Widget: Added "Sum row" option to visually separate the last row with a double border
 - Universal Widget: Added "Corner style" – switch between rounded and chamfered (45 degree bevel) corners
@@ -287,12 +287,6 @@ Renders a bullet-point list from a single text value — either from a data poin
 
 ### 1.0.0 (2026-05-17)
 - Universal Widget: Add polygon shape support (triangle, diamond, pentagon, hexagon, heptagon, octagon, star) with configurable rotation and corner radius
-
-### 0.9.0 (2026-05-17)
-- Added document with example designs for universal widget
-- Marquee widget: new scrolling text widget with configurable speed, direction, loop count, gap and pause-on-hover (#5)
-- Dropdown widget: optional conditional background color on title, configurable title padding (top, bottom, left, right) (#246)
-- Value List widget: new widget that renders a bullet-point list from a text value (datapoint or manual), with configurable separator, bullet type, colors, spacing and padding (#2)
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)

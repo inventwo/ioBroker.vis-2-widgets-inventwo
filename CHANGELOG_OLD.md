@@ -1,4 +1,10 @@
 # Older changes
+## 0.9.0 (2026-05-17)
+- Added document with example designs for universal widget
+- Marquee widget: new scrolling text widget with configurable speed, direction, loop count, gap and pause-on-hover (#5)
+- Dropdown widget: optional conditional background color on title, configurable title padding (top, bottom, left, right) (#246)
+- Value List widget: new widget that renders a bullet-point list from a text value (datapoint or manual), with configurable separator, bullet type, colors, spacing and padding (#2)
+
 ## 0.8.0 (2026-05-15)
 - Slider widget: added read-only mode, gradient support for colors and an option to place steps inside the slider bar (#244)
 - Dropdown widget: added conditional background color (#198), read-only mode (#201) and option to show value without text (#201)
