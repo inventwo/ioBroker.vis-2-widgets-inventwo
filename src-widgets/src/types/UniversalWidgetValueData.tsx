@@ -104,6 +104,7 @@ export interface UniversalWidgetBorderRadiusStyles {
     borderRadiusTopRight: number;
     borderRadiusBottomLeft: number;
     borderRadiusBottomRight: number;
+    borderCornerStyle: 'rounded' | 'chamfered';
 }
 
 export interface UniversalWidgetBorderStyles {

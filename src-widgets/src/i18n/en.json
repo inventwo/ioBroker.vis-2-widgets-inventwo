@@ -1,5 +1,8 @@
 {
   "set_label": "inventwo design",
+  "corner_style": "Corner style",
+  "corner_style_rounded": "Rounded",
+  "corner_style_chamfered": "Chamfered (bevel)",
   "widget_universal": "Universal (Switch, Button, Nav, Image & more)",
   "widget_slider": "Slider",
   "widget_radial_slider": "Radial Slider",

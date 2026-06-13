@@ -1795,6 +1795,17 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             all: true,
                         },
                         {
+                            name: 'borderCornerStyle',
+                            type: 'select',
+                            options: [
+                                { value: 'rounded', label: 'corner_style_rounded' },
+                                { value: 'chamfered', label: 'corner_style_chamfered' },
+                            ],
+                            default: 'rounded',
+                            label: 'corner_style',
+                            hidden: '!!data.borderRadiusStyleFromWidget',
+                        },
+                        {
                             name: 'borderRadiusTopLeft',
                             type: 'slider',
                             min: 0,
@@ -3911,14 +3922,17 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         i: number | null,
         content: React.JSX.Element | string,
         shape: string,
+        overridePoints?: Array<[number, number]>,
+        overrideCornerRadius?: number,
     ): React.JSX.Element {
         const rotation = valueData.styles.shapeRotation ?? 0;
-        const cornerRadius = valueData.styles.shapeCornerRadius ?? 0;
+        const cornerRadius = overrideCornerRadius ?? (valueData.styles.shapeCornerRadius ?? 0);
         // For 'custom' shapes the user provides raw polygon points; all other shapes are computed.
         const points =
-            shape === 'custom'
+            overridePoints ??
+            (shape === 'custom'
                 ? this.parseCustomPath(valueData.styles.shapeCustomPath ?? '')
-                : this.getShapePoints(shape, rotation);
+                : this.getShapePoints(shape, rotation));
 
         if (!points || points.length === 0) {
             // Fallback to rectangle card when shape cannot be computed (e.g. empty/invalid custom path).
@@ -4264,6 +4278,20 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             return this.buildPolygonCard(valueData, i, content, shape);
         }
 
+        if (valueData.styles.borderCornerStyle === 'chamfered') {
+            const tl = valueData.styles.borderRadiusTopLeft ?? 0;
+            const tr = valueData.styles.borderRadiusTopRight ?? 0;
+            const br = valueData.styles.borderRadiusBottomRight ?? 0;
+            const bl = valueData.styles.borderRadiusBottomLeft ?? 0;
+            const chamferedPoints: Array<[number, number]> = [
+                [tl, 0], [100 - tr, 0],
+                [100, tr], [100, 100 - br],
+                [100 - br, 100], [bl, 100],
+                [0, 100 - bl], [0, tl],
+            ];
+            return this.buildPolygonCard(valueData, i, content, 'chamfered', chamferedPoints, 0);
+        }
+
         let shadow = '';
         if (valueData.outerShadowColor) {
             shadow += `${valueData.styles.outerShadowX}px ${valueData.styles.outerShadowY}px ${valueData.styles.outerShadowBlur}px ${valueData.styles.outerShadowSize}px ${valueData.outerShadowColor}`;
@@ -4276,6 +4304,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             shadow += `inset ${valueData.styles.innerShadowX}px ${valueData.styles.innerShadowY}px ${valueData.styles.innerShadowBlur}px ${valueData.styles.innerShadowSize}px ${valueData.innerShadowColor}`;
         }
 
+        const borderRadius = `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`;
+
         return (
             <div
                 key={i !== null ? i : ''}
@@ -4284,15 +4314,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     height: i === null ? '100%' : '',
                     flex: i !== null ? `0 0 ${this.state.rxData.buttonSize}px` : '',
                     position: 'relative',
-                    border: valueData.styles.borderRadiusTopLeft,
-                    borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+                    borderRadius,
                 }}
             >
                 <Card
                     className="vis_rx_widget_card"
                     style={{
                         background: valueData.background,
-                        borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+                        borderRadius,
                         boxShadow: shadow,
                         opacity: valueData.styles.backgroundOpacity,
                         position: 'absolute',
@@ -4312,7 +4341,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 ? 'not-allowed'
                                 : 'pointer',
                         background: 'transparent',
-                        borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+                        borderRadius,
                         opacity: valueData.styles.contentOpacity,
                         position: 'absolute',
                         inset: 0,

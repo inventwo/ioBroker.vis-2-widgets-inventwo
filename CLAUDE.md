@@ -142,6 +142,16 @@ Erlaubt, Styling-Attribute von einem anderen Widget zu erben:
 
 ---
 
+## Dokumentation
+
+Die Doku liegt unter `docs/en/` (Englisch) und `docs/de/` (Deutsch). **Beide Sprachversionen müssen immer synchron gehalten werden.**
+
+- Neue Features oder geänderte Einstellungen, die für den Nutzer sichtbar sind, **immer** in der zugehörigen Doku-Seite ergänzen.
+- Für das Universal Widget: Styling-Änderungen gehören in `docs/en/widgets/universal/styling-and-shapes.md` bzw. das deutsche Pendant.
+- Nur `en` und `de` manuell pflegen – andere Sprachen werden nicht in der Doku geführt.
+
+---
+
 ## Changelog (README.md)
 
 - Wichtige Änderungen (neue Features, Breaking Changes, größere Bugfixes) **immer** in der `README.md` im Abschnitt `## Changelog` unter `### **WORK IN PROGRESS**` aufnehmen.

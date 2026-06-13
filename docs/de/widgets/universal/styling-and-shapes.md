@@ -88,13 +88,14 @@ Setzt den inneren Abstand der Kachel — den Bereich zwischen dem Kachelrand und
 
 ### inventwo - Rahmenradius
 
-Rundet die Ecken der Kachel ab. Jede Ecke kann unabhängig eingestellt werden.
+Steuert die Form der Kachelecken. Jede Ecke kann unabhängig eingestellt werden.
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Oben links / Oben rechts / Unten rechts / Unten links** | Eckenradius in Pixeln für jede Ecke. |
+| **Eckentyp** | Wie die Ecken gestaltet werden: **Abgerundet** (Standard — weiche Kurve) oder **Abgeflacht (Fase)** (gerader 45°-Schnitt). |
+| **Oben links / Oben rechts / Unten rechts / Unten links** | Größe der Ecke in Pixeln. Bei *Abgerundet* ist das der Kurvenradius; bei *Abgeflacht* die Länge des Fasenschnitts. |
 
-> **Hinweis:** Wenn eine Polygon-Form aktiv ist, hat der Standard-Border-Radius keine Wirkung. Verwende stattdessen die **Eckenradius**-Einstellung innerhalb der Gruppe **inventwo - Form**.
+> **Hinweis:** Wenn eine Polygon-Form aktiv ist, haben die Rahmenradius-Einstellungen keine Wirkung. Verwende stattdessen die **Eckenradius**-Einstellung innerhalb der Gruppe **inventwo - Form**.
 
 ---
 

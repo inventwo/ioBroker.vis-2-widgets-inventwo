@@ -88,13 +88,14 @@ Sets the inner padding of the tile — the space between the tile border and its
 
 ### inventwo — Border radius
 
-Rounds the corners of the tile. Set each corner independently.
+Controls the shape of the tile's corners. Each corner can be configured independently.
 
 | Setting | What it does |
 |---------|-------------|
-| **Top left / Top right / Bottom right / Bottom left** | Corner radius in pixels for each corner. |
+| **Corner style** | How the corners are styled: **Rounded** (default — smooth curve) or **Chamfered (bevel)** (straight 45° cut). |
+| **Top left / Top right / Bottom right / Bottom left** | Size of the corner in pixels. For *Rounded* this is the curve radius; for *Chamfered* this is the length of the bevel cut. |
 
-> **Note:** When a polygon shape is active, the standard border-radius has no effect. Use the **Corner radius** setting inside the **inventwo - Shape** group instead.
+> **Note:** When a polygon shape is active, the border radius settings have no effect. Use the **Corner radius** setting inside the **inventwo - Shape** group instead.
 
 ---
 
