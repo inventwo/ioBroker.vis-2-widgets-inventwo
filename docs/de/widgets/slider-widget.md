@@ -24,6 +24,8 @@ Das Slider Widget ermöglicht es Benutzern, einen numerischen Wert durch Ziehen 
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
+| **Überschrift** | Optionale Überschrift, die oberhalb des Sliders angezeigt wird. Damit lässt sich beschreiben, was der Slider steuert, z. B. `Ladestrom` oder `Ladelimit`. |
+| **Einheit** | Optionale Einheit, die an alle angezeigten Werte angehängt wird — Min/Max-Beschriftungen, Stufenmarkierungen und den Werte-Tooltip. Z. B. `A` oder `%`. |
 | **Objekt-ID** | Der Datenpunkt zum Lesen und Schreiben. Bei der Auswahl werden **Mindestwert**, **Maximalwert** und **Schritt** automatisch aus der Objektdefinition befüllt. |
 | **Mindestwert** | Der kleinste Wert, den der Schieberegler setzen kann. Standard: 0. |
 | **Maximalwert** | Der größte Wert, den der Schieberegler setzen kann. Standard: 100. |

@@ -24,6 +24,8 @@ The Slider Widget lets users set a numeric value by dragging a handle along a tr
 
 | Setting | What it does |
 |---------|-------------|
+| **Title** | Optional heading shown above the slider. Use this to label what the slider controls, e.g. `Charging current` or `Charge limit`. |
+| **Unit** | Optional unit appended to all displayed values — the min/max labels, step marks, and the value tooltip. E.g. `A` or `%`. |
 | **Object ID** | The datapoint to read and write. When selected, **Min value**, **Max value**, and **Step** are automatically populated from the object definition. |
 | **Min value** | The lowest value the slider can set. Default: 0. |
 | **Max value** | The highest value the slider can set. Default: 100. |

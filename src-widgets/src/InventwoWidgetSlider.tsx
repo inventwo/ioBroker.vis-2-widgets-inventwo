@@ -14,6 +14,9 @@ import { createDocsLinkField } from './utils/docLinkField';
 
 interface SliderRxData {
     oid: null | string;
+    sliderTitle: string;
+    sliderTitleSpacing: number;
+    sliderUnit: string;
     minValue: number;
     maxValue: number;
     step: number;
@@ -70,6 +73,26 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                     name: 'common',
                     fields: [
                         createDocsLinkField('docs/en/widgets/slider-widget.md') as any,
+                        {
+                            name: 'sliderTitle',
+                            type: 'text',
+                            label: 'slider_title',
+                        },
+                        {
+                            name: 'sliderTitleSpacing',
+                            type: 'slider',
+                            min: 0,
+                            max: 100,
+                            step: 1,
+                            label: 'slider_title_spacing',
+                            default: 4,
+                            hidden: '!data.sliderTitle',
+                        },
+                        {
+                            name: 'sliderUnit',
+                            type: 'text',
+                            label: 'slider_unit',
+                        },
                         {
                             name: 'oid',
                             type: 'id',
@@ -462,16 +485,17 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
         const orientation = this.state.rxData.orientation;
         const stepsInside = this.state.rxData.stepsInside;
         const stepsAbove = this.state.rxData.stepsAbove;
+        const unit = this.state.rxData.sliderUnit ?? '';
 
         const marks = [];
         if (this.state.rxData.showMinMax) {
             marks.push({
                 value: minValue,
-                label: minValue,
+                label: `${minValue}${unit}`,
             });
             marks.push({
                 value: maxValue,
-                label: maxValue,
+                label: `${maxValue}${unit}`,
             });
         }
 
@@ -480,9 +504,10 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 const stepDisplay = Number(this.state.rxData.stepDisplay);
                 if (stepDisplay > 0 && maxValue > minValue) {
                     for (let i = minValue + stepDisplay; i < maxValue; i += stepDisplay) {
+                        const label = i.toFixed(2).replace(/[.,]00$/, '');
                         marks.push({
-                            value: parseFloat(i.toFixed(2).replace(/[.,]00$/, '')),
-                            label: i.toFixed(2).replace(/[.,]00$/, ''),
+                            value: parseFloat(label),
+                            label: `${label}${unit}`,
                         });
                     }
                 }
@@ -497,7 +522,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                     const s: number = parseInt(step);
                     marks.push({
                         value: s,
-                        label: s,
+                        label: `${s}${unit}`,
                     });
                 });
             }
@@ -628,16 +653,61 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 step={Number(this.state.rxData.step)}
                 value={this.state.sliderValue || 0}
                 valueLabelDisplay={this.state.rxData.valueLabelDisplay ?? 'auto'}
+                valueLabelFormat={unit ? val => `${val}${unit}` : undefined}
                 track={trackStyle.trackBarType}
                 orientation={orientation}
                 marks={marks}
             />
         );
 
-        if (this.state.rxData.readOnly) {
-            return <div style={{ pointerEvents: 'none', width: '100%', height: '100%' }}>{slider}</div>;
+        const sliderWithPointer = this.state.rxData.readOnly ? (
+            <div style={{ pointerEvents: 'none', width: '100%', height: '100%' }}>{slider}</div>
+        ) : (
+            slider
+        );
+
+        const sliderTitle = this.state.rxData.sliderTitle;
+        if (sliderTitle) {
+            const titleStyle: React.CSSProperties = {
+                fontSize: this.state.rxStyle!['font-size'] ?? undefined,
+                color: this.state.rxStyle!.color ?? undefined,
+                fontFamily: this.state.rxStyle!['font-family'] ?? undefined,
+                fontWeight: this.state.rxStyle!['font-weight'] ?? undefined,
+                fontStyle: this.state.rxStyle!['font-style'] ?? undefined,
+                textShadow: this.state.rxStyle!['text-shadow'] ?? undefined,
+                lineHeight: this.state.rxStyle!['line-height'] ?? undefined,
+                flexShrink: 0,
+            };
+
+            // MUI mark labels use absolute positioning and can overflow above the slider container.
+            // stepsAbove (horizontal): labels are `bottom: trackWidth + 20` above the mark → overflow ≈ trackWidth + 24px
+            // vertical with any marks: MUI centers labels on the mark with translateY(-50%) → top half overflows ≈ 12px
+            let sliderTopPadding = 0;
+            if (orientation === 'horizontal' && stepsAbove && !stepsInside) {
+                sliderTopPadding = (trackStyle.trackWidth ?? 10) + 24;
+            } else if (orientation === 'vertical' && (this.state.rxData.showMinMax || this.state.rxData.showSteps)) {
+                sliderTopPadding = 12;
+            }
+
+            const titleSpacing = this.state.rxData.sliderTitleSpacing ?? 4;
+            return (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        height: '100%',
+                        gap: titleSpacing,
+                    }}
+                >
+                    <div style={titleStyle}>{sliderTitle}</div>
+                    <div style={{ flex: 1, minHeight: 0, minWidth: 0, paddingTop: sliderTopPadding || undefined }}>
+                        {sliderWithPointer}
+                    </div>
+                </div>
+            );
         }
 
-        return slider;
+        return sliderWithPointer;
     }
 }
