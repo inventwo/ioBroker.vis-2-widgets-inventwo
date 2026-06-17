@@ -2414,7 +2414,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
         if (
             this.state.rxData.type == 'nav' &&
-            this.state.rxData.view == this.props.view &&
+            this.state.rxData.view == this.props.context.activeView &&
             Object.keys(window.vis?.viewsActiveFilter).length > 1
         ) {
             this.setState({ showFeedback: true });
@@ -2544,8 +2544,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 const isActive =
                     (this.state.rxData.mode === 'singleButton' &&
                         this.state.rxData.countStates === 1 &&
-                        this.state.rxData.view === this.props.view) ||
-                    (this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.view);
+                        this.state.rxData.view === this.props.context.activeView) ||
+                    (this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.context.activeView);
                 if (isActive) {
                     return true;
                 }
@@ -2611,8 +2611,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     (isNavBtn &&
                         this.state.rxData.mode === 'singleButton' &&
                         this.state.rxData.countStates === 1 &&
-                        this.state.rxData.view === this.props.view) ||
-                    (isNavBtn && this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.view)
+                        this.state.rxData.view === this.props.context.activeView) ||
+                    (isNavBtn && this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.context.activeView)
                 ) {
                     data = this.getStateData(i);
                     matchedStateIndex = i;
@@ -2627,7 +2627,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     this.state.rxData.type === 'button' ||
                     this.state.rxData.type === 'readonly') &&
                     value === this.convertValue(this.state.rxData[`value${index}`])) ||
-                (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)
+                (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.context.activeView)
             ) {
                 data = this.getStateData(index, true);
             } else {
