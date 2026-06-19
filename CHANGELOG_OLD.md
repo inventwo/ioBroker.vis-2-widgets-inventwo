@@ -1,4 +1,7 @@
 # Older changes
+## 1.0.0 (2026-05-17)
+- Universal Widget: Add polygon shape support (triangle, diamond, pentagon, hexagon, heptagon, octagon, star) with configurable rotation and corner radius
+
 ## 0.9.0 (2026-05-17)
 - Added document with example designs for universal widget
 - Marquee widget: new scrolling text widget with configurable speed, direction, loop count, gap and pause-on-hover (#5)
