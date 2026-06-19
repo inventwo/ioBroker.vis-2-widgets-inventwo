@@ -1555,10 +1555,13 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     </StyledTableRow>,
                 );
             }
-        } else if (countColumns > 0) {
-            const visibleCount = Array.from({ length: countColumns }, (_, i) => i + 1).filter(
-                i => !this.state.rxData[`columnHidden${i}`],
-            ).length;
+        } else {
+            const visibleCount =
+                countColumns > 0
+                    ? Array.from({ length: countColumns }, (_, i) => i + 1).filter(
+                          i => !this.state.rxData[`columnHidden${i}`],
+                      ).length
+                    : 1;
             rows.push(
                 <StyledTableRow
                     key="no-data"

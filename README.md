@@ -258,7 +258,7 @@ Renders a bullet-point list from a single text value — either from a data poin
 -->
 ### **WORK IN PROGRESS**
 - Universal Widget: Fixed navigation active state not updating correctly when nav buttons are placed inside a "View in Widget"
-- Table Widget: Empty JSON array now renders a "No data" row when columns are configured, instead of an empty broken table structure
+- Table Widget: Empty JSON array now renders a "No data" row regardless of column configuration, instead of an empty or broken table structure
 - Marquee Widget: Added vertical scroll directions "Up" and "Down" in addition to the existing "Left" and "Right"
 
 ### 1.5.0 (2026-06-13)
