@@ -1,4 +1,5 @@
 {
+  "no_data": "No data",
   "set_label": "inventwo design",
   "column_formula": "Formula",
   "tooltip_column_formula": "Calculate from row JSON keys, e.g. \"price * qty\" or \"value * 100\". Allowed operators: + - * / % **. JSON keys are used directly as variables. When a formula is set, the value of the key field is ignored.",
@@ -224,6 +225,8 @@
   "suffix": "Suffix",
   "left": "Left",
   "right": "Right",
+  "up": "Up",
+  "down": "Down",
   "title_align": "Title align",
   "count_columns": "Count columns",
   "single_button": "Single button",
@@ -343,7 +346,7 @@
   "marquee_speed": "Speed (px/s)",
   "marquee_speed_tooltip": "Scrolling speed in pixels per second – independent of the number of copies",
   "marquee_repeat": "Text copies",
-  "marquee_repeat_tooltip": "How many times the text is repeated side by side. More copies prevent gaps for short texts.",
+  "marquee_repeat_tooltip": "How many times the text is repeated. More copies prevent gaps for short texts.",
   "marquee_gap": "Gap between copies (px)",
   "marquee_gap_tooltip": "Space in pixels between two text copies",
   "marquee_pause_on_hover": "Pause on hover",

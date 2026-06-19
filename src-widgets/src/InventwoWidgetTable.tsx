@@ -23,6 +23,7 @@ import {
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { I18n } from '@iobroker/adapter-react-v5';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
 import React from 'react';
@@ -880,7 +881,6 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
 
     // Do not delete this method. It is used by vis to read the widget configuration.
 
-    // eslint-disable-next-line class-methods-use-this
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetTable.getWidgetInfo();
     }
@@ -985,7 +985,6 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         }
     };
 
-    // eslint-disable-next-line class-methods-use-this
     sortData = (
         data: Record<string, any>[],
         sortCriteria: SortCriterion[],
@@ -1295,11 +1294,14 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             );
         };
 
-        if ((json && json.length > 0) || unfilteredJson.length > 0) {
-            const sourceJson = unfilteredJson.length > 0 ? unfilteredJson : json!;
-            const countColumns = this.state.rxData.countColumns;
-            if (countColumns === 0) {
-                Object.keys(sourceJson[0]).forEach((h, index) => {
+        const countColumns = this.state.rxData.countColumns;
+        const hasData = json !== null && json.length > 0;
+        const sourceJson = unfilteredJson.length > 0 ? unfilteredJson : hasData ? json! : [];
+        const sourceKeys = sourceJson.length > 0 ? Object.keys(sourceJson[0]) : [];
+
+        if (countColumns === 0) {
+            if (sourceJson.length > 0) {
+                sourceKeys.forEach((h, index) => {
                     headers.push(
                         <StyledTableHeaderCell key={index}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -1315,68 +1317,68 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         </StyledTableHeaderCell>,
                     );
                 });
-            } else {
-                for (let i = 1; i <= this.state.rxData.countColumns; i++) {
-                    if (this.state.rxData[`columnHidden${i}`]) {
-                        continue;
-                    }
-
-                    let columnTitle = this.state.rxData[`columnTitle${i}`];
-
-                    if (columnTitle === null) {
-                        columnTitle = Object.keys(sourceJson[0])[i - 1];
-                    }
-
-                    let columnKey = this.state.rxData[`columnKey${i}`];
-                    if (!columnKey) {
-                        columnKey = Object.keys(sourceJson[0])[i - 1];
-                    }
-
-                    const isSortable = this.state.rxData[`sortable${i}`];
-
-                    const styles: SxProps = {
-                        textAlign: this.state.rxData[`columnTitleAlign${i}`],
-                    };
-                    if (this.state.rxData[`columnWidth${i}`]) {
-                        styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
-                        styles.overflow = 'hidden';
-                    }
-
-                    headers.push(
-                        <StyledTableHeaderCell
-                            key={i}
-                            sx={styles}
-                        >
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: this.state.rxData[`columnTitleAlign${i}`] ?? 'left',
-                                }}
-                            >
-                                {isSortable ? (
-                                    <>
-                                        <TableSortLabel
-                                            active={getSortIndex(String(columnKey)) !== -1}
-                                            direction={getSortDirection(String(columnKey))}
-                                            onClick={() => this.handleRequestSort(String(columnKey))}
-                                        >
-                                            {columnTitle}
-                                        </TableSortLabel>
-                                        {renderSortPriorityBadge(String(columnKey))}
-                                    </>
-                                ) : (
-                                    <span>{columnTitle}</span>
-                                )}
-                                {this.state.rxData[`columnFilterable${i}`]
-                                    ? renderFilterButton(String(columnKey))
-                                    : null}
-                            </Box>
-                        </StyledTableHeaderCell>,
-                    );
-                }
             }
+        } else {
+            for (let i = 1; i <= countColumns; i++) {
+                if (this.state.rxData[`columnHidden${i}`]) {
+                    continue;
+                }
 
+                let columnTitle = this.state.rxData[`columnTitle${i}`];
+
+                if (columnTitle === null) {
+                    columnTitle = sourceKeys[i - 1] ?? null;
+                }
+
+                let columnKey = this.state.rxData[`columnKey${i}`];
+                if (!columnKey) {
+                    columnKey = sourceKeys[i - 1] ?? '';
+                }
+
+                const isSortable = this.state.rxData[`sortable${i}`];
+
+                const styles: SxProps = {
+                    textAlign: this.state.rxData[`columnTitleAlign${i}`],
+                };
+                if (this.state.rxData[`columnWidth${i}`]) {
+                    styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
+                    styles.overflow = 'hidden';
+                }
+
+                headers.push(
+                    <StyledTableHeaderCell
+                        key={i}
+                        sx={styles}
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: this.state.rxData[`columnTitleAlign${i}`] ?? 'left',
+                            }}
+                        >
+                            {isSortable ? (
+                                <>
+                                    <TableSortLabel
+                                        active={getSortIndex(String(columnKey)) !== -1}
+                                        direction={getSortDirection(String(columnKey))}
+                                        onClick={() => this.handleRequestSort(String(columnKey))}
+                                    >
+                                        {columnTitle}
+                                    </TableSortLabel>
+                                    {renderSortPriorityBadge(String(columnKey))}
+                                </>
+                            ) : (
+                                <span>{columnTitle}</span>
+                            )}
+                            {this.state.rxData[`columnFilterable${i}`] ? renderFilterButton(String(columnKey)) : null}
+                        </Box>
+                    </StyledTableHeaderCell>,
+                );
+            }
+        }
+
+        if (hasData) {
             let maxRows = this.state.rxData.maxRows;
             if (maxRows <= 0) {
                 maxRows = json!.length;
@@ -1401,7 +1403,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         columns.push(<SumAwareTableCell key={`${index}_${indexCol}`}>{v}</SumAwareTableCell>);
                     });
                 } else {
-                    for (let i = 1; i <= this.state.rxData.countColumns; i++) {
+                    for (let i = 1; i <= countColumns; i++) {
                         if (this.state.rxData[`columnHidden${i}`]) {
                             continue;
                         }
@@ -1412,7 +1414,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         const columnPlaceholder = this.state.rxData[`columnPlaceholder${i}`];
                         const columnFormat = this.state.rxData[`columnValueFormat${i}`];
                         if (!columnKey) {
-                            columnKey = Object.keys(sourceJson[0])[i - 1];
+                            columnKey = sourceKeys[i - 1] ?? '';
                         }
                         let columnValue = r[columnKey];
                         const columnFormula = this.state.rxData[`columnFormula${i}`];
@@ -1516,9 +1518,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             columnValue = <span dangerouslySetInnerHTML={{ __html: columnValue as string }}></span>;
                         }
 
-                        const resolvedColumnKey = columnKey
-                            ? String(columnKey)
-                            : String(Object.keys(sourceJson[0])[i - 1] ?? '');
+                        const resolvedColumnKey = columnKey ? String(columnKey) : String(sourceKeys[i - 1] ?? '');
                         const isConditionColumn = !!columnValueColor && conditionColumnKey === resolvedColumnKey;
                         const styles: SxProps = {
                             textAlign: this.state.rxData[`columnContentAlign${i}`],
@@ -1555,6 +1555,23 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     </StyledTableRow>,
                 );
             }
+        } else if (countColumns > 0) {
+            const visibleCount = Array.from({ length: countColumns }, (_, i) => i + 1).filter(
+                i => !this.state.rxData[`columnHidden${i}`],
+            ).length;
+            rows.push(
+                <StyledTableRow
+                    key="no-data"
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                    <StyledTableCell
+                        colSpan={Math.max(visibleCount, 1)}
+                        sx={{ textAlign: 'center' }}
+                    >
+                        {I18n.t('vis_2_widgets_inventwo_no_data')}
+                    </StyledTableCell>
+                </StyledTableRow>,
+            );
         }
 
         let shadow = '';
@@ -1714,28 +1731,30 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         borderRadius: `${borderRadiusStyle.borderRadiusTopLeft}px ${borderRadiusStyle.borderRadiusTopRight}px ${borderRadiusStyle.borderRadiusBottomRight}px ${borderRadiusStyle.borderRadiusBottomLeft}px`,
                     }}
                 >
-                    <TableContainer
-                        component={Paper}
-                        style={{
-                            height: stickyHeader ? '100%' : 'auto',
-                            maxHeight: stickyHeader ? '100%' : 'none',
-                            overflow: stickyHeader ? 'auto' : 'visible',
-                            background: 'transparent',
-                            borderRadius: 0,
-                        }}
-                    >
-                        <Table
-                            stickyHeader={stickyHeader}
-                            sx={{ tableLayout: 'fixed' }}
+                    {(headers.length > 0 || rows.length > 0) && (
+                        <TableContainer
+                            component={Paper}
+                            style={{
+                                height: stickyHeader ? '100%' : 'auto',
+                                maxHeight: stickyHeader ? '100%' : 'none',
+                                overflow: stickyHeader ? 'auto' : 'visible',
+                                background: 'transparent',
+                                borderRadius: 0,
+                            }}
                         >
-                            {this.state.rxData.showHead && (
-                                <TableHead>
-                                    <StyledTableHeaderRow>{headers}</StyledTableHeaderRow>
-                                </TableHead>
-                            )}
-                            <TableBody>{rows}</TableBody>
-                        </Table>
-                    </TableContainer>
+                            <Table
+                                stickyHeader={stickyHeader}
+                                sx={{ tableLayout: 'fixed' }}
+                            >
+                                {this.state.rxData.showHead && (
+                                    <TableHead>
+                                        <StyledTableHeaderRow>{headers}</StyledTableHeaderRow>
+                                    </TableHead>
+                                )}
+                                <TableBody>{rows}</TableBody>
+                            </Table>
+                        </TableContainer>
+                    )}
                 </div>
                 {filterBox}
             </div>

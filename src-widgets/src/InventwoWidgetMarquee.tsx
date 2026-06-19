@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
@@ -6,7 +6,7 @@ import { createDocsLinkField } from './utils/docLinkField';
 interface MarqueeRxData {
     oid: null | string;
     marqueeText: string;
-    direction: 'left' | 'right';
+    direction: 'left' | 'right' | 'up' | 'down';
     speed: number;
     textRepeat: number;
     gap: number;
@@ -17,6 +17,8 @@ interface MarqueeRxData {
 interface MarqueeState extends VisRxWidgetState {
     textWidth: number;
     containerWidth: number;
+    textHeight: number;
+    containerHeight: number;
 }
 
 export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData, MarqueeState> {
@@ -33,6 +35,8 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
             ...this.state,
             textWidth: 0,
             containerWidth: 0,
+            textHeight: 0,
+            containerHeight: 0,
         };
     }
 
@@ -47,7 +51,12 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
 
     componentDidUpdate(_prevProps: VisRxWidgetProps, prevState: MarqueeState): void {
         // Avoid re-measuring when only dimension state changed (prevents infinite loops)
-        if (prevState.textWidth !== this.state.textWidth || prevState.containerWidth !== this.state.containerWidth) {
+        if (
+            prevState.textWidth !== this.state.textWidth ||
+            prevState.containerWidth !== this.state.containerWidth ||
+            prevState.textHeight !== this.state.textHeight ||
+            prevState.containerHeight !== this.state.containerHeight
+        ) {
             return;
         }
         this.scheduleMeasure(50);
@@ -84,15 +93,22 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
             return;
         }
         const cw = this.containerRef.current.clientWidth;
+        const ch = this.containerRef.current.clientHeight;
         const tw = this.textRef.current.offsetWidth;
+        const th = this.textRef.current.offsetHeight;
 
         if (!this.resizeObserver && window.ResizeObserver) {
             this.resizeObserver = new ResizeObserver(() => this.scheduleMeasure(50));
             this.resizeObserver.observe(this.containerRef.current);
         }
 
-        if (cw !== this.state.containerWidth || tw !== this.state.textWidth) {
-            this.setState({ containerWidth: cw, textWidth: tw });
+        if (
+            cw !== this.state.containerWidth ||
+            tw !== this.state.textWidth ||
+            ch !== this.state.containerHeight ||
+            th !== this.state.textHeight
+        ) {
+            this.setState({ containerWidth: cw, textWidth: tw, containerHeight: ch, textHeight: th });
         }
     }
 
@@ -124,6 +140,8 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
                             options: [
                                 { value: 'left', label: 'left' },
                                 { value: 'right', label: 'right' },
+                                { value: 'up', label: 'up' },
+                                { value: 'down', label: 'down' },
                             ],
                             default: 'left',
                             label: 'direction',
@@ -178,7 +196,7 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
     }
 
     // Do not delete this method. It is used by vis to read the widget configuration.
-    // eslint-disable-next-line class-methods-use-this
+
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetMarquee.getWidgetInfo();
     }
@@ -197,27 +215,33 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
         const pauseOnHover = this.state.rxData.pauseOnHover;
         const backgroundColor = this.state.rxData.backgroundColor;
 
-        const { textWidth } = this.state;
+        const isVertical = direction === 'up' || direction === 'down';
+        const { textWidth, textHeight } = this.state;
+        const primarySize = isVertical ? textHeight : textWidth;
 
         // One full animation cycle = one text copy + its trailing gap
-        const cycleWidth = textWidth + gap;
-        // Duration for exactly one cycle at constant speed (px/s) â†’ independent of textRepeat
-        const duration = textWidth > 0 && speed > 0 ? cycleWidth / speed : 0;
+        const cycleSize = primarySize + gap;
+        // Duration for exactly one cycle at constant speed (px/s) → independent of textRepeat
+        const duration = primarySize > 0 && speed > 0 ? cycleSize / speed : 0;
 
-        // Left: start at 0, end at -cycleWidth â†’ copy slides off left, next copy takes over
-        // Right: start at -cycleWidth, end at 0 â†’ copy slides off right, next copy takes over
-        const fromX = direction === 'left' ? 0 : -cycleWidth;
-        const toX = direction === 'left' ? -cycleWidth : 0;
+        let styleContent = '';
+        if (primarySize > 0) {
+            if (isVertical) {
+                // up: start at 0, end at -cycleSize → copy slides off top, next copy takes over
+                // down: start at -cycleSize, end at 0 → copy slides in from top
+                const fromY = direction === 'up' ? 0 : -cycleSize;
+                const toY = direction === 'up' ? -cycleSize : 0;
+                styleContent = `@keyframes ${this.animName} { from { transform: translateY(${fromY}px); } to { transform: translateY(${toY}px); } }`;
+            } else {
+                // left: start at 0, end at -cycleSize → copy slides off left, next copy takes over
+                // right: start at -cycleSize, end at 0 → copy slides in from left
+                const fromX = direction === 'left' ? 0 : -cycleSize;
+                const toX = direction === 'left' ? -cycleSize : 0;
+                styleContent = `@keyframes ${this.animName} { from { transform: translateX(${fromX}px); } to { transform: translateX(${toX}px); } }`;
+            }
+        }
 
-        const styleContent =
-            textWidth > 0
-                ? `@keyframes ${this.animName} { from { transform: translateX(${fromX}px); } to { transform: translateX(${toX}px); } }`
-                : '';
-
-        const textStyle: React.CSSProperties = {
-            display: 'inline-block',
-            whiteSpace: 'nowrap',
-            marginRight: gap,
+        const commonFontStyle: React.CSSProperties = {
             fontSize: this.state.rxStyle?.['font-size'] ?? undefined,
             color: this.state.rxStyle?.color ?? undefined,
             fontFamily: this.state.rxStyle?.['font-family'] ?? undefined,
@@ -226,17 +250,23 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
             letterSpacing: this.state.rxStyle?.['letter-spacing'] ?? undefined,
         };
 
-        const innerStyle: React.CSSProperties =
-            textWidth > 0
-                ? {
-                      display: 'inline-block',
-                      whiteSpace: 'nowrap',
-                      animation: `${this.animName} ${duration.toFixed(3)}s linear infinite`,
-                  }
-                : {
-                      display: 'inline-block',
-                      whiteSpace: 'nowrap',
-                  };
+        const textStyle: React.CSSProperties = isVertical
+            ? {
+                  ...commonFontStyle,
+                  display: 'block',
+                  marginBottom: gap,
+              }
+            : {
+                  ...commonFontStyle,
+                  display: 'inline-block',
+                  whiteSpace: 'nowrap',
+                  marginRight: gap,
+              };
+
+        const innerStyle: React.CSSProperties = {
+            ...(isVertical ? { display: 'block' } : { display: 'inline-block', whiteSpace: 'nowrap' }),
+            ...(duration > 0 ? { animation: `${this.animName} ${duration.toFixed(3)}s linear infinite` } : {}),
+        };
 
         const handleMouseEnter = pauseOnHover
             ? (e: React.MouseEvent<HTMLSpanElement>): void => {
@@ -250,7 +280,7 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
               }
             : undefined;
 
-        // Render textRepeat copies of the text, each followed by a gap (via marginRight)
+        // Render textRepeat copies of the text, each followed by a gap (via margin)
         const copies = Array.from({ length: textRepeat }, (_, i) => (
             <span
                 key={i}
@@ -269,7 +299,8 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
                     height: '100%',
                     overflow: 'hidden',
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: isVertical ? 'stretch' : 'center',
+                    flexDirection: isVertical ? 'column' : 'row',
                     background: backgroundColor || undefined,
                     position: 'relative',
                 }}

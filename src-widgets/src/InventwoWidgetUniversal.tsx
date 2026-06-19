@@ -2448,7 +2448,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
     // Do not delete this method. It is used by vis to read the widget configuration.
 
-    // eslint-disable-next-line class-methods-use-this
     getWidgetInfo(): RxWidgetInfo {
         return InventwoWidgetUniversal.getWidgetInfo();
     }
@@ -2476,7 +2475,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return 'vis_2_widgets_inventwo_';
     }
 
-    // eslint-disable-next-line class-methods-use-this
     compare(value1: any, value2: any, operator = '==='): boolean {
         switch (operator) {
             case '===':
@@ -2545,7 +2543,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     (this.state.rxData.mode === 'singleButton' &&
                         this.state.rxData.countStates === 1 &&
                         this.state.rxData.view === this.props.context.activeView) ||
-                    (this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.context.activeView);
+                    (this.state.rxData.countStates > 1 &&
+                        this.state.rxData[`view${i}`] === this.props.context.activeView);
                 if (isActive) {
                     return true;
                 }
@@ -2612,7 +2611,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         this.state.rxData.mode === 'singleButton' &&
                         this.state.rxData.countStates === 1 &&
                         this.state.rxData.view === this.props.context.activeView) ||
-                    (isNavBtn && this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.context.activeView)
+                    (isNavBtn &&
+                        this.state.rxData.countStates > 1 &&
+                        this.state.rxData[`view${i}`] === this.props.context.activeView)
                 ) {
                     data = this.getStateData(i);
                     matchedStateIndex = i;
@@ -2627,7 +2628,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     this.state.rxData.type === 'button' ||
                     this.state.rxData.type === 'readonly') &&
                     value === this.convertValue(this.state.rxData[`value${index}`])) ||
-                (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.context.activeView)
+                (this.state.rxData.type === 'nav' &&
+                    this.state.rxData[`view${index}`] === this.props.context.activeView)
             ) {
                 data = this.getStateData(index, true);
             } else {
@@ -3295,7 +3297,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
-    // eslint-disable-next-line class-methods-use-this
     getContentIcon(valueData: UniversalWidgetValueData): React.JSX.Element | string {
         if (valueData.icon === null) {
             return '';
@@ -3351,7 +3352,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
-    // eslint-disable-next-line class-methods-use-this
     getContentHtml(valueData: UniversalWidgetValueData): React.JSX.Element {
         return (
             <div
@@ -3772,7 +3772,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
     // ── Shape helpers ──────────────────────────────────────────────────────────
 
-    // eslint-disable-next-line class-methods-use-this
     private computePolygonPoints(sides: number, rotation: number): Array<[number, number]> {
         const cx = 50;
         const cy = 50;
@@ -3785,7 +3784,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return pts;
     }
 
-    // eslint-disable-next-line class-methods-use-this
     private computeStarPoints(rotation: number): Array<[number, number]> {
         const cx = 50;
         const cy = 50;
@@ -3830,7 +3828,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
      *   "40 0, 100 50, 40 100, 0 50"            (without % signs, values 0–100)
      * Returns null when the input is empty or cannot be parsed (≥3 valid points required).
      */
-    // eslint-disable-next-line class-methods-use-this
+
     private parseCustomPath(pathStr: string): Array<[number, number]> | null {
         if (!pathStr?.trim()) {
             return null;
@@ -3872,7 +3870,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return pts.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(' ');
     }
 
-    // eslint-disable-next-line class-methods-use-this
     private getStrokeDashArray(borderStyle: string | undefined, borderSize: number): string | undefined {
         switch (borderStyle) {
             case 'dashed':
@@ -3888,7 +3885,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
      * Builds an SVG path string (0–100 coordinate space) for a regular polygon with
      * optional rounded corners using quadratic Bézier curves.
      */
-    // eslint-disable-next-line class-methods-use-this
+
     private computeRoundedPolygonPath(points: Array<[number, number]>, radius: number): string {
         const n = points.length;
         if (radius <= 0) {
@@ -3920,7 +3917,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
     }
 
     /** Scales every numeric value in an SVG path string from the 0–100 space to the 0–1 space. */
-    // eslint-disable-next-line class-methods-use-this
+
     private scalePathTo01(pathD: string): string {
         return pathD.replace(/-?\d+\.?\d*/g, match => (parseFloat(match) / 100).toFixed(5));
     }
