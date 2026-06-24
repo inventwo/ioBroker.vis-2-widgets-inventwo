@@ -1,4 +1,9 @@
 # Older changes
+## 1.2.0 (2026-06-02)
+- Radial Slider: Support gradient colors for rail and active rail
+- Dropdown: Added shadow spread option
+- Table: Added ip-address column format for correct sorting
+
 ## 1.0.0 (2026-05-17)
 - Universal Widget: Add polygon shape support (triangle, diamond, pentagon, hexagon, heptagon, octagon, star) with configurable rotation and corner radius
 
