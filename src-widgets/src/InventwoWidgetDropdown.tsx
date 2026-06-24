@@ -11,6 +11,10 @@ interface DropdownRxData {
     showText: boolean;
     readOnly: boolean;
     title: string;
+    useCustomOptions: boolean;
+    countCustomOptions: number;
+    [key: `optionValue${number}`]: string;
+    [key: `optionLabel${number}`]: string;
     backgroundOid: string | null;
     countBgConditions: number;
     [key: `bgConditionValue${number}`]: string;
@@ -63,12 +67,48 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
     async componentDidUpdate(prevProps: VisRxWidgetProps, prevState: DropdownState): Promise<void> {
         const prev = prevState.rxData as any;
         const curr = this.state.rxData as any;
-        if (prev.oid !== curr.oid || prev.showValue !== curr.showValue || prev.showText !== curr.showText) {
+        const customOptionsChanged =
+            prev.useCustomOptions !== curr.useCustomOptions ||
+            prev.countCustomOptions !== curr.countCustomOptions ||
+            (curr.useCustomOptions &&
+                Array.from({ length: curr.countCustomOptions || 0 }, (_: unknown, i: number) => i + 1).some(
+                    (i: number) =>
+                        prev[`optionValue${i}`] !== curr[`optionValue${i}`] ||
+                        prev[`optionLabel${i}`] !== curr[`optionLabel${i}`],
+                ));
+        if (
+            prev.oid !== curr.oid ||
+            prev.showValue !== curr.showValue ||
+            prev.showText !== curr.showText ||
+            customOptionsChanged
+        ) {
             await this.loadOptions();
         }
     }
 
     async loadOptions(): Promise<void> {
+        if (this.state.rxData.useCustomOptions) {
+            const count = this.state.rxData.countCustomOptions || 0;
+            const showVal = this.state.rxData.showValue !== false;
+            const showTxt = this.state.rxData.showText !== false;
+            const options: Array<{ value: string | number; label: string }> = [];
+            for (let i = 1; i <= count; i++) {
+                const val = (this.state.rxData as any)[`optionValue${i}`] ?? '';
+                const lbl = (this.state.rxData as any)[`optionLabel${i}`] ?? '';
+                let label: string;
+                if (showVal && showTxt) {
+                    label = lbl ? `${val} - ${lbl}` : val;
+                } else if (showVal && !showTxt) {
+                    label = val;
+                } else {
+                    label = lbl || val;
+                }
+                options.push({ value: val, label });
+            }
+            this.setState({ options });
+            return;
+        }
+
         const oid = this.state.rxData.oid;
         if (!this.validOid(oid) || !oid) {
             this.setState({ options: [] });
@@ -172,6 +212,12 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             label: 'oid',
                         },
                         {
+                            name: 'useCustomOptions',
+                            type: 'checkbox',
+                            label: 'use_custom_options',
+                            default: false,
+                        },
+                        {
                             name: 'showValue',
                             type: 'checkbox',
                             label: 'show_value_in_label',
@@ -194,6 +240,38 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             name: 'title',
                             type: 'text',
                             label: 'title',
+                        },
+                    ],
+                },
+                {
+                    name: 'attr_group_custom_options',
+                    label: 'attr_group_custom_options',
+                    hidden: '!data.useCustomOptions',
+                    fields: [
+                        {
+                            name: 'countCustomOptions',
+                            type: 'number',
+                            default: 0,
+                            label: 'count_custom_options',
+                        },
+                    ],
+                },
+                {
+                    name: 'countCustomOptions',
+                    indexFrom: 1,
+                    indexTo: 'countCustomOptions',
+                    label: 'attr_group_custom_option',
+                    hidden: '!data.useCustomOptions',
+                    fields: [
+                        {
+                            name: 'optionValue',
+                            type: 'text',
+                            label: 'value',
+                        },
+                        {
+                            name: 'optionLabel',
+                            type: 'text',
+                            label: 'display_text',
                         },
                     ],
                 },
