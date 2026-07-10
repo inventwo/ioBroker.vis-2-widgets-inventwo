@@ -19,6 +19,7 @@ import {
     Box,
     Divider,
     Typography,
+    TablePagination,
 } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
@@ -38,6 +39,9 @@ interface TableRxData {
     oid: null | string;
     countColumns: number;
     maxRows: number;
+    pagination: boolean;
+    rowsPerPage: number;
+    paginationHeight: number | string;
     showHead: boolean;
     defaultSortColumn: string;
     defaultSortOrder: 'asc' | 'desc';
@@ -95,6 +99,7 @@ interface TableWidgetState extends VisRxWidgetState {
     filterColumnAllValues: string[];
     filterColumnPendingValues: string[];
     parentHeight: number | null;
+    page: number;
 }
 
 // ── Safe formula evaluator (no eval) ─────────────────────────────────────────
@@ -283,6 +288,21 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             type: 'checkbox',
                             default: true,
                             label: 'show_head',
+                        },
+                        {
+                            name: 'pagination',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'pagination',
+                        },
+                        {
+                            name: 'rowsPerPage',
+                            type: 'number',
+                            min: 1,
+                            step: 1,
+                            default: 10,
+                            label: 'rows_per_page',
+                            hidden: '!data.pagination',
                         },
                         {
                             name: 'stickyHeader',
@@ -641,6 +661,16 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             label: 'column_height',
                         },
                         {
+                            name: 'paginationHeight',
+                            type: 'slider',
+                            min: 0,
+                            max: 100,
+                            step: 1,
+                            default: 52,
+                            label: 'pagination_height',
+                            hidden: '!data.pagination',
+                        },
+                        {
                             name: '',
                             type: 'help',
                             text: 'vis_2_widgets_inventwo_row_border',
@@ -958,6 +988,10 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         }
     }
 
+    handleChangePage = (_event: unknown, newPage: number): void => {
+        this.setState({ page: newPage });
+    };
+
     handleRequestSort = (columnKey: string): void => {
         const multiSort = this.state.rxData.multiSort;
         const existing: SortCriterion[] = this.state.sortCriteria ?? [];
@@ -1102,7 +1136,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         } else {
             filters[filterColumn] = filterColumnPendingValues;
         }
-        this.setState({ filters, filterAnchorEl: null, filterColumn: null });
+        this.setState({ filters, filterAnchorEl: null, filterColumn: null, page: 0 });
     };
 
     togglePendingValue = (value: string): void => {
@@ -1378,20 +1412,70 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             }
         }
 
+        let paginationControl: React.JSX.Element | null = null;
+
         if (hasData) {
-            let maxRows = this.state.rxData.maxRows;
+            let maxRows = Number(this.state.rxData.maxRows) || 0;
             if (maxRows <= 0) {
                 maxRows = json!.length;
             } else {
                 maxRows = Math.min(maxRows, json!.length);
             }
 
-            for (let index = 0; index < maxRows; index++) {
-                const r = json![index];
+            const cappedData = json!.slice(0, maxRows);
+            const paginationEnabled = this.state.rxData.pagination;
+            const rowsPerPageRaw = Number(this.state.rxData.rowsPerPage);
+            const rowsPerPage = rowsPerPageRaw > 0 ? rowsPerPageRaw : 10;
+            const totalPages = paginationEnabled ? Math.max(1, Math.ceil(cappedData.length / rowsPerPage)) : 1;
+            const currentPage = paginationEnabled ? Math.min(this.state.page ?? 0, totalPages - 1) : 0;
+            const pageData = paginationEnabled
+                ? cappedData.slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage)
+                : cappedData;
+
+            if (paginationEnabled) {
+                const paginationHeight = this.valWithUnit(this.state.rxData.paginationHeight ?? 52);
+                paginationControl = (
+                    <TablePagination
+                        component="div"
+                        count={cappedData.length}
+                        page={currentPage}
+                        onPageChange={this.handleChangePage}
+                        rowsPerPage={rowsPerPage}
+                        rowsPerPageOptions={[]}
+                        labelDisplayedRows={({ from, to, count }) =>
+                            `${from}–${to} ${I18n.t('vis_2_widgets_inventwo_pagination_of')} ${count}`
+                        }
+                        sx={{
+                            flexShrink: 0,
+                            color: 'inherit',
+                            background: this.state.rxData.backgroundHeader,
+                            minHeight: paginationHeight,
+                            height: paginationHeight,
+                            overflow: 'hidden',
+                            '& .MuiTablePagination-toolbar': {
+                                minHeight: paginationHeight,
+                                height: paginationHeight,
+                                overflow: 'hidden',
+                                paddingTop: 0,
+                                paddingBottom: 0,
+                            },
+                            '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                                margin: 0,
+                            },
+                            '& .MuiTablePagination-actions': {
+                                overflow: 'hidden',
+                            },
+                        }}
+                    />
+                );
+            }
+
+            for (let index = 0; index < pageData.length; index++) {
+                const r = pageData[index];
                 const columns = [];
                 const { rowColor, valueColor, columnValueColor, conditionColumnKey } = this.getConditionColors(r);
 
-                const isSumRow = this.state.rxData.showSumRow && index === maxRows - 2;
+                const isSumRow = this.state.rxData.showSumRow && index === pageData.length - 2;
                 const SumAwareTableCell = isSumRow ? StyledSumRowTableCell : StyledTableCell;
 
                 if (countColumns === 0) {
@@ -1720,6 +1804,8 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     ref={this.wrapperRef}
                     style={{
                         boxShadow: `${shadow}`,
+                        display: 'flex',
+                        flexDirection: 'column',
                         overflow: stickyHeader ? 'hidden' : 'auto',
                         height: stickyHeader ? '100%' : 'fit-content',
                         maxHeight: '100%',
@@ -1738,8 +1824,8 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         <TableContainer
                             component={Paper}
                             style={{
-                                height: stickyHeader ? '100%' : 'auto',
-                                maxHeight: stickyHeader ? '100%' : 'none',
+                                flex: stickyHeader ? '1 1 auto' : '0 0 auto',
+                                minHeight: stickyHeader ? 0 : undefined,
                                 overflow: stickyHeader ? 'auto' : 'visible',
                                 background: 'transparent',
                                 borderRadius: 0,
@@ -1758,6 +1844,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             </Table>
                         </TableContainer>
                     )}
+                    {paginationControl}
                 </div>
                 {filterBox}
             </div>

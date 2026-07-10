@@ -33,6 +33,7 @@ The Radial Slider Widget is a circular arc dial for numeric datapoints. It works
 | **Show value** | Displays the current numeric value in the center of the dial. |
 | **Show label** | Displays a text label below the value in the center. Only visible when a label text is entered. |
 | **Label** | The text to show as the center label, e.g. `°C` or `%`. Only visible when **Show label** is enabled. |
+| **Read only** | When enabled, the dial displays the current value but cannot be dragged. Useful for read-only gauges. |
 
 ---
 

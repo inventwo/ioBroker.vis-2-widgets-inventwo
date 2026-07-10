@@ -129,6 +129,7 @@ interface RadialSliderRxData {
     showValue: boolean;
     showLabel: boolean;
     label: string;
+    readOnly: boolean;
     startAngle: number;
     endAngle: number;
     trackWidth: number;
@@ -270,6 +271,12 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                             label: 'label',
                             default: '',
                             hidden: '!data.showLabel',
+                        },
+                        {
+                            name: 'readOnly',
+                            type: 'checkbox',
+                            label: 'read_only',
+                            default: false,
                         },
                     ],
                 },
@@ -524,7 +531,7 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
     }
 
     private handleMouseDown = (e: React.MouseEvent | React.TouchEvent): void => {
-        if (this.props.editMode) {
+        if (this.props.editMode || this.state.rxData.readOnly) {
             return;
         }
         this.setState({ isDragging: true });
@@ -671,7 +678,7 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
             alignItems: 'center',
             justifyContent: 'center',
             position: 'relative',
-            cursor: this.props.editMode ? 'default' : 'pointer',
+            cursor: this.props.editMode || this.state.rxData.readOnly ? 'default' : 'pointer',
             userSelect: 'none',
         };
 

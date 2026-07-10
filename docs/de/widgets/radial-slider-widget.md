@@ -33,6 +33,7 @@ Das Radial Slider Widget ist ein kreisförmiger Bogenschieberegler für numerisc
 | **Wert anzeigen** | Zeigt den aktuellen numerischen Wert in der Mitte des Reglers an. |
 | **Bezeichnung anzeigen** | Zeigt eine Textbeschriftung unterhalb des Werts in der Mitte an. Nur sichtbar, wenn ein Beschriftungstext eingegeben wurde. |
 | **Bezeichnung** | Der Text, der als Mittelbeschriftung angezeigt wird, z. B. `°C` oder `%`. Nur sichtbar, wenn **Bezeichnung anzeigen** aktiviert ist. |
+| **Schreibgeschützt** | Bei Aktivierung zeigt der Regler den aktuellen Wert an, kann aber nicht gezogen werden. Nützlich für reine Anzeige-Regler. |
 
 ---
 

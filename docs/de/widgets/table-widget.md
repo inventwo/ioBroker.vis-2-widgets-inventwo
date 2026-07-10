@@ -43,6 +43,8 @@ Wenn der Datenpunktwert kein gültiges JSON ist, zeigt die Tabelle eine Fehlerme
 | **Spalten zählen** | Anzahl der manuell konfigurierten Spalten. Bei **0** werden Spalten automatisch erzeugt (alle Schlüssel in der Reihenfolge, in der sie im JSON erscheinen). Erhöhe diesen Wert, um jede Spalte individuell zu konfigurieren. |
 | **Max. Zeilen** | Maximale Anzahl der anzuzeigenden Zeilen. Bei **0** werden alle Zeilen angezeigt. |
 | **Kopf anzeigen** | Zeigt oder versteckt die Kopfzeile mit den Spaltentiteln. |
+| **Paginierung** | Bei Aktivierung werden die Zeilen auf Seiten aufgeteilt, mit Navigation am unteren Rand der Tabelle, anstatt alle Zeilen auf einmal anzuzeigen. |
+| **Zeilen pro Seite** | *(Nur bei Paginierung)* Anzahl der pro Seite angezeigten Zeilen. |
 | **Klebriger Header** | Bei Aktivierung bleibt die Kopfzeile beim Durchscrollen vieler Zeilen sichtbar. |
 | **Summenzeile** | Bei Aktivierung wird unterhalb der vorletzten Zeile eine doppelte Trennlinie gezeichnet, die die letzte Zeile optisch als Summen- oder Ergebniszeile hervorhebt. |
 
@@ -136,6 +138,7 @@ Die erste zutreffende Bedingung gewinnt. Alle anderen Zeilenfarben (ungerade/ger
 | **Hintergrund gerade Zeile** | Hintergrundfarbe gerader Zeilen (2., 4., ...). |
 | **Headerhöhe** | Höhe der Kopfzeile in Pixeln. |
 | **Säulenhöhe** | Höhe jeder Datenzeile in Pixeln. |
+| **Höhe Paginierung** | *(Nur bei Paginierung)* Höhe der Paginierungsleiste in Pixeln. |
 | **Dicke Kopfzeile** | Dicke des unteren Rahmens der Kopfzeile. |
 | **Farbe Kopfzeile** | Farbe des unteren Rahmens der Kopfzeile. |
 | **Dicke** | Dicke des unteren Rahmens jeder Datenzeile. |
@@ -168,6 +171,7 @@ Fügt einen Schlagschatten um den Tabellen-Container hinzu. X-Offset, Y-Offset, 
 - **Bildspalte:** Wenn eine JSON-Eigenschaft eine URL zu einem Bild enthält, setze **Format** auf **Image**, und die Zelle rendert das Bild direkt.
 - **Linkspalte:** Wenn eine JSON-Eigenschaft eine URL enthält, setze **Format** auf **URL**, um einen anklickbaren Link anzuzeigen. Mit **Link-Ziel** steuerst du, ob der Link in einem neuen oder dem gleichen Tab öffnet.
 - **Summenzeile:** Lege deine Gesamtwerte als letzte Zeile im JSON-Array ab und aktiviere **Summenzeile**, um sie mit einer doppelten Linie abzutrennen.
+- **Große Datenmengen:** Aktiviere **Paginierung** und stelle **Zeilen pro Seite** ein, damit große Tabellen übersichtlich bleiben, statt durch Hunderte von Zeilen zu scrollen. **Max. Zeilen** wirkt weiterhin als übergeordnete Obergrenze vor der Seitenaufteilung.
 - **Standardsortierung:** Trage den JSON-Schlüssel in **Standard-Sortierspalte** ein (z. B. `temp`), um die Tabelle beim Laden der Ansicht vorzusortieren.
 
 ---

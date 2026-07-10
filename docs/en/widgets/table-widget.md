@@ -43,6 +43,8 @@ If the datapoint value is not valid JSON, the table shows an error message.
 | **Count columns** | Number of manually configured columns. Set to **0** for automatic columns (all keys shown in the order they appear in the JSON). Increase this to configure each column individually. |
 | **Max rows** | Maximum number of rows to display. Set to **0** to show all rows. |
 | **Show head** | Shows or hides the header row with column titles. |
+| **Pagination** | When enabled, rows are split into pages with navigation controls at the bottom of the table instead of showing all rows at once. |
+| **Rows per page** | *(Pagination only)* Number of rows shown per page. |
 | **Sticky header** | When enabled, the header row stays visible while you scroll through many rows. |
 | **Sum row** | When enabled, a double bottom border is drawn below the second-to-last row, visually separating the last row as a totals or summary row. |
 
@@ -136,6 +138,7 @@ The first matching condition wins. All other row colors (odd/even alternating) a
 | **Background even row** | Background color of even-numbered rows (2nd, 4th, ...). |
 | **Header height** | Height of the header row in pixels. |
 | **Column height** | Height of each data row in pixels. |
+| **Pagination height** | *(Pagination only)* Height of the pagination bar in pixels. |
 | **Thickness header** | Bottom border thickness of the header row. |
 | **Color header** | Bottom border color of the header row. |
 | **Thickness** | Bottom border thickness of each data row. |
@@ -168,6 +171,7 @@ Adds a drop shadow around the table container. Set X offset, Y offset, blur, siz
 - **Image column:** If a JSON property contains a URL to an image, set the column **Format** to **Image** and the cell will render the image directly.
 - **Link column:** If a JSON property contains a URL, set the column **Format** to **URL** to render a clickable link. Use **Link target** to control whether the link opens in a new tab or the same tab.
 - **Sum row:** Put your totals as the last row in the JSON array and enable **Sum row** to separate it with a double line.
+- **Large datasets:** Enable **Pagination** and set **Rows per page** to keep large tables readable instead of scrolling through hundreds of rows. **Max rows** still applies as an overall cap before paging.
 - **Sorting by default:** Enter the JSON key in **Default sort column** (e.g. `temp`) to pre-sort the table when the view loads.
 
 ---
