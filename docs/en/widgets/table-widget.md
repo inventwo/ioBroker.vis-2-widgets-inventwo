@@ -106,8 +106,13 @@ When **Count columns** is greater than 0, each column has these settings:
 | `mm` | Minutes (with leading zero) | `05` |
 | `ss` | Seconds (with leading zero) | `00` |
 | `sss` | Milliseconds | `123` |
+| `WD` | Weekday short name | `Mon` |
+| `WDL` | Weekday full name | `Monday` |
+| `KW` | Calendar week (with leading zero) | `27` |
+| `K` | Calendar week (without leading zero) | `27` |
 
 Example: `DD.MM.YYYY hh:mm` → `04.07.2025 09:05`
+Example: `WDL, YYYY (KW/52)` → `Friday, 2025 (27/52)`
 
 ---
 

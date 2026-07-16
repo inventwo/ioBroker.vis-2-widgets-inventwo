@@ -106,8 +106,13 @@ Wenn **Spalten zählen** größer als 0 ist, hat jede Spalte folgende Einstellun
 | `mm` | Minuten (mit führender Null) | `05` |
 | `ss` | Sekunden (mit führender Null) | `00` |
 | `sss` | Millisekunden | `123` |
+| `WD` | Wochentag kurz | `Mo` |
+| `WDL` | Wochentag ausgeschrieben | `Montag` |
+| `KW` | Kalenderwoche (mit führender Null) | `27` |
+| `K` | Kalenderwoche (ohne führende Null) | `27` |
 
 Beispiel: `DD.MM.YYYY hh:mm` → `04.07.2025 09:05`
+Beispiel: `WDL, YYYY (KW/52)` → `Freitag, 2025 (27/52)`
 
 ---
 
