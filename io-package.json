@@ -158,7 +158,8 @@
           "InventwoWidgetTable",
           "InventwoWidgetDropdown",
           "InventwoWidgetMarquee",
-          "InventwoWidgetValueList"
+          "InventwoWidgetValueList",
+          "InventwoWidgetCalendar"
         ]
       }
     },

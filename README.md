@@ -30,6 +30,7 @@ A collection of highly customizable widgets for **ioBroker vis 2.0** — built f
 | [Dropdown](#widget---dropdown) | Dropdown select auto-populated from ioBroker object states |
 | [Marquee](#widget---marquee) | Scrolling text ticker with configurable speed, direction and gap |
 | [Value List](#widget---value-list) | Bullet-point list generated from a text value or data point |
+| [Calendar](#widget---calendar) | Month calendar view, usable as a datepicker, read-only display, and/or today-highlighter |
 
 ---
 
@@ -251,6 +252,25 @@ Renders a bullet-point list from a single text value — either from a data poin
 
 ---
 
+## Widget - Calendar
+
+Month calendar view based on MUI's Date Calendar. Works as a datepicker, a read-only date display, and/or a today-highlighter — freely combinable via "Read only" and "Highlight today".
+
+**Key features:**
+- Reads/writes a date from an object ID, as timestamp (ms) or ISO date string (`YYYY-MM-DD`)
+- "Read only" mode to just display a date without allowing changes
+- "Highlight today" to mark the current day distinctly
+- Disable past and/or future dates
+- Optional month/year quick navigation via the header
+- First day of week: Monday or Sunday
+- Optional calendar week numbers, ISO-8601 or "simple" (week 1 contains Jan 1st) style
+- Configurable day cell size
+- Independent color styling for header, weekdays, regular days, selected day (incl. shadow), today marker and week numbers
+- Follows the browser language for month/weekday names
+- "From widget" style reuse across multiple Calendar widgets
+
+---
+
 ## Changelog
 <!--
     Placeholder for the next version (at the beginning of the line):
@@ -260,6 +280,7 @@ Renders a bullet-point list from a single text value — either from a data poin
 - Radial Slider Widget: Added "Read only" option to prevent value changes, matching the Slider widget's behavior
 - Table Widget: Added pagination support ("Pagination" / "Rows per page") to split large tables across pages instead of showing all rows at once
 - Table Widget: Added weekday (WD/WDL) and calendar week (KW/K) tokens
+- Added new Calendar Widget: month calendar based on MUI's Date Calendar, usable as a datepicker (read/write a date), a read-only date display, and/or a today-highlighter, with configurable first day of week, ISO/simple calendar week numbers, and full color/size customization
 
 ### 1.7.0 (2026-06-24)
 - Dropdown Widget: Added support for manually defined value/label pairs as an alternative to OID-based state enumeration

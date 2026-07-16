@@ -89,10 +89,18 @@ The inventwo widget set adds highly customizable tiles, controls, and display el
 
 ---
 
+### Calendar
+**A full month calendar view.** Works as a datepicker (read and write a date), a read-only date display, or a today-highlighter — freely combinable, with full color and layout customization.
+
+→ [Calendar Widget](widgets/calendar-widget.md)
+
+---
+
 ## Where to Start
 
 - **Building a control panel with buttons?** → [Universal Widget](widgets/universal-widget.md)
 - **Controlling a dimmer or temperature?** → [Slider Widget](widgets/slider-widget.md) or [Radial Slider Widget](widgets/radial-slider-widget.md)
 - **Simple on/off controls?** → [Switch Widget](widgets/switch-widget.md) or [Checkbox Widget](widgets/checkbox-widget.md)
 - **Displaying tabular data?** → [Table Widget](widgets/table-widget.md)
+- **Picking or displaying a date?** → [Calendar Widget](widgets/calendar-widget.md)
 - **Selecting a mode or scene?** → [Dropdown Widget](widgets/dropdown-widget.md)

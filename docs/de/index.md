@@ -89,10 +89,18 @@ Das inventwo-Widget-Set fügt VIS 2 hochgradig anpassbare Kacheln, Steuerelement
 
 ---
 
+### Calendar
+**Eine vollständige Monatskalenderansicht.** Funktioniert als Datepicker (Datum lesen und schreiben), als schreibgeschützte Datumsanzeige oder als "Heute"-Hervorhebung — frei kombinierbar, mit voller Farb- und Layout-Anpassung.
+
+→ [Calendar Widget](widgets/calendar-widget.md)
+
+---
+
 ## Wo anfangen?
 
 - **Bedienfeld mit Schaltflächen aufbauen?** → [Universal Widget](widgets/universal-widget.md)
 - **Dimmer oder Temperatur steuern?** → [Slider Widget](widgets/slider-widget.md) oder [Radial Slider Widget](widgets/radial-slider-widget.md)
 - **Einfache Ein/Aus-Steuerung?** → [Switch Widget](widgets/switch-widget.md) oder [Checkbox Widget](widgets/checkbox-widget.md)
 - **Tabellendaten anzeigen?** → [Table Widget](widgets/table-widget.md)
+- **Ein Datum auswählen oder anzeigen?** → [Calendar Widget](widgets/calendar-widget.md)
 - **Modus oder Szene auswählen?** → [Dropdown Widget](widgets/dropdown-widget.md)
