@@ -276,7 +276,7 @@ Month calendar view based on MUI's Date Calendar. Works as a datepicker, a read-
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.8.0 (2026-07-16)
 - Radial Slider Widget: Added "Read only" option to prevent value changes, matching the Slider widget's behavior
 - Table Widget: Added pagination support ("Pagination" / "Rows per page") to split large tables across pages instead of showing all rows at once
 - Table Widget: Added weekday (WD/WDL) and calendar week (KW/K) tokens
@@ -307,12 +307,6 @@ Month calendar view based on MUI's Date Calendar. Works as a datepicker, a read-
 - Table Widget: Added boolean column format displaying a readonly checkbox with optional configurable checked/unchecked colors
 - Table Widget: Added comparison operator selection to row conditions (equal, not equal, greater, less, greater/less equal)
 - Table Widget: Added value color per row condition – applicable to the whole row or to the condition column only
-
-### 1.3.0 (2026-06-03)
-- Slider: Added configurable value label display (always/on drag/never) and step marks position (above/below)
-- Universal: Added "Disable click when active" option per state
-- Universal: Fixed color picker components not updating when toggled in the editor
-- Added links to widget documentation in widget settings
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)
