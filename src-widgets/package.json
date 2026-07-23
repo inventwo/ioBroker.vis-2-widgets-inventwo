@@ -8,7 +8,7 @@
         "@iobroker/types-vis-2": "^2.13.8",
         "@iobroker/vis-2-widgets-react-dev": "^4.0.4",
         "@jaames/iro": "^5.5.2",
-        "@module-federation/vite": "^1.16.3",
+        "@module-federation/vite": "^1.19.1",
         "@mui/icons-material": "^6.5.0",
         "@mui/material": "^6.5.0",
         "@mui/x-date-pickers": "^7.29.4",
