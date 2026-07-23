@@ -276,7 +276,7 @@ Month calendar view based on MUI's Date Calendar. Works as a datepicker, a read-
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.8.1 (2026-07-23)
 - Added preview image for calendar and value list widgets
 
 ### 1.8.0 (2026-07-16)
@@ -300,16 +300,6 @@ Month calendar view based on MUI's Date Calendar. Works as a datepicker, a read-
 - Table Widget: Added "Formula" field per column to compute values from row fields (e.g. price * qty)
 - Slider Widget: Added "Title" and "Unit" fields
 - Dropdown Widget: Fixed border radius; added "Widget shadow" for the entire widget container
-
-### 1.4.0 (2026-06-04)
-- Universal Widget: Added "RGB (Scaled)" color model for the color picker – supports configurable value ranges (e.g. 0–1023 for 10-bit RGB controllers)
-- Universal Widget: Added optional password/PIN protection for navigation buttons
-- Universal Widget: Added per-state content mirror option (inherit from content style / yes / no)
-- Table Widget: Added configurable decimal and thousand separators for number format columns
-- Table Widget: Added value color to row conditions (in addition to row background color)
-- Table Widget: Added boolean column format displaying a readonly checkbox with optional configurable checked/unchecked colors
-- Table Widget: Added comparison operator selection to row conditions (equal, not equal, greater, less, greater/less equal)
-- Table Widget: Added value color per row condition – applicable to the whole row or to the condition column only
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)

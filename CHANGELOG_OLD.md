@@ -1,4 +1,14 @@
 # Older changes
+## 1.4.0 (2026-06-04)
+- Universal Widget: Added "RGB (Scaled)" color model for the color picker – supports configurable value ranges (e.g. 0–1023 for 10-bit RGB controllers)
+- Universal Widget: Added optional password/PIN protection for navigation buttons
+- Universal Widget: Added per-state content mirror option (inherit from content style / yes / no)
+- Table Widget: Added configurable decimal and thousand separators for number format columns
+- Table Widget: Added value color to row conditions (in addition to row background color)
+- Table Widget: Added boolean column format displaying a readonly checkbox with optional configurable checked/unchecked colors
+- Table Widget: Added comparison operator selection to row conditions (equal, not equal, greater, less, greater/less equal)
+- Table Widget: Added value color per row condition – applicable to the whole row or to the condition column only
+
 ## 1.3.0 (2026-06-03)
 - Slider: Added configurable value label display (always/on drag/never) and step marks position (above/below)
 - Universal: Added "Disable click when active" option per state
