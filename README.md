@@ -276,6 +276,9 @@ Month calendar view based on MUI's Date Calendar. Works as a datepicker, a read-
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Added preview image for calendar and value list widgets
+
 ### 1.8.0 (2026-07-16)
 - Radial Slider Widget: Added "Read only" option to prevent value changes, matching the Slider widget's behavior
 - Table Widget: Added pagination support ("Pagination" / "Rows per page") to split large tables across pages instead of showing all rows at once
