@@ -26,6 +26,7 @@ const config = {
                 './InventwoWidgetMarquee': './src/InventwoWidgetMarquee',
                 './InventwoWidgetValueList': './src/InventwoWidgetValueList',
                 './InventwoWidgetCalendar': './src/InventwoWidgetCalendar',
+                './InventwoWidgetEventCalendar': './src/InventwoWidgetEventCalendar',
                 './translations': './src/translations',
             },
             remotes: {},

@@ -4,6 +4,8 @@
 
 Das Kalender Widget zeigt eine vollständige Monatsansicht basierend auf [MUI's Date Calendar](https://mui.com/x/react-date-pickers/date-calendar/). Es kann als Datepicker (Datum aus einem Datenpunkt lesen und schreiben), als reine Anzeige eines Datums oder einfach zur Hervorhebung des heutigen Tages verwendet werden — auch alle drei Funktionen gleichzeitig.
 
+Du möchtest stattdessen Termine anzeigen (z. B. aus einem iCal-Kalender)? Nutze das [Terminkalender Widget](event-calendar-widget.md).
+
 ![Kalender Widget](../img/widget-calendar.png)
 
 ---
@@ -126,4 +128,5 @@ Wird nur angezeigt, wenn **Kalenderwochen anzeigen** aktiviert ist.
 
 ## Siehe auch
 
+- [Terminkalender Widget](event-calendar-widget.md) — zur Anzeige von Terminen in Monats-/Wochen-/Tagesansicht
 - [Tabelle Widget](table-widget.md) — zur Anzeige von Datumswerten als Teil einer größeren Datentabelle

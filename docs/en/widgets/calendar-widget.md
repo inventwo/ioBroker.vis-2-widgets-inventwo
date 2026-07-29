@@ -4,6 +4,8 @@
 
 The Calendar Widget shows a full month view based on [MUI's Date Calendar](https://mui.com/x/react-date-pickers/date-calendar/). It can work as a datepicker (read and write a date from/to a datapoint), as a read-only date display, or simply highlight today's date — all three at once if you like.
 
+Looking to show events/appointments (e.g. from an iCal calendar) instead? Use the [Event Calendar Widget](event-calendar-widget.md).
+
 ![Calendar Widget](../img/widget-calendar.png)
 
 ---
@@ -126,4 +128,5 @@ Only shown when **Show calendar week numbers** is enabled.
 
 ## See Also
 
+- [Event Calendar Widget](event-calendar-widget.md) — for showing events/appointments in a month/week/day view
 - [Table Widget](table-widget.md) — for displaying date values as part of a larger data table

@@ -159,7 +159,8 @@
           "InventwoWidgetDropdown",
           "InventwoWidgetMarquee",
           "InventwoWidgetValueList",
-          "InventwoWidgetCalendar"
+          "InventwoWidgetCalendar",
+          "InventwoWidgetEventCalendar"
         ]
       }
     },

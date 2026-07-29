@@ -4,6 +4,12 @@
     "version": "1.8.1",
     "type": "module",
     "dependencies": {
+        "@fullcalendar/core": "^6.1.21",
+        "@fullcalendar/daygrid": "^6.1.21",
+        "@fullcalendar/list": "^6.1.21",
+        "@fullcalendar/multimonth": "^6.1.21",
+        "@fullcalendar/react": "^6.1.21",
+        "@fullcalendar/timegrid": "^6.1.21",
         "@iobroker/adapter-react-v5": "^7.7.3",
         "@iobroker/types-vis-2": "^2.13.8",
         "@iobroker/vis-2-widgets-react-dev": "^4.0.4",

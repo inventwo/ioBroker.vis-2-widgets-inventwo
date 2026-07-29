@@ -254,7 +254,7 @@ Renders a bullet-point list from a single text value — either from a data poin
 
 ## Widget - Calendar
 
-Month calendar view based on MUI's Date Calendar. Works as a datepicker, a read-only date display, and/or a today-highlighter — freely combinable via "Read only" and "Highlight today".
+Month calendar view, a plain date picker based on MUI's Date Calendar (datepicker, read-only date display, and/or today-highlighter — freely combinable via "Read only" and "Highlight today").
 
 **Key features:**
 - Reads/writes a date from an object ID, as timestamp (ms) or ISO date string (`YYYY-MM-DD`)
@@ -271,11 +271,32 @@ Month calendar view based on MUI's Date Calendar. Works as a datepicker, a read-
 
 ---
 
+## Widget - Event Calendar
+
+Google-Calendar-style view for events/appointments, based on FullCalendar. Every color, font size, and border is configurable.
+
+**Key features:**
+- Point "Events (datapoint)" at a datapoint holding a JSON list of events - either a simple custom shape or the native JSON produced by the ioBroker "ical" adapter
+- All views from FullCalendar's free/MIT bundle: Month, Week, Day, Multi-month (year), and List (day/week/month/year)
+- Optional calendar week numbers (ISO-8601 or "simple"/locale-dependent), mainly for Month/Multi-month views
+- Header bar (title + prev/next/today navigation) can be shown/hidden, and navigation can be disabled independently while keeping the title
+- Correctly handles multi-day/all-day events (iCal exclusive-end convention)
+- Only needs the events datapoint - no separate object ID required
+- Configurable event color rules: color events by title (case-insensitive substring match), overriding the source color - works around the ioBroker "ical" adapter only providing one color per calendar, not per event
+- Fully configurable header (title color/size, button text/background/border/radius incl. hover), weekdays (color/background/size), day (color/size, outside-month color, weekend background), today (background/text/border color+width, live now-indicator line), event tiles (background/text/border/radius/size, "+N more" link color), and grid borders (show/hide, width, color) - each color group with independent "From widget" style reuse
+- Calendar resizes live when the widget is resized in the vis editor (no page reload needed)
+- Follows the browser language for month/weekday names
+
+---
+
 ## Changelog
 <!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Added new Event Calendar Widget: Google-Calendar-style view for events/appointments based on FullCalendar, fed from a datapoint holding a JSON list of events (either a simple custom shape or the native JSON produced by the ioBroker "ical" adapter). Supports all FullCalendar free/MIT views (Month, Week, Day, Multi-month, List day/week/month/year), optional calendar week numbers, optional header bar/navigation, live resizing in the vis editor, and fully configurable header/weekday/day/today/event-tile/border styling (colors, font sizes, border radius/width, hover states, now-indicator), each with independent "From widget" style reuse
+
 ### 1.8.1 (2026-07-23)
 - Added preview image for calendar and value list widgets
 
