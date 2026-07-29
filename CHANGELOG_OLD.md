@@ -1,4 +1,12 @@
 # Older changes
+## 1.5.0 (2026-06-13)
+- Table Widget: Added "URL" column format for clickable links with configurable target
+- Table Widget: Added "Sum row" option to visually separate the last row with a double border
+- Universal Widget: Added "Corner style" – switch between rounded and chamfered (45 degree bevel) corners
+- Table Widget: Added "Formula" field per column to compute values from row fields (e.g. price * qty)
+- Slider Widget: Added "Title" and "Unit" fields
+- Dropdown Widget: Fixed border radius; added "Widget shadow" for the entire widget container
+
 ## 1.4.0 (2026-06-04)
 - Universal Widget: Added "RGB (Scaled)" color model for the color picker – supports configurable value ranges (e.g. 0–1023 for 10-bit RGB controllers)
 - Universal Widget: Added optional password/PIN protection for navigation buttons

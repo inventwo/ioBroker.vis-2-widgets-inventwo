@@ -294,7 +294,7 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.9.0 (2026-07-29)
 - Added new Event Calendar Widget: Google-Calendar-style view for events/appointments based on FullCalendar, fed from a datapoint holding a JSON list of events (either a simple custom shape or the native JSON produced by the ioBroker "ical" adapter). Supports all FullCalendar free/MIT views (Month, Week, Day, Multi-month, List day/week/month/year), optional calendar week numbers, optional header bar/navigation, live resizing in the vis editor, and fully configurable header/weekday/day/today/event-tile/border styling (colors, font sizes, border radius/width, hover states, now-indicator), each with independent "From widget" style reuse
 
 ### 1.8.1 (2026-07-23)
@@ -313,14 +313,6 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
 - Universal Widget: Fixed navigation active state not updating correctly when nav buttons are placed inside a "View in Widget"
 - Table Widget: Empty JSON array now renders a "No data" row regardless of column configuration, instead of an empty or broken table structure
 - Marquee Widget: Added vertical scroll directions "Up" and "Down" in addition to the existing "Left" and "Right"
-
-### 1.5.0 (2026-06-13)
-- Table Widget: Added "URL" column format for clickable links with configurable target
-- Table Widget: Added "Sum row" option to visually separate the last row with a double border
-- Universal Widget: Added "Corner style" – switch between rounded and chamfered (45 degree bevel) corners
-- Table Widget: Added "Formula" field per column to compute values from row fields (e.g. price * qty)
-- Slider Widget: Added "Title" and "Unit" fields
-- Dropdown Widget: Fixed border radius; added "Widget shadow" for the entire widget container
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)
