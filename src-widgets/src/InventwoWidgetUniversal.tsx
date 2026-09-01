@@ -3234,6 +3234,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             '.MuiDialogTitle-root': {
                                 padding: `${this.valWithUnit(this.state.rxData.dialogTitlePaddingTop)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingRight)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingBottom)} ${this.valWithUnit(this.state.rxData.dialogTitlePaddingLeft)}`,
                                 color: this.state.rxData.dialogTitleColor,
+                                fontSize: this.valWithUnit(this.state.rxData.dialogTitleSize),
                                 display: this.state.rxData.dialogTitleHide ? 'none !important' : 'flex',
                             },
                         },
