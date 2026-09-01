@@ -4,6 +4,7 @@
     "version": "1.9.0",
     "type": "module",
     "dependencies": {
+        "@iobroker/adapter-react-v5": "^8.2.1",
         "@fullcalendar/core": "^6.1.21",
         "@fullcalendar/daygrid": "^6.1.21",
         "@fullcalendar/list": "^6.1.21",
