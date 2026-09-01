@@ -855,8 +855,7 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
             return;
         }
         const rxData = this.state.rxData;
-        const isRelevant =
-            id === rxData.eventsOid || this.getCalendarSources().some(source => source.oid === id);
+        const isRelevant = id === rxData.eventsOid || this.getCalendarSources().some(source => source.oid === id);
         if (isRelevant) {
             this.setState({ events: this.buildEvents() });
         }
@@ -1051,9 +1050,8 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
                   right: '',
               };
 
-        const legendEntries = (rxData.fcShowLegend ?? true)
-            ? this.getCalendarSources().filter(source => source.label)
-            : [];
+        const legendEntries =
+            (rxData.fcShowLegend ?? true) ? this.getCalendarSources().filter(source => source.label) : [];
 
         const calendar = (
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
