@@ -4,6 +4,8 @@
     "version": "1.9.0",
     "type": "module",
     "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.1",
         "@fullcalendar/core": "^6.1.21",
         "@fullcalendar/daygrid": "^6.1.21",
         "@fullcalendar/list": "^6.1.21",
