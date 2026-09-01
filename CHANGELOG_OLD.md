@@ -1,4 +1,9 @@
 # Older changes
+## 1.6.0 (2026-06-19)
+- Universal Widget: Fixed navigation active state not updating correctly when nav buttons are placed inside a "View in Widget"
+- Table Widget: Empty JSON array now renders a "No data" row regardless of column configuration, instead of an empty or broken table structure
+- Marquee Widget: Added vertical scroll directions "Up" and "Down" in addition to the existing "Left" and "Right"
+
 ## 1.5.0 (2026-06-13)
 - Table Widget: Added "URL" column format for clickable links with configurable target
 - Table Widget: Added "Sum row" option to visually separate the last row with a double border
