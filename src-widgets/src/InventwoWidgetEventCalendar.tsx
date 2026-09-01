@@ -864,7 +864,7 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
                 verticalAlign: 'middle',
             },
             '& .fc-col-header-cell': {
-                backgroundColor: weekdaysStyle.fcWeekdayBackgroundColor,
+                backgroundColor: `${weekdaysStyle.fcWeekdayBackgroundColor} !important`,
             },
             // FullCalendar's own stylesheet paints the background on the <th> itself
             // (".fc .fc-list-sticky .fc-list-day > *" using --fc-page-bg-color), not on the
