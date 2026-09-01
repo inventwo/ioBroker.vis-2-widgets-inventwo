@@ -22,13 +22,32 @@ Du suchst stattdessen einen reinen Datepicker? Nutze das [Kalender Widget](calen
 
 | Einstellung | Beschreibung |
 |-------------|--------------|
-| **Termine (Datenpunkt)** | Datenpunkt mit einer JSON-Terminliste (siehe [Termine anzeigen](#termine-anzeigen) unten). Das ist der einzige Datenpunkt, den das Widget benötigt. |
+| **Termine (Datenpunkt)** | Datenpunkt mit einer JSON-Terminliste (siehe [Termine anzeigen](#termine-anzeigen) unten). Wird ignoriert, sobald in der Gruppe *Weitere Kalender* (siehe unten) mindestens ein Kalender konfiguriert ist. |
 | **Erster Wochentag** | Ob Wochen mit **Montag** oder **Sonntag** beginnen. |
 | **Ansicht** | **Monat**, **Woche**, **Tag**, **Mehrere Monate (Jahr)** (ein Raster/Stapel mehrerer Monate) oder eine der vier **Listen**-Ansichten (**Liste - Tag/Woche/Monat/Jahr**, eine Agenda-artige Liste kommender Termine). |
 | **Kopfzeile anzeigen** | Standardmäßig aktiv. Deaktivieren, um die komplette Kopfzeile (Titel + Navigations-Buttons) auszublenden. |
 | **Monats-/Wochen-/Tageswechsel erlauben** | Nur sichtbar, wenn **Kopfzeile anzeigen** aktiv ist. Standardmäßig aktiv. Deaktivieren, um den Titel sichtbar zu lassen, aber die Zurück-/Vor-/Heute-Buttons zu entfernen, sodass der Nutzer nicht zu einem anderen Monat/einer anderen Woche/einem anderen Tag wechseln kann. |
 | **Kalenderwochen anzeigen** | Fügt jeder Tageszelle ein Kalenderwochen-Abzeichen hinzu (vor allem in Monats-/Mehrere-Monate-Ansichten sichtbar). |
 | **Art der Kalenderwoche** | Nur sichtbar, wenn Kalenderwochen angezeigt werden. **ISO-8601**: Wochen beginnen am Montag, KW 1 ist die Woche mit dem ersten Donnerstag des Jahres (europäischer Standard). **Einfach**: Sprachraum-abhängige Wochennummerierung. |
+| **Max. Termine pro Tag** | Nur in den Ansichten **Monat**/**Mehrere Monate (Jahr)** sichtbar und wirksam. Standard `0` = kein Limit, Tageszellen wachsen wie bisher mit der Anzahl der Termine. Bei einem Wert größer 0 werden pro Tag nur so viele Termin-Kacheln angezeigt; weitere Termine stecken hinter einem "+N weitere"-Link, der beim Klick alle Termine des Tages in einem Popover zeigt. |
+
+---
+
+### Weitere Kalender
+
+Standardmäßig zeigt das Widget die Termine eines einzelnen Datenpunkts (**Termine (Datenpunkt)** oben). Sollen mehrere Kalender gleichzeitig angezeigt werden – z. B. je ein iCal-Kalender pro Familienmitglied –, trägst du sie stattdessen hier ein. Jeder Kalender bekommt eine eigene Farbe und ein Label, die als Legende unter dem Kalender angezeigt werden.
+
+Sobald hier mindestens ein Kalender konfiguriert ist, wird das einzelne Feld **Termine (Datenpunkt)** oben komplett ignoriert und kann leer bleiben.
+
+| Einstellung | Beschreibung |
+|-------------|--------------|
+| **Anzahl Kalender** | Wie viele Kalender unten konfiguriert werden. |
+| **Legende anzeigen** | Standardmäßig aktiv. Nur sichtbar, wenn mindestens ein Kalender konfiguriert ist. Blendet die Farb-/Label-Legende unter dem Kalender ein oder aus. |
+| **Termine (Datenpunkt)** *(pro Kalender)* | Datenpunkt mit der JSON-Terminliste dieses Kalenders (gleiches Format wie oben, siehe [Termine anzeigen](#termine-anzeigen)). |
+| **Farbe** *(pro Kalender)* | Überschreibt die Farbe aller Termine dieses Kalenders (dessen eigene `color`/`_calColor` sowie die Fallback-**Termin-Hintergrundfarbe**). Leer lassen, um die vom Termin/Adapter gelieferte Farbe zu behalten. |
+| **Label** *(pro Kalender)* | Beschriftung dieses Kalenders in der Legende. Leer lassen, um den Kalender aus der Legende auszublenden (er wird trotzdem angezeigt). |
+
+Die [Termin-Farbregeln](#termin-farbregeln) unten wirken weiterhin zusätzlich auf alle Kalender und überschreiben bei einem Treffer die hier gesetzte Kalenderfarbe. Damit trotzdem immer erkennbar bleibt, aus welchem Kalender ein Termin stammt, bekommt jede Termin-Kachel zusätzlich einen 4px breiten farbigen Rand links in der Kalenderfarbe — unabhängig davon, ob eine Farbregel die Füllfarbe der Kachel überschrieben hat. In den Listen-Ansichten (die Termine als Tabellenzeilen darstellen) wird stattdessen der eingebaute Punkt vor dem Termintitel in dieser Farbe eingefärbt, damit er mittig in seiner Spalte bleibt.
 
 ---
 

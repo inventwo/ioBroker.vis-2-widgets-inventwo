@@ -133,22 +133,36 @@ function parseCalendarEvents(value: any): CalendarEventItem[] {
  * as-is - including the ioBroker `ical` adapter's native `_date`/`_end` fields - without any
  * adjustment.
  */
-function toFullCalendarEvents(events: CalendarEventItem[]): EventInput[] {
+/**
+ * `sourceColor` is stashed in extendedProps (separate from backgroundColor/borderColor) so the
+ * calendar-identity indicator rendered per tile (see `eventDidMount` in `renderWidgetBody`) keeps
+ * showing which calendar an event came from even after `applyEventColorRules` overwrites the
+ * tile's actual background/border color based on the title.
+ */
+function toFullCalendarEvents(events: CalendarEventItem[], overrideColor?: string, sourceLabel?: string): EventInput[] {
     return events.reduce<EventInput[]>((result, event) => {
         const start = getEventStart(event);
         if (start === undefined) {
             return result;
         }
+        const color = overrideColor || getEventColor(event);
         result.push({
             title: getEventTitle(event),
             start,
             end: getEventEnd(event),
             allDay: isEventAllDay(event),
-            backgroundColor: getEventColor(event),
-            borderColor: getEventColor(event),
+            backgroundColor: color,
+            borderColor: color,
+            extendedProps: { sourceColor: color, sourceLabel },
         });
         return result;
     }, []);
+}
+
+interface CalendarSource {
+    oid: string;
+    color: string;
+    label: string;
 }
 
 interface EventColorRule {
@@ -184,11 +198,17 @@ interface EventCalendarRxData {
     countEventColorRules: number;
     [key: `eventColorRuleMatch${number}`]: string;
     [key: `eventColorRuleColor${number}`]: string;
+    countCalendarSources: number;
+    [key: `calendarSourceOid${number}`]: string;
+    [key: `calendarSourceColor${number}`]: string;
+    [key: `calendarSourceLabel${number}`]: string;
+    fcShowLegend: boolean;
     fcView: EventCalendarView;
     fcShowHeader: boolean;
     fcAllowNavigation: boolean;
     fcShowWeekNumbers: boolean;
     fcWeekNumberType: 'iso' | 'simple';
+    fcMaxEventsPerDay: number;
 
     fcHeaderFromWidget: string;
     fcHeaderTextColor: string;
@@ -254,9 +274,7 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
 
     componentDidMount(): void {
         super.componentDidMount();
-        this.setState({
-            events: toFullCalendarEvents(parseCalendarEvents(this.getValue(this.state.rxData.eventsOid))),
-        });
+        this.setState({ events: this.buildEvents() });
     }
 
     componentDidUpdate(
@@ -372,6 +390,14 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
                             tooltip: 'calendar_week_number_type_help',
                             hidden: '!data.fcShowWeekNumbers',
                         },
+                        {
+                            name: 'fcMaxEventsPerDay',
+                            type: 'number',
+                            default: 0,
+                            label: 'calendar_fc_max_events_per_day',
+                            tooltip: 'calendar_fc_max_events_per_day_help',
+                            hidden: "data.fcView !== 'month' && data.fcView !== 'multiMonth'",
+                        },
                     ],
                 },
                 {
@@ -401,6 +427,53 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
                             name: 'eventColorRuleColor',
                             type: 'color',
                             label: 'event_color_rule_color',
+                        },
+                    ],
+                },
+                {
+                    name: 'attr_group_calendar_sources',
+                    label: 'attr_group_calendar_sources',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_calendar_sources_help',
+                        },
+                        {
+                            name: 'countCalendarSources',
+                            type: 'number',
+                            default: 0,
+                            label: 'count_calendar_sources',
+                        },
+                        {
+                            name: 'fcShowLegend',
+                            type: 'checkbox',
+                            default: true,
+                            label: 'fc_show_legend',
+                            hidden: '!data.countCalendarSources',
+                        },
+                    ],
+                },
+                {
+                    name: 'countCalendarSources',
+                    indexFrom: 1,
+                    indexTo: 'countCalendarSources',
+                    label: 'attr_group_calendar_source',
+                    fields: [
+                        {
+                            name: 'calendarSourceOid',
+                            type: 'id',
+                            label: 'calendar_source_oid',
+                        },
+                        {
+                            name: 'calendarSourceColor',
+                            type: 'color',
+                            label: 'calendar_source_color',
+                        },
+                        {
+                            name: 'calendarSourceLabel',
+                            type: 'text',
+                            label: 'calendar_source_label',
                         },
                     ],
                 },
@@ -778,9 +851,44 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
     }
 
     onStateUpdated(id: string | null, state: ioBroker.State): void {
-        if (id === this.state.rxData.eventsOid && state) {
-            this.setState({ events: toFullCalendarEvents(parseCalendarEvents(state.val)) });
+        if (!id || !state) {
+            return;
         }
+        const rxData = this.state.rxData;
+        const isRelevant =
+            id === rxData.eventsOid || this.getCalendarSources().some(source => source.oid === id);
+        if (isRelevant) {
+            this.setState({ events: this.buildEvents() });
+        }
+    }
+
+    getCalendarSources(): CalendarSource[] {
+        const rxData = this.state.rxData;
+        const count = rxData.countCalendarSources ?? 0;
+        const sources: CalendarSource[] = [];
+        for (let i = 1; i <= count; i++) {
+            const oid = rxData[`calendarSourceOid${i}`];
+            if (this.validOid(oid)) {
+                sources.push({
+                    oid,
+                    color: rxData[`calendarSourceColor${i}`],
+                    label: rxData[`calendarSourceLabel${i}`],
+                });
+            }
+        }
+        return sources;
+    }
+
+    buildEvents(): EventInput[] {
+        const sources = this.getCalendarSources();
+        if (sources.length) {
+            return sources.reduce<EventInput[]>((result, source) => {
+                const events = parseCalendarEvents(this.getValue(source.oid));
+                result.push(...toFullCalendarEvents(events, source.color || undefined, source.label || undefined));
+                return result;
+            }, []);
+        }
+        return toFullCalendarEvents(parseCalendarEvents(this.getValue(this.state.rxData.eventsOid)));
     }
 
     getEventColorRules(): EventColorRule[] {
@@ -880,6 +988,15 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
                 color: weekdaysStyle.fcWeekdayTextColor,
                 fontSize: `${weekdaysStyle.fcWeekdayFontSize ?? 13}px`,
             },
+            // FullCalendar's own stylesheet zeroes this cell's right padding
+            // (".fc-direction-ltr .fc-list-table .fc-list-event-graphic{padding-right:0}",
+            // same specificity as this override, hence !important) so the identity dot sits
+            // flush against the title instead of centered in its column - restoring the
+            // matching 14px right padding (equal to the left, from the generic
+            // ".fc-list-table td" rule) centers it.
+            '& .fc-list-event-graphic': {
+                paddingRight: '14px !important',
+            },
             '& .fc-daygrid-day-number': {
                 color: dayStyle.fcDayTextColor,
                 fontSize: `${dayStyle.fcDayFontSize ?? 13}px`,
@@ -934,24 +1051,84 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
                   right: '',
               };
 
+        const legendEntries = (rxData.fcShowLegend ?? true)
+            ? this.getCalendarSources().filter(source => source.label)
+            : [];
+
         const calendar = (
-            <Box
-                ref={this.attachFullCalendarContainer}
-                sx={fcSx}
-            >
-                <FullCalendar
-                    ref={this.fullCalendarRef}
-                    plugins={[dayGridPlugin, timeGridPlugin, listPlugin, multiMonthPlugin]}
-                    initialView={mapFullCalendarView(rxData.fcView ?? 'month')}
-                    headerToolbar={headerToolbar}
-                    locale={FULLCALENDAR_LOCALES[locale]}
-                    firstDay={weekStartsOn}
-                    height="100%"
-                    nowIndicator={showNowIndicator}
-                    weekNumbers={rxData.fcShowWeekNumbers ?? false}
-                    weekNumberCalculation={rxData.fcWeekNumberType === 'simple' ? 'local' : 'ISO'}
-                    events={applyEventColorRules(this.state.events, this.getEventColorRules())}
-                />
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
+                <Box
+                    ref={this.attachFullCalendarContainer}
+                    sx={{ ...fcSx, flex: '1 1 auto', minHeight: 0 }}
+                >
+                    <FullCalendar
+                        ref={this.fullCalendarRef}
+                        plugins={[dayGridPlugin, timeGridPlugin, listPlugin, multiMonthPlugin]}
+                        initialView={mapFullCalendarView(rxData.fcView ?? 'month')}
+                        headerToolbar={headerToolbar}
+                        locale={FULLCALENDAR_LOCALES[locale]}
+                        firstDay={weekStartsOn}
+                        height="100%"
+                        nowIndicator={showNowIndicator}
+                        weekNumbers={rxData.fcShowWeekNumbers ?? false}
+                        weekNumberCalculation={rxData.fcWeekNumberType === 'simple' ? 'local' : 'ISO'}
+                        dayMaxEvents={rxData.fcMaxEventsPerDay > 0 ? rxData.fcMaxEventsPerDay : false}
+                        events={applyEventColorRules(this.state.events, this.getEventColorRules())}
+                        eventDidMount={info => {
+                            const sourceColor = info.event.extendedProps.sourceColor as string | undefined;
+                            if (!sourceColor || this.getCalendarSources().length === 0) {
+                                return;
+                            }
+                            // List views render events as table rows: adding a border directly to
+                            // the row (like the grid views below) would offset the row's own
+                            // "fc-list-event-dot" indicator out of its column's center. Coloring
+                            // that existing dot instead keeps it centered and reuses FullCalendar's
+                            // own list-view identity marker.
+                            if (info.view.type.startsWith('list')) {
+                                const dot = info.el.querySelector<HTMLElement>('.fc-list-event-dot');
+                                if (dot) {
+                                    dot.style.borderColor = sourceColor;
+                                }
+                            } else {
+                                info.el.style.borderLeftWidth = '4px';
+                                info.el.style.borderLeftStyle = 'solid';
+                                info.el.style.borderLeftColor = sourceColor;
+                            }
+                        }}
+                    />
+                </Box>
+                {legendEntries.length ? (
+                    <Box
+                        sx={{
+                            flex: '0 0 auto',
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '12px',
+                            padding: '8px 4px 0',
+                            color: this.state.rxStyle!.color,
+                            fontFamily: this.state.rxStyle!['font-family'],
+                            fontSize: `${eventStyle.fcEventFontSize ?? 12}px`,
+                        }}
+                    >
+                        {legendEntries.map((source, index) => (
+                            <Box
+                                key={index}
+                                sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+                            >
+                                <Box
+                                    sx={{
+                                        width: '10px',
+                                        height: '10px',
+                                        borderRadius: '50%',
+                                        flex: '0 0 auto',
+                                        background: source.color || eventStyle.fcEventBackgroundColor,
+                                    }}
+                                />
+                                {source.label}
+                            </Box>
+                        ))}
+                    </Box>
+                ) : null}
             </Box>
         );
 

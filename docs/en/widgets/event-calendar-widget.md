@@ -22,13 +22,32 @@ Looking for a plain date picker instead? Use the [Calendar Widget](calendar-widg
 
 | Setting | What it does |
 |---------|-------------|
-| **Events (datapoint)** | Datapoint holding a JSON list of events (see [Showing events](#showing-events) below). This is the only datapoint the widget needs. |
+| **Events (datapoint)** | Datapoint holding a JSON list of events (see [Showing events](#showing-events) below). Ignored once at least one calendar is configured in the *Additional calendars* group below. |
 | **First day of week** | Whether weeks start on **Monday** or **Sunday**. |
 | **View** | **Month**, **Week**, **Day**, **Multi-month (year)** (a grid/stack of several months), or one of four **List** views (**List - day/week/month/year**, an agenda-style list of upcoming events). |
 | **Show header bar** | Enabled by default. Disable to hide the toolbar (title + navigation buttons) entirely. |
 | **Allow month/week/day navigation** | Only shown when **Show header bar** is enabled. Enabled by default. Disable to keep the title visible but remove the prev/next/today buttons, so the user can't switch to a different month/week/day. |
 | **Show calendar week numbers** | Adds a week-number badge to each day cell (mainly visible in Month/Multi-month views). |
 | **Calendar week type** | Only visible when week numbers are shown. **ISO-8601**: weeks start on Monday, week 1 is the week containing the first Thursday of the year (the European standard). **Simple**: locale-dependent week numbering. |
+| **Max. events per day** | Only visible and effective in the **Month**/**Multi-month (year)** views. Defaults to `0` = no limit, day cells keep growing with the number of events as before. Above 0, only that many event tiles are shown per day; the rest sit behind a "+N more" link that opens a popover with all of that day's events when clicked. |
+
+---
+
+### Additional calendars
+
+By default the widget shows the events of a single datapoint (**Events (datapoint)** above). To show multiple calendars at once - e.g. one iCal calendar per family member - list them here instead. Each calendar gets its own color and label, shown in a legend below the calendar.
+
+Once at least one calendar is configured here, the single **Events (datapoint)** field above is ignored entirely and can be left empty.
+
+| Setting | What it does |
+|---------|-------------|
+| **Number of calendars** | How many calendars to configure below. |
+| **Show legend** | Enabled by default. Only shown once at least one calendar is configured. Toggles the color/label legend below the calendar. |
+| **Events (datapoint)** *(per calendar)* | Datapoint holding this calendar's JSON event list (same format as above, see [Showing events](#showing-events)). |
+| **Color** *(per calendar)* | Overrides the color of every event from this calendar (its own `color`/`_calColor`, and the fallback **Event background color**). Leave empty to keep the color provided by the event/adapter. |
+| **Label** *(per calendar)* | Caption for this calendar in the legend. Leave empty to omit it from the legend (it's still shown on the calendar). |
+
+The [Event color rules](#event-color-rules) below still apply on top of all calendars, and override a calendar's color on a match. To keep it clear which calendar an event came from either way, every event tile also gets a 4px colored left border in that calendar's color, regardless of whether a color rule overrode the tile's fill color. In the List views (which render events as table rows), the built-in dot shown before the event title is colored instead, so it stays centered in its column.
 
 ---
 
