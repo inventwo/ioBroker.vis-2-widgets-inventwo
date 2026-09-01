@@ -3,6 +3,7 @@ import { FormControlLabel, FormGroup, Checkbox } from '@mui/material';
 
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState } from '@iobroker/types-vis-2';
+import { createDocsLinkField } from './utils/docLinkField';
 
 interface CheckboxRxData {
     oid: null | string;
@@ -24,6 +25,7 @@ export default class InventwoWidgetCheckbox extends InventwoGeneric<CheckboxRxDa
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/checkbox-widget.md') as any,
                         {
                             name: 'oid',
                             type: 'id',

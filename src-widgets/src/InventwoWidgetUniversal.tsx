@@ -1,8 +1,18 @@
 import React from 'react';
-import { Card, CardContent, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import {
+    Button,
+    Card,
+    CardContent,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    TextField,
+} from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
-import { Icon } from '@iobroker/adapter-react-v5';
+import { I18n, Icon } from '@iobroker/adapter-react-v5';
 
 import { hexToCSSFilter } from 'hex-to-css-filter';
 import iro from '@jaames/iro';
@@ -10,6 +20,7 @@ import iro from '@jaames/iro';
 import './assets/inventwo.css';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
+import { createDocsLinkField } from './utils/docLinkField';
 import type { ColorPickerProps } from '@jaames/iro/dist/ColorPicker';
 import type { UniversalCompleteRxData } from './types/UniversalWidgetRxDataTypes';
 import type {
@@ -20,6 +31,7 @@ import type {
     UniversalWidgetContentStyles,
     UniversalWidgetInnerShadowStyles,
     UniversalWidgetOuterShadowStyles,
+    UniversalWidgetShapeStyles,
     UniversalWidgetSpacingStyles,
     UniversalWidgetStyles,
     UniversalWidgetStylesStyles,
@@ -49,6 +61,10 @@ interface UniversalState extends VisRxWidgetState {
     pointerDownTime: number | null;
     pointerDownIndex: number | null;
     dialogOpenTime: number | null;
+    navPasswordDialogOpen: boolean;
+    navPasswordInput: string;
+    navPasswordError: boolean;
+    navPendingIndex: number | null;
 }
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
@@ -76,6 +92,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             pointerDownTime: null,
             pointerDownIndex: null,
             dialogOpenTime: null,
+            navPasswordDialogOpen: false,
+            navPasswordInput: '',
+            navPasswordError: false,
+            navPendingIndex: null,
         };
     }
 
@@ -91,6 +111,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/universal-widget.md') as any,
                         {
                             name: 'type',
                             type: 'select',
@@ -158,6 +179,30 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             type: 'views',
                             label: 'view',
                             hidden: '(data.type != "nav" && data.type != "viewInDialog") || data.mode == "separatedButtons"',
+                        },
+                        {
+                            name: 'navPasswordEnabled',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'nav_password_enabled',
+                            hidden: 'data.type !== "nav"',
+                        },
+                        {
+                            name: 'navPasswordType',
+                            type: 'select',
+                            options: [
+                                { value: 'password', label: 'password_input' },
+                                { value: 'pin', label: 'pin' },
+                            ],
+                            default: 'password',
+                            label: 'nav_password_type',
+                            hidden: 'data.type !== "nav" || !data.navPasswordEnabled',
+                        },
+                        {
+                            name: 'navPassword',
+                            type: 'text',
+                            label: 'nav_password',
+                            hidden: 'data.type !== "nav" || !data.navPasswordEnabled',
                         },
                         {
                             name: 'valueFalse',
@@ -729,6 +774,13 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             hidden: '(data.type != "nav" && data["compareBy" + index] != "view") || data["compareBy" + index] == "value"',
                         },
                         {
+                            name: 'disableClickWhenActive',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'disable_click_when_active',
+                            hidden: 'data.type == "readonly"',
+                        },
+                        {
                             name: '',
                             type: 'delimiter',
                         },
@@ -804,6 +856,17 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             step: 100,
                             default: 0,
                             label: 'content_blink_interval',
+                        },
+                        {
+                            name: 'contentMirror',
+                            type: 'select',
+                            options: [
+                                { value: '', label: 'mirror_inherit' },
+                                { value: 'true', label: 'mirror_on' },
+                                { value: 'false', label: 'mirror_off' },
+                            ],
+                            default: '',
+                            label: 'mirror',
                         },
                         {
                             name: '',
@@ -930,6 +993,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 { value: 'hex', label: 'hex' },
                                 { value: 'hex8', label: 'hex_8' },
                                 { value: 'rgb', label: 'rgb' },
+                                { value: 'rgbScaled', label: 'rgb_scaled' },
                                 { value: 'hsl', label: 'hsl' },
                                 { value: 'hsv', label: 'hsv' },
                                 { value: 'cie', label: 'cie' },
@@ -940,26 +1004,36 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         {
                             name: 'colorPickerOid',
                             type: 'id',
-                            hidden: 'data.colorPickerColorModel === "rgb" || data.colorPickerColorModel === "hsl" || data.colorPickerColorModel === "hsv"',
+                            hidden: 'data.colorPickerColorModel === "rgb" || data.colorPickerColorModel === "rgbScaled" || data.colorPickerColorModel === "hsl" || data.colorPickerColorModel === "hsv"',
                             label: 'oid',
                         },
                         {
                             name: 'colorPickerOid1',
                             type: 'id',
-                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
+                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "rgbScaled" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
                             label: 'oid_value_1',
+                            tooltip: 'oid_color_1_tooltip',
                         },
                         {
                             name: 'colorPickerOid2',
                             type: 'id',
-                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
+                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "rgbScaled" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
                             label: 'oid_value_2',
+                            tooltip: 'oid_color_2_tooltip',
                         },
                         {
                             name: 'colorPickerOid3',
                             type: 'id',
-                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
+                            hidden: 'data.colorPickerColorModel !== "rgb" && data.colorPickerColorModel !== "rgbScaled" && data.colorPickerColorModel !== "hsl" && data.colorPickerColorModel !== "hsv"',
                             label: 'oid_value_3',
+                            tooltip: 'oid_color_3_tooltip',
+                        },
+                        {
+                            name: 'colorPickerRgbMaxValue',
+                            type: 'number',
+                            default: 1023,
+                            label: 'max_value',
+                            hidden: 'data.colorPickerColorModel !== "rgbScaled"',
                         },
                         {
                             name: '',
@@ -1721,6 +1795,17 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             all: true,
                         },
                         {
+                            name: 'borderCornerStyle',
+                            type: 'select',
+                            options: [
+                                { value: 'rounded', label: 'corner_style_rounded' },
+                                { value: 'chamfered', label: 'corner_style_chamfered' },
+                            ],
+                            default: 'rounded',
+                            label: 'corner_style',
+                            hidden: '!!data.borderRadiusStyleFromWidget',
+                        },
+                        {
                             name: 'borderRadiusTopLeft',
                             type: 'slider',
                             min: 0,
@@ -1939,6 +2024,76 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     ],
                 },
 
+                {
+                    name: 'attr_group_css_shape',
+                    label: 'attr_group_css_shape',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'shapeStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
+                            name: 'shape',
+                            type: 'select',
+                            options: [
+                                { value: 'rectangle', label: 'rectangle' },
+                                { value: 'triangle', label: 'triangle' },
+                                { value: 'diamond', label: 'diamond' },
+                                { value: 'pentagon', label: 'pentagon' },
+                                { value: 'hexagon', label: 'hexagon' },
+                                { value: 'heptagon', label: 'heptagon' },
+                                { value: 'octagon', label: 'octagon' },
+                                { value: 'star', label: 'star' },
+                                { value: 'custom', label: 'custom' },
+                            ],
+                            default: 'rectangle',
+                            label: 'shape',
+                            hidden: '!!data.shapeStyleFromWidget',
+                        },
+                        {
+                            name: 'shapeCustomPath',
+                            type: 'text',
+                            label: 'shape_custom_path',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape != "custom"',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_shape_custom_hint',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape != "custom"',
+                        },
+                        {
+                            name: 'shapeRotation',
+                            type: 'slider',
+                            min: 0,
+                            max: 359,
+                            step: 1,
+                            default: 0,
+                            label: 'shape_rotation',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape == "rectangle" || data.shape == "custom" || !data.shape',
+                        },
+                        {
+                            name: 'shapeCornerRadius',
+                            type: 'slider',
+                            min: 0,
+                            max: 30,
+                            step: 0.5,
+                            default: 0,
+                            label: 'shape_corner_radius',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape == "rectangle" || !data.shape',
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_shape_hint',
+                            hidden: '!!data.shapeStyleFromWidget || data.shape == "rectangle" || !data.shape',
+                        },
+                    ],
+                },
+
                 // check here all possible types https://github.com/ioBroker/ioBroker.vis/blob/react/src/src/Attributes/Widget/SCHEMA.md
             ],
             visDefaultStyle: {
@@ -2060,7 +2215,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 };
                 // @ts-expect-error
                 const colorPicker = new iro.ColorPicker(el, colorPickerProps);
-                this.setState({ colorPicker: colorPicker });
+                this.setState({ colorPicker });
 
                 colorPicker.on('input:change', (color: iro.Color) => {
                     const colorModel = this.state.rxData.colorPickerColorModel;
@@ -2087,6 +2242,28 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 this.props.context.setValue(this.state.rxData.colorPickerOid3, color.rgb.b);
                             }
                             break;
+                        case 'rgbScaled': {
+                            const maxValue = this.state.rxData.colorPickerRgbMaxValue ?? 1023;
+                            if (this.state.rxData.colorPickerOid1) {
+                                this.props.context.setValue(
+                                    this.state.rxData.colorPickerOid1,
+                                    Math.round((color.rgb.r / 255) * maxValue),
+                                );
+                            }
+                            if (this.state.rxData.colorPickerOid2) {
+                                this.props.context.setValue(
+                                    this.state.rxData.colorPickerOid2,
+                                    Math.round((color.rgb.g / 255) * maxValue),
+                                );
+                            }
+                            if (this.state.rxData.colorPickerOid3) {
+                                this.props.context.setValue(
+                                    this.state.rxData.colorPickerOid3,
+                                    Math.round((color.rgb.b / 255) * maxValue),
+                                );
+                            }
+                            break;
+                        }
                         case 'hsl':
                             if (this.state.rxData.colorPickerOid1) {
                                 this.props.context.setValue(this.state.rxData.colorPickerOid1, color.hsl.h);
@@ -2112,13 +2289,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     }
                 });
 
-                void this.setColorPickerColor();
+                void this.setColorPickerColor(colorPicker);
             }
         }
     }
 
-    async setColorPickerColor(): Promise<void> {
-        if (!this.state.colorPicker) {
+    async setColorPickerColor(colorPickerInstance?: iro.ColorPicker): Promise<void> {
+        const picker = colorPickerInstance ?? this.state.colorPicker;
+        if (!picker) {
             return;
         }
         const colorModel = this.state.rxData.colorPickerColorModel;
@@ -2138,42 +2316,55 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         switch (colorModel) {
             case 'hex':
                 if (color && /^#([A-Fa-f0-9]{3}$)|([A-Fa-f0-9]{6}$)/.test(color)) {
-                    this.state.colorPicker.color.hexString = color;
+                    picker.color.hexString = color;
                 } else {
-                    this.state.colorPicker.color.hexString = '#ffffff';
+                    picker.color.hexString = '#ffffff';
                 }
                 break;
             case 'hex8':
                 if (color && /^#([A-Fa-f0-9]{8}$)/.test(color)) {
-                    this.state.colorPicker.color.hex8String = color;
+                    picker.color.hex8String = color;
                 } else {
-                    this.state.colorPicker.color.hexString = '#ffffffff';
+                    picker.color.hexString = '#ffffffff';
                 }
                 break;
             case 'rgb':
                 if (color1 !== undefined && color2 !== undefined && color3 !== undefined) {
-                    this.state.colorPicker.color.rgb = {
+                    picker.color.rgb = {
                         r: color1,
                         g: color2,
                         b: color3,
                     };
                 } else {
-                    this.state.colorPicker.color.rgb = {
+                    picker.color.rgb = {
                         r: 255,
                         g: 255,
                         b: 255,
                     };
                 }
                 break;
+            case 'rgbScaled': {
+                const maxValue = this.state.rxData.colorPickerRgbMaxValue ?? 1023;
+                if (color1 !== undefined && color2 !== undefined && color3 !== undefined) {
+                    picker.color.rgb = {
+                        r: Math.round((color1 / maxValue) * 255),
+                        g: Math.round((color2 / maxValue) * 255),
+                        b: Math.round((color3 / maxValue) * 255),
+                    };
+                } else {
+                    picker.color.rgb = { r: 255, g: 255, b: 255 };
+                }
+                break;
+            }
             case 'hsl':
                 if (color1 !== undefined && color2 !== undefined && color3 !== undefined) {
-                    this.state.colorPicker.color.hsl = {
+                    picker.color.hsl = {
                         h: color1,
                         s: color2,
                         l: color3,
                     };
                 } else {
-                    this.state.colorPicker.color.hsl = {
+                    picker.color.hsl = {
                         h: 330,
                         s: 0,
                         l: 100,
@@ -2182,13 +2373,13 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 break;
             case 'hsv':
                 if (color1 !== undefined && color2 !== undefined && color3 !== undefined) {
-                    this.state.colorPicker.color.hsv = {
+                    picker.color.hsv = {
                         h: color1,
                         s: color2,
                         v: color3,
                     };
                 } else {
-                    this.state.colorPicker.color.hsv = {
+                    picker.color.hsv = {
                         h: 0,
                         s: 0,
                         v: 100,
@@ -2223,7 +2414,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
         if (
             this.state.rxData.type == 'nav' &&
-            this.state.rxData.view == this.props.view &&
+            this.state.rxData.view == this.props.context.activeView &&
             Object.keys(window.vis?.viewsActiveFilter).length > 1
         ) {
             this.setState({ showFeedback: true });
@@ -2236,7 +2427,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
-    componentDidUpdate(_prevProps: any, prevState: { dialogOpen: any }): void {
+    componentDidUpdate(_prevProps: any, prevState: UniversalState): void {
+        super.componentDidUpdate?.(_prevProps, prevState as any);
+
         if (prevState.dialogOpen && !this.state.dialogOpen && this.state.dialogCloseTimeout) {
             clearTimeout(this.state.dialogCloseTimeout);
         }
@@ -2302,10 +2495,82 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
+    /**
+     * Returns true when clicking the button/state identified by `index` should be blocked
+     * because its "disable click when active" option is set and the state is currently active.
+     *
+     * @param index – null for singleButton mode, 1-based number for separatedButtons mode
+     */
+    isClickDisabled(index: number | null): boolean {
+        if (index !== null) {
+            // separatedButtons: button i is disabled when flagged AND currently active (its value matches)
+            if (!this.state.rxData[`disableClickWhenActive${index}`]) {
+                return false;
+            }
+            const oid = this.state.rxData.oid;
+            if (!oid || !this.validOid(oid)) {
+                return false;
+            }
+            const currentValue = this.getValue(oid);
+            const buttonValue = this.convertValue(this.state.rxData[`value${index}`]);
+            return currentValue === buttonValue;
+        }
+
+        // singleButton: iterate states, find the first matching one, check its flag
+        for (let i = 1; i <= this.state.rxData.countStates; i++) {
+            if (!this.state.rxData[`disableClickWhenActive${i}`]) {
+                continue;
+            }
+
+            let compareBy = this.state.rxData[`compareBy${i}`];
+            if (compareBy === undefined || compareBy === null) {
+                compareBy = 'default';
+            }
+            let comparisonOperator = this.state.rxData[`comparisonOperator${i}`];
+            if (comparisonOperator === undefined || comparisonOperator === null) {
+                comparisonOperator = '===';
+            }
+            let compareValue = this.state.rxData.valueTrue;
+            if (this.state.rxData[`value${i}`] !== undefined && this.state.rxData[`value${i}`] !== null) {
+                compareValue = this.state.rxData[`value${i}`];
+            }
+            compareValue = this.convertValue(compareValue);
+
+            const isNavBtn = (compareBy === 'default' && this.state.rxData.type === 'nav') || compareBy === 'view';
+
+            if (isNavBtn) {
+                const isActive =
+                    (this.state.rxData.mode === 'singleButton' &&
+                        this.state.rxData.countStates === 1 &&
+                        this.state.rxData.view === this.props.context.activeView) ||
+                    (this.state.rxData.countStates > 1 &&
+                        this.state.rxData[`view${i}`] === this.props.context.activeView);
+                if (isActive) {
+                    return true;
+                }
+            } else {
+                let oid: string | null = null;
+                if (this.validOid(this.state.rxData[`oid${i}`])) {
+                    oid = this.state.rxData[`oid${i}`];
+                } else if (this.validOid(this.state.rxData.oid)) {
+                    oid = this.state.rxData.oid;
+                }
+                if (oid) {
+                    const value = this.getValue(oid);
+                    if (this.compare(value, compareValue, comparisonOperator)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     getValueData(index: number | null = null): UniversalWidgetValueData {
         let oid = null;
         let value = null;
         let data: UniversalWidgetStyles | null = null;
+        let matchedStateIndex: number | null = index;
 
         if (index === null) {
             for (let i = 1; i <= this.state.rxData.countStates; i++) {
@@ -2345,10 +2610,13 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     (isNavBtn &&
                         this.state.rxData.mode === 'singleButton' &&
                         this.state.rxData.countStates === 1 &&
-                        this.state.rxData.view === this.props.view) ||
-                    (isNavBtn && this.state.rxData.countStates > 1 && this.state.rxData[`view${i}`] === this.props.view)
+                        this.state.rxData.view === this.props.context.activeView) ||
+                    (isNavBtn &&
+                        this.state.rxData.countStates > 1 &&
+                        this.state.rxData[`view${i}`] === this.props.context.activeView)
                 ) {
                     data = this.getStateData(i);
+                    matchedStateIndex = i;
                     break;
                 }
             }
@@ -2360,7 +2628,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     this.state.rxData.type === 'button' ||
                     this.state.rxData.type === 'readonly') &&
                     value === this.convertValue(this.state.rxData[`value${index}`])) ||
-                (this.state.rxData.type === 'nav' && this.state.rxData[`view${index}`] === this.props.view)
+                (this.state.rxData.type === 'nav' &&
+                    this.state.rxData[`view${index}`] === this.props.context.activeView)
             ) {
                 data = this.getStateData(index, true);
             } else {
@@ -2433,7 +2702,20 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 'clickFeedbackFromWidget',
                 this.groupAttrs.attr_group_click_feedback,
             ) as UniversalWidgetClickFeedbackStyles),
+            ...(this.getStyle(
+                'shapeStyleFromWidget',
+                this.groupAttrs.attr_group_css_shape,
+            ) as UniversalWidgetShapeStyles),
         };
+
+        if (matchedStateIndex !== null) {
+            const perStateMirror = this.state.rxData[`contentMirror${matchedStateIndex}`];
+            if (perStateMirror === 'true') {
+                dataWithStyles.styles.contentMirror = true;
+            } else if (perStateMirror === 'false') {
+                dataWithStyles.styles.contentMirror = false;
+            }
+        }
 
         if (this.state.showFeedback && !this.state.rxData.clickThrough) {
             dataWithStyles = this.replaceWithClickFeedbackData(dataWithStyles);
@@ -2503,7 +2785,33 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         return data;
     }
 
+    private doNavigation(index: number | null): void {
+        if (this.state.rxData.mode === 'singleButton') {
+            if (this.state.rxData.view) {
+                window.vis.changeView(this.state.rxData.view, this.state.rxData.view);
+            }
+        } else if (index !== null) {
+            if (this.state.rxData[`view${index}`]) {
+                window.vis.changeView(this.state.rxData[`view${index}`], this.state.rxData[`view${index}`]);
+            }
+        }
+    }
+
+    private confirmNavPassword(): void {
+        if (this.state.navPasswordInput === this.state.rxData.navPassword) {
+            const pendingIndex = this.state.navPendingIndex;
+            this.setState({ navPasswordDialogOpen: false, navPasswordInput: '', navPasswordError: false }, () => {
+                this.doNavigation(pendingIndex);
+            });
+        } else {
+            this.setState({ navPasswordError: true, navPasswordInput: '' });
+        }
+    }
+
     private onClick(index: number | null, e?: React.PointerEvent<HTMLDivElement>): void {
+        if (this.isClickDisabled(index)) {
+            return;
+        }
         const oid = this.state.rxData.oid;
         this.setState({ showFeedback: true });
         switch (this.state.rxData.type) {
@@ -2543,15 +2851,17 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     return;
                 }
 
-                if (this.state.rxData.mode === 'singleButton') {
-                    if (this.state.rxData.view) {
-                        window.vis.changeView(this.state.rxData.view, this.state.rxData.view);
-                    }
-                } else if (index !== null) {
-                    if (this.state.rxData[`view${index}`]) {
-                        window.vis.changeView(this.state.rxData[`view${index}`], this.state.rxData[`view${index}`]);
-                    }
+                if (this.state.rxData.navPasswordEnabled && this.state.rxData.navPassword) {
+                    this.setState({
+                        navPasswordDialogOpen: true,
+                        navPasswordInput: '',
+                        navPasswordError: false,
+                        navPendingIndex: index,
+                    });
+                    return;
                 }
+
+                this.doNavigation(index);
                 break;
             case 'viewInDialog':
                 this.setState({ dialogOpen: true, dialogOpenTime: Date.now() });
@@ -2599,6 +2909,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
     onBtnMouseDown(index: number | null, e: React.PointerEvent<HTMLDivElement>): void {
         if (!this.isInteractionAllowed(e)) {
+            return;
+        }
+        if (this.isClickDisabled(index)) {
             return;
         }
 
@@ -2720,6 +3033,130 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 >
                     {content}
                 </div>,
+            );
+        }
+
+        if (this.state.rxData.type === 'nav' && this.state.rxData.navPasswordEnabled) {
+            const isPinMode = this.state.rxData.navPasswordType === 'pin';
+            const closeDialog = (): void =>
+                this.setState({ navPasswordDialogOpen: false, navPasswordInput: '', navPasswordError: false });
+
+            const dialogTitle = isPinMode
+                ? I18n.t('vis_2_widgets_inventwo_nav_pin_dialog_title')
+                : I18n.t('vis_2_widgets_inventwo_nav_password_dialog_title');
+
+            widgetContent.push(
+                <Dialog
+                    key="nav-password-dialog"
+                    open={this.state.navPasswordDialogOpen}
+                    onClose={closeDialog}
+                >
+                    <DialogTitle>{dialogTitle}</DialogTitle>
+                    <DialogContent>
+                        {isPinMode ? (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    gap: 8,
+                                    padding: '4px 8px',
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        fontSize: 28,
+                                        letterSpacing: 14,
+                                        minHeight: 44,
+                                        textAlign: 'center',
+                                        color: this.state.navPasswordError ? '#d32f2f' : 'inherit',
+                                    }}
+                                >
+                                    {this.state.navPasswordInput.length > 0
+                                        ? '●'.repeat(this.state.navPasswordInput.length)
+                                        : ' '}
+                                </div>
+                                {this.state.navPasswordError && (
+                                    <div style={{ color: '#d32f2f', fontSize: 13, marginTop: -4 }}>
+                                        {I18n.t('vis_2_widgets_inventwo_nav_password_wrong')}
+                                    </div>
+                                )}
+                                {[
+                                    ['1', '2', '3'],
+                                    ['4', '5', '6'],
+                                    ['7', '8', '9'],
+                                    ['C', '0', '⌫'],
+                                ].map((row, ri) => (
+                                    <div
+                                        key={ri}
+                                        style={{ display: 'flex', gap: 8 }}
+                                    >
+                                        {row.map(key => (
+                                            <Button
+                                                key={key}
+                                                variant="outlined"
+                                                sx={{ minWidth: 64, height: 56, fontSize: 20, fontWeight: 'bold' }}
+                                                onClick={() => {
+                                                    if (key === '⌫') {
+                                                        this.setState(prev => ({
+                                                            navPasswordInput: prev.navPasswordInput.slice(0, -1),
+                                                            navPasswordError: false,
+                                                        }));
+                                                    } else if (key === 'C') {
+                                                        this.setState({
+                                                            navPasswordInput: '',
+                                                            navPasswordError: false,
+                                                        });
+                                                    } else {
+                                                        this.setState(prev => ({
+                                                            navPasswordInput: prev.navPasswordInput + key,
+                                                            navPasswordError: false,
+                                                        }));
+                                                    }
+                                                }}
+                                            >
+                                                {key}
+                                            </Button>
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <TextField
+                                autoFocus
+                                type="password"
+                                fullWidth
+                                variant="outlined"
+                                size="small"
+                                value={this.state.navPasswordInput}
+                                error={this.state.navPasswordError}
+                                helperText={
+                                    this.state.navPasswordError
+                                        ? I18n.t('vis_2_widgets_inventwo_nav_password_wrong')
+                                        : undefined
+                                }
+                                onChange={e =>
+                                    this.setState({ navPasswordInput: e.target.value, navPasswordError: false })
+                                }
+                                onKeyDown={e => {
+                                    if (e.key === 'Enter') {
+                                        this.confirmNavPassword();
+                                    }
+                                }}
+                                sx={{ mt: 1 }}
+                            />
+                        )}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeDialog}>{I18n.t('vis_2_widgets_inventwo_nav_password_cancel')}</Button>
+                        <Button
+                            variant="contained"
+                            onClick={() => this.confirmNavPassword()}
+                        >
+                            {I18n.t('vis_2_widgets_inventwo_nav_password_confirm')}
+                        </Button>
+                    </DialogActions>
+                </Dialog>,
             );
         }
 
@@ -3333,11 +3770,539 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         );
     }
 
+    // ── Shape helpers ──────────────────────────────────────────────────────────
+
+    private computePolygonPoints(sides: number, rotation: number): Array<[number, number]> {
+        const cx = 50;
+        const cy = 50;
+        const r = 50;
+        const pts: Array<[number, number]> = [];
+        for (let i = 0; i < sides; i++) {
+            const angle = ((i * 360) / sides + rotation - 90) * (Math.PI / 180);
+            pts.push([cx + r * Math.cos(angle), cy + r * Math.sin(angle)]);
+        }
+        return pts;
+    }
+
+    private computeStarPoints(rotation: number): Array<[number, number]> {
+        const cx = 50;
+        const cy = 50;
+        const outerR = 50;
+        // inner radius for a regular 5-pointed star
+        const innerR = outerR * (Math.sin((18 * Math.PI) / 180) / Math.sin((54 * Math.PI) / 180));
+        const numPoints = 5;
+        const pts: Array<[number, number]> = [];
+        for (let i = 0; i < numPoints * 2; i++) {
+            const angle = ((i * 180) / numPoints + rotation - 90) * (Math.PI / 180);
+            const r = i % 2 === 0 ? outerR : innerR;
+            pts.push([cx + r * Math.cos(angle), cy + r * Math.sin(angle)]);
+        }
+        return pts;
+    }
+
+    private getShapePoints(shape: string, rotation: number): Array<[number, number]> | null {
+        switch (shape) {
+            case 'triangle':
+                return this.computePolygonPoints(3, rotation);
+            case 'diamond':
+                return this.computePolygonPoints(4, rotation);
+            case 'pentagon':
+                return this.computePolygonPoints(5, rotation);
+            case 'hexagon':
+                return this.computePolygonPoints(6, rotation);
+            case 'heptagon':
+                return this.computePolygonPoints(7, rotation);
+            case 'octagon':
+                return this.computePolygonPoints(8, rotation);
+            case 'star':
+                return this.computeStarPoints(rotation);
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Parses a user-supplied polygon path string in clip-path notation into SVG coordinate points.
+     * Accepts formats like:
+     *   "40% 0%, 100% 50%, 40% 100%, 0% 50%"   (with % signs)
+     *   "40 0, 100 50, 40 100, 0 50"            (without % signs, values 0–100)
+     * Returns null when the input is empty or cannot be parsed (≥3 valid points required).
+     */
+
+    private parseCustomPath(pathStr: string): Array<[number, number]> | null {
+        if (!pathStr?.trim()) {
+            return null;
+        }
+        const pairs = pathStr
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean);
+        const points: Array<[number, number]> = [];
+        for (const pair of pairs) {
+            const parts = pair.split(/\s+/).filter(Boolean);
+            if (parts.length < 2) {
+                return null;
+            }
+            // Strip optional % suffix – values are already in 0–100 range (= SVG viewBox units)
+            const x = parseFloat(parts[0].replace('%', ''));
+            const y = parseFloat(parts[1].replace('%', ''));
+            if (isNaN(x) || isNaN(y)) {
+                return null;
+            }
+            points.push([x, y]);
+        }
+        return points.length >= 3 ? points : null;
+    }
+
+    private getClipPath(shape: string, rotation: number): string {
+        const pts = this.getShapePoints(shape, rotation);
+        if (!pts) {
+            return '';
+        }
+        return `polygon(${pts.map(([x, y]) => `${x.toFixed(2)}% ${y.toFixed(2)}%`).join(', ')})`;
+    }
+
+    private getSvgPolygonPoints(shape: string, rotation: number): string {
+        const pts = this.getShapePoints(shape, rotation);
+        if (!pts) {
+            return '';
+        }
+        return pts.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(' ');
+    }
+
+    private getStrokeDashArray(borderStyle: string | undefined, borderSize: number): string | undefined {
+        switch (borderStyle) {
+            case 'dashed':
+                return `${borderSize * 5} ${borderSize * 3}`;
+            case 'dotted':
+                return `${borderSize} ${borderSize * 2}`;
+            default:
+                return undefined;
+        }
+    }
+
+    /**
+     * Builds an SVG path string (0–100 coordinate space) for a regular polygon with
+     * optional rounded corners using quadratic Bézier curves.
+     */
+
+    private computeRoundedPolygonPath(points: Array<[number, number]>, radius: number): string {
+        const n = points.length;
+        if (radius <= 0) {
+            return `M ${points.map(([x, y]) => `${x.toFixed(3)},${y.toFixed(3)}`).join(' L ')} Z`;
+        }
+        const corners = points.map((curr, idx) => {
+            const prev = points[(idx - 1 + n) % n];
+            const next = points[(idx + 1) % n];
+            const v1: [number, number] = [prev[0] - curr[0], prev[1] - curr[1]];
+            const len1 = Math.hypot(v1[0], v1[1]);
+            const v2: [number, number] = [next[0] - curr[0], next[1] - curr[1]];
+            const len2 = Math.hypot(v2[0], v2[1]);
+            const r = Math.min(radius, len1 / 2, len2 / 2);
+            return {
+                vertex: curr,
+                pIn: [curr[0] + (v1[0] / len1) * r, curr[1] + (v1[1] / len1) * r] as [number, number],
+                pOut: [curr[0] + (v2[0] / len2) * r, curr[1] + (v2[1] / len2) * r] as [number, number],
+            };
+        });
+        let d = `M ${corners[0].pIn[0].toFixed(3)},${corners[0].pIn[1].toFixed(3)}`;
+        for (let i = 0; i < n; i++) {
+            const c = corners[i];
+            const nextC = corners[(i + 1) % n];
+            d += ` Q ${c.vertex[0].toFixed(3)},${c.vertex[1].toFixed(3)} ${c.pOut[0].toFixed(3)},${c.pOut[1].toFixed(3)}`;
+            d += ` L ${nextC.pIn[0].toFixed(3)},${nextC.pIn[1].toFixed(3)}`;
+        }
+        d += ' Z';
+        return d;
+    }
+
+    /** Scales every numeric value in an SVG path string from the 0–100 space to the 0–1 space. */
+
+    private scalePathTo01(pathD: string): string {
+        return pathD.replace(/-?\d+\.?\d*/g, match => (parseFloat(match) / 100).toFixed(5));
+    }
+
+    // ── Polygon card renderer ──────────────────────────────────────────────────
+
+    buildPolygonCard(
+        valueData: UniversalWidgetValueData,
+        i: number | null,
+        content: React.JSX.Element | string,
+        shape: string,
+        overridePoints?: Array<[number, number]>,
+        overrideCornerRadius?: number,
+    ): React.JSX.Element {
+        const rotation = valueData.styles.shapeRotation ?? 0;
+        const cornerRadius = overrideCornerRadius ?? valueData.styles.shapeCornerRadius ?? 0;
+        // For 'custom' shapes the user provides raw polygon points; all other shapes are computed.
+        const points =
+            overridePoints ??
+            (shape === 'custom'
+                ? this.parseCustomPath(valueData.styles.shapeCustomPath ?? '')
+                : this.getShapePoints(shape, rotation));
+
+        if (!points || points.length === 0) {
+            // Fallback to rectangle card when shape cannot be computed (e.g. empty/invalid custom path).
+            // We must NOT call buildCard with the original valueData here because buildCard would
+            // see shape='custom' again and call buildPolygonCard → infinite recursion.
+            // Force shape='rectangle' so buildCard takes the rectangle branch directly.
+            const fallbackData = {
+                ...valueData,
+                styles: { ...valueData.styles, shape: 'rectangle' as const },
+            };
+            return this.buildCard(fallbackData, i, content);
+        }
+
+        // SVG path in 0–100 coordinate space (matches viewBox="0 0 100 100")
+        const pathD = this.computeRoundedPolygonPath(points, cornerRadius);
+        // Same path in 0–1 space for clipPathUnits="objectBoundingBox"
+        const pathD01 = this.scalePathTo01(pathD);
+
+        // Outer shadow: separate SVG layer behind the background.
+        // Uses feMorphology(dilate) for size/spread and feGaussianBlur for blur, both as SVG filter
+        // primitives applied to the shadow path directly – no CSS blur() which would just fade the
+        // clipped polygon instead of expanding it.
+        // blur=0 AND size=0 → no filter → purely hard shadow polygon (like box-shadow blur:0 spread:0).
+        const outerShadowX = valueData.styles.outerShadowX ?? 0;
+        const outerShadowY = valueData.styles.outerShadowY ?? 0;
+        const outerShadowBlurValue = valueData.styles.outerShadowBlur ?? 0;
+        const outerShadowSizeValue = valueData.styles.outerShadowSize ?? 0;
+        const hasOuterShadow =
+            !!valueData.outerShadowColor &&
+            (outerShadowBlurValue > 0 || outerShadowSizeValue > 0 || outerShadowX !== 0 || outerShadowY !== 0);
+
+        // Inner shadow: computed via SVG filter (feFlood / feComposite "outside-bleed" technique)
+        const innerShadowX = valueData.styles.innerShadowX ?? 0;
+        const innerShadowY = valueData.styles.innerShadowY ?? 0;
+        const innerShadowBlur = valueData.styles.innerShadowBlur ?? 0;
+        const innerShadowSize = valueData.styles.innerShadowSize ?? 0;
+        const hasInnerShadow =
+            !!valueData.innerShadowColor &&
+            (innerShadowBlur > 0 || innerShadowSize > 0 || innerShadowX !== 0 || innerShadowY !== 0);
+        // stdDeviation=0 causes feGaussianBlur to silently discard output in some browsers → skip it entirely
+        const innerShadowStdDev = (innerShadowBlur + innerShadowSize) / 2;
+        // result name for the step feeding into the final feComposite (might skip blur step)
+        const innerShadowBlurResult = innerShadowStdDev > 0 ? 'shadow-blur' : 'shadow-offset';
+
+        // Border via SVG path stroke overlay
+        const borderSize = Math.max(
+            valueData.styles.borderSizeTop ?? 0,
+            valueData.styles.borderSizeBottom ?? 0,
+            valueData.styles.borderSizeLeft ?? 0,
+            valueData.styles.borderSizeRight ?? 0,
+        );
+        const showBorder =
+            borderSize > 0 &&
+            !!valueData.borderColor &&
+            valueData.styles.borderStyle !== 'none' &&
+            !!valueData.styles.borderStyle;
+        const strokeDashArray = this.getStrokeDashArray(valueData.styles.borderStyle, borderSize);
+
+        // Unique IDs scoped to this widget instance (and button index for separated-buttons mode)
+        const widgetId = (this.props.id ?? 'w').replace(/[^a-zA-Z0-9]/g, '_');
+        const suffix = i !== null ? `_${i}` : '';
+        // CSS clip-path reference (objectBoundingBox → scales with the HTML element)
+        const clipId = `inventwo_cp_${widgetId}${suffix}`;
+        // SVG clip-path for foreignObject (userSpaceOnUse → same coordinate space as the viewBox)
+        const clipIdSvg = `inventwo_cp_svg_${widgetId}${suffix}`;
+        const innerShadowFilterId = `inventwo_is_${widgetId}${suffix}`;
+        const outerShadowFilterId = `inventwo_os_${widgetId}${suffix}`;
+
+        return (
+            <div
+                key={i !== null ? i : ''}
+                style={{
+                    width: i === null ? '100%' : undefined,
+                    height: i === null ? '100%' : undefined,
+                    flex: i !== null ? `0 0 ${this.state.rxData.buttonSize}px` : undefined,
+                    position: 'relative',
+                }}
+            >
+                {/*
+                 * Outer shadow layer – rendered first (= visually behind everything else).
+                 * A separate SVG with the polygon path + SVG filter:
+                 *  – feMorphology(dilate) expands the shadow polygon outward (= "Größe" / spread)
+                 *  – feGaussianBlur softens the edges (= "Verwischen" / blur)
+                 *  – CSS transform handles the pixel-exact x/y offset
+                 * No filter at all when blur=0 AND size=0 → hard shadow.
+                 */}
+                {hasOuterShadow && (
+                    <svg
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            overflow: 'visible',
+                            pointerEvents: 'none',
+                            transform:
+                                outerShadowX !== 0 || outerShadowY !== 0
+                                    ? `translate(${outerShadowX}px, ${outerShadowY}px)`
+                                    : undefined,
+                        }}
+                        viewBox="0 0 100 100"
+                        preserveAspectRatio="none"
+                    >
+                        {(outerShadowBlurValue > 0 || outerShadowSizeValue > 0) && (
+                            <defs>
+                                <filter
+                                    id={outerShadowFilterId}
+                                    x="-50%"
+                                    y="-50%"
+                                    width="200%"
+                                    height="200%"
+                                >
+                                    {/* Dilate first to expand the shadow outward (spread / Größe) */}
+                                    {outerShadowSizeValue > 0 && (
+                                        <feMorphology
+                                            in="SourceGraphic"
+                                            operator="dilate"
+                                            radius={outerShadowSizeValue}
+                                            result="dilated"
+                                        />
+                                    )}
+                                    {/* Then blur; skip entirely when blur=0 so we get hard edges */}
+                                    {outerShadowBlurValue > 0 && (
+                                        <feGaussianBlur
+                                            in={outerShadowSizeValue > 0 ? 'dilated' : 'SourceGraphic'}
+                                            stdDeviation={outerShadowBlurValue}
+                                        />
+                                    )}
+                                </filter>
+                            </defs>
+                        )}
+                        <path
+                            d={pathD}
+                            fill={valueData.outerShadowColor || 'transparent'}
+                            filter={
+                                outerShadowBlurValue > 0 || outerShadowSizeValue > 0
+                                    ? `url(#${outerShadowFilterId})`
+                                    : undefined
+                            }
+                        />
+                    </svg>
+                )}
+                {/*
+                 * Background SVG
+                 * – defines clip paths (objectBoundingBox for HTML, userSpaceOnUse for SVG)
+                 * – defines the inner shadow filter (SVG primitives, polygon-aware)
+                 * – renders background via <foreignObject> so CSS `background` is used,
+                 *   which supports linear-gradient / radial-gradient strings
+                 */}
+                <svg
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'visible',
+                        pointerEvents: 'none',
+                    }}
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="none"
+                >
+                    <defs>
+                        {/* For CSS clip-path on the interactive content div (HTML context) */}
+                        <clipPath
+                            id={clipId}
+                            clipPathUnits="objectBoundingBox"
+                        >
+                            <path d={pathD01} />
+                        </clipPath>
+                        {/* For SVG clip-path attribute on foreignObject (SVG userSpace context) */}
+                        <clipPath id={clipIdSvg}>
+                            <path d={pathD} />
+                        </clipPath>
+
+                        {/* Inner shadow filter: "outside bleed" technique
+                            Applied to a separate <path> element (not the foreignObject) so that
+                            SourceAlpha correctly reflects the polygon shape – not the bounding rectangle.
+                            SVG processes filters BEFORE clip-path, so applying to foreignObject would
+                            cause SourceAlpha to always be a rectangle. Using a dedicated path avoids this.
+                            The filter outputs ONLY the shadow (no feMerge with SourceGraphic) so the
+                            path's own fill is fully replaced by the transparent shadow overlay.
+                            1. Flood white → composite OUT with SourceAlpha → get the area outside the shape
+                            2. Offset + blur → the outside region bleeds inward
+                            3. Composite IN with SourceAlpha → keep only what is inside the shape
+                            4. Color it → output shadow only (no merge with SourceGraphic)             */}
+                        {hasInnerShadow && (
+                            <filter
+                                id={innerShadowFilterId}
+                                x="-50%"
+                                y="-50%"
+                                width="200%"
+                                height="200%"
+                            >
+                                <feFlood
+                                    floodColor="white"
+                                    floodOpacity={1}
+                                    result="inverted-flood"
+                                />
+                                <feComposite
+                                    in="inverted-flood"
+                                    in2="SourceAlpha"
+                                    operator="out"
+                                    result="outside"
+                                />
+                                <feOffset
+                                    in="outside"
+                                    dx={innerShadowX}
+                                    dy={innerShadowY}
+                                    result="shadow-offset"
+                                />
+                                {/* Skip feGaussianBlur entirely when stdDeviation=0 – some browsers
+                                    discard all output when stdDeviation is exactly 0 instead of
+                                    treating it as a pass-through, which would make the shadow invisible. */}
+                                {innerShadowStdDev > 0 && (
+                                    <feGaussianBlur
+                                        in="shadow-offset"
+                                        stdDeviation={innerShadowStdDev}
+                                        result="shadow-blur"
+                                    />
+                                )}
+                                <feComposite
+                                    in={innerShadowBlurResult}
+                                    in2="SourceAlpha"
+                                    operator="in"
+                                    result="shadow-inner"
+                                />
+                                <feFlood
+                                    floodColor={valueData.innerShadowColor ?? 'black'}
+                                    result="shadow-color"
+                                />
+                                <feComposite
+                                    in="shadow-color"
+                                    in2="shadow-inner"
+                                    operator="in"
+                                />
+                            </filter>
+                        )}
+                    </defs>
+
+                    {/* The background polygon.
+                        Uses <foreignObject> so that CSS `background` is the rendering property,
+                        which fully supports linear-gradient / radial-gradient strings.
+                        The clip-path attribute clips the foreignObject to the polygon outline.
+                        No filter here – see the inner shadow <path> below. */}
+                    <foreignObject
+                        x="0"
+                        y="0"
+                        width="100"
+                        height="100"
+                        clipPath={`url(#${clipIdSvg})`}
+                        opacity={valueData.styles.backgroundOpacity}
+                    >
+                        {/* div must be in the HTML namespace; React handles the namespace switch automatically */}
+                        <div
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                background: valueData.background || 'transparent',
+                            }}
+                        />
+                    </foreignObject>
+
+                    {/* Inner shadow overlay: the filter is applied to a <path> whose SourceAlpha
+                        naturally matches the polygon shape. SVG filters run before clip-path, so
+                        using foreignObject+clipPath would always produce a rectangular SourceAlpha.
+                        The filter outputs ONLY the shadow (last primitive = output, no feMerge),
+                        so the path's fill is entirely replaced by the transparent shadow image. */}
+                    {hasInnerShadow && (
+                        <path
+                            d={pathD}
+                            fill="black"
+                            filter={`url(#${innerShadowFilterId})`}
+                        />
+                    )}
+                </svg>
+
+                {/* Interactive content layer – clipped to the polygon via <clipPath> */}
+                <div
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        clipPath: `url(#${clipId})`,
+                        opacity: valueData.styles.contentOpacity,
+                        cursor:
+                            this.state.rxData.type === 'readonly' || this.isClickDisabled(i)
+                                ? 'not-allowed'
+                                : 'pointer',
+                        touchAction: 'none',
+                        color: 'unset',
+                    }}
+                    onPointerDown={e => this.onBtnMouseDown(i, e)}
+                    onPointerUp={e => this.onBtnMouseUp(e)}
+                    onPointerCancel={e => this.onBtnMouseUp(e)}
+                >
+                    <div
+                        style={{
+                            padding: `${valueData.styles.paddingTop ?? 10}px ${valueData.styles.paddingRight ?? 10}px ${valueData.styles.paddingBottom ?? 10}px ${valueData.styles.paddingLeft ?? 10}px`,
+                            boxSizing: 'border-box',
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    >
+                        {content}
+                    </div>
+                </div>
+
+                {/* SVG border overlay – uses the same rounded path; vector-effect keeps stroke width in screen pixels */}
+                {showBorder && (
+                    <svg
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            overflow: 'visible',
+                            pointerEvents: 'none',
+                        }}
+                        viewBox="0 0 100 100"
+                        preserveAspectRatio="none"
+                    >
+                        <path
+                            d={pathD}
+                            fill="none"
+                            stroke={valueData.borderColor || undefined}
+                            strokeWidth={borderSize}
+                            strokeDasharray={strokeDashArray}
+                            strokeLinecap={valueData.styles.borderStyle === 'dotted' ? 'round' : 'butt'}
+                            vectorEffect="non-scaling-stroke"
+                        />
+                    </svg>
+                )}
+            </div>
+        );
+    }
+
     buildCard(
         valueData: UniversalWidgetValueData,
         i: number | null,
         content: React.JSX.Element | string,
     ): React.JSX.Element {
+        const shape = valueData.styles.shape ?? 'rectangle';
+        if (shape && shape !== 'rectangle') {
+            return this.buildPolygonCard(valueData, i, content, shape);
+        }
+
+        if (valueData.styles.borderCornerStyle === 'chamfered') {
+            const tl = valueData.styles.borderRadiusTopLeft ?? 0;
+            const tr = valueData.styles.borderRadiusTopRight ?? 0;
+            const br = valueData.styles.borderRadiusBottomRight ?? 0;
+            const bl = valueData.styles.borderRadiusBottomLeft ?? 0;
+            const chamferedPoints: Array<[number, number]> = [
+                [tl, 0],
+                [100 - tr, 0],
+                [100, tr],
+                [100, 100 - br],
+                [100 - br, 100],
+                [bl, 100],
+                [0, 100 - bl],
+                [0, tl],
+            ];
+            return this.buildPolygonCard(valueData, i, content, 'chamfered', chamferedPoints, 0);
+        }
+
         let shadow = '';
         if (valueData.outerShadowColor) {
             shadow += `${valueData.styles.outerShadowX}px ${valueData.styles.outerShadowY}px ${valueData.styles.outerShadowBlur}px ${valueData.styles.outerShadowSize}px ${valueData.outerShadowColor}`;
@@ -3350,6 +4315,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             shadow += `inset ${valueData.styles.innerShadowX}px ${valueData.styles.innerShadowY}px ${valueData.styles.innerShadowBlur}px ${valueData.styles.innerShadowSize}px ${valueData.innerShadowColor}`;
         }
 
+        const borderRadius = `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`;
+
         return (
             <div
                 key={i !== null ? i : ''}
@@ -3358,15 +4325,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     height: i === null ? '100%' : '',
                     flex: i !== null ? `0 0 ${this.state.rxData.buttonSize}px` : '',
                     position: 'relative',
-                    border: valueData.styles.borderRadiusTopLeft,
-                    borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+                    borderRadius,
                 }}
             >
                 <Card
                     className="vis_rx_widget_card"
                     style={{
                         background: valueData.background,
-                        borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+                        borderRadius,
                         boxShadow: shadow,
                         opacity: valueData.styles.backgroundOpacity,
                         position: 'absolute',
@@ -3381,9 +4347,12 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 />
                 <Card
                     style={{
-                        cursor: this.state.rxData.type !== 'readonly' ? 'pointer' : '',
+                        cursor:
+                            this.state.rxData.type === 'readonly' || this.isClickDisabled(i)
+                                ? 'not-allowed'
+                                : 'pointer',
                         background: 'transparent',
-                        borderRadius: `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`,
+                        borderRadius,
                         opacity: valueData.styles.contentOpacity,
                         position: 'absolute',
                         inset: 0,

@@ -10,18 +10,26 @@ import type {
     RxRenderWidgetProps,
 } from '@iobroker/types-vis-2';
 import React from 'react';
+import { createDocsLinkField } from './utils/docLinkField';
 
 interface SliderRxData {
     oid: null | string;
+    sliderTitle: string;
+    sliderTitleSpacing: number;
+    sliderUnit: string;
     minValue: number;
     maxValue: number;
     step: number;
     showMinMax: boolean;
     orientation: 'horizontal' | 'vertical';
+    valueLabelDisplay: 'auto' | 'on' | 'off';
     showSteps: boolean;
+    stepsInside: boolean;
+    stepsAbove: boolean;
     stepMode: 'auto' | 'custom';
     stepDisplay: number;
     customSteps: string;
+    readOnly: boolean;
     sliderRailColor: string;
     sliderRailActiveColor: string;
     trackBarType: 'normal' | 'inverted' | false;
@@ -64,6 +72,27 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/slider-widget.md') as any,
+                        {
+                            name: 'sliderTitle',
+                            type: 'text',
+                            label: 'slider_title',
+                        },
+                        {
+                            name: 'sliderTitleSpacing',
+                            type: 'slider',
+                            min: 0,
+                            max: 100,
+                            step: 1,
+                            label: 'slider_title_spacing',
+                            default: 4,
+                            hidden: '!data.sliderTitle',
+                        },
+                        {
+                            name: 'sliderUnit',
+                            type: 'text',
+                            label: 'slider_unit',
+                        },
                         {
                             name: 'oid',
                             type: 'id',
@@ -131,6 +160,23 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                             default: true,
                         },
                         {
+                            name: 'readOnly',
+                            type: 'checkbox',
+                            label: 'read_only',
+                            default: false,
+                        },
+                        {
+                            name: 'valueLabelDisplay',
+                            type: 'select',
+                            options: [
+                                { value: 'auto', label: 'value_label_auto' },
+                                { value: 'on', label: 'value_label_always' },
+                                { value: 'off', label: 'value_label_off' },
+                            ],
+                            default: 'auto',
+                            label: 'value_label_display',
+                        },
+                        {
                             name: '',
                             type: 'delimiter',
                         },
@@ -144,6 +190,21 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                             type: 'checkbox',
                             label: 'show_steps',
                             default: false,
+                        },
+                        {
+                            name: 'stepsInside',
+                            type: 'checkbox',
+                            label: 'steps_inside',
+                            default: false,
+                            hidden: '!data.showSteps',
+                        },
+                        {
+                            name: 'stepsAbove',
+                            type: 'checkbox',
+                            label: 'steps_above',
+                            default: false,
+                            tooltip: 'steps_above_tooltip',
+                            hidden: '!data.showSteps || data.stepsInside',
                         },
                         {
                             name: 'stepMode',
@@ -311,7 +372,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                         {
                             name: 'thumbSize',
                             type: 'slider',
-                            min: 1,
+                            min: 0,
                             max: 50,
                             step: 1,
                             default: 16,
@@ -418,29 +479,34 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
     renderWidgetBody(props: RxRenderWidgetProps): React.JSX.Element {
         super.renderWidgetBody(props);
 
-        const minValue = this.state.rxData.minValue;
-        const maxValue = this.state.rxData.maxValue;
+        const minValue = Number(this.state.rxData.minValue);
+        const maxValue = Number(this.state.rxData.maxValue);
+        const orientation = this.state.rxData.orientation;
+        const stepsInside = this.state.rxData.stepsInside;
+        const stepsAbove = this.state.rxData.stepsAbove;
+        const unit = this.state.rxData.sliderUnit ?? '';
 
         const marks = [];
         if (this.state.rxData.showMinMax) {
             marks.push({
                 value: minValue,
-                label: minValue,
+                label: `${minValue}${unit}`,
             });
             marks.push({
                 value: maxValue,
-                label: maxValue,
+                label: `${maxValue}${unit}`,
             });
         }
 
         if (this.state.rxData.showSteps) {
             if (this.state.rxData.stepMode === 'auto') {
-                const stepDisplay = this.state.rxData.stepDisplay;
-                if (stepDisplay > 0 && minValue && maxValue && stepDisplay) {
+                const stepDisplay = Number(this.state.rxData.stepDisplay);
+                if (stepDisplay > 0 && maxValue > minValue) {
                     for (let i = minValue + stepDisplay; i < maxValue; i += stepDisplay) {
+                        const label = i.toFixed(2).replace(/[.,]00$/, '');
                         marks.push({
-                            value: parseFloat(i.toFixed(2).replace(/[.,]00$/, '')),
-                            label: i.toFixed(2).replace(/[.,]00$/, ''),
+                            value: parseFloat(label),
+                            label: `${label}${unit}`,
                         });
                     }
                 }
@@ -455,7 +521,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                     const s: number = parseInt(step);
                     marks.push({
                         value: s,
-                        label: s,
+                        label: `${s}${unit}`,
                     });
                 });
             }
@@ -466,49 +532,101 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
 
         const trackBarType = trackStyle.trackBarType;
 
-        let sliderAttributes: SxProps = {
-            height: this.state.rxData.orientation === 'horizontal' ? trackStyle.trackWidth : '100%',
-            width: this.state.rxData.orientation !== 'horizontal' ? trackStyle.trackWidth : '100%',
-            '& .MuiSlider-thumb': {
-                backgroundColor: thumbStyle.sliderThumbColor, // color of thumbs
-                width: thumbStyle.thumbSize,
-                height: thumbStyle.thumbSize,
-                borderRadius: `${thumbStyle.thumbBorderRadius}%`,
-                // marginLeft: `-${thumbOffset}px`,
-                '&:before': {
-                    boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbStyle.thumbShadowColor}`,
-                },
-            },
+        // Rail (inactive) und Track (active) Farben – unterstützen direkt Gradient-Strings
+        const railColor: string =
+            trackBarType === 'normal'
+                ? trackStyle.sliderRailColor
+                : trackBarType === 'inverted'
+                  ? trackStyle.sliderRailActiveColor
+                  : '';
+        const trackColor: string =
+            trackBarType === 'normal'
+                ? trackStyle.sliderRailActiveColor
+                : trackBarType === 'inverted'
+                  ? trackStyle.sliderRailColor
+                  : '';
+        const thumbColor: string = thumbStyle.sliderThumbColor;
+
+        // Build markLabel style (font + position)
+        const markLabelFontStyle = {
+            fontSize: this.state.rxStyle!['font-size'],
+            color: this.state.rxStyle!.color,
+            textShadow: this.state.rxStyle!['text-shadow'],
+            fontFamily: this.state.rxStyle!['font-family'],
+            fontStyle: this.state.rxStyle!['font-style'],
+            fontVariant: this.state.rxStyle!['font-variant'],
+            fontWeight: this.state.rxStyle!['font-weight'],
+            lineHeight: this.state.rxStyle!['line-height'],
+            letterSpacing: this.state.rxStyle!['letter-spacing'],
+            wordSpacing: this.state.rxStyle!['word-spacing'],
+        };
+
+        let markLabelPositionStyle: Record<string, any>;
+        if (stepsInside) {
+            if (orientation === 'horizontal') {
+                markLabelPositionStyle = {
+                    top: '50%',
+                    transform: 'translateX(-50%) translateY(-50%)',
+                };
+            } else {
+                markLabelPositionStyle = {
+                    left: '50%',
+                    transform: 'translateX(-50%) translateY(50%)',
+                };
+            }
+        } else if (stepsAbove) {
+            if (orientation === 'horizontal') {
+                // Position marks above the slider track
+                markLabelPositionStyle = {
+                    top: 'auto',
+                    bottom: (trackStyle.trackWidth ?? 10) + 20,
+                };
+            } else {
+                // Position marks to the left of the vertical slider
+                markLabelPositionStyle = {
+                    left: 'auto',
+                    right: (trackStyle.trackWidth ?? 10) + 20,
+                };
+            }
+        } else {
+            if (orientation === 'horizontal') {
+                markLabelPositionStyle = {
+                    top: (trackStyle.trackWidth ?? 10) + 20,
+                };
+            } else {
+                markLabelPositionStyle = {
+                    left: (trackStyle.trackWidth ?? 10) + 20,
+                };
+            }
+        }
+
+        const thumbSize = thumbStyle.thumbSize ?? 16;
+        const thumbHidden = thumbSize === 0;
+
+        const sliderAttributes: SxProps = {
+            height: orientation === 'horizontal' ? trackStyle.trackWidth : '100%',
+            width: orientation !== 'horizontal' ? trackStyle.trackWidth : '100%',
+            '& .MuiSlider-thumb': thumbHidden
+                ? { display: 'none' }
+                : {
+                      background: thumbColor,
+                      width: thumbSize,
+                      height: thumbSize,
+                      borderRadius: `${thumbStyle.thumbBorderRadius}%`,
+                      '&:before': {
+                          boxShadow: `${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowSize}px ${thumbStyle.thumbShadowColor}`,
+                      },
+                  },
             '& .MuiSlider-rail': {
-                backgroundColor:
-                    trackBarType === 'normal'
-                        ? trackStyle.sliderRailColor
-                        : trackBarType === 'inverted'
-                          ? trackStyle.sliderRailActiveColor
-                          : '',
-                color:
-                    trackBarType === 'normal'
-                        ? trackStyle.sliderRailColor
-                        : trackBarType === 'inverted'
-                          ? trackStyle.sliderRailActiveColor
-                          : '',
+                background: railColor,
+                color: railColor,
                 border: 'none',
                 borderRadius: `${trackStyle.trackBorderRadius}px`,
                 boxShadow: `${trackStyle.trackShadowX}px ${this.state.rxData.trackShadowY}px ${trackStyle.trackShadowBlur}px ${trackStyle.trackShadowSize}px ${trackStyle.trackShadowColor}`,
             },
             '& .MuiSlider-track': {
-                backgroundColor:
-                    trackBarType === 'normal'
-                        ? this.state.rxData.sliderRailActiveColor
-                        : trackBarType === 'inverted'
-                          ? trackStyle.sliderRailColor
-                          : '',
-                color:
-                    trackBarType === 'normal'
-                        ? this.state.rxData.sliderRailActiveColor
-                        : trackBarType === 'inverted'
-                          ? trackStyle.sliderRailColor
-                          : '',
+                background: trackColor,
+                color: trackColor,
                 border: 'none',
                 borderRadius: `${trackStyle.trackBorderRadius}px`,
             },
@@ -516,36 +634,12 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 color: trackStyle.sliderRailActiveColor,
             },
             '& .MuiSlider-markLabel': {
-                fontSize: this.state.rxStyle!['font-size'],
-                color: this.state.rxStyle!.color,
-                textShadow: this.state.rxStyle!['text-shadow'],
-                fontFamily: this.state.rxStyle!['font-family'],
-                fontStyle: this.state.rxStyle!['font-style'],
-                fontVariant: this.state.rxStyle!['font-variant'],
-                fontWeight: this.state.rxStyle!['font-weight'],
-                lineHeight: this.state.rxStyle!['line-height'],
-                letterSpacing: this.state.rxStyle!['letter-spacing'],
-                wordSpacing: this.state.rxStyle!['word-spacing'],
+                ...markLabelFontStyle,
+                ...markLabelPositionStyle,
             },
         };
 
-        if (this.state.rxData.orientation === 'horizontal') {
-            sliderAttributes = {
-                ...sliderAttributes,
-                '& .MuiSlider-markLabel': {
-                    top: trackStyle.trackWidth + 20,
-                },
-            };
-        } else {
-            sliderAttributes = {
-                ...sliderAttributes,
-                '& .MuiSlider-markLabel': {
-                    left: trackStyle.trackWidth + 20,
-                },
-            };
-        }
-
-        return (
+        const slider = (
             <Slider
                 disabled={this.props.editMode}
                 sx={sliderAttributes}
@@ -553,15 +647,66 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 onChangeCommitted={(e, val) =>
                     this.setState({ sliderValue: val as number }, () => this.onChange(e, val))
                 }
-                min={this.state.rxData.minValue}
-                max={this.state.rxData.maxValue}
-                step={this.state.rxData.step}
+                min={minValue}
+                max={maxValue}
+                step={Number(this.state.rxData.step)}
                 value={this.state.sliderValue || 0}
-                valueLabelDisplay="auto"
+                valueLabelDisplay={this.state.rxData.valueLabelDisplay ?? 'auto'}
+                valueLabelFormat={unit ? val => `${val}${unit}` : undefined}
                 track={trackStyle.trackBarType}
-                orientation={this.state.rxData.orientation}
+                orientation={orientation}
                 marks={marks}
             />
         );
+
+        const sliderWithPointer = this.state.rxData.readOnly ? (
+            <div style={{ pointerEvents: 'none', width: '100%', height: '100%' }}>{slider}</div>
+        ) : (
+            slider
+        );
+
+        const sliderTitle = this.state.rxData.sliderTitle;
+        if (sliderTitle) {
+            const titleStyle: React.CSSProperties = {
+                fontSize: this.state.rxStyle!['font-size'] ?? undefined,
+                color: this.state.rxStyle!.color ?? undefined,
+                fontFamily: this.state.rxStyle!['font-family'] ?? undefined,
+                fontWeight: this.state.rxStyle!['font-weight'] ?? undefined,
+                fontStyle: this.state.rxStyle!['font-style'] ?? undefined,
+                textShadow: this.state.rxStyle!['text-shadow'] ?? undefined,
+                lineHeight: this.state.rxStyle!['line-height'] ?? undefined,
+                flexShrink: 0,
+            };
+
+            // MUI mark labels use absolute positioning and can overflow above the slider container.
+            // stepsAbove (horizontal): labels are `bottom: trackWidth + 20` above the mark → overflow ≈ trackWidth + 24px
+            // vertical with any marks: MUI centers labels on the mark with translateY(-50%) → top half overflows ≈ 12px
+            let sliderTopPadding = 0;
+            if (orientation === 'horizontal' && stepsAbove && !stepsInside) {
+                sliderTopPadding = (trackStyle.trackWidth ?? 10) + 24;
+            } else if (orientation === 'vertical' && (this.state.rxData.showMinMax || this.state.rxData.showSteps)) {
+                sliderTopPadding = 12;
+            }
+
+            const titleSpacing = this.state.rxData.sliderTitleSpacing ?? 4;
+            return (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        height: '100%',
+                        gap: titleSpacing,
+                    }}
+                >
+                    <div style={titleStyle}>{sliderTitle}</div>
+                    <div style={{ flex: 1, minHeight: 0, minWidth: 0, paddingTop: sliderTopPadding || undefined }}>
+                        {sliderWithPointer}
+                    </div>
+                </div>
+            );
+        }
+
+        return sliderWithPointer;
     }
 }

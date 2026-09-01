@@ -21,6 +21,10 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
+# Restrict default GITHUB_TOKEN permissions for all jobs
+permissions:
+  contents: read
+
 jobs:
   # Performs quick checks before the expensive test runs
   check-and-lint:
@@ -29,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: ioBroker/testing-action-check@v1
+      - uses: ioBroker/testing-action-check@v2
         with:
           node-version: '24.x'
           # Try a clean install first; if lockfile is out-of-sync fallback to `npm install`.
@@ -46,59 +50,22 @@ jobs:
     strategy:
       matrix:
         node-version: [ 22.x, 24.x ]
-        # temp removed windows and mac because issues with python
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest, windows-latest ]
 
     runs-on: ${{ matrix.os }}
 
     steps:
+      - uses: browser-actions/setup-chrome@latest
+        id: setup-chrome
       - uses: ioBroker/testing-action-adapter@v1
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'true'
+          PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
         with:
           build: true
           install-command: 'npm ci || npm install; cd src-widgets; npm ci || npm install'
           os: ${{ matrix.os }}
           node-version: ${{ matrix.node-version }}
-
-#  adapter-tests:
-#    needs: [check-and-lint]
-#    if: contains(github.event.head_commit.message, '[skip ci]') == false
-#
-#    runs-on: ${{ matrix.os }}
-#    strategy:
-#      matrix:
-#        node-version: [22.x, 24.x]
-#        # temp removed windows and mac because issues with python
-#        os: [ubuntu-latest, windows-latest, macos-latest]
-#
-#    steps:
-#      - uses: actions/checkout@v6
-#
-#      - name: Use Node.js ${{ matrix.node-version }}
-#        uses: actions/setup-node@v6
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#
-#      - name: Install macos distutils
-#        if: matrix.os == 'macos-latest'
-#        run: python3 --version
-#
-#      - name: Install Dependencies
-#        run: npm i
-#
-#      - name: Build
-#        run: npm run build
-#
-#      - name: Run local tests
-#        run: npm test
-#
-#      - name: Archive screenshots
-#        if: always()
-#        # if: failure()
-#        uses: actions/upload-artifact@v7
-#        with:
-#          name: my-artifacts-${{ strategy.job-index }}
-#          path: tmp/screenshots/**/*.png
-#          retention-days: 3
 
   # Deploys the final package to NPM
   deploy:

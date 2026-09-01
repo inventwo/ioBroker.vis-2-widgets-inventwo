@@ -1,4 +1,67 @@
 # Older changes
+## 1.5.0 (2026-06-13)
+- Table Widget: Added "URL" column format for clickable links with configurable target
+- Table Widget: Added "Sum row" option to visually separate the last row with a double border
+- Universal Widget: Added "Corner style" – switch between rounded and chamfered (45 degree bevel) corners
+- Table Widget: Added "Formula" field per column to compute values from row fields (e.g. price * qty)
+- Slider Widget: Added "Title" and "Unit" fields
+- Dropdown Widget: Fixed border radius; added "Widget shadow" for the entire widget container
+
+## 1.4.0 (2026-06-04)
+- Universal Widget: Added "RGB (Scaled)" color model for the color picker – supports configurable value ranges (e.g. 0–1023 for 10-bit RGB controllers)
+- Universal Widget: Added optional password/PIN protection for navigation buttons
+- Universal Widget: Added per-state content mirror option (inherit from content style / yes / no)
+- Table Widget: Added configurable decimal and thousand separators for number format columns
+- Table Widget: Added value color to row conditions (in addition to row background color)
+- Table Widget: Added boolean column format displaying a readonly checkbox with optional configurable checked/unchecked colors
+- Table Widget: Added comparison operator selection to row conditions (equal, not equal, greater, less, greater/less equal)
+- Table Widget: Added value color per row condition – applicable to the whole row or to the condition column only
+
+## 1.3.0 (2026-06-03)
+- Slider: Added configurable value label display (always/on drag/never) and step marks position (above/below)
+- Universal: Added "Disable click when active" option per state
+- Universal: Fixed color picker components not updating when toggled in the editor
+- Added links to widget documentation in widget settings
+
+## 1.2.0 (2026-06-02)
+- Radial Slider: Support gradient colors for rail and active rail
+- Dropdown: Added shadow spread option
+- Table: Added ip-address column format for correct sorting
+
+## 1.0.0 (2026-05-17)
+- Universal Widget: Add polygon shape support (triangle, diamond, pentagon, hexagon, heptagon, octagon, star) with configurable rotation and corner radius
+
+## 0.9.0 (2026-05-17)
+- Added document with example designs for universal widget
+- Marquee widget: new scrolling text widget with configurable speed, direction, loop count, gap and pause-on-hover (#5)
+- Dropdown widget: optional conditional background color on title, configurable title padding (top, bottom, left, right) (#246)
+- Value List widget: new widget that renders a bullet-point list from a text value (datapoint or manual), with configurable separator, bullet type, colors, spacing and padding (#2)
+
+## 0.8.0 (2026-05-15)
+- Slider widget: added read-only mode, gradient support for colors and an option to place steps inside the slider bar (#244)
+- Dropdown widget: added conditional background color (#198), read-only mode (#201) and option to show value without text (#201)
+- Table widget: added multi-column sort (#234)
+
+## 0.7.2 (2026-04-26)
+- Fix button click and hold for mobile devices (#192)
+
+## 0.7.1 (2026-04-24)
+- Fixed table widget fixed header not working
+
+## 0.7.0 (2026-04-21)
+- Table widget added fixed header option (#234)
+- Table widget added conditional row color (#234)
+- Table widget added column filter (#234)
+
+## 0.6.5 (2026-04-11)
+- Changed click behavior to fix click and hold for mobile devices (#192)
+- Fixed dropdown border on focus visible even though border with is 0 (#200)
+
+## 0.6.4 (2026-03-19)
+- Fixed touch triggers twice on universal state widget
+
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## 0.6.3 (2026-03-19)
 - Fixed HTML support for table widget without configured columns
 

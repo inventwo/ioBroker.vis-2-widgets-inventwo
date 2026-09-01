@@ -19,21 +19,36 @@ import {
     Box,
     Divider,
     Typography,
+    TablePagination,
 } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { tableRowClasses } from '@mui/material/TableRow';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { I18n } from '@iobroker/adapter-react-v5';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
 import React from 'react';
+import { createDocsLinkField } from './utils/docLinkField';
+
+interface SortCriterion {
+    key: string;
+    order: 'asc' | 'desc';
+}
 
 interface TableRxData {
     oid: null | string;
     countColumns: number;
     maxRows: number;
+    pagination: boolean;
+    rowsPerPage: number;
+    paginationHeight: number | string;
     showHead: boolean;
     defaultSortColumn: string;
     defaultSortOrder: 'asc' | 'desc';
+    multiSort: boolean;
+    countDefaultSortColumns: number;
+    [key: `defaultSortKey${number}`]: string;
+    [key: `defaultSortDir${number}`]: 'asc' | 'desc';
     headerHeight: number | string;
     backgroundHeader: string;
     headerBorderWidth: number | string;
@@ -50,24 +65,33 @@ interface TableRxData {
     [key: `columnPrefix${number}`]: string;
     [key: `columnSuffix${number}`]: string;
     [key: `columnPlaceholder${number}`]: string;
-    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime' | 'image';
+    [key: `columnValueFormat${number}`]: 'text' | 'number' | 'datetime' | 'image' | 'ip' | 'boolean' | 'url';
+    [key: `columnUrlTarget${number}`]: '_self' | '_blank' | '_parent' | '_top';
+    [key: `columnBooleanCheckedColor${number}`]: string;
+    [key: `columnBooleanUncheckedColor${number}`]: string;
     [key: `columnNumberDecimals${number}`]: number;
+    [key: `columnDecimalSeparator${number}`]: string;
+    [key: `columnThousandSeparator${number}`]: string;
     [key: `columnDatetimeFormat${number}`]: 'datetime' | 'date' | 'time';
     [key: `columnContentAlign${number}`]: React.CSSProperties['textAlign'];
     [key: `columnDatetimeFormatCustom${number}`]: string;
     [key: `sortable${number}`]: boolean;
     [key: `columnHidden${number}`]: boolean;
     [key: `columnFilterable${number}`]: boolean;
+    [key: `columnFormula${number}`]: string;
     stickyHeader: boolean;
+    showSumRow: boolean;
     countRowConditions: number;
     [key: `rowConditionKey${number}`]: string;
+    [key: `rowConditionOperator${number}`]: '===' | '!=' | '>' | '<' | '>=' | '<=';
     [key: `rowConditionValue${number}`]: string;
     [key: `rowConditionColor${number}`]: string;
+    [key: `rowConditionValueColor${number}`]: string;
+    [key: `rowConditionColumnValueColor${number}`]: string;
 }
 
 interface TableWidgetState extends VisRxWidgetState {
-    orderBy: string | null;
-    order: 'asc' | 'desc';
+    sortCriteria: SortCriterion[];
     filters: Record<string, string[]>;
     filterAnchorEl: HTMLElement | null;
     filterButtonRect: DOMRect | null;
@@ -75,6 +99,154 @@ interface TableWidgetState extends VisRxWidgetState {
     filterColumnAllValues: string[];
     filterColumnPendingValues: string[];
     parentHeight: number | null;
+    page: number;
+}
+
+// ── Safe formula evaluator (no eval) ─────────────────────────────────────────
+// Supports: +  -  *  /  %  **  ( )  numeric literals  JSON-key identifiers
+// Identifiers are resolved against the current data row; unknown keys → NaN.
+
+function tokenizeFormula(formula: string): string[] | null {
+    const tokens: string[] = [];
+    let i = 0;
+    while (i < formula.length) {
+        if (/\s/.test(formula[i])) {
+            i++;
+            continue;
+        }
+        // Number literal (integer or decimal)
+        if (/\d/.test(formula[i]) || (formula[i] === '.' && /\d/.test(formula[i + 1] ?? ''))) {
+            let num = '';
+            while (i < formula.length && /[\d.]/.test(formula[i])) {
+                num += formula[i++];
+            }
+            tokens.push(num);
+            continue;
+        }
+        // Identifier (JSON key)
+        if (/[a-zA-Z_$]/.test(formula[i])) {
+            let id = '';
+            while (i < formula.length && /[a-zA-Z0-9_$]/.test(formula[i])) {
+                id += formula[i++];
+            }
+            tokens.push(id);
+            continue;
+        }
+        // ** must be checked before *
+        if (formula[i] === '*' && formula[i + 1] === '*') {
+            tokens.push('**');
+            i += 2;
+            continue;
+        }
+        if ('+-*/%()'.includes(formula[i])) {
+            tokens.push(formula[i++]);
+            continue;
+        }
+        return null; // unknown character → invalid formula
+    }
+    return tokens;
+}
+
+function evaluateFormula(formula: string, row: Record<string, any>): number | null {
+    if (!formula?.trim()) {
+        return null;
+    }
+    const tokens = tokenizeFormula(formula.trim());
+    if (!tokens) {
+        return null;
+    }
+
+    let pos = 0;
+    const peek = (): string | null => (pos < tokens.length ? tokens[pos] : null);
+    const consume = (): string => tokens[pos++];
+
+    function parsePrimary(): number {
+        const t = peek();
+        if (t === null) {
+            return NaN;
+        }
+        if (t === '(') {
+            consume();
+            const v = parseAdditive();
+            if (peek() === ')') {
+                consume();
+            }
+            return v;
+        }
+        if (/^[\d.]+$/.test(t)) {
+            consume();
+            return parseFloat(t);
+        }
+        if (/^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(t)) {
+            consume();
+            const val = row[t];
+            return val !== undefined && val !== null && val !== '' ? Number(val) : NaN;
+        }
+        return NaN;
+    }
+
+    function parseUnary(): number {
+        if (peek() === '-') {
+            consume();
+            return -parsePrimary();
+        }
+        if (peek() === '+') {
+            consume();
+            return parsePrimary();
+        }
+        return parsePrimary();
+    }
+
+    function parsePower(): number {
+        const base = parseUnary();
+        if (peek() === '**') {
+            consume();
+            return Math.pow(base, parsePower());
+        }
+        return base;
+    }
+
+    function parseMultiplicative(): number {
+        let left = parsePower();
+        while (peek() === '*' || peek() === '/' || peek() === '%') {
+            const op = consume();
+            const right = parsePower();
+            if (op === '*') {
+                left *= right;
+            } else if (op === '/') {
+                left = right !== 0 ? left / right : NaN;
+            } else {
+                left %= right;
+            }
+        }
+        return left;
+    }
+
+    function parseAdditive(): number {
+        let left = parseMultiplicative();
+        while (peek() === '+' || peek() === '-') {
+            const op = consume();
+            const right = parseMultiplicative();
+            left = op === '+' ? left + right : left - right;
+        }
+        return left;
+    }
+
+    try {
+        const result = parseAdditive();
+        return Number.isFinite(result) ? result : null;
+    } catch {
+        return null;
+    }
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+function ipToNumber(ip: string): number {
+    const parts = ip.split('.').map(Number);
+    if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) {
+        return 0;
+    }
+    return ((parts[0] * 256 + parts[1]) * 256 + parts[2]) * 256 + parts[3];
 }
 
 export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, TableWidgetState> {
@@ -90,6 +262,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                 {
                     name: 'common',
                     fields: [
+                        createDocsLinkField('docs/en/widgets/table-widget.md') as any,
                         {
                             name: 'oid',
                             type: 'id',
@@ -117,16 +290,45 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             label: 'show_head',
                         },
                         {
+                            name: 'pagination',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'pagination',
+                        },
+                        {
+                            name: 'rowsPerPage',
+                            type: 'number',
+                            min: 1,
+                            step: 1,
+                            default: 10,
+                            label: 'rows_per_page',
+                            hidden: '!data.pagination',
+                        },
+                        {
                             name: 'stickyHeader',
                             type: 'checkbox',
                             default: false,
                             label: 'sticky_header',
                         },
                         {
+                            name: 'showSumRow',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'show_sum_row',
+                        },
+                    ],
+                },
+
+                {
+                    name: 'attr_group_sorting',
+                    label: 'attr_group_sorting',
+                    fields: [
+                        {
                             name: 'defaultSortColumn',
                             type: 'text',
                             label: 'default_sort_column',
                             tooltip: 'tooltip_default_sort_column',
+                            hidden: 'data.multiSort && data.countDefaultSortColumns > 0',
                         },
                         {
                             name: 'defaultSortOrder',
@@ -137,6 +339,48 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             ],
                             default: 'asc',
                             label: 'default_sort_order',
+                            hidden: 'data.multiSort && data.countDefaultSortColumns > 0',
+                        },
+                        {
+                            name: 'multiSort',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'multi_sort',
+                            tooltip: 'tooltip_multi_sort',
+                        },
+                        {
+                            name: 'countDefaultSortColumns',
+                            type: 'number',
+                            min: 0,
+                            step: 1,
+                            default: 0,
+                            label: 'count_default_sort_columns',
+                            hidden: '!data.multiSort',
+                        },
+                    ],
+                },
+
+                {
+                    name: 'countDefaultSortColumns',
+                    indexFrom: 1,
+                    indexTo: 'countDefaultSortColumns',
+                    label: 'attr_group_default_sort_column',
+                    fields: [
+                        {
+                            name: 'defaultSortKey',
+                            type: 'text',
+                            label: 'default_sort_key',
+                            tooltip: 'tooltip_default_sort_column',
+                        },
+                        {
+                            name: 'defaultSortDir',
+                            type: 'select',
+                            options: [
+                                { value: 'asc', label: 'ascending' },
+                                { value: 'desc', label: 'descending' },
+                            ],
+                            default: 'asc',
+                            label: 'default_sort_dir',
                         },
                     ],
                 },
@@ -157,6 +401,12 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             name: 'columnKey',
                             type: 'text',
                             label: 'key',
+                        },
+                        {
+                            name: 'columnFormula',
+                            type: 'text',
+                            label: 'column_formula',
+                            tooltip: 'tooltip_column_formula',
                         },
                         {
                             name: 'columnTitle',
@@ -215,17 +465,59 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             options: [
                                 { value: 'text', label: 'Text' },
                                 { value: 'number', label: 'Number' },
+                                { value: 'boolean', label: 'boolean' },
                                 { value: 'datetime', label: 'datetime' },
                                 { value: 'image', label: 'image' },
+                                { value: 'ip', label: 'ip_address' },
+                                { value: 'url', label: 'url' },
                             ],
                             default: 'text',
                             label: 'format',
+                        },
+                        {
+                            name: 'columnUrlTarget',
+                            type: 'select',
+                            options: [
+                                { value: '_blank', label: 'new_tab' },
+                                { value: '_self', label: 'same_tab' },
+                                { value: '_parent', label: 'parent_frame' },
+                                { value: '_top', label: 'top_frame' },
+                            ],
+                            default: '_blank',
+                            label: 'url_target',
+                            hidden: 'data["columnValueFormat" + index] != "url"',
+                        },
+                        {
+                            name: 'columnBooleanCheckedColor',
+                            type: 'color',
+                            label: 'boolean_checked_color',
+                            hidden: 'data["columnValueFormat" + index] != "boolean"',
+                        },
+                        {
+                            name: 'columnBooleanUncheckedColor',
+                            type: 'color',
+                            label: 'boolean_unchecked_color',
+                            hidden: 'data["columnValueFormat" + index] != "boolean"',
                         },
                         {
                             name: 'columnNumberDecimals',
                             type: 'number',
                             label: 'decimals',
                             default: 0,
+                            hidden: 'data["columnValueFormat" + index] != "number"',
+                        },
+                        {
+                            name: 'columnDecimalSeparator',
+                            type: 'text',
+                            label: 'decimal_separator',
+                            tooltip: 'tooltip_decimal_separator',
+                            hidden: 'data["columnValueFormat" + index] != "number"',
+                        },
+                        {
+                            name: 'columnThousandSeparator',
+                            type: 'text',
+                            label: 'thousand_separator',
+                            tooltip: 'tooltip_thousand_separator',
                             hidden: 'data["columnValueFormat" + index] != "number"',
                         },
                         {
@@ -286,6 +578,20 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             label: 'row_color_condition_key',
                         },
                         {
+                            name: 'rowConditionOperator',
+                            type: 'select',
+                            options: [
+                                { value: '===', label: 'equal' },
+                                { value: '!=', label: 'not_equal' },
+                                { value: '>', label: 'greater' },
+                                { value: '<', label: 'lower' },
+                                { value: '>=', label: 'greater_equal' },
+                                { value: '<=', label: 'lower_equal' },
+                            ],
+                            default: '===',
+                            label: 'comparison_operator',
+                        },
+                        {
                             name: 'rowConditionValue',
                             type: 'text',
                             label: 'row_color_condition_value',
@@ -294,6 +600,16 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             name: 'rowConditionColor',
                             type: 'color',
                             label: 'row_color_condition_color',
+                        },
+                        {
+                            name: 'rowConditionValueColor',
+                            type: 'color',
+                            label: 'row_color_condition_value_color',
+                        },
+                        {
+                            name: 'rowConditionColumnValueColor',
+                            type: 'color',
+                            label: 'row_color_condition_column_value_color',
                         },
                     ],
                 },
@@ -343,6 +659,16 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             step: 1,
                             default: 50,
                             label: 'column_height',
+                        },
+                        {
+                            name: 'paginationHeight',
+                            type: 'slider',
+                            min: 0,
+                            max: 100,
+                            step: 1,
+                            default: 52,
+                            label: 'pagination_height',
+                            hidden: '!data.pagination',
                         },
                         {
                             name: '',
@@ -589,14 +915,37 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         return InventwoWidgetTable.getWidgetInfo();
     }
 
+    buildDefaultSortCriteria(): SortCriterion[] {
+        const rxData = this.state.rxData;
+        const countDefaultSortColumns = rxData.countDefaultSortColumns ?? 0;
+
+        if (rxData.multiSort && countDefaultSortColumns > 0) {
+            const criteria: SortCriterion[] = [];
+            for (let i = 1; i <= countDefaultSortColumns; i++) {
+                const key = rxData[`defaultSortKey${i}`];
+                if (key) {
+                    const dir: 'asc' | 'desc' = rxData[`defaultSortDir${i}`] === 'desc' ? 'desc' : 'asc';
+                    criteria.push({ key: String(key), order: dir });
+                }
+            }
+            return criteria;
+        }
+
+        if (rxData.defaultSortColumn) {
+            return [{ key: rxData.defaultSortColumn, order: rxData.defaultSortOrder || 'asc' }];
+        }
+
+        return [];
+    }
+
     componentDidMount(): void {
         super.componentDidMount?.();
 
-        if (this.state.rxData.defaultSortColumn && !this.state.orderBy) {
-            this.setState({
-                orderBy: this.state.rxData.defaultSortColumn,
-                order: this.state.rxData.defaultSortOrder || 'asc',
-            });
+        if (!this.state.sortCriteria?.length) {
+            const criteria = this.buildDefaultSortCriteria();
+            if (criteria.length) {
+                this.setState({ sortCriteria: criteria });
+            }
         }
 
         // Measure parent (VIS widget) height
@@ -619,79 +968,139 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
     componentDidUpdate(prevProps: VisRxWidgetProps, prevState: TableWidgetState & { rxData: TableRxData }): void {
         super.componentDidUpdate?.(prevProps, prevState);
 
-        // Check if default sort settings have changed
-        if (
-            this.state.rxData.defaultSortColumn !== prevState.rxData.defaultSortColumn ||
-            this.state.rxData.defaultSortOrder !== prevState.rxData.defaultSortOrder
-        ) {
-            // Update sorting when default settings change
-            if (this.state.rxData.defaultSortColumn) {
-                this.setState({
-                    orderBy: this.state.rxData.defaultSortColumn,
-                    order: this.state.rxData.defaultSortOrder || 'asc',
-                });
-            } else {
-                // Clear sorting if default column is removed
-                this.setState({
-                    orderBy: null,
-                    order: 'asc',
-                });
+        // Build a serialized key from all default-sort-relevant config fields
+        const getDefaultSortConfigKey = (rxData: TableRxData): string => {
+            const parts = [
+                rxData.defaultSortColumn ?? '',
+                rxData.defaultSortOrder ?? '',
+                String(rxData.multiSort ?? false),
+                String(rxData.countDefaultSortColumns ?? 0),
+            ];
+            for (let i = 1; i <= (rxData.countDefaultSortColumns ?? 0); i++) {
+                parts.push(String(rxData[`defaultSortKey${i}`] ?? ''));
+                parts.push(String(rxData[`defaultSortDir${i}`] ?? ''));
             }
+            return parts.join('|');
+        };
+
+        if (getDefaultSortConfigKey(this.state.rxData) !== getDefaultSortConfigKey(prevState.rxData)) {
+            this.setState({ sortCriteria: this.buildDefaultSortCriteria() });
         }
     }
 
-    handleRequestSort = (columnKey: string): void => {
-        const isAsc = this.state.orderBy === columnKey && this.state.order === 'asc';
-        this.setState({
-            order: isAsc ? 'desc' : 'asc',
-            orderBy: columnKey,
-        });
+    handleChangePage = (_event: unknown, newPage: number): void => {
+        this.setState({ page: newPage });
     };
 
-    sortData = (data: Record<string, any>[], orderBy: string | null, order: 'asc' | 'desc'): Record<string, any>[] => {
-        if (!orderBy) {
+    handleRequestSort = (columnKey: string): void => {
+        const multiSort = this.state.rxData.multiSort;
+        const existing: SortCriterion[] = this.state.sortCriteria ?? [];
+        const idx = existing.findIndex(c => c.key === columnKey);
+
+        if (multiSort) {
+            if (idx === -1) {
+                // Not yet in criteria → append as ascending (lowest priority)
+                this.setState({ sortCriteria: [...existing, { key: columnKey, order: 'asc' }] });
+            } else if (existing[idx].order === 'asc') {
+                // Ascending → toggle to descending
+                const updated = [...existing];
+                updated[idx] = { key: columnKey, order: 'desc' };
+                this.setState({ sortCriteria: updated });
+            } else {
+                // Descending → remove from criteria
+                this.setState({ sortCriteria: existing.filter((_, i) => i !== idx) });
+            }
+        } else {
+            // Single-sort mode (legacy behavior)
+            const currentEntry = existing.find(c => c.key === columnKey);
+            const newOrder: 'asc' | 'desc' =
+                existing.length === 1 && currentEntry ? (currentEntry.order === 'asc' ? 'desc' : 'asc') : 'asc';
+            this.setState({ sortCriteria: [{ key: columnKey, order: newOrder }] });
+        }
+    };
+
+    sortData = (
+        data: Record<string, any>[],
+        sortCriteria: SortCriterion[],
+        columnFormats: Record<string, string> = {},
+    ): Record<string, any>[] => {
+        if (!sortCriteria || sortCriteria.length === 0) {
             return data;
         }
         return [...data].sort((a, b) => {
-            const aValue = a[orderBy];
-            const bValue = b[orderBy];
-            if (aValue == null && bValue == null) {
-                return 0;
+            for (const criterion of sortCriteria) {
+                const aValue = a[criterion.key];
+                const bValue = b[criterion.key];
+                let comparison: number;
+                if (aValue == null && bValue == null) {
+                    comparison = 0;
+                } else if (aValue == null) {
+                    comparison = 1;
+                } else if (bValue == null) {
+                    comparison = -1;
+                } else if (columnFormats[criterion.key] === 'ip') {
+                    comparison = ipToNumber(String(aValue)) - ipToNumber(String(bValue));
+                } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+                    comparison = aValue - bValue;
+                } else if (typeof aValue === 'string' && typeof bValue === 'string') {
+                    comparison = aValue.localeCompare(bValue);
+                } else {
+                    comparison = String(aValue).localeCompare(String(bValue));
+                }
+                if (comparison !== 0) {
+                    return criterion.order === 'asc' ? comparison : -comparison;
+                }
             }
-            if (aValue == null) {
-                return order === 'asc' ? 1 : -1;
-            }
-            if (bValue == null) {
-                return order === 'asc' ? -1 : 1;
-            }
-            let comparison;
-            if (typeof aValue === 'number' && typeof bValue === 'number') {
-                comparison = aValue - bValue;
-            } else if (typeof aValue === 'string' && typeof bValue === 'string') {
-                comparison = aValue.localeCompare(bValue);
-            } else {
-                comparison = String(aValue).localeCompare(String(bValue));
-            }
-            return order === 'asc' ? comparison : -comparison;
+            return 0;
         });
     };
 
-    getRowColor = (row: Record<string, any>): string | undefined => {
+    getConditionColors = (
+        row: Record<string, any>,
+    ): { rowColor?: string; valueColor?: string; columnValueColor?: string; conditionColumnKey?: string } => {
         const count = this.state.rxData.countRowConditions ?? 0;
         for (let i = 1; i <= count; i++) {
             const keyOrIndex = this.state.rxData[`rowConditionKey${i}`];
-            const condValue = this.state.rxData[`rowConditionValue${i}`];
-            const color = this.state.rxData[`rowConditionColor${i}`];
-            if (!color || keyOrIndex === undefined || keyOrIndex === '') {
+            const rowColor = this.state.rxData[`rowConditionColor${i}`];
+            const valueColor = this.state.rxData[`rowConditionValueColor${i}`];
+            const columnValueColor = this.state.rxData[`rowConditionColumnValueColor${i}`];
+            if (keyOrIndex === undefined || keyOrIndex === '' || (!rowColor && !valueColor && !columnValueColor)) {
                 continue;
             }
+            const condValue = this.state.rxData[`rowConditionValue${i}`];
             const asNumber = Number(keyOrIndex);
             const resolvedKey = !isNaN(asNumber) && keyOrIndex.trim() !== '' ? Object.keys(row)[asNumber] : keyOrIndex;
-            if (resolvedKey !== undefined && String(row[resolvedKey]) === String(condValue)) {
-                return color;
+            const operator = this.state.rxData[`rowConditionOperator${i}`] ?? '===';
+            const rawValue = row[resolvedKey];
+            const numA = Number(rawValue);
+            const numB = Number(condValue);
+            const canCompareNumeric = !isNaN(numA) && !isNaN(numB) && operator !== '===' && operator !== '!=';
+            const a = canCompareNumeric ? numA : String(rawValue);
+            const b = canCompareNumeric ? numB : String(condValue);
+            const matches =
+                operator === '==='
+                    ? a === b
+                    : operator === '!='
+                      ? a !== b
+                      : operator === '>'
+                        ? a > b
+                        : operator === '<'
+                          ? a < b
+                          : operator === '>='
+                            ? a >= b
+                            : operator === '<='
+                              ? a <= b
+                              : false;
+            if (resolvedKey !== undefined && matches) {
+                return {
+                    rowColor: rowColor || undefined,
+                    valueColor: valueColor || undefined,
+                    columnValueColor: columnValueColor || undefined,
+                    conditionColumnKey: resolvedKey,
+                };
             }
         }
-        return undefined;
+        return {};
     };
 
     openFilterMenu = (
@@ -699,7 +1108,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         columnKey: string,
         allData: Record<string, any>[],
     ): void => {
-        const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+        const rect = event.currentTarget.getBoundingClientRect();
         const uniqueValues = Array.from(new Set(allData.map(row => String(row[columnKey] ?? '')))).sort();
         const currentFilter = this.state.filters?.[columnKey] ?? uniqueValues;
         this.setState({
@@ -727,7 +1136,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
         } else {
             filters[filterColumn] = filterColumnPendingValues;
         }
-        this.setState({ filters, filterAnchorEl: null, filterColumn: null });
+        this.setState({ filters, filterAnchorEl: null, filterColumn: null, page: 0 });
     };
 
     togglePendingValue = (value: string): void => {
@@ -766,9 +1175,22 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
 
         const unfilteredJson = json!;
 
-        // Sort the data if orderBy is set
-        if (json && this.state.orderBy) {
-            json = this.sortData(json, this.state.orderBy, this.state.order || 'asc');
+        // Sort the data
+        if (json && this.state.sortCriteria?.length) {
+            const columnFormats: Record<string, string> = {};
+            const colCount = this.state.rxData.countColumns ?? 0;
+            const autoKeys = json.length > 0 ? Object.keys(json[0]) : [];
+            for (let i = 1; i <= colCount; i++) {
+                let key = this.state.rxData[`columnKey${i}`];
+                if (!key) {
+                    key = autoKeys[i - 1];
+                }
+                const fmt = this.state.rxData[`columnValueFormat${i}`];
+                if (key && fmt) {
+                    columnFormats[String(key)] = fmt;
+                }
+            }
+            json = this.sortData(json, this.state.sortCriteria, columnFormats);
         }
 
         // Apply column filters
@@ -778,6 +1200,44 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
 
         const headers = [];
         const rows = [];
+
+        const sortCriteria: SortCriterion[] = this.state.sortCriteria ?? [];
+        const multiSort = this.state.rxData.multiSort;
+        const showSortPriority = multiSort && sortCriteria.length > 1;
+
+        const getSortDirection = (key: string): 'asc' | 'desc' => sortCriteria.find(c => c.key === key)?.order ?? 'asc';
+        const getSortIndex = (key: string): number => sortCriteria.findIndex(c => c.key === key);
+
+        const renderSortPriorityBadge = (key: string): React.JSX.Element | null => {
+            if (!showSortPriority) {
+                return null;
+            }
+            const idx = getSortIndex(key);
+            if (idx === -1) {
+                return null;
+            }
+            return (
+                <Box
+                    component="span"
+                    sx={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 16,
+                        height: 16,
+                        borderRadius: '50%',
+                        fontSize: '10px',
+                        fontWeight: 'bold',
+                        lineHeight: 1,
+                        ml: 0.25,
+                        backgroundColor: 'rgba(128,128,128,0.25)',
+                        flexShrink: 0,
+                    }}
+                >
+                    {idx + 1}
+                </Box>
+            );
+        };
 
         const outerShadowStyle = this.getStyle(
             'outerShadowStyleFromWidget',
@@ -832,6 +1292,14 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             },
         }));
 
+        const StyledSumRowTableCell = styled(StyledTableCell)(() => ({
+            [`&.${tableCellClasses.root}`]: {
+                borderBottomStyle: 'double',
+                borderBottomWidth: '3px',
+                borderBottomColor: this.state.rxData.rowBorderColor || 'currentColor',
+            },
+        }));
+
         const StyledTableRow = styled(TableRow)(() => ({
             '&:nth-of-type(odd)': {
                 backgroundColor: this.state.rxData.backgroundOddRow,
@@ -860,95 +1328,155 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
             );
         };
 
-        if ((json && json.length > 0) || unfilteredJson.length > 0) {
-            const sourceJson = unfilteredJson.length > 0 ? unfilteredJson : json!;
-            const countColumns = this.state.rxData.countColumns;
-            if (countColumns === 0) {
-                Object.keys(sourceJson[0]).forEach((h, index) => {
+        const countColumns = this.state.rxData.countColumns;
+        const hasData = json !== null && json.length > 0;
+        const sourceJson = unfilteredJson.length > 0 ? unfilteredJson : hasData ? json! : [];
+        const sourceKeys = sourceJson.length > 0 ? Object.keys(sourceJson[0]) : [];
+
+        if (countColumns === 0) {
+            if (sourceJson.length > 0) {
+                sourceKeys.forEach((h, index) => {
                     headers.push(
                         <StyledTableHeaderCell key={index}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <TableSortLabel
-                                    active={this.state.orderBy === h}
-                                    direction={this.state.orderBy === h ? this.state.order : 'asc'}
+                                    active={getSortIndex(h) !== -1}
+                                    direction={getSortDirection(h)}
                                     onClick={() => this.handleRequestSort(h)}
                                 >
                                     {h}
                                 </TableSortLabel>
+                                {renderSortPriorityBadge(h)}
                             </Box>
                         </StyledTableHeaderCell>,
                     );
                 });
-            } else {
-                for (let i = 1; i <= this.state.rxData.countColumns; i++) {
-                    if (this.state.rxData[`columnHidden${i}`]) {
-                        continue;
-                    }
+            }
+        } else {
+            for (let i = 1; i <= countColumns; i++) {
+                if (this.state.rxData[`columnHidden${i}`]) {
+                    continue;
+                }
 
-                    let columnTitle = this.state.rxData[`columnTitle${i}`];
+                let columnTitle = this.state.rxData[`columnTitle${i}`];
 
-                    if (columnTitle === null) {
-                        columnTitle = Object.keys(sourceJson[0])[i - 1];
-                    }
+                if (columnTitle === null) {
+                    columnTitle = sourceKeys[i - 1] ?? null;
+                }
 
-                    let columnKey = this.state.rxData[`columnKey${i}`];
-                    if (!columnKey) {
-                        columnKey = Object.keys(sourceJson[0])[i - 1];
-                    }
+                let columnKey = this.state.rxData[`columnKey${i}`];
+                if (!columnKey) {
+                    columnKey = sourceKeys[i - 1] ?? '';
+                }
 
-                    const isSortable = this.state.rxData[`sortable${i}`];
+                const isSortable = this.state.rxData[`sortable${i}`];
 
-                    const styles: SxProps = {
-                        textAlign: this.state.rxData[`columnTitleAlign${i}`],
-                    };
-                    if (this.state.rxData[`columnWidth${i}`]) {
-                        styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
-                        styles.overflow = 'hidden';
-                    }
+                const styles: SxProps = {
+                    textAlign: this.state.rxData[`columnTitleAlign${i}`],
+                };
+                if (this.state.rxData[`columnWidth${i}`]) {
+                    styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
+                    styles.overflow = 'hidden';
+                }
 
-                    headers.push(
-                        <StyledTableHeaderCell
-                            key={i}
-                            sx={styles}
+                headers.push(
+                    <StyledTableHeaderCell
+                        key={i}
+                        sx={styles}
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: this.state.rxData[`columnTitleAlign${i}`] ?? 'left',
+                            }}
                         >
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: this.state.rxData[`columnTitleAlign${i}`] ?? 'left',
-                                }}
-                            >
-                                {isSortable ? (
+                            {isSortable ? (
+                                <>
                                     <TableSortLabel
-                                        active={this.state.orderBy === String(columnKey)}
-                                        direction={this.state.orderBy === String(columnKey) ? this.state.order : 'asc'}
+                                        active={getSortIndex(String(columnKey)) !== -1}
+                                        direction={getSortDirection(String(columnKey))}
                                         onClick={() => this.handleRequestSort(String(columnKey))}
                                     >
                                         {columnTitle}
                                     </TableSortLabel>
-                                ) : (
-                                    <span>{columnTitle}</span>
-                                )}
-                                {this.state.rxData[`columnFilterable${i}`]
-                                    ? renderFilterButton(String(columnKey))
-                                    : null}
-                            </Box>
-                        </StyledTableHeaderCell>,
-                    );
-                }
+                                    {renderSortPriorityBadge(String(columnKey))}
+                                </>
+                            ) : (
+                                <span>{columnTitle}</span>
+                            )}
+                            {this.state.rxData[`columnFilterable${i}`] ? renderFilterButton(String(columnKey)) : null}
+                        </Box>
+                    </StyledTableHeaderCell>,
+                );
             }
+        }
 
-            let maxRows = this.state.rxData.maxRows;
+        let paginationControl: React.JSX.Element | null = null;
+
+        if (hasData) {
+            let maxRows = Number(this.state.rxData.maxRows) || 0;
             if (maxRows <= 0) {
                 maxRows = json!.length;
             } else {
                 maxRows = Math.min(maxRows, json!.length);
             }
 
-            for (let index = 0; index < maxRows; index++) {
-                const r = json![index];
+            const cappedData = json!.slice(0, maxRows);
+            const paginationEnabled = this.state.rxData.pagination;
+            const rowsPerPageRaw = Number(this.state.rxData.rowsPerPage);
+            const rowsPerPage = rowsPerPageRaw > 0 ? rowsPerPageRaw : 10;
+            const totalPages = paginationEnabled ? Math.max(1, Math.ceil(cappedData.length / rowsPerPage)) : 1;
+            const currentPage = paginationEnabled ? Math.min(this.state.page ?? 0, totalPages - 1) : 0;
+            const pageData = paginationEnabled
+                ? cappedData.slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage)
+                : cappedData;
+
+            if (paginationEnabled) {
+                const paginationHeight = this.valWithUnit(this.state.rxData.paginationHeight ?? 52);
+                paginationControl = (
+                    <TablePagination
+                        component="div"
+                        count={cappedData.length}
+                        page={currentPage}
+                        onPageChange={this.handleChangePage}
+                        rowsPerPage={rowsPerPage}
+                        rowsPerPageOptions={[]}
+                        labelDisplayedRows={({ from, to, count }) =>
+                            `${from}–${to} ${I18n.t('vis_2_widgets_inventwo_pagination_of')} ${count}`
+                        }
+                        sx={{
+                            flexShrink: 0,
+                            color: 'inherit',
+                            background: this.state.rxData.backgroundHeader,
+                            minHeight: paginationHeight,
+                            height: paginationHeight,
+                            overflow: 'hidden',
+                            '& .MuiTablePagination-toolbar': {
+                                minHeight: paginationHeight,
+                                height: paginationHeight,
+                                overflow: 'hidden',
+                                paddingTop: 0,
+                                paddingBottom: 0,
+                            },
+                            '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                                margin: 0,
+                            },
+                            '& .MuiTablePagination-actions': {
+                                overflow: 'hidden',
+                            },
+                        }}
+                    />
+                );
+            }
+
+            for (let index = 0; index < pageData.length; index++) {
+                const r = pageData[index];
                 const columns = [];
-                const rowColor = this.getRowColor(r);
+                const { rowColor, valueColor, columnValueColor, conditionColumnKey } = this.getConditionColors(r);
+
+                const isSumRow = this.state.rxData.showSumRow && index === pageData.length - 2;
+                const SumAwareTableCell = isSumRow ? StyledSumRowTableCell : StyledTableCell;
 
                 if (countColumns === 0) {
                     Object.values(r).forEach((v, indexCol: number) => {
@@ -956,10 +1484,10 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             v = JSON.stringify(v);
                         }
                         v = <span dangerouslySetInnerHTML={{ __html: v as string }}></span>;
-                        columns.push(<StyledTableCell key={`${index}_${indexCol}`}>{v}</StyledTableCell>);
+                        columns.push(<SumAwareTableCell key={`${index}_${indexCol}`}>{v}</SumAwareTableCell>);
                     });
                 } else {
-                    for (let i = 1; i <= this.state.rxData.countColumns; i++) {
+                    for (let i = 1; i <= countColumns; i++) {
                         if (this.state.rxData[`columnHidden${i}`]) {
                             continue;
                         }
@@ -970,17 +1498,39 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         const columnPlaceholder = this.state.rxData[`columnPlaceholder${i}`];
                         const columnFormat = this.state.rxData[`columnValueFormat${i}`];
                         if (!columnKey) {
-                            columnKey = Object.keys(sourceJson[0])[i - 1];
+                            columnKey = sourceKeys[i - 1] ?? '';
                         }
                         let columnValue = r[columnKey];
+                        const columnFormula = this.state.rxData[`columnFormula${i}`];
+                        if (columnFormula) {
+                            const formulaResult = evaluateFormula(columnFormula, r);
+                            if (formulaResult !== null) {
+                                columnValue = formulaResult;
+                            }
+                        }
                         if ((columnValue === null || columnValue === '') && columnPlaceholder) {
                             columnValue = columnPlaceholder;
                         } else if (columnFormat === 'number') {
-                            const formatter = new Intl.NumberFormat(navigator.language, {
-                                minimumFractionDigits: this.state.rxData[`columnNumberDecimals${i}`] ?? 0,
-                                maximumFractionDigits: this.state.rxData[`columnNumberDecimals${i}`] ?? 0,
-                            });
-                            columnValue = formatter.format(columnValue);
+                            const decimals = this.state.rxData[`columnNumberDecimals${i}`] ?? 0;
+                            const decimalSep = this.state.rxData[`columnDecimalSeparator${i}`];
+                            const thousandSep = this.state.rxData[`columnThousandSeparator${i}`];
+                            const hasCustomSep = decimalSep !== undefined && decimalSep !== null && decimalSep !== '';
+                            const hasThousandSep = thousandSep !== undefined && thousandSep !== null;
+                            if (hasCustomSep || hasThousandSep) {
+                                const fixedStr = Number(columnValue).toFixed(decimals);
+                                const parts = fixedStr.split('.');
+                                if (hasThousandSep && thousandSep !== '') {
+                                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSep);
+                                }
+                                const sep = hasCustomSep ? decimalSep : '.';
+                                columnValue = decimals > 0 ? parts.join(sep) : parts[0];
+                            } else {
+                                const formatter = new Intl.NumberFormat(navigator.language, {
+                                    minimumFractionDigits: decimals,
+                                    maximumFractionDigits: decimals,
+                                });
+                                columnValue = formatter.format(columnValue);
+                            }
                         } else if (columnFormat === 'datetime') {
                             if (columnValue) {
                                 const datetimeFormat = this.state.rxData[`columnDatetimeFormat${i}`];
@@ -997,6 +1547,26 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                                     );
                                 }
                             }
+                        } else if (columnFormat === 'boolean') {
+                            const boolVal =
+                                columnValue === true ||
+                                columnValue === 1 ||
+                                String(columnValue).toLowerCase() === 'true' ||
+                                columnValue === '1';
+                            const checkedColor = this.state.rxData[`columnBooleanCheckedColor${i}`];
+                            const uncheckedColor = this.state.rxData[`columnBooleanUncheckedColor${i}`];
+                            columnValue = (
+                                <Checkbox
+                                    checked={boolVal}
+                                    tabIndex={-1}
+                                    sx={{
+                                        pointerEvents: 'none',
+                                        padding: 0,
+                                        ...(uncheckedColor ? { color: uncheckedColor } : {}),
+                                        ...(checkedColor ? { '&.Mui-checked': { color: checkedColor } } : {}),
+                                    }}
+                                />
+                            );
                         } else if (columnFormat == 'image') {
                             let columnWidth = this.state.rxData[`columnWidth${i}`];
                             if (!columnWidth || columnWidth === 0) {
@@ -1011,6 +1581,20 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                                     alt={columnValue}
                                 />
                             );
+                        } else if (columnFormat === 'url') {
+                            const urlTarget = this.state.rxData[`columnUrlTarget${i}`] ?? '_blank';
+                            const href = String(columnValue ?? '');
+                            columnValue = href ? (
+                                <a
+                                    href={href}
+                                    target={urlTarget}
+                                    rel={urlTarget === '_blank' ? 'noopener noreferrer' : undefined}
+                                    style={{ color: 'inherit' }}
+                                    onClick={e => e.stopPropagation()}
+                                >
+                                    {href}
+                                </a>
+                            ) : null;
                         } else {
                             if (typeof columnValue === 'object' && columnValue !== null) {
                                 columnValue = JSON.stringify(columnValue);
@@ -1018,8 +1602,12 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             columnValue = <span dangerouslySetInnerHTML={{ __html: columnValue as string }}></span>;
                         }
 
+                        const resolvedColumnKey = columnKey ? String(columnKey) : String(sourceKeys[i - 1] ?? '');
+                        const isConditionColumn = !!columnValueColor && conditionColumnKey === resolvedColumnKey;
                         const styles: SxProps = {
                             textAlign: this.state.rxData[`columnContentAlign${i}`],
+                            ...(valueColor ? { color: `${valueColor} !important` } : {}),
+                            ...(isConditionColumn ? { color: `${columnValueColor} !important` } : {}),
                         };
                         if (this.state.rxData[`columnWidth${i}`]) {
                             styles.width = this.valWithUnit(this.state.rxData[`columnWidth${i}`]);
@@ -1027,14 +1615,14 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         }
 
                         columns.push(
-                            <StyledTableCell
+                            <SumAwareTableCell
                                 key={`${index}_${i}`}
                                 sx={styles}
                             >
                                 {columnPrefix}
                                 {columnValue}
                                 {columnSuffix}
-                            </StyledTableCell>,
+                            </SumAwareTableCell>,
                         );
                     }
                 }
@@ -1051,6 +1639,26 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     </StyledTableRow>,
                 );
             }
+        } else {
+            const visibleCount =
+                countColumns > 0
+                    ? Array.from({ length: countColumns }, (_, i) => i + 1).filter(
+                          i => !this.state.rxData[`columnHidden${i}`],
+                      ).length
+                    : 1;
+            rows.push(
+                <StyledTableRow
+                    key="no-data"
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                    <StyledTableCell
+                        colSpan={Math.max(visibleCount, 1)}
+                        sx={{ textAlign: 'center' }}
+                    >
+                        {I18n.t('vis_2_widgets_inventwo_no_data')}
+                    </StyledTableCell>
+                </StyledTableRow>,
+            );
         }
 
         let shadow = '';
@@ -1196,6 +1804,8 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                     ref={this.wrapperRef}
                     style={{
                         boxShadow: `${shadow}`,
+                        display: 'flex',
+                        flexDirection: 'column',
                         overflow: stickyHeader ? 'hidden' : 'auto',
                         height: stickyHeader ? '100%' : 'fit-content',
                         maxHeight: '100%',
@@ -1210,28 +1820,31 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                         borderRadius: `${borderRadiusStyle.borderRadiusTopLeft}px ${borderRadiusStyle.borderRadiusTopRight}px ${borderRadiusStyle.borderRadiusBottomRight}px ${borderRadiusStyle.borderRadiusBottomLeft}px`,
                     }}
                 >
-                    <TableContainer
-                        component={Paper}
-                        style={{
-                            height: stickyHeader ? '100%' : 'auto',
-                            maxHeight: stickyHeader ? '100%' : 'none',
-                            overflow: stickyHeader ? 'auto' : 'visible',
-                            background: 'transparent',
-                            borderRadius: 0,
-                        }}
-                    >
-                        <Table
-                            stickyHeader={stickyHeader}
-                            sx={{ tableLayout: 'fixed' }}
+                    {(headers.length > 0 || rows.length > 0) && (
+                        <TableContainer
+                            component={Paper}
+                            style={{
+                                flex: stickyHeader ? '1 1 auto' : '0 0 auto',
+                                minHeight: stickyHeader ? 0 : undefined,
+                                overflow: stickyHeader ? 'auto' : 'visible',
+                                background: 'transparent',
+                                borderRadius: 0,
+                            }}
                         >
-                            {this.state.rxData.showHead && (
-                                <TableHead>
-                                    <StyledTableHeaderRow>{headers}</StyledTableHeaderRow>
-                                </TableHead>
-                            )}
-                            <TableBody>{rows}</TableBody>
-                        </Table>
-                    </TableContainer>
+                            <Table
+                                stickyHeader={stickyHeader}
+                                sx={{ tableLayout: 'fixed' }}
+                            >
+                                {this.state.rxData.showHead && (
+                                    <TableHead>
+                                        <StyledTableHeaderRow>{headers}</StyledTableHeaderRow>
+                                    </TableHead>
+                                )}
+                                <TableBody>{rows}</TableBody>
+                            </Table>
+                        </TableContainer>
+                    )}
+                    {paginationControl}
                 </div>
                 {filterBox}
             </div>

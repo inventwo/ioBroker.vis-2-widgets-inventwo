@@ -178,44 +178,49 @@ export default class InventwoGeneric<
         return value + (!Number.isNaN(Number(value)) ? 'px' : '');
     }
 
-    // formatDate(format: string, d: Date): string {
-    //     const pad = (n: number): string => {
-    //         return String(n).padStart(2, '0');
-    //     };
-    //
-    //     const map = {
-    //         // Jahr
-    //         Y: () => d.getFullYear(),
-    //         y: () => String(d.getFullYear()).slice(-2),
-    //
-    //         // Monat
-    //         m: () => pad(d.getMonth() + 1),
-    //         n: () => d.getMonth() + 1,
-    //         F: () => d.toLocaleString('de-DE', { month: 'long' }),
-    //         M: () => d.toLocaleString('de-DE', { month: 'short' }),
-    //
-    //         // Tag
-    //         d: () => pad(d.getDate()),
-    //         j: () => d.getDate(),
-    //         D: () => d.toLocaleString('de-DE', { weekday: 'short' }),
-    //         l: () => d.toLocaleString('de-DE', { weekday: 'long' }),
-    //         N: () => (d.getDay() === 0 ? 7 : d.getDay()),
-    //
-    //         // Zeit
-    //         H: () => pad(d.getHours()),
-    //         G: () => d.getHours(),
-    //         i: () => pad(d.getMinutes()),
-    //         s: () => pad(d.getSeconds()),
-    //
-    //         // Sonstiges
-    //         U: () => Math.floor(d.getTime() / 1000)
-    //     };
-    //
-    //     return format.replace(/\\?([a-zA-Z])/g, (match, token) => {
-    //         if (match.startsWith('\\')) {
-    //             return token; // escaped character
-    //         }
-    //         return map[token] ? map[token]() : token;
-    //     });
-    // }
+    formatDate(value: any, format: string): string {
+        if (!format) {
+            return String(value);
+        }
+
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) {
+            return String(value);
+        }
+
+        const pad = (n: number, len = 2): string => String(n).padStart(len, '0');
+
+        const isoWeek = (date: Date): number => {
+            const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            // Thursday of the current week decides the week's year (ISO-8601).
+            target.setDate(target.getDate() + 3 - ((target.getDay() + 6) % 7));
+            const firstThursday = new Date(target.getFullYear(), 0, 4);
+            firstThursday.setDate(firstThursday.getDate() + 3 - ((firstThursday.getDay() + 6) % 7));
+            return 1 + Math.round((target.getTime() - firstThursday.getTime()) / (7 * 24 * 60 * 60 * 1000));
+        };
+
+        const locale = navigator.language;
+
+        const map: Record<string, () => string> = {
+            YYYY: () => String(d.getFullYear()),
+            YY: () => String(d.getFullYear()).slice(-2),
+            MM: () => pad(d.getMonth() + 1),
+            M: () => String(d.getMonth() + 1),
+            DD: () => pad(d.getDate()),
+            D: () => String(d.getDate()),
+            hh: () => pad(d.getHours()),
+            h: () => String(d.getHours()),
+            mm: () => pad(d.getMinutes()),
+            m: () => String(d.getMinutes()),
+            sss: () => pad(d.getMilliseconds(), 3),
+            ss: () => pad(d.getSeconds()),
+            s: () => String(d.getSeconds()),
+            WDL: () => d.toLocaleDateString(locale, { weekday: 'long' }),
+            WD: () => d.toLocaleDateString(locale, { weekday: 'short' }),
+            KW: () => pad(isoWeek(d)),
+            K: () => String(isoWeek(d)),
+        };
+
+        return format.replace(/YYYY|YY|MM|M|DD|D|hh|h|mm|m|sss|ss|s|WDL|WD|KW|K/g, match => map[match]());
+    }
 }
