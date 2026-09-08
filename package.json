@@ -36,7 +36,6 @@
     "LICENSE"
   ],
   "scripts": {
-    "prepublishOnly": "npm run build",
     "build": "node tasks",
     "test:integration": "mocha test/widgets.test --exit",
     "test:package": "mocha test/package.test --exit",
