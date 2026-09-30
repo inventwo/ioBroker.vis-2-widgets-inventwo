@@ -6,8 +6,6 @@ Das Kalender Widget zeigt eine vollständige Monatsansicht basierend auf [MUI's 
 
 Du möchtest stattdessen Termine anzeigen (z. B. aus einem iCal-Kalender)? Nutze das [Terminkalender Widget](event-calendar-widget.md).
 
-![Kalender Widget](../img/widget-calendar.png)
-
 ---
 
 ## Widget hinzufügen

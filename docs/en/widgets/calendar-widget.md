@@ -6,8 +6,6 @@ The Calendar Widget shows a full month view based on [MUI's Date Calendar](https
 
 Looking to show events/appointments (e.g. from an iCal calendar) instead? Use the [Event Calendar Widget](event-calendar-widget.md).
 
-![Calendar Widget](../img/widget-calendar.png)
-
 ---
 
 ## How to Add the Widget
