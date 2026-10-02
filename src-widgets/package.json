@@ -19,7 +19,7 @@
         "@module-federation/vite": "^1.21.1",
         "@mui/icons-material": "^6.5.0",
         "@mui/material": "^6.5.0",
-        "@mui/x-date-pickers": "^7.29.4",
+        "@mui/x-date-pickers": "^9.14.0",
         "@vitejs/plugin-react": "^6.1.1",
         "dayjs": "^1.11.21",
         "hex-to-css-filter": "^6.0.0",
