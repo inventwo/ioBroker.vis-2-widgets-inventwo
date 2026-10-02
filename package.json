@@ -26,7 +26,7 @@
     "@iobroker/eslint-config": "^2.3.4",
     "@iobroker/testing": "^6.2.2",
     "@iobroker/vis-2-widgets-react-dev": "^4.0.4",
-    "@iobroker/vis-2-widgets-testing": "^1.0.6"
+    "@iobroker/vis-2-widgets-testing": "^2.0.0"
   },
   "main": "widgets/vis-2-widgets-inventwo/customWidgets.js",
   "files": [
