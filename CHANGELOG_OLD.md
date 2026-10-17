@@ -1,4 +1,10 @@
 # Older changes
+## 1.8.0 (2026-07-16)
+- Radial Slider Widget: Added "Read only" option to prevent value changes, matching the Slider widget's behavior
+- Table Widget: Added pagination support ("Pagination" / "Rows per page") to split large tables across pages instead of showing all rows at once
+- Table Widget: Added weekday (WD/WDL) and calendar week (KW/K) tokens
+- Added new Calendar Widget: month calendar based on MUI's Date Calendar, usable as a datepicker (read/write a date), a read-only date display, and/or a today-highlighter, with configurable first day of week, ISO/simple calendar week numbers, and full color/size customization
+
 ## 1.7.0 (2026-06-24)
 - Dropdown Widget: Added support for manually defined value/label pairs as an alternative to OID-based state enumeration
 

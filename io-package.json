@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "news": {
+      "2.0.2": {
+        "en": "Removed default react 19 border on universal widget",
+        "de": "React 19-Standardrand im Universal Widget entfernt",
+        "ru": "Удалена стандартная граница react 19 на универсальном виджете",
+        "pt": "Removida a borda padrão do react 19 no widget",
+        "nl": "De standaardrand van React 19 op de universele widget is verwijderd",
+        "fr": "Le bord React 19 par défaut du widget universel a été supprimé",
+        "it": "È stato rimosso il bordo React 19 dal widget",
+        "es": "Se eliminó el borde por defecto de React 19 en el widget universal",
+        "pl": "Usunięto domyślną granicę React 19 na uniwersalnym widżecie",
+        "uk": "Вилучено типову межу React 19 на універсальному віджеті",
+        "zh-cn": "移除了通用控件上的默认 react 19 边框"
+      },
       "2.0.1": {
         "en": "Breaking: Requires vis-2 >= 2.20.0 (React 19 / MUI 9). Older vis-2 versions (React 18) are no longer supported\nUpdated dependencies to React 19 and MUI 9",
         "de": "Neu: Benötigt VIS-2 >= 2.20.0 (React 19/MUI 9). Ältere Versionen (React 18) werden nicht mehr unterstützt\nAbhängigkeiten zu React 19 und MUI 9 geändert",

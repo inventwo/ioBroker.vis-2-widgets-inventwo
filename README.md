@@ -294,7 +294,7 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.0.2 (2026-10-17)
 - Removed default react 19 border on universal widget
 
 ### 2.0.1 (2026-10-17)
@@ -311,12 +311,6 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
 
 ### 1.8.1 (2026-07-23)
 - Added preview image for calendar and value list widgets
-
-### 1.8.0 (2026-07-16)
-- Radial Slider Widget: Added "Read only" option to prevent value changes, matching the Slider widget's behavior
-- Table Widget: Added pagination support ("Pagination" / "Rows per page") to split large tables across pages instead of showing all rows at once
-- Table Widget: Added weekday (WD/WDL) and calendar week (KW/K) tokens
-- Added new Calendar Widget: month calendar based on MUI's Date Calendar, usable as a datepicker (read/write a date), a read-only date display, and/or a today-highlighter, with configurable first day of week, ISO/simple calendar week numbers, and full color/size customization
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)
