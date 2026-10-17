@@ -294,6 +294,10 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Breaking: Requires vis-2 >= 2.20.0 (React 19 / MUI 9). Older vis-2 versions (React 18) are no longer supported
+- Updated dependencies to React 19 and MUI 9
+
 ### 1.10.0 (2026-09-01)
 - Event Calendar Widget: Added support for showing multiple calendars at once via a new "Additional calendars" group (datapoint + color + label per calendar, e.g. one iCal calendar per family member), merged into a single view with an optional color/label legend below the calendar and a persistent per-event colored left border showing which calendar an event belongs to (kept even when an Event color rule overrides the tile's fill color). The original single "Events (datapoint)" field keeps working unchanged when no additional calendars are configured; once at least one is added, that field is ignored
 - Event Calendar Widget: Added "Max. events per day" setting (Month/Multi-month views) to cap how many event tiles are shown per day cell before the rest collapse behind FullCalendar's "+N more" popover link, instead of day cells always growing with the number of events

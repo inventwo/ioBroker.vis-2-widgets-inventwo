@@ -16,7 +16,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "types": ["@iobroker/types"]
+    "types": ["@iobroker/types"],
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src"],
   "references": [

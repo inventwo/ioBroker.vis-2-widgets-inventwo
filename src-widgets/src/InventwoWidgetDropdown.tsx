@@ -730,11 +730,13 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         };
 
         const menuProps = {
-            PaperProps: {
-                style: {
-                    maxHeight: 400,
-                    backgroundColor: style.backgroundColor,
-                    boxShadow: shadow,
+            slotProps: {
+                paper: {
+                    style: {
+                        maxHeight: 400,
+                        backgroundColor: style.backgroundColor,
+                        boxShadow: shadow,
+                    },
                 },
             },
         };
