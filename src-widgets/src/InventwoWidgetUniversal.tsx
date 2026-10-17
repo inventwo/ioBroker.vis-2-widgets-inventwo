@@ -4353,6 +4353,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 ? 'not-allowed'
                                 : 'pointer',
                         background: 'transparent',
+                        border: 'unset',
                         borderRadius,
                         opacity: valueData.styles.contentOpacity,
                         position: 'absolute',
