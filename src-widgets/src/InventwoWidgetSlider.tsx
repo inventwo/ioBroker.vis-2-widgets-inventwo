@@ -104,7 +104,10 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                                 socket,
                             ) => {
                                 if (data[field.name as string] && data[field.name as string] !== 'nothing_selected') {
-                                    const object = await socket.getObject(data[field.name as string]);
+                                    const object = (await socket.getObject(data[field.name as string])) as
+                                        | ioBroker.StateObject
+                                        | null
+                                        | undefined;
                                     if (object?.common) {
                                         let changed = false;
 
@@ -643,10 +646,8 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
             <Slider
                 disabled={this.props.editMode}
                 sx={sliderAttributes}
-                onChange={(_e, val) => this.setState({ sliderValue: val as number })}
-                onChangeCommitted={(e, val) =>
-                    this.setState({ sliderValue: val as number }, () => this.onChange(e, val))
-                }
+                onChange={(_e, val) => this.setState({ sliderValue: val })}
+                onChangeCommitted={(e, val) => this.setState({ sliderValue: val }, () => this.onChange(e, val))}
                 min={minValue}
                 max={maxValue}
                 step={Number(this.state.rxData.step)}

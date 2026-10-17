@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
-import { I18n, Icon } from '@iobroker/adapter-react-v5';
+import { I18n, Icon } from '@iobroker/gui-components';
 
 import { hexToCSSFilter } from 'hex-to-css-filter';
 import iro from '@jaames/iro';

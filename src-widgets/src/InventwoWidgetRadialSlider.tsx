@@ -196,7 +196,10 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                                 socket,
                             ) => {
                                 if (data[field.name as string] && data[field.name as string] !== 'nothing_selected') {
-                                    const object = await socket.getObject(data[field.name as string]);
+                                    const object = (await socket.getObject(data[field.name as string])) as
+                                        | ioBroker.StateObject
+                                        | null
+                                        | undefined;
                                     if (object?.common) {
                                         let changed = false;
 

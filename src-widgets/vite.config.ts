@@ -7,22 +7,6 @@ import { readFileSync } from 'node:fs';
 
 const pack = JSON.parse(readFileSync('./package.json').toString());
 
-/**
- * @iobroker/adapter-react-v5 (peer: MUI 6) still imports `Grid2`, which does not exist in MUI 9 anymore (renamed to `Grid`).
- * Only unused components (ObjectBrowser, Tab*) are affected, but the bundler fails on the missing export.
- * Remove as soon as adapter-react-v5 supports MUI 9.
- */
-const adapterReactMui9Compat = {
-    name: 'adapter-react-v5-mui9-compat',
-    enforce: 'pre' as const,
-    transform(code: string, id: string): { code: string; map: null } | null {
-        if (!id.split('\\').join('/').includes('/@iobroker/adapter-react-v5/') || !code.includes('Grid2')) {
-            return null;
-        }
-        return { code: code.replace(/Grid2/g, 'Grid'), map: null };
-    },
-};
-
 const config = {
     // vis-2 ships the production build of React 19, whose `react/jsx-dev-runtime` has no `jsxDEV` export.
     // So the dev server must not emit `jsxDEV` calls either.
@@ -31,15 +15,7 @@ const config = {
             development: false,
         },
     },
-    // The dev server pre-bundles adapter-react-v5, so the patch has to be applied there as well
-    optimizeDeps: {
-        include: ['@iobroker/adapter-react-v5'],
-        rolldownOptions: {
-            plugins: [adapterReactMui9Compat],
-        },
-    },
     plugins: [
-        adapterReactMui9Compat,
         federation({
             manifest: true,
             name: 'vis2Inventwo',

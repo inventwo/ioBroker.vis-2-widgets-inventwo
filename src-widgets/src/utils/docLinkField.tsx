@@ -1,5 +1,5 @@
 import React from 'react';
-import { I18n } from '@iobroker/adapter-react-v5';
+import { I18n } from '@iobroker/gui-components';
 
 const GITHUB_BASE = 'https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/';
 const GENERAL_DOCS_URL = `${GITHUB_BASE}docs/en/index.md`;
