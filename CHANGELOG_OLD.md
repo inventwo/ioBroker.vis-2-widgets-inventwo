@@ -1,4 +1,7 @@
 # Older changes
+## 1.7.0 (2026-06-24)
+- Dropdown Widget: Added support for manually defined value/label pairs as an alternative to OID-based state enumeration
+
 ## 1.6.0 (2026-06-19)
 - Universal Widget: Fixed navigation active state not updating correctly when nav buttons are placed inside a "View in Widget"
 - Table Widget: Empty JSON array now renders a "No data" row regardless of column configuration, instead of an empty or broken table structure

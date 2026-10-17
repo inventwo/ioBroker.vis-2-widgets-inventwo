@@ -294,7 +294,7 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.0.0 (2026-10-17)
 - Breaking: Requires vis-2 >= 2.20.0 (React 19 / MUI 9). Older vis-2 versions (React 18) are no longer supported
 - Updated dependencies to React 19 and MUI 9
 
@@ -314,9 +314,6 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
 - Table Widget: Added pagination support ("Pagination" / "Rows per page") to split large tables across pages instead of showing all rows at once
 - Table Widget: Added weekday (WD/WDL) and calendar week (KW/K) tokens
 - Added new Calendar Widget: month calendar based on MUI's Date Calendar, usable as a datepicker (read/write a date), a read-only date display, and/or a today-highlighter, with configurable first day of week, ISO/simple calendar week numbers, and full color/size customization
-
-### 1.7.0 (2026-06-24)
-- Dropdown Widget: Added support for manually defined value/label pairs as an alternative to OID-based state enumeration
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)
