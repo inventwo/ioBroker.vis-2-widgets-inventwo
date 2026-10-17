@@ -88,4 +88,6 @@ jobs:
       - uses: ioBroker/testing-action-deploy@v1
         with:
           node-version: '24.x'
+          build: true
+          install-command: 'npm ci || npm install; cd src-widgets; npm ci || npm install'
           github-token: ${{ secrets.GITHUB_TOKEN }}
