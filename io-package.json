@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "news": {
+      "2.0.1": {
+        "en": "Breaking: Requires vis-2 >= 2.20.0 (React 19 / MUI 9). Older vis-2 versions (React 18) are no longer supported\nUpdated dependencies to React 19 and MUI 9",
+        "de": "Neu: Benötigt VIS-2 >= 2.20.0 (React 19/MUI 9). Ältere Versionen (React 18) werden nicht mehr unterstützt\nAbhängigkeiten zu React 19 und MUI 9 geändert",
+        "ru": "Срочно: требуется версия vis-2 >= 2.20.0 (React 19/MUI 9). Старые версии vis-2 (React 18) больше не поддерживаются\nОбновленные зависимости от React 19 и MUI 9",
+        "pt": "Quebra: Requer vis-2 >= 2.20.0 (React 19/MUI 9). Versões antigas do Vis-2 (React 18) não são mais aceitas\nNovas dependências do React 19 e MUI 9",
+        "nl": "Breaking: vereist vis-2 >= 2.20.0 (React 19/MUI 9). Oudere versies versus 2 (React 18) worden niet langer ondersteund\nBijgewerkte afhankelijkheden voor React 19 en MUI 9",
+        "fr": "Rupture : nécessite vis-2 >= 2.20.0 (React 19/MUI 9). Les anciennes versions Vis-2 (React 18) ne sont plus supportées\nDépendances mises à jour à React 19 et MUI 9",
+        "it": "Rottura: richiede vis-2 >= 2.20.0 (React 19/MUI 9). Le vecchie versioni vis-2 (React 18) non sono più supportate\nDipendenze aggiornate da React 19 e MUI 9",
+        "es": "Última hora: requiere vis-2 >= 2.20.0 (React 19/MUI 9). Las versiones antiguas de la vis-2 (React 18) ya no se admiten\nSe actualizaron las dependencias a React 19 y MUI 9",
+        "pl": "Breaking: Wymaga vis-2 >= 2.20.0 (React 19/MUI 9). Starsze wersje vis-2 (React 18) nie są już obsługiwane\nZaktualizowano zależności do React 19 i MUI 9",
+        "uk": "Порушення: Потрібен vis-2 >= 2.20.0 (Реакт 19/MUI 9). Старі версії vis-2 (React 18) більше не підтримуються\nОновлені залежності до React 19 і MUI 9",
+        "zh-cn": "中断：需要 vis-2 >= 2.20.0（React 19/MUI 9）。不再支持较早的 vis-2 版本 (React 18)\n更新了对 React 19 和 MUI 9 的依赖关系"
+      },
       "2.0.0": {
         "en": "Breaking: Requires vis-2 >= 2.20.0 (React 19 / MUI 9). Older vis-2 versions (React 18) are no longer supported\nUpdated dependencies to React 19 and MUI 9",
         "de": "Neu: Benötigt VIS-2 >= 2.20.0 (React 19/MUI 9). Ältere Versionen (React 18) werden nicht mehr unterstützt\nAbhängigkeiten zu React 19 und MUI 9 geändert",
@@ -80,19 +93,6 @@
         "pl": "Widżet rozwijany: Dodano obsługę ręcznie zdefiniowanych par wartość/etykieta jako alternatywę dla wyliczania stanu na podstawie OID",
         "uk": "Віджет випадаючого списку: додано підтримку для пар значення/мітки, визначених вручну, як альтернативу перерахуванню станів на основі OID.",
         "zh-cn": "下拉菜单组件：新增了对手动定义值/标签对的支持，作为基于 OID 的状态枚举的替代方案。"
-      },
-      "1.6.0": {
-        "en": "Universal Widget: Fixed navigation active state not updating correctly when nav buttons are placed inside a \"View in Widget\"\nTable Widget: Empty JSON array now renders a \"No data\" row regardless of column configuration, instead of an empty or broken table structure\nMarquee Widget: Added vertical scroll directions \"Up\" and \"Down\" in addition to the existing \"Left\" and \"Right\"",
-        "de": "Universelles Widget: Problem behoben, bei dem der aktive Navigationsstatus nicht korrekt aktualisiert wurde, wenn Navigationsschaltflächen innerhalb eines „In Widget anzeigen“-Elements platziert wurden.\nTabellen-Widget: Ein leeres JSON-Array erzeugt nun unabhängig von der Spaltenkonfiguration eine Zeile mit der Meldung „Keine Daten“ anstelle einer leeren oder fehlerhaften Tabellenstruktur.\nLaufschrift-Widget: Zusätzlich zu den bereits vorhandenen Richtungen „Links“ und „Rechts“ wurden die vertikalen Scrollrichtungen „Nach oben“ und „Nach unten“ hinzugefügt.",
-        "ru": "Универсальный виджет: Исправлена ошибка, из-за которой активное состояние навигации некорректно обновлялось, когда кнопки навигации размещались внутри элемента \"Просмотр в виджете\".\nВиджет таблицы: Теперь пустой массив JSON отображает строку \"Нет данных\" независимо от конфигурации столбцов, вместо пустой или поврежденной структуры таблицы.\nВиджет бегущей строки: добавлены направления вертикальной прокрутки «Вверх» и «Вниз» в дополнение к существующим «Влево» и «Вправо».",
-        "pt": "Widget Universal: Corrigido o problema em que o estado ativo da navegação não atualizava corretamente quando os botões de navegação eram colocados dentro de um \"Visualizar em Widget\".\nWidget de tabela: agora, um array JSON vazio exibe uma linha \"Sem dados\", independentemente da configuração das colunas, em vez de uma estrutura de tabela vazia ou corrompida.\nWidget Marquee: Adicionadas as direções de rolagem vertical \"Para cima\" e \"Para baixo\", além das já existentes \"Para a esquerda\" e \"Para a direita\".",
-        "nl": "Universele widget: Opgelost probleem waarbij de actieve status van de navigatie niet correct werd bijgewerkt wanneer navigatieknoppen zich binnen een \"Weergave in widget\" bevonden.\nTabelwidget: Een lege JSON-array geeft nu een rij \"Geen gegevens\" weer, ongeacht de kolomconfiguratie, in plaats van een lege of beschadigde tabelstructuur.\nMarquee-widget: Naast de bestaande verticale scrollrichtingen \"Links\" en \"Rechts\" zijn nu ook de verticale scrollrichtingen \"Omhoog\" en \"Omlaag\" toegevoegd.",
-        "fr": "Widget universel : Correction d’un problème d’affichage de l’état actif de la navigation lorsque les boutons de navigation sont placés dans un widget « Vue dans un widget ».\nWidget Tableau : Un tableau JSON vide affiche désormais une ligne « Aucune donnée » quelle que soit la configuration des colonnes, au lieu d’une structure de tableau vide ou corrompue.\nWidget Marquee : Ajout des directions de défilement vertical « Haut » et « Bas » en plus des directions existantes « Gauche » et « Droite ».",
-        "it": "Widget universale: risolto il problema per cui lo stato attivo della navigazione non si aggiornava correttamente quando i pulsanti di navigazione venivano posizionati all'interno di un \"Visualizza nel widget\".\nWidget Tabella: Gli array JSON vuoti ora visualizzano una riga \"Nessun dato\" indipendentemente dalla configurazione delle colonne, anziché una struttura di tabella vuota o danneggiata.\nWidget Marquee: aggiunte le direzioni di scorrimento verticale \"Su\" e \"Giù\" oltre a quelle già esistenti \"Sinistra\" e \"Destra\".",
-        "es": "Widget universal: Se solucionó un problema por el cual el estado activo de navegación no se actualizaba correctamente cuando los botones de navegación se colocaban dentro de un \"Ver en widget\".\nWidget de tabla: Ahora, una matriz JSON vacía muestra una fila \"Sin datos\" independientemente de la configuración de la columna, en lugar de una estructura de tabla vacía o defectuosa.\nWidget Marquee: Se agregaron las direcciones de desplazamiento vertical \"Arriba\" y \"Abajo\", además de las existentes \"Izquierda\" y \"Derecha\".",
-        "pl": "Uniwersalny widżet: Naprawiono problem z aktualizacją stanu aktywnego nawigacji, który nie był poprawnie aktualizowany, gdy przyciski nawigacyjne były umieszczone w „Widoku w widżecie”\nWidżet tabeli: Pusta tablica JSON teraz renderuje wiersz „Brak danych” niezależnie od konfiguracji kolumny, zamiast pustej lub uszkodzonej struktury tabeli\nWidżet Marquee: Dodano pionowe kierunki przewijania „W górę” i „W dół” oprócz istniejących „W lewo” i „W prawo”",
-        "uk": "Універсальний віджет: Виправлено помилку, через яку активний стан навігації не оновлювався належним чином, коли кнопки навігації розміщувалися всередині «Перегляду у віджеті».\nВіджет таблиці: порожній масив JSON тепер відображає рядок «Без даних» незалежно від конфігурації стовпців, а не порожню або пошкоджену структуру таблиці.\nВіджет Marquee: додано напрямки вертикального прокручування «Вгору» та «Вниз» на додаток до існуючих «Вліво» та «Вправо».",
-        "zh-cn": "通用组件：修复了当导航按钮放置在“组件中的视图”内时，导航激活状态无法正确更新的问题。\n表格组件：现在，无论列配置如何，空的 JSON 数组都会渲染“无数据”行，而不是显示空表格或损坏的表格结构。\n跑马灯组件：除了现有的“左”和“右”滚动方向外，还增加了“上”和“下”垂直滚动方向。"
       }
     },
     "titleLang": {
