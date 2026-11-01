@@ -586,5 +586,7 @@
   "fc_event_border_color": "Event border color",
   "fc_event_border_radius": "Event border radius",
   "fc_event_font_size": "Event font size",
-  "fc_more_text_color": "\"+N more\" link color"
+  "fc_more_text_color": "\"+N more\" link color",
+  "dialog_reset_on_close": "Set value false on close",
+  "dialog_reset_on_close_tooltip": "When the dialog is closed (close button, click outside, timeout), write 'Value false' to the object ID - only if it still holds 'Value true'."
 }

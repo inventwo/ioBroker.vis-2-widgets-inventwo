@@ -77,6 +77,7 @@ Die **Typ**-Einstellung in der Gruppe **Common** legt fest, was passiert, wenn e
 |-------------|--------------|
 | **Dialog Vollbild** | Dehnt den Dialog auf den gesamten Bildschirm aus. |
 | **Durch Klicken von außen schließen** | Ein Klick außerhalb des Dialogs schließt ihn. (Im Vollbildmodus nicht verfügbar.) |
+| **Beim Schließen Wert false setzen** | Wird der Dialog lokal geschlossen (Schließen-Schaltfläche, Klick außerhalb / Escape, *Nach x Sekunden schließen*), wird *Wert false* auf die Objekt-ID geschrieben – aber nur, wenn sie noch *Wert true* enthält. Von Skripten gesetzte Werte werden nie überschrieben. Ist *Wert false* leer, wird `false` geschrieben. |
 | **Dialogbreite** | Breite des Dialogs in Pixeln. |
 | **Dialoghöhe** | Höhe des Dialogs in Pixeln. |
 | **Innenabstand** | Abstand zwischen dem Dialog-Rahmen und der eingebetteten Ansicht darin. |

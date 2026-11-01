@@ -130,6 +130,7 @@ export interface AnalogClockRxData {
 export interface DialogRxData {
     dialogFullscreen: boolean;
     dialogCloseOnClickOutside: boolean;
+    dialogResetOnClose: boolean;
     dialogWidth: number;
     dialogHeight: number;
     dialogPadding: number;

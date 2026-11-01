@@ -77,6 +77,7 @@ The **Type** setting in the **Common** group defines what happens when a user cl
 |---------|-------------|
 | **Dialog fullscreen** | Stretches the dialog to fill the entire screen. |
 | **Close on click outside** | Clicking anywhere outside the dialog closes it. (Not available in fullscreen mode.) |
+| **Set value false on close** | When the dialog is closed locally (close button, click outside / Escape, *Close after x seconds*), *Value false* is written to the object ID — but only if it still holds *Value true*. Values set by scripts are never overwritten. If *Value false* is empty, `false` is written. |
 | **Dialog width** | Width of the dialog in pixels. |
 | **Dialog height** | Height of the dialog in pixels. |
 | **Padding** | Space between the dialog border and the embedded view inside it. |

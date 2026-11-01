@@ -586,5 +586,7 @@
   "widget_valuelist": "Werteliste",
   "width": "Breite",
   "x_offset": "X-Versatz",
-  "y_offset": "Y-Versatz"
+  "y_offset": "Y-Versatz",
+  "dialog_reset_on_close": "Beim Schließen Wert false setzen",
+  "dialog_reset_on_close_tooltip": "Beim Schließen des Dialogs (Schließen-Button, Klick außerhalb, Timeout) wird 'Wert false' auf die Objekt-ID geschrieben – nur wenn sie noch 'Wert true' enthält."
 }

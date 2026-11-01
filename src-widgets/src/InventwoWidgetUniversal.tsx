@@ -208,7 +208,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             name: 'valueFalse',
                             type: 'text',
                             label: 'value_false',
-                            hidden: 'data.type != "switch" || data.mode == "separatedButtons"',
+                            hidden: '(data.type != "switch" && !(data.type == "viewInDialog" && data.dialogResetOnClose)) || data.mode == "separatedButtons"',
                         },
                         {
                             name: 'valueTrue',
@@ -271,6 +271,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             type: 'checkbox',
                             label: 'dialog_close_on_click_outside',
                             hidden: 'data.type != "viewInDialog" || data.dialogFullscreen',
+                        },
+                        {
+                            name: 'dialogResetOnClose',
+                            type: 'checkbox',
+                            default: false,
+                            label: 'dialog_reset_on_close',
+                            tooltip: 'dialog_reset_on_close_tooltip',
+                            hidden: 'data.type != "viewInDialog"',
                         },
                         {
                             name: 'dialogWidth',
@@ -2422,6 +2430,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
     }
 
     componentWillUnmount(): void {
+        if (this.state.dialogCloseTimeout) {
+            clearTimeout(this.state.dialogCloseTimeout);
+        }
         if (this.state.clockInterval) {
             window.clearInterval(this.state.clockInterval);
         }
@@ -2432,6 +2443,11 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
 
         if (prevState.dialogOpen && !this.state.dialogOpen && this.state.dialogCloseTimeout) {
             clearTimeout(this.state.dialogCloseTimeout);
+        }
+
+        // Start the close timeout on every open - also when the dialog is opened via the object ID (e.g. by a script)
+        if (!prevState.dialogOpen && this.state.dialogOpen) {
+            this.startDialogCloseTimeout();
         }
 
         // Start or stop clock interval based on content type changes
@@ -2808,6 +2824,40 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
+    private startDialogCloseTimeout(): void {
+        if (this.state.dialogCloseTimeout) {
+            clearTimeout(this.state.dialogCloseTimeout);
+        }
+        if (this.state.rxData.dialogCloseTimeoutSeconds && this.state.rxData.dialogCloseTimeoutSeconds > 0) {
+            const dialogCloseTimeout = setTimeout(() => {
+                this.closeDialogByUser();
+            }, this.state.rxData.dialogCloseTimeoutSeconds * 1000) as unknown as number;
+            this.setState({ dialogCloseTimeout: dialogCloseTimeout });
+        }
+    }
+
+    /**
+     * Closes the "view in dialog" dialog after a local user action (close button,
+     * click outside / Escape, close timeout). Optionally resets the object ID to
+     * "Value false" - but only if it still holds "Value true", so values written
+     * by scripts or other clients are never overwritten.
+     */
+    private closeDialogByUser(): void {
+        if (this.state.dialogCloseTimeout) {
+            clearTimeout(this.state.dialogCloseTimeout);
+        }
+        this.setState({ dialogOpen: false, dialogCloseTimeout: null });
+
+        const oid = this.state.rxData.oid;
+        if (!this.state.rxData.dialogResetOnClose || this.props.editMode || !oid || !this.validOid(oid)) {
+            return;
+        }
+        if (this.getValue(oid) !== this.convertValue(this.state.rxData.valueTrue)) {
+            return;
+        }
+        this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueFalse, false));
+    }
+
     private onClick(index: number | null, e?: React.PointerEvent<HTMLDivElement>): void {
         if (this.isClickDisabled(index)) {
             return;
@@ -2865,12 +2915,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 break;
             case 'viewInDialog':
                 this.setState({ dialogOpen: true, dialogOpenTime: Date.now() });
-                if (this.state.rxData.dialogCloseTimeoutSeconds && this.state.rxData.dialogCloseTimeoutSeconds > 0) {
-                    const dialogCloseTimeout = setTimeout(() => {
-                        this.setState({ dialogOpen: false });
-                    }, this.state.rxData.dialogCloseTimeoutSeconds * 1000) as unknown as number;
-                    this.setState({ dialogCloseTimeout: dialogCloseTimeout });
-                }
                 if (oid) {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
                 }
@@ -3247,13 +3291,13 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         if (reason && reason === 'backdropClick' && !this.state.rxData.dialogCloseOnClickOutside) {
                             return;
                         }
-                        this.setState({ dialogOpen: false });
+                        this.closeDialogByUser();
                     }}
                 >
                     <DialogTitle style={styles.dialogTitle}>
                         <span>{this.state.rxData.dialogTitle}</span>
                         <IconButton
-                            onClick={() => this.setState({ dialogOpen: false })}
+                            onClick={() => this.closeDialogByUser()}
                             sx={{
                                 background: this.state.rxData.dialogCloseButtonBackground,
                                 color: this.state.rxData.dialogCloseButtonColor,
