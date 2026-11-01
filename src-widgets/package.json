@@ -13,7 +13,7 @@
         "@fullcalendar/react": "^6.1.21",
         "@fullcalendar/timegrid": "^6.1.21",
         "@iobroker/gui-components": "^10.3.13",
-        "@iobroker/types-vis-2": "^2.20.2",
+        "@iobroker/types-vis-2": "^2.20.4",
         "@iobroker/vis-2-widgets-react-dev": "^4.0.4",
         "@jaames/iro": "^5.5.2",
         "@module-federation/vite": "^1.23.5",
