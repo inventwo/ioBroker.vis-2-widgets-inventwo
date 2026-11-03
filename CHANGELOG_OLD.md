@@ -1,4 +1,7 @@
 # Older changes
+## 1.9.0 (2026-07-29)
+- Added new Event Calendar Widget: Google-Calendar-style view for events/appointments based on FullCalendar, fed from a datapoint holding a JSON list of events (either a simple custom shape or the native JSON produced by the ioBroker "ical" adapter). Supports all FullCalendar free/MIT views (Month, Week, Day, Multi-month, List day/week/month/year), optional calendar week numbers, optional header bar/navigation, live resizing in the vis editor, and fully configurable header/weekday/day/today/event-tile/border styling (colors, font sizes, border radius/width, hover states, now-indicator), each with independent "From widget" style reuse
+
 ## 1.8.1 (2026-07-23)
 - Added preview image for calendar and value list widgets
 
