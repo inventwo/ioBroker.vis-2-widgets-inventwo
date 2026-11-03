@@ -136,14 +136,14 @@ export default class InventwoGeneric<
         if (!colorStr) {
             return null;
         }
-        const rgbaValues = colorStr.match(/(\d+),(\d+),(\d+),(\d+)/);
+        const rgbaValues = colorStr.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*[\d.]+\s*)?\)/i);
         if (!rgbaValues) {
             return null;
         }
-        const [red, green, blue] = rgbaValues.slice(1, 5).map(parseFloat);
+        const [red, green, blue] = rgbaValues.slice(1, 4).map(parseFloat);
 
         function componentToHex(c: number): string {
-            const hex = c.toString(16);
+            const hex = Math.min(255, c).toString(16);
             return hex.length === 1 ? `0${hex}` : hex;
         }
 
