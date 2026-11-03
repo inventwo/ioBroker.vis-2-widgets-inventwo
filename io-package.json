@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "2.0.2",
+    "version": "2.1.0",
     "news": {
+      "2.1.0": {
+        "en": "Universal Widget: Up to 5 additional inner and outer shadows per widget; X/Y offsets of shadows may now be negative (#286)\nUniversal Widget (View in dialog): New option \"Set value false on close\" – closing the dialog (close button, click outside, timeout) writes \"Value false\" to the object ID, as long as it still holds \"Value true\" (#309)",
+        "de": "Universal-Widget: Bis zu 5 Innen- und Außenschatten pro Widget; X/Y-Offsets können nun negativ sein (#286)\nUniversal Widget (Im Dialog anzeigen): Neue Option „Beim Schließen auf Falsch setzen“ — beim Schließen des Dialogs wird „Falsch“ in die Objekt-ID geschrieben, solange sie noch „Wert wahr“ enthält (#309)",
+        "ru": "Универсальный виджет: до 5 дополнительных внутренних и внешних теней на виджет; смещение теней по X/Y теперь может быть отрицательным (#286)\nУниверсальный виджет (просмотр в диалоговом окне): новая опция «Устанавливать значение false при закрытии» — при закрытии диалогового окна (кнопка закрытия, нажатие кнопки на выход, тайм-аут) в идентификатор объекта записывается значение «Value false», если оно сохраняет значение «Value true» (#309)",
+        "pt": "Widget universal: até 5 sombras internas e externas por widget; os desvios X/Y agora podem ser negativos (#286)\nWidget universal: nova opção “Definir valor falso ao fechar” — fechar a caixa de diálogo grava “Valor falso” no ID do objeto, desde que ainda tenha “Valor verdadeiro” (#309)",
+        "nl": "Universele widget: Tot vijf extra binnen- en buitenschaduwen per widget; X/Y-verschuivingen van schaduwen kunnen nu negatief zijn (#286)\nUniversal Widget (in dialoogvenster weergeven): Nieuwe optie „Stel waarde false in bij sluiten” — als u het dialoogvenster sluit (knop sluiten, buiten klikken, time-out) wordt „Value false” naar de object-ID geschreven, zolang er nog „Value true” in staat (#309)",
+        "fr": "Widget universel : jusqu'à 5 ombres internes et externes supplémentaires par widget ; les décalages X/Y peuvent désormais être négatifs (#286)\nUniversal Widget (Afficher dans la boîte de dialogue) : Nouvelle option « Définir la valeur fausse à la fermeture ». Fermer la boîte de dialogue (bouton de fermeture, clic extérieur, délai) ajoute « Valeur fausse » à l'ID de l'objet, tant que « Value true » (#309)",
+        "it": "Universal Widget: fino a 5 ombre interne ed esterne aggiuntive per widget; ora gli scostamenti X/Y sono negativi (#286)\nUniversal Widget (Visualizza in dialogo): nuova opzione «Imposta valore falso alla chiusura»: chiudendo (clic esterno, timeout) si scrive «Valore falso» nell'ID oggetto, purché contenga «Vero» (#309)",
+        "es": "Widget universal: hasta 5 sombras interiores y exteriores adicionales por widget; los desfases X/Y de sombras ahora pueden ser negativos (#286)\nUniversal Widget (ver en cuadro de diálogo): nueva opción «Definir valor falso al cerrar»: al cerrar el cuadro de diálogo (botón de cierre, clic fuera, tiempo de espera), se escribe «Valor falso» en el ID del objeto, siempre que mantenga «Valor verdadero» (#309)",
+        "pl": "Uniwersalny widżet: maksymalnie 5 dodatkowych cieni wewnętrznych i zewnętrznych na widżet; przesunięcia X/Y cieni mogą być teraz ujemne (#286)\nUniwersalny Widżet (Widok w oknie dialogowym): Nowa opcja „Ustaw wartość false przy zamknięciu” — zamknięcie okna dialogowego (przycisk zamknięcia, kliknięcie na zewnątrz, limit czasu) zapisuje „Value false” na ID obiektu, o ile nadal zawiera „Value true” (#309)",
+        "uk": "Універсальний віджет: до 5 додаткових внутрішніх і зовнішніх тіней на віджет; X/Y зміщення тіней тепер можуть бути негативними (#286)\nУніверсальний віджет (Перегляд у діалоговому вікні): Нова опція «Встановити значення false при закритті» - закриття діалогового вікна (кнопка закрити, клацнути назовні, тайм-аут) записує «Значення false» до ідентифікатора об'єкта, якщо він все ще зберігає «Значення true» (#309)",
+        "zh-cn": "通用控件：每个控件最多可额外增加 5 个内部和外部阴影；阴影的 X/Y 偏移量现在可能为负数 (#286)\n通用控件（在对话框中查看）：新选项 “关闭时将值设置为假” — 关闭对话框（关闭按钮、在外面单击、超时）将 “值为假” 写入对象 ID，只要它仍然保持 “值为真” (#309)"
+      },
       "2.0.2": {
         "en": "Removed default react 19 border on universal widget",
         "de": "React 19-Standardrand im Universal Widget entfernt",
@@ -80,19 +93,6 @@
         "pl": "Widżet suwaka promieniowego: dodano opcję „Tylko do odczytu”, aby zapobiec zmianom wartości, dostosowując zachowanie widżetu suwaka\nWidżet tabeli: Dodano obsługę paginacji („Paginacja” / „Wiersze na stronę”) w celu podziału dużych tabel na strony zamiast wyświetlania wszystkich wierszy naraz\nWidżet tabeli: Dodano tokeny dni powszednich (WD/WDL) i tygodni kalendarzowych (KW/K)\nDodano nowy widżet kalendarza: kalendarz miesięczny oparty na kalendarzu dat MUI, który można używać jako selektora dat (odczyt/zapis daty), wyświetlacza dat tylko do odczytu i/lub zaznaczacza dnia dzisiejszego, z konfigurowalnym pierwszym dniem tygodnia, numerami tygodni ISO/prostego kalendarza oraz pełną możliwością dostosowywania kolorów i rozmiaru",
         "uk": "Віджет радіального повзунка: додано опцію «Тільки читання», щоб запобігти зміні значень, що відповідає поведінці віджета повзунка.\nВіджет таблиці: додано підтримку пагінації («Пагінація» / «Рядків на сторінці») для розділення великих таблиць на сторінки замість відображення всіх рядків одночасно.\nВіджет таблиці: додано токени для днів тижня (WD/WDL) та календарного тижня (KW/K).\nДодано новий віджет календаря: місячний календар на основі календаря дат MUI, який можна використовувати як вибір дати (читання/запис дати), відображення дати лише для читання та/або підсвічування сьогоднішнього дня, з налаштовуваним першим днем тижня, номерами тижнів у форматі ISO/простого календаря та повним налаштуванням кольору/розміру.",
         "zh-cn": "径向滑块控件：新增“只读”选项，以防止值被更改，与滑块控件的行为保持一致。\n表格组件：新增分页支持（“分页”/“每页行数”），可将大型表格拆分到多个页面显示，而不是一次性显示所有行。\n表格小部件：新增了星期几 (WD/WDL) 和日历周 (KW/K) 标记\n新增日历小部件：基于 MUI 日期日历的月历，可用作日期选择器（读取/写入日期）、只读日期显示和/或今日高亮显示，支持配置一周的第一天、ISO/简易日历周数以及完整的颜色/大小自定义。"
-      },
-      "1.7.0": {
-        "en": "Dropdown Widget: Added support for manually defined value/label pairs as an alternative to OID-based state enumeration",
-        "de": "Dropdown-Widget: Unterstützung für manuell definierte Wert-/Bezeichnungspaare als Alternative zur OID-basierten Zustandsaufzählung hinzugefügt.",
-        "ru": "Виджет выпадающего списка: добавлена поддержка пар значение/метка, заданных вручную, в качестве альтернативы перечислению состояний на основе OID.",
-        "pt": "Widget de lista suspensa: Adicionada a possibilidade de definir manualmente pares de valor/rótulo como alternativa à enumeração de estado baseada em OID.",
-        "nl": "Dropdown-widget: Ondersteuning toegevoegd voor handmatig gedefinieerde waarde/label-paren als alternatief voor op OID gebaseerde statusopsomming.",
-        "fr": "Widget de liste déroulante : Ajout de la prise en charge des paires valeur/étiquette définies manuellement comme alternative à l’énumération d’état basée sur les OID",
-        "it": "Widget a discesa: aggiunto il supporto per coppie valore/etichetta definite manualmente come alternativa all'enumerazione dello stato basata su OID",
-        "es": "Widget desplegable: Se agregó compatibilidad con pares de valor/etiqueta definidos manualmente como alternativa a la enumeración de estados basada en OID.",
-        "pl": "Widżet rozwijany: Dodano obsługę ręcznie zdefiniowanych par wartość/etykieta jako alternatywę dla wyliczania stanu na podstawie OID",
-        "uk": "Віджет випадаючого списку: додано підтримку для пар значення/мітки, визначених вручну, як альтернативу перерахуванню станів на основі OID.",
-        "zh-cn": "下拉菜单组件：新增了对手动定义值/标签对的支持，作为基于 OID 的状态枚举的替代方案。"
       }
     },
     "titleLang": {

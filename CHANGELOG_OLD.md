@@ -1,4 +1,7 @@
 # Older changes
+## 1.8.1 (2026-07-23)
+- Added preview image for calendar and value list widgets
+
 ## 1.8.0 (2026-07-16)
 - Radial Slider Widget: Added "Read only" option to prevent value changes, matching the Slider widget's behavior
 - Table Widget: Added pagination support ("Pagination" / "Rows per page") to split large tables across pages instead of showing all rows at once
