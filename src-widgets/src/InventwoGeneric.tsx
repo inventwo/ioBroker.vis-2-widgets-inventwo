@@ -136,6 +136,17 @@ export default class InventwoGeneric<
         if (!colorStr) {
             return null;
         }
+        const hexValues = colorStr.trim().match(/^#([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i);
+        if (hexValues) {
+            let hex = hexValues[1];
+            if (hex.length <= 4) {
+                hex = hex
+                    .split('')
+                    .map(c => c + c)
+                    .join('');
+            }
+            return `#${hex.slice(0, 6).toLowerCase()}`;
+        }
         const rgbaValues = colorStr.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*[\d.]+\s*)?\)/i);
         if (!rgbaValues) {
             return null;
