@@ -122,6 +122,7 @@ Fügt einen Schlagschatten außerhalb der Kachel hinzu.
 | **Y-Versatz** | Vertikaler Schatten-Offset in Pixeln. |
 | **Verwischen** | Schatten-Unschärferadius. |
 | **Größe** | Schatten-Streuungsgröße. |
+| **Zusätzliche Schatten** | Anzahl (0–5) weiterer Schatten. Jeder hat eigenen X-/Y-Versatz, Verwischen, Größe und Farbe; der erste Schatten liegt oben. Versätze dürfen negativ sein. |
 
 ---
 
@@ -129,7 +130,7 @@ Fügt einen Schlagschatten außerhalb der Kachel hinzu.
 
 Fügt einen eingebetteten Schatten innerhalb der Kachel hinzu (erzeugt einen vertieften/gedrückten Effekt).
 
-Gleiche Einstellungen wie beim äußeren Schatten. Eine Farbe pro Zustand kann in den Zustandsgruppen gesetzt werden.
+Gleiche Einstellungen wie beim äußeren Schatten, inklusive zusätzlicher Schatten (z. B. ein heller Schatten oben links und ein dunkler unten rechts für einen Neumorphism-Look). Eine Farbe pro Zustand kann in den Zustandsgruppen gesetzt werden.
 
 ---
 

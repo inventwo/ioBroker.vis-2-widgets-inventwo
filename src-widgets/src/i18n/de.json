@@ -43,7 +43,9 @@
   "attr_group_css_dropdown": "inventwo - Dropdown",
   "attr_group_css_form": "inventwo - Form",
   "attr_group_css_inner_shadow": "inventwo - Innerer Schatten",
+  "attr_group_css_inner_shadow_extra": "inventwo - Zusätzlicher innerer Schatten",
   "attr_group_css_outer_shadow": "inventwo - Äußerer Schatten",
+  "attr_group_css_outer_shadow_extra": "inventwo - Zusätzlicher äußerer Schatten",
   "attr_group_css_radial_thumb": "inventwo - Radialer Daumen",
   "attr_group_css_radial_track": "inventwo - Radialer Track",
   "attr_group_css_radial_value": "inventwo - Radialer Wert",
@@ -195,6 +197,8 @@
   "dialog_close_on_click_outside": "Durch Klicken von außen schließen",
   "dialog_fullscreen": "Dialog Vollbild",
   "dialog_height": "Dialoghöhe",
+  "dialog_reset_on_close": "Beim Schließen Wert false setzen",
+  "dialog_reset_on_close_tooltip": "Beim Schließen des Dialogs (Schließen-Button, Klick außerhalb, Timeout) wird 'Wert false' auf die Objekt-ID geschrieben – nur wenn sie noch 'Wert true' enthält.",
   "dialog_title": "Dialogtitel",
   "dialog_width": "Dialogbreite",
   "diamond": "Raute",
@@ -400,6 +404,7 @@
   "set_label": "inventwo design",
   "shadow_color": "Schattenfarbe",
   "shadow_color_true": "Schattenfarbe wahr",
+  "shadow_extra_count": "Zusätzliche Schatten",
   "shape": "Form",
   "shape_corner_radius": "Eckenradius",
   "shape_custom_path": "Benutzerdefinierte Polygon-Punkte",
@@ -499,6 +504,7 @@
   "tooltip_decimal_separator": "Zeichen für die Dezimaltrennung (z. B. \",\" oder \".\"). Leer = Browser-Sprache",
   "tooltip_default_sort_column": "Geben Sie den Spaltennamen (Key) für die Standard-Sortierung an",
   "tooltip_multi_sort": "Aktiviert die Sortierung nach mehreren Spalten. 1. Klick: aufsteigend, 2. Klick: absteigend, 3. Klick: entfernen. Mehrere Spalten nacheinander anklicken, um eine Sortierpriorität aufzubauen.",
+  "tooltip_shadow_extra_count": "Anzahl zusätzlicher Schatten (werden hinter dem ersten Schatten gezeichnet)",
   "tooltip_state_oid": "Wenn leer und kein Nav, wird die Objekt-ID von oben verwendet",
   "tooltip_thousand_separator": "Zeichen für die Tausendertrennung (z. B. \".\" oder \" \"). Leer = kein Tausendertrennzeichen",
   "tooltip_widget_dropwown_show_value_in_label": "Erfordert eine Seitenaktualisierung, um Änderungen im Bearbeitungsmodus zu übernehmen. Zeigt den aktuellen Wert in der Beschriftung der Dropdown-Optionen an. Wenn nicht aktiviert, wird nur der Text angezeigt.",
@@ -586,7 +592,5 @@
   "widget_valuelist": "Werteliste",
   "width": "Breite",
   "x_offset": "X-Versatz",
-  "y_offset": "Y-Versatz",
-  "dialog_reset_on_close": "Beim Schließen Wert false setzen",
-  "dialog_reset_on_close_tooltip": "Beim Schließen des Dialogs (Schließen-Button, Klick außerhalb, Timeout) wird 'Wert false' auf die Objekt-ID geschrieben – nur wenn sie noch 'Wert true' enthält."
+  "y_offset": "Y-Versatz"
 }

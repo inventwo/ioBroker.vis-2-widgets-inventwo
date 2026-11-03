@@ -115,11 +115,23 @@ export interface UniversalWidgetBorderStyles {
     borderStyle: React.CSSProperties['borderStyle'];
 }
 
+/** One additional shadow layer (on top of the primary shadow) */
+export interface UniversalWidgetShadowLayer {
+    x: number;
+    y: number;
+    blur: number;
+    size: number;
+    color: string;
+}
+
 export interface UniversalWidgetOuterShadowStyles {
     outerShadowBlur: number;
     outerShadowSize: number;
     outerShadowX: number;
     outerShadowY: number;
+    outerShadowExtraCount?: number;
+    /** Resolved additional outer shadows (built in getValueData) */
+    outerShadowExtras?: UniversalWidgetShadowLayer[];
 }
 
 export interface UniversalWidgetInnerShadowStyles {
@@ -127,6 +139,9 @@ export interface UniversalWidgetInnerShadowStyles {
     innerShadowSize: number;
     innerShadowX: number;
     innerShadowY: number;
+    innerShadowExtraCount?: number;
+    /** Resolved additional inner shadows (built in getValueData) */
+    innerShadowExtras?: UniversalWidgetShadowLayer[];
 }
 
 export interface UniversalWidgetClickFeedbackStyles {

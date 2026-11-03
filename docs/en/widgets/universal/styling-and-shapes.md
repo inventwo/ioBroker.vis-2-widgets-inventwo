@@ -122,6 +122,7 @@ Adds a drop shadow outside the tile.
 | **Y offset** | Vertical shadow offset in pixels. |
 | **Blur** | Shadow blur radius. |
 | **Size** | Shadow spread size. |
+| **Additional shadows** | Number (0–5) of further shadows. Each one gets its own X/Y offset, blur, size and color; the first shadow is drawn on top. Offsets may be negative. |
 
 ---
 
@@ -129,7 +130,7 @@ Adds a drop shadow outside the tile.
 
 Adds an inset shadow inside the tile (creates a recessed/pressed effect).
 
-Same settings as the outer shadow. A per-state color can be set in the state groups.
+Same settings as the outer shadow, including additional shadows (e.g. a light shadow top-left plus a dark one bottom-right for a neumorphic look). A per-state color can be set in the state groups.
 
 ---
 

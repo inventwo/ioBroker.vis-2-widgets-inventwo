@@ -31,6 +31,7 @@ import type {
     UniversalWidgetContentStyles,
     UniversalWidgetInnerShadowStyles,
     UniversalWidgetOuterShadowStyles,
+    UniversalWidgetShadowLayer,
     UniversalWidgetShapeStyles,
     UniversalWidgetSpacingStyles,
     UniversalWidgetStyles,
@@ -1939,7 +1940,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         {
                             name: 'outerShadowX',
                             type: 'slider',
-                            min: 0,
+                            min: -50,
                             max: 50,
                             step: 1,
                             default: 2,
@@ -1949,7 +1950,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         {
                             name: 'outerShadowY',
                             type: 'slider',
-                            min: 0,
+                            min: -50,
                             max: 50,
                             step: 1,
                             default: 2,
@@ -1976,6 +1977,68 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             label: 'size',
                             hidden: '!!data.outerShadowStyleFromWidget',
                         },
+                        {
+                            name: 'outerShadowExtraCount',
+                            type: 'slider',
+                            min: 0,
+                            max: 5,
+                            step: 1,
+                            default: 0,
+                            label: 'shadow_extra_count',
+                            tooltip: 'tooltip_shadow_extra_count',
+                            hidden: '!!data.outerShadowStyleFromWidget',
+                        },
+                    ],
+                },
+                {
+                    name: 'outerShadowExtras',
+                    indexFrom: 1,
+                    indexTo: 'outerShadowExtraCount',
+                    label: 'attr_group_css_outer_shadow_extra',
+                    hidden: '!!data.outerShadowStyleFromWidget',
+                    fields: [
+                        {
+                            name: 'outerShadowExtraX',
+                            type: 'slider',
+                            min: -50,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'x_offset',
+                        },
+                        {
+                            name: 'outerShadowExtraY',
+                            type: 'slider',
+                            min: -50,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'y_offset',
+                        },
+                        {
+                            name: 'outerShadowExtraBlur',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 2,
+                            label: 'blur',
+                        },
+                        {
+                            name: 'outerShadowExtraSize',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'size',
+                        },
+                        {
+                            name: 'outerShadowExtraColor',
+                            type: 'color',
+                            label: 'outer_shadow_color',
+                            default: 'rgba(0, 0, 0, 0.5)',
+                        },
                     ],
                 },
                 {
@@ -1992,7 +2055,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         {
                             name: 'innerShadowX',
                             type: 'slider',
-                            min: 0,
+                            min: -50,
                             max: 50,
                             step: 1,
                             default: 0,
@@ -2002,7 +2065,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         {
                             name: 'innerShadowY',
                             type: 'slider',
-                            min: 0,
+                            min: -50,
                             max: 50,
                             step: 1,
                             default: 0,
@@ -2028,6 +2091,68 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             default: 0,
                             label: 'size',
                             hidden: '!!data.innerShadowStyleFromWidget',
+                        },
+                        {
+                            name: 'innerShadowExtraCount',
+                            type: 'slider',
+                            min: 0,
+                            max: 5,
+                            step: 1,
+                            default: 0,
+                            label: 'shadow_extra_count',
+                            tooltip: 'tooltip_shadow_extra_count',
+                            hidden: '!!data.innerShadowStyleFromWidget',
+                        },
+                    ],
+                },
+                {
+                    name: 'innerShadowExtras',
+                    indexFrom: 1,
+                    indexTo: 'innerShadowExtraCount',
+                    label: 'attr_group_css_inner_shadow_extra',
+                    hidden: '!!data.innerShadowStyleFromWidget',
+                    fields: [
+                        {
+                            name: 'innerShadowExtraX',
+                            type: 'slider',
+                            min: -50,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'x_offset',
+                        },
+                        {
+                            name: 'innerShadowExtraY',
+                            type: 'slider',
+                            min: -50,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'y_offset',
+                        },
+                        {
+                            name: 'innerShadowExtraBlur',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 2,
+                            label: 'blur',
+                        },
+                        {
+                            name: 'innerShadowExtraSize',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'size',
+                        },
+                        {
+                            name: 'innerShadowExtraColor',
+                            type: 'color',
+                            label: 'inner_shadow_color',
+                            default: 'rgba(255, 255, 255, 0.5)',
                         },
                     ],
                 },
@@ -2719,6 +2844,19 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             ) as UniversalWidgetShapeStyles),
         };
 
+        dataWithStyles.styles.outerShadowExtras = this.getShadowExtras(
+            'outerShadowStyleFromWidget',
+            'outerShadow',
+            dataWithStyles.styles.outerShadowExtraCount,
+            this.groupAttrs.outerShadowExtras,
+        );
+        dataWithStyles.styles.innerShadowExtras = this.getShadowExtras(
+            'innerShadowStyleFromWidget',
+            'innerShadow',
+            dataWithStyles.styles.innerShadowExtraCount,
+            this.groupAttrs.innerShadowExtras,
+        );
+
         if (matchedStateIndex !== null) {
             const perStateMirror = this.state.rxData[`contentMirror${matchedStateIndex}`];
             if (perStateMirror === 'true') {
@@ -2733,6 +2871,38 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
 
         return dataWithStyles;
+    }
+
+    /**
+     * Resolves the additional (indexed) shadow layers of the given kind.
+     * Honours the "From Widget" reference of the shadow group, so the layers are read from the referenced widget.
+     */
+    getShadowExtras(
+        fromWidgetField: string,
+        prefix: 'outerShadow' | 'innerShadow',
+        count: number | string | undefined,
+        attrList: string[] | undefined,
+    ): UniversalWidgetShadowLayer[] {
+        const layers: UniversalWidgetShadowLayer[] = [];
+        const total = Math.min(parseInt(String(count ?? 0), 10) || 0, 5);
+        if (!attrList) {
+            return layers;
+        }
+        for (let n = 1; n <= total; n++) {
+            const style = this.getStyle(fromWidgetField, attrList, n);
+            const num = (name: string): number => {
+                const val = parseFloat(style[`${prefix}Extra${name}${n}`]);
+                return Number.isNaN(val) ? 0 : val;
+            };
+            layers.push({
+                x: num('X'),
+                y: num('Y'),
+                blur: num('Blur'),
+                size: num('Size'),
+                color: style[`${prefix}ExtraColor${n}`] as string,
+            });
+        }
+        return layers;
     }
 
     getStateData(i: number, useExtraTrueValues = false): UniversalWidgetStyles {
@@ -4006,26 +4176,36 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         // primitives applied to the shadow path directly – no CSS blur() which would just fade the
         // clipped polygon instead of expanding it.
         // blur=0 AND size=0 → no filter → purely hard shadow polygon (like box-shadow blur:0 spread:0).
-        const outerShadowX = valueData.styles.outerShadowX ?? 0;
-        const outerShadowY = valueData.styles.outerShadowY ?? 0;
-        const outerShadowBlurValue = valueData.styles.outerShadowBlur ?? 0;
-        const outerShadowSizeValue = valueData.styles.outerShadowSize ?? 0;
-        const hasOuterShadow =
-            !!valueData.outerShadowColor &&
-            (outerShadowBlurValue > 0 || outerShadowSizeValue > 0 || outerShadowX !== 0 || outerShadowY !== 0);
+        // Multiple shadows: the primary shadow plus the additional layers. Like CSS box-shadow, the first
+        // layer is drawn on top, so layers are rendered in reverse order.
+        const isVisibleShadow = (layer: UniversalWidgetShadowLayer): boolean =>
+            !!layer.color && (layer.blur > 0 || layer.size > 0 || layer.x !== 0 || layer.y !== 0);
+        const outerShadowLayers = [
+            {
+                x: valueData.styles.outerShadowX ?? 0,
+                y: valueData.styles.outerShadowY ?? 0,
+                blur: valueData.styles.outerShadowBlur ?? 0,
+                size: valueData.styles.outerShadowSize ?? 0,
+                color: valueData.outerShadowColor,
+            },
+            ...(valueData.styles.outerShadowExtras ?? []),
+        ]
+            .filter(isVisibleShadow)
+            .reverse();
 
         // Inner shadow: computed via SVG filter (feFlood / feComposite "outside-bleed" technique)
-        const innerShadowX = valueData.styles.innerShadowX ?? 0;
-        const innerShadowY = valueData.styles.innerShadowY ?? 0;
-        const innerShadowBlur = valueData.styles.innerShadowBlur ?? 0;
-        const innerShadowSize = valueData.styles.innerShadowSize ?? 0;
-        const hasInnerShadow =
-            !!valueData.innerShadowColor &&
-            (innerShadowBlur > 0 || innerShadowSize > 0 || innerShadowX !== 0 || innerShadowY !== 0);
-        // stdDeviation=0 causes feGaussianBlur to silently discard output in some browsers → skip it entirely
-        const innerShadowStdDev = (innerShadowBlur + innerShadowSize) / 2;
-        // result name for the step feeding into the final feComposite (might skip blur step)
-        const innerShadowBlurResult = innerShadowStdDev > 0 ? 'shadow-blur' : 'shadow-offset';
+        const innerShadowLayers = [
+            {
+                x: valueData.styles.innerShadowX ?? 0,
+                y: valueData.styles.innerShadowY ?? 0,
+                blur: valueData.styles.innerShadowBlur ?? 0,
+                size: valueData.styles.innerShadowSize ?? 0,
+                color: valueData.innerShadowColor,
+            },
+            ...(valueData.styles.innerShadowExtras ?? []),
+        ]
+            .filter(isVisibleShadow)
+            .reverse();
 
         // Border via SVG path stroke overlay
         const borderSize = Math.max(
@@ -4048,8 +4228,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         const clipId = `inventwo_cp_${widgetId}${suffix}`;
         // SVG clip-path for foreignObject (userSpaceOnUse → same coordinate space as the viewBox)
         const clipIdSvg = `inventwo_cp_svg_${widgetId}${suffix}`;
-        const innerShadowFilterId = `inventwo_is_${widgetId}${suffix}`;
-        const outerShadowFilterId = `inventwo_os_${widgetId}${suffix}`;
+        const innerShadowFilterId = (n: number): string => `inventwo_is_${widgetId}${suffix}_${n}`;
+        const outerShadowFilterId = (n: number): string => `inventwo_os_${widgetId}${suffix}_${n}`;
 
         return (
             <div
@@ -4069,8 +4249,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                  *  – CSS transform handles the pixel-exact x/y offset
                  * No filter at all when blur=0 AND size=0 → hard shadow.
                  */}
-                {hasOuterShadow && (
+                {outerShadowLayers.map((layer, n) => (
                     <svg
+                        key={`outer_${n}`}
                         style={{
                             position: 'absolute',
                             inset: 0,
@@ -4079,36 +4260,34 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             overflow: 'visible',
                             pointerEvents: 'none',
                             transform:
-                                outerShadowX !== 0 || outerShadowY !== 0
-                                    ? `translate(${outerShadowX}px, ${outerShadowY}px)`
-                                    : undefined,
+                                layer.x !== 0 || layer.y !== 0 ? `translate(${layer.x}px, ${layer.y}px)` : undefined,
                         }}
                         viewBox="0 0 100 100"
                         preserveAspectRatio="none"
                     >
-                        {(outerShadowBlurValue > 0 || outerShadowSizeValue > 0) && (
+                        {(layer.blur > 0 || layer.size > 0) && (
                             <defs>
                                 <filter
-                                    id={outerShadowFilterId}
+                                    id={outerShadowFilterId(n)}
                                     x="-50%"
                                     y="-50%"
                                     width="200%"
                                     height="200%"
                                 >
                                     {/* Dilate first to expand the shadow outward (spread / Größe) */}
-                                    {outerShadowSizeValue > 0 && (
+                                    {layer.size > 0 && (
                                         <feMorphology
                                             in="SourceGraphic"
                                             operator="dilate"
-                                            radius={outerShadowSizeValue}
+                                            radius={layer.size}
                                             result="dilated"
                                         />
                                     )}
                                     {/* Then blur; skip entirely when blur=0 so we get hard edges */}
-                                    {outerShadowBlurValue > 0 && (
+                                    {layer.blur > 0 && (
                                         <feGaussianBlur
-                                            in={outerShadowSizeValue > 0 ? 'dilated' : 'SourceGraphic'}
-                                            stdDeviation={outerShadowBlurValue}
+                                            in={layer.size > 0 ? 'dilated' : 'SourceGraphic'}
+                                            stdDeviation={layer.blur}
                                         />
                                     )}
                                 </filter>
@@ -4116,15 +4295,11 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         )}
                         <path
                             d={pathD}
-                            fill={valueData.outerShadowColor || 'transparent'}
-                            filter={
-                                outerShadowBlurValue > 0 || outerShadowSizeValue > 0
-                                    ? `url(#${outerShadowFilterId})`
-                                    : undefined
-                            }
+                            fill={layer.color || 'transparent'}
+                            filter={layer.blur > 0 || layer.size > 0 ? `url(#${outerShadowFilterId(n)})` : undefined}
                         />
                     </svg>
-                )}
+                ))}
                 {/*
                  * Background SVG
                  * – defines clip paths (objectBoundingBox for HTML, userSpaceOnUse for SVG)
@@ -4168,58 +4343,65 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             2. Offset + blur → the outside region bleeds inward
                             3. Composite IN with SourceAlpha → keep only what is inside the shape
                             4. Color it → output shadow only (no merge with SourceGraphic)             */}
-                        {hasInnerShadow && (
-                            <filter
-                                id={innerShadowFilterId}
-                                x="-50%"
-                                y="-50%"
-                                width="200%"
-                                height="200%"
-                            >
-                                <feFlood
-                                    floodColor="white"
-                                    floodOpacity={1}
-                                    result="inverted-flood"
-                                />
-                                <feComposite
-                                    in="inverted-flood"
-                                    in2="SourceAlpha"
-                                    operator="out"
-                                    result="outside"
-                                />
-                                <feOffset
-                                    in="outside"
-                                    dx={innerShadowX}
-                                    dy={innerShadowY}
-                                    result="shadow-offset"
-                                />
-                                {/* Skip feGaussianBlur entirely when stdDeviation=0 – some browsers
-                                    discard all output when stdDeviation is exactly 0 instead of
-                                    treating it as a pass-through, which would make the shadow invisible. */}
-                                {innerShadowStdDev > 0 && (
-                                    <feGaussianBlur
-                                        in="shadow-offset"
-                                        stdDeviation={innerShadowStdDev}
-                                        result="shadow-blur"
+                        {innerShadowLayers.map((layer, n) => {
+                            // stdDeviation=0 causes feGaussianBlur to silently discard output in some browsers → skip it entirely
+                            const stdDev = (layer.blur + layer.size) / 2;
+                            // result name for the step feeding into the final feComposite (might skip blur step)
+                            const blurResult = stdDev > 0 ? 'shadow-blur' : 'shadow-offset';
+                            return (
+                                <filter
+                                    key={`inner_${n}`}
+                                    id={innerShadowFilterId(n)}
+                                    x="-50%"
+                                    y="-50%"
+                                    width="200%"
+                                    height="200%"
+                                >
+                                    <feFlood
+                                        floodColor="white"
+                                        floodOpacity={1}
+                                        result="inverted-flood"
                                     />
-                                )}
-                                <feComposite
-                                    in={innerShadowBlurResult}
-                                    in2="SourceAlpha"
-                                    operator="in"
-                                    result="shadow-inner"
-                                />
-                                <feFlood
-                                    floodColor={valueData.innerShadowColor ?? 'black'}
-                                    result="shadow-color"
-                                />
-                                <feComposite
-                                    in="shadow-color"
-                                    in2="shadow-inner"
-                                    operator="in"
-                                />
-                            </filter>
-                        )}
+                                    <feComposite
+                                        in="inverted-flood"
+                                        in2="SourceAlpha"
+                                        operator="out"
+                                        result="outside"
+                                    />
+                                    <feOffset
+                                        in="outside"
+                                        dx={layer.x}
+                                        dy={layer.y}
+                                        result="shadow-offset"
+                                    />
+                                    {/* Skip feGaussianBlur entirely when stdDeviation=0 – some browsers
+                                        discard all output when stdDeviation is exactly 0 instead of
+                                        treating it as a pass-through, which would make the shadow invisible. */}
+                                    {stdDev > 0 && (
+                                        <feGaussianBlur
+                                            in="shadow-offset"
+                                            stdDeviation={stdDev}
+                                            result="shadow-blur"
+                                        />
+                                    )}
+                                    <feComposite
+                                        in={blurResult}
+                                        in2="SourceAlpha"
+                                        operator="in"
+                                        result="shadow-inner"
+                                    />
+                                    <feFlood
+                                        floodColor={layer.color ?? 'black'}
+                                        result="shadow-color"
+                                    />
+                                    <feComposite
+                                        in="shadow-color"
+                                        in2="shadow-inner"
+                                        operator="in"
+                                    />
+                                </filter>
+                            );
+                        })}
                     </defs>
 
                     {/* The background polygon.
@@ -4250,13 +4432,14 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         using foreignObject+clipPath would always produce a rectangular SourceAlpha.
                         The filter outputs ONLY the shadow (last primitive = output, no feMerge),
                         so the path's fill is entirely replaced by the transparent shadow image. */}
-                    {hasInnerShadow && (
+                    {innerShadowLayers.map((_layer, n) => (
                         <path
+                            key={`inner_${n}`}
                             d={pathD}
                             fill="black"
-                            filter={`url(#${innerShadowFilterId})`}
+                            filter={`url(#${innerShadowFilterId(n)})`}
                         />
-                    )}
+                    ))}
                 </svg>
 
                 {/* Interactive content layer – clipped to the polygon via <clipPath> */}
@@ -4346,17 +4529,30 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             return this.buildPolygonCard(valueData, i, content, 'chamfered', chamferedPoints, 0);
         }
 
-        let shadow = '';
+        // Primary shadow first (drawn on top), followed by the additional shadows
+        const shadows: string[] = [];
         if (valueData.outerShadowColor) {
-            shadow += `${valueData.styles.outerShadowX}px ${valueData.styles.outerShadowY}px ${valueData.styles.outerShadowBlur}px ${valueData.styles.outerShadowSize}px ${valueData.outerShadowColor}`;
+            shadows.push(
+                `${valueData.styles.outerShadowX}px ${valueData.styles.outerShadowY}px ${valueData.styles.outerShadowBlur}px ${valueData.styles.outerShadowSize}px ${valueData.outerShadowColor}`,
+            );
         }
+        (valueData.styles.outerShadowExtras ?? []).forEach(layer => {
+            if (layer.color) {
+                shadows.push(`${layer.x}px ${layer.y}px ${layer.blur}px ${layer.size}px ${layer.color}`);
+            }
+        });
 
         if (valueData.innerShadowColor) {
-            if (shadow !== '') {
-                shadow += ', ';
-            }
-            shadow += `inset ${valueData.styles.innerShadowX}px ${valueData.styles.innerShadowY}px ${valueData.styles.innerShadowBlur}px ${valueData.styles.innerShadowSize}px ${valueData.innerShadowColor}`;
+            shadows.push(
+                `inset ${valueData.styles.innerShadowX}px ${valueData.styles.innerShadowY}px ${valueData.styles.innerShadowBlur}px ${valueData.styles.innerShadowSize}px ${valueData.innerShadowColor}`,
+            );
         }
+        (valueData.styles.innerShadowExtras ?? []).forEach(layer => {
+            if (layer.color) {
+                shadows.push(`inset ${layer.x}px ${layer.y}px ${layer.blur}px ${layer.size}px ${layer.color}`);
+            }
+        });
+        const shadow = shadows.join(', ');
 
         const borderRadius = `${valueData.styles.borderRadiusTopLeft}px ${valueData.styles.borderRadiusTopRight}px ${valueData.styles.borderRadiusBottomRight}px ${valueData.styles.borderRadiusBottomLeft}px`;
 
