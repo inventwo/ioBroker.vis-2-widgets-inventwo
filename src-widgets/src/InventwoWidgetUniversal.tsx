@@ -2445,11 +2445,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             clearTimeout(this.state.dialogCloseTimeout);
         }
 
-        // Start the close timeout on every open - also when the dialog is opened via the object ID (e.g. by a script)
-        if (!prevState.dialogOpen && this.state.dialogOpen) {
-            this.startDialogCloseTimeout();
-        }
-
         // Start or stop clock interval based on content type changes
         if (this.state.rxData.contentType === 'analogClock' && !this.state.clockInterval) {
             const clockInterval = window.setInterval(() => {
@@ -2855,7 +2850,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         if (this.getValue(oid) !== this.convertValue(this.state.rxData.valueTrue)) {
             return;
         }
-        this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueFalse, false));
+        // convertValue turns an empty string into NaN, so fall back to false explicitly
+        const valueFalse = this.state.rxData.valueFalse;
+        this.props.context.setValue(oid, this.validFieldValue(valueFalse) ? this.convertValue(valueFalse) : false);
     }
 
     private onClick(index: number | null, e?: React.PointerEvent<HTMLDivElement>): void {
@@ -2915,6 +2912,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 break;
             case 'viewInDialog':
                 this.setState({ dialogOpen: true, dialogOpenTime: Date.now() });
+                this.startDialogCloseTimeout();
                 if (oid) {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
                 }
