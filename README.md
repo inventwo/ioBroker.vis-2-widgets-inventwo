@@ -306,7 +306,7 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.2.0 (2026-11-17)
 - Adapter settings: New migration assistant that converts the old vis-1 widgets of the adapter vis-inventwo (`i-vis-*`) in a vis-2 project into the widgets of this adapter – with preview, a list of widgets to check manually and either an automatic backup or a converted copy as new project. It can also restore widgets shown in several views, which vis-2 drops when importing a vis-1 project. Based on the community tool [inventwo-vis1-to-vis2](https://github.com/crunchip77/inventwo-vis1-to-vis2) by crunchip77
 
 ### 2.1.1 (2026-11-03)
@@ -322,11 +322,6 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
 ### 2.0.1 (2026-10-17)
 - Breaking: Requires vis-2 >= 2.20.0 (React 19 / MUI 9). Older vis-2 versions (React 18) are no longer supported
 - Updated dependencies to React 19 and MUI 9
-
-### 1.10.0 (2026-09-01)
-- Event Calendar Widget: Added support for showing multiple calendars at once via a new "Additional calendars" group (datapoint + color + label per calendar, e.g. one iCal calendar per family member), merged into a single view with an optional color/label legend below the calendar and a persistent per-event colored left border showing which calendar an event belongs to (kept even when an Event color rule overrides the tile's fill color). The original single "Events (datapoint)" field keeps working unchanged when no additional calendars are configured; once at least one is added, that field is ignored
-- Event Calendar Widget: Added "Max. events per day" setting (Month/Multi-month views) to cap how many event tiles are shown per day cell before the rest collapse behind FullCalendar's "+N more" popover link, instead of day cells always growing with the number of events
-- Universal Widget: Fixed the dialog title "Size" setting, which was configurable but had no effect on the rendered dialog title font size
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)
