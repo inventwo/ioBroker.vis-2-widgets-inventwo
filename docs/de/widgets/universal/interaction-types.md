@@ -70,6 +70,10 @@ Die **Typ**-Einstellung in der Gruppe **Common** legt fest, was passiert, wenn e
 
 **Einstellungen (in der Common-Gruppe):**
 - **Sicht** — Die VIS-Ansicht, die im Dialog angezeigt werden soll.
+- **Objekt-ID** — Optional. Damit kann ein Skript oder ein anderes Widget den Dialog öffnen und schließen (siehe unten).
+- **Wert true** — Der Wert der Objekt-ID, bei dem der Dialog geöffnet ist.
+
+**Öffnen und Schließen per Datenpunkt:** Ist eine **Objekt-ID** gesetzt, folgt der Dialog ihrem Wert: Er öffnet sich, sobald der Datenpunkt **Wert true** enthält, und schließt sich bei jedem anderen Wert. So kann ein Skript den Dialog öffnen (z. B. wenn es an der Tür klingelt) und wieder schließen — auf allen Geräten, die die Ansicht anzeigen. Ein Klick auf die Kachel öffnet den Dialog weiterhin lokal.
 
 **Dialog-Einstellungen (in der Gruppe "Type — View in dialog"):**
 

@@ -70,6 +70,10 @@ The **Type** setting in the **Common** group defines what happens when a user cl
 
 **Settings (in the Common group):**
 - **View** — The VIS view to show inside the dialog.
+- **Object ID** — Optional. Lets a script or another widget open and close the dialog (see below).
+- **Value true** — The value of the Object ID at which the dialog is open.
+
+**Opening and closing by datapoint:** If an **Object ID** is set, the dialog follows its value: it opens as soon as the datapoint holds **Value true** and closes on any other value. This way a script can open the dialog (e.g. when the doorbell rings) and close it again — on all devices showing the view. Clicking the tile still opens the dialog locally.
 
 **Dialog settings (in the "Type — View in dialog" group):**
 

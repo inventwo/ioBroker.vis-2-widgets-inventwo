@@ -85,5 +85,7 @@ Colors, texts, images, corner radius, shadows, borders, alignment, spacing and o
 
 The color sliders (`i-vis-slider-color-hor`, `i-vis-slider-color-vert`) have no counterpart. They stay unchanged and are listed under **Widgets without conversion**.
 
-Not available in VIS 2 and therefore dropped: hover colors, the digital clock, resetting a value after a time, closing a dialog by datapoint, the matrix arrangement of radio buttons, thresholds per table cell, the rotation of sliders.
+Not available in VIS 2 and therefore dropped: hover colors, the digital clock, resetting a value after a time, the separate datapoint for closing a dialog, the matrix arrangement of radio buttons, thresholds per table cell, the rotation of sliders.
+
+A dialog can still be closed by datapoint in VIS 2: it follows the **Object ID** of the widget and is open only while that datapoint holds **Value true** (see [Interaction types](widgets/universal/interaction-types.md#view-in-dialog)). Only the additional close datapoint of vis-1 has no counterpart.
 
