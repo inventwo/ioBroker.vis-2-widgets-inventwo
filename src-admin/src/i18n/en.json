@@ -23,7 +23,7 @@
     "custom_inventwo_migration_table_skipped": "Widgets without conversion",
     "custom_inventwo_migration_table_mappings": "Conversions",
     "custom_inventwo_migration_note_state": "\"State\" became a button that sets the value – check value and click behaviour.",
-    "custom_inventwo_migration_note_state_reset": "Resetting the value after a time (iStateResetValueTime) does not exist in vis-2.",
+    "custom_inventwo_migration_note_state_reset_check": "Resetting the value after a time (iStateResetValueTime) was taken over. Check the time (ms) and the reset value (\"Value false\").",
     "custom_inventwo_migration_note_nav_view": "The target view is missing – select it in the vis-2 editor.",
     "custom_inventwo_migration_note_increase": "Increase/decrease: check the step value.",
     "custom_inventwo_migration_note_http": "HTTP: check URL and request type.",

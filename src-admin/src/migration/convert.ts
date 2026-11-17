@@ -554,7 +554,12 @@ function convertUniversal(widget: VisWidget, isMulti: boolean): ConvertResult {
             data.valueTrue = first(old.value, old.iValueTrue) ?? 'true';
             notes.push({ key: 'migration_note_state' });
             if (parseNum(old.iStateResetValueTime, 0) > 0) {
-                notes.push({ key: 'migration_note_state_reset' });
+                // vis-2: "Reset value after (ms)" writes "Value false" after that time
+                data.buttonResetTime = parseNum(old.iStateResetValueTime, 0);
+                if (isSet(old.iStateResetValue)) {
+                    data.valueFalse = old.iStateResetValue;
+                }
+                notes.push({ key: 'migration_note_state_reset_check' });
             }
             break;
 

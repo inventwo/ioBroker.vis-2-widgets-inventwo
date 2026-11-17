@@ -71,6 +71,7 @@ interface UniversalState extends VisRxWidgetState {
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
     private readonly refContentContainer: React.RefObject<HTMLDivElement | null> = React.createRef();
     private _isHolding: boolean = false;
+    private _buttonResetTimer: ReturnType<typeof setTimeout> | null = null;
     private _previousOidValue: any = null;
     private _lastRestoredValue: any = undefined;
     private _lastRestoredTime: number = 0;
@@ -186,7 +187,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             type: 'checkbox',
                             default: false,
                             label: 'nav_password_enabled',
-                            hidden: 'data.type !== "nav"',
+                            tooltip: 'tooltip_password_protection',
+                            hidden: 'data.type == "readonly" || (data.type == "button" && data.buttonHoldValue)',
                         },
                         {
                             name: 'navPasswordType',
@@ -197,19 +199,19 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             ],
                             default: 'password',
                             label: 'nav_password_type',
-                            hidden: 'data.type !== "nav" || !data.navPasswordEnabled',
+                            hidden: 'data.type == "readonly" || (data.type == "button" && data.buttonHoldValue) || !data.navPasswordEnabled',
                         },
                         {
                             name: 'navPassword',
                             type: 'text',
                             label: 'nav_password',
-                            hidden: 'data.type !== "nav" || !data.navPasswordEnabled',
+                            hidden: 'data.type == "readonly" || (data.type == "button" && data.buttonHoldValue) || !data.navPasswordEnabled',
                         },
                         {
                             name: 'valueFalse',
                             type: 'text',
                             label: 'value_false',
-                            hidden: '(data.type != "switch" && !(data.type == "viewInDialog" && data.dialogResetOnClose)) || data.mode == "separatedButtons"',
+                            hidden: '!(data.type == "button" && !data.buttonHoldValue && data.buttonResetTime > 0) && ((data.type != "switch" && !(data.type == "viewInDialog" && data.dialogResetOnClose)) || data.mode == "separatedButtons")',
                         },
                         {
                             name: 'valueTrue',
@@ -252,6 +254,15 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             label: 'button_hold_value',
                             tooltip: 'tooltip_button_hold_value',
                             hidden: 'data.type != "button"',
+                        },
+                        {
+                            name: 'buttonResetTime',
+                            type: 'number',
+                            min: 0,
+                            default: 0,
+                            label: 'button_reset_time',
+                            tooltip: 'tooltip_button_reset_time',
+                            hidden: 'data.type != "button" || data.buttonHoldValue',
                         },
                     ],
                 },
@@ -2555,6 +2566,9 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
     }
 
     componentWillUnmount(): void {
+        if (this._buttonResetTimer) {
+            clearTimeout(this._buttonResetTimer);
+        }
         if (this.state.dialogCloseTimeout) {
             clearTimeout(this.state.dialogCloseTimeout);
         }
@@ -2978,11 +2992,45 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
+    /**
+     * Password/PIN protection: the action of the tile is only executed after the correct
+     * password was entered. Not available for read only tiles and "hold value" buttons.
+     */
+    private isPasswordProtected(): boolean {
+        const type = this.state.rxData.type;
+        if (type === 'readonly' || (type === 'button' && this.state.rxData.buttonHoldValue)) {
+            return false;
+        }
+        return !!this.state.rxData.navPasswordEnabled && !!this.state.rxData.navPassword;
+    }
+
+    /** Type "button": writes "Value false" (or false) after the configured time. */
+    private startButtonResetTimer(oid: string): void {
+        const resetTime = Number(this.state.rxData.buttonResetTime) || 0;
+        if (this._buttonResetTimer) {
+            clearTimeout(this._buttonResetTimer);
+            this._buttonResetTimer = null;
+        }
+        if (resetTime <= 0) {
+            return;
+        }
+        this._buttonResetTimer = setTimeout(() => {
+            this._buttonResetTimer = null;
+            // convertValue turns an empty string into NaN, so fall back to false explicitly
+            const valueFalse = this.state.rxData.valueFalse;
+            this.props.context.setValue(oid, this.validFieldValue(valueFalse) ? this.convertValue(valueFalse) : false);
+        }, resetTime);
+    }
+
     private confirmNavPassword(): void {
         if (this.state.navPasswordInput === this.state.rxData.navPassword) {
             const pendingIndex = this.state.navPendingIndex;
             this.setState({ navPasswordDialogOpen: false, navPasswordInput: '', navPasswordError: false }, () => {
-                this.doNavigation(pendingIndex);
+                if (this.state.rxData.type === 'nav') {
+                    this.doNavigation(pendingIndex);
+                } else {
+                    this.onClick(pendingIndex, undefined, true);
+                }
             });
         } else {
             this.setState({ navPasswordError: true, navPasswordInput: '' });
@@ -3025,8 +3073,19 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         this.props.context.setValue(oid, this.validFieldValue(valueFalse) ? this.convertValue(valueFalse) : false);
     }
 
-    private onClick(index: number | null, e?: React.PointerEvent<HTMLDivElement>): void {
+    private onClick(index: number | null, e?: React.PointerEvent<HTMLDivElement>, authorized = false): void {
         if (this.isClickDisabled(index)) {
+            return;
+        }
+        // Password/PIN protection for all types but "nav" (which asks itself, see below):
+        // ask first, the action runs again with `authorized` after the correct input.
+        if (!authorized && this.state.rxData.type !== 'nav' && this.isPasswordProtected()) {
+            this.setState({
+                navPasswordDialogOpen: true,
+                navPasswordInput: '',
+                navPasswordError: false,
+                navPendingIndex: index,
+            });
             return;
         }
         const oid = this.state.rxData.oid;
@@ -3060,6 +3119,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 } else if (index !== null) {
                     this.props.context.setValue(oid, this.convertValue(this.state.rxData[`value${index}`]));
                 }
+                this.startButtonResetTimer(oid);
 
                 break;
             case 'nav':
@@ -3068,7 +3128,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     return;
                 }
 
-                if (this.state.rxData.navPasswordEnabled && this.state.rxData.navPassword) {
+                if (this.isPasswordProtected()) {
                     this.setState({
                         navPasswordDialogOpen: true,
                         navPasswordInput: '',
@@ -3248,7 +3308,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             );
         }
 
-        if (this.state.rxData.type === 'nav' && this.state.rxData.navPasswordEnabled) {
+        if (this.isPasswordProtected()) {
             const isPinMode = this.state.rxData.navPasswordType === 'pin';
             const closeDialog = (): void =>
                 this.setState({ navPasswordDialogOpen: false, navPasswordInput: '', navPasswordError: false });

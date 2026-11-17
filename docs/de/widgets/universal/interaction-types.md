@@ -30,6 +30,7 @@ Die **Typ**-Einstellung in der Gruppe **Common** legt fest, was passiert, wenn e
 **Einstellungen:**
 - **Objekt-ID** — Der Datenpunkt, in den geschrieben wird.
 - **Wert true** — Der beim Klick geschriebene Wert.
+- **Wert zurücksetzen nach (ms)** — Schreibt nach dieser Zeit in Millisekunden **Wert false** in den Datenpunkt (`false`, wenn **Wert false** leer ist). `0` schaltet es ab. Gedacht für Datenpunkte, die sich nicht selbst zurücksetzen, z. B. ein Auslöser, der nach einer Sekunde wieder auf `false` gehen muss. Nicht zusammen mit **Wert halten** verfügbar.
 - **Wert halten** — Bei Aktivierung wird der Wert geschrieben, wenn die Schaltfläche gedrückt wird, und der Datenpunkt wird auf seinen vorherigen Wert zurückgesetzt, wenn die Schaltfläche losgelassen wird. Das erzeugt ein "Halten zum Aktivieren"-Verhalten (z. B. für Aktionen, die so lange andauern, wie die Taste gedrückt wird).
 
 ---
@@ -43,9 +44,7 @@ Die **Typ**-Einstellung in der Gruppe **Common** legt fest, was passiert, wenn e
 **Einstellungen:**
 - **Sicht** — Die VIS-Ansicht, die beim Klick geöffnet wird. (Sichtbar, wenn nicht im **Separated buttons**-Modus.)
 - **Wert true** — Optional. Wenn gesetzt, verwendet der Zustandsvergleich dieses Werts, um zu erkennen, wann die Zielansicht die aktuell aktive ist (für visuelle Hervorhebung).
-- **Passwortschutz** — Wenn aktiviert, muss der Benutzer vor der Navigation ein Passwort oder eine PIN eingeben.
-- **Eingabetyp** — Wähle zwischen **Password** (verdeckte Texteingabe) und **PIN** (numerisches PIN-Feld).
-- **Passwort / PIN** — Das Passwort oder die PIN, die der Benutzer zur Bestätigung eingeben muss.
+- **Passwortschutz** — Wenn aktiviert, muss der Benutzer vor der Navigation ein Passwort oder eine PIN eingeben. Siehe [Passwort- / PIN-Schutz](#passwort---pin-schutz).
 
 **Tipp:** Konfiguriere einen zweiten Zustand, der zutrifft, wenn die Zielansicht aktiv ist (Vergleich nach Ansicht oder Wert), und gib ihm eine andere Hintergrund-/Rahmenfarbe. Damit wird die aktive Raumkachel in deiner Navigationsleiste hervorgehoben.
 
@@ -138,6 +137,23 @@ Die **Typ**-Einstellung in der Gruppe **Common** legt fest, was passiert, wenn e
   - **Send request** — Sendet eine HTTP-GET-Anfrage im Hintergrund. Die Seite navigiert nicht. Damit wird ein API-Endpunkt ausgelöst.
   - **Open URL** — Navigiert den aktuellen Browser-Tab zur URL.
   - **Open URL in new tab** — Öffnet die URL in einem neuen Browser-Tab.
+
+---
+
+## Passwort- / PIN-Schutz
+
+**Einsatz:** Kacheln, die nicht versehentlich oder nicht von jedem ausgelöst werden sollen — Alarmanlage unscharf schalten, Türschloss oder Garagentor öffnen, Heizung abschalten.
+
+**Funktionsweise:** Ein Klick auf die Kachel öffnet zuerst einen Eingabedialog. Erst nach dem richtigen Passwort bzw. der richtigen PIN wird die Aktion der Kachel ausgeführt: Der Wert wird geschrieben, die Ansicht gewechselt, der Dialog geöffnet oder die HTTP-Anfrage gesendet. Eine falsche Eingabe oder **Abbrechen** bewirkt nichts.
+
+Verfügbar für alle Typen außer **Read only** und nicht für eine **Taste** mit **Wert halten**.
+
+**Einstellungen (in der Common-Gruppe):**
+- **Passwortschutz** — Schaltet den Schutz ein.
+- **Eingabetyp** — Wähle zwischen **Password** (verdeckte Texteingabe) und **PIN** (numerisches PIN-Feld).
+- **Passwort / PIN** — Das Passwort oder die PIN, die der Benutzer eingeben muss. Ohne Wert ist der Schutz nicht aktiv.
+
+> **Sicherheitshinweis:** Das Passwort liegt im Klartext im vis-Projekt und wird im Browser geprüft. Es verhindert versehentliches oder beiläufiges Bedienen an einem Wandpanel, ist aber kein echter Zugriffsschutz — wer Zugriff auf ioBroker hat, kann den Datenpunkt weiterhin schreiben.
 
 ---
 

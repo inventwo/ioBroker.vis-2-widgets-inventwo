@@ -30,6 +30,7 @@ The **Type** setting in the **Common** group defines what happens when a user cl
 **Settings:**
 - **Object ID** — The datapoint to write to.
 - **Value true** — The value written on click.
+- **Reset value after (ms)** — Writes **Value false** to the datapoint after this time in milliseconds (`false` if **Value false** is empty). `0` disables it. Use it for datapoints that do not reset themselves, e.g. a trigger that must go back to `false` after one second. Not available together with **Hold value**.
 - **Hold value** — When enabled, the value is written when the button is pressed down and the datapoint is restored to its previous value when the button is released. This creates a "hold to activate" behavior (e.g. for as-long-as-pressed actions).
 
 ---
@@ -43,9 +44,7 @@ The **Type** setting in the **Common** group defines what happens when a user cl
 **Settings:**
 - **View** — The VIS view to open on click. (Visible when not in **Separated buttons** mode.)
 - **Value true** — Optional. If set, the tile's state comparison uses this value to detect when the target view is the currently active one (for visual highlighting).
-- **Password protection** — When enabled, the user must enter a password or PIN before the navigation is executed.
-- **Input type** — Choose between **Password** (masked text input) and **PIN** (numeric PIN pad).
-- **Password / PIN** — The password or PIN the user must enter to confirm navigation.
+- **Password protection** — When enabled, the user must enter a password or PIN before the navigation is executed. See [Password / PIN protection](#password--pin-protection).
 
 **Tip:** Configure a second state that matches when the target view is active (compare by view or by value) and give it a different background/border color. This highlights the active room tile in your navigation bar.
 
@@ -138,6 +137,23 @@ The **Type** setting in the **Common** group defines what happens when a user cl
   - **Send request** — Sends an HTTP GET request in the background. The page does not navigate. Use this to trigger an API endpoint.
   - **Open URL** — Navigates the current browser tab to the URL.
   - **Open URL in new tab** — Opens the URL in a new browser tab.
+
+---
+
+## Password / PIN protection
+
+**Use for:** Tiles that must not be triggered by accident or by everyone — disarming an alarm system, opening a door lock or garage door, switching off the heating.
+
+**How it works:** A click on the tile first opens an input dialog. Only after the correct password or PIN the action of the tile is executed: the value is written, the view is changed, the dialog opens or the HTTP request is sent. A wrong input or **Cancel** does nothing.
+
+Available for all types except **Read only**, and not for a **Button** with **Hold value**.
+
+**Settings (in the Common group):**
+- **Password protection** — Enables the protection.
+- **Input type** — Choose between **Password** (masked text input) and **PIN** (numeric PIN pad).
+- **Password / PIN** — The password or PIN the user must enter. Without a value the protection is inactive.
+
+> **Security note:** The password is stored in plain text in the vis project and is checked in the browser. It prevents accidental or casual operation on a wall panel, but it is no real access protection — anyone with access to ioBroker can still write the datapoint.
 
 ---
 

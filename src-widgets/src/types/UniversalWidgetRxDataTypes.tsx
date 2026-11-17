@@ -45,6 +45,7 @@ export interface UniversalRxData {
     btnSpacing: number;
     countStates: number;
     buttonHoldValue: boolean;
+    buttonResetTime: number;
     contentType: 'icon' | 'image' | 'html' | 'viewInWidget' | 'colorPicker' | 'analogClock';
     clickThrough: boolean;
     dialogCloseTimeoutSeconds: number;

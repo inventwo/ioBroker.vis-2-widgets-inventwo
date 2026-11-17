@@ -59,7 +59,7 @@ To get them back, select the original project under **Original vis-1 project (op
 | Universal — Background | Universal Widget, type *Read only* | complete |
 | Universal — Navigation | Universal Widget, type *Nav* | complete |
 | Universal — View in popup | Universal Widget, type *View in dialog* | complete |
-| Universal — State | Universal Widget, type *Button* | check value and click behaviour |
+| Universal — State | Universal Widget, type *Button* | check value and click behaviour; a reset time is taken over as *Reset value after (ms)* |
 | Universal — Increase/decrease value | Universal Widget, type *Increase/decrease value* | check step value |
 | Universal — HTTP | Universal Widget, type *Send HTTP request / Open URL* | check URL |
 | Universal with analog clock | Universal Widget, content *Analog clock* | check clock face, time zone is not taken over |
@@ -85,7 +85,7 @@ Colors, texts, images, corner radius, shadows, borders, alignment, spacing and o
 
 The color sliders (`i-vis-slider-color-hor`, `i-vis-slider-color-vert`) have no counterpart. They stay unchanged and are listed under **Widgets without conversion**.
 
-Not available in VIS 2 and therefore dropped: hover colors, the digital clock, resetting a value after a time, the separate datapoint for closing a dialog, the matrix arrangement of radio buttons, thresholds per table cell, the rotation of sliders.
+Not available in VIS 2 and therefore dropped: hover colors, the digital clock, the separate datapoint for closing a dialog, the matrix arrangement of radio buttons, thresholds per table cell, the rotation of sliders.
 
 A dialog can still be closed by datapoint in VIS 2: it follows the **Object ID** of the widget and is open only while that datapoint holds **Value true** (see [Interaction types](widgets/universal/interaction-types.md#view-in-dialog)). Only the additional close datapoint of vis-1 has no counterpart.
 

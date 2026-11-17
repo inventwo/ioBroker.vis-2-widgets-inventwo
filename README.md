@@ -307,6 +307,8 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+- Universal Widget: Password/PIN protection is now available for all types that trigger an action (switch, button, view in dialog, increase/decrease, HTTP), not only for navigation
+- Universal Widget: Type button can reset the value after a configurable time; the migration assistant takes over the reset time of vis-1
 - Slider & Radial Slider: New color zones – the active part changes its color depending on the value (e.g. green/yellow/red), either as a whole, per zone segment or as a fixed scale along the whole track, with a hard cut or a gradient between the zones
 - Radial Slider: Decimals, decimal separator and unit for the displayed value; the thumb can be hidden (thumb size 0) to use the widget as a gauge
 - Radial Slider: Optional scale ticks with labels, a needle, a second value (e.g. setpoint) and the time of the last change

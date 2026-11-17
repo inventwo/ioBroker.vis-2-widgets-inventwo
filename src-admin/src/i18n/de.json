@@ -53,7 +53,7 @@
     "custom_inventwo_migration_note_slider": "Slider: Beschriftungen und Wertanzeige prüfen.",
     "custom_inventwo_migration_note_slider_rotation": "Die Drehung des Sliders wird nicht übernommen.",
     "custom_inventwo_migration_note_state": "„State“ wurde zu einem Button, der den Wert setzt – Wert und Klickverhalten prüfen.",
-    "custom_inventwo_migration_note_state_reset": "Das Zurücksetzen des Werts nach einer Zeit (iStateResetValueTime) gibt es in vis-2 nicht.",
+    "custom_inventwo_migration_note_state_reset_check": "Das Zurücksetzen des Werts nach einer Zeit (iStateResetValueTime) wurde übernommen. Zeit (ms) und Rücksetzwert („Wert false“) prüfen.",
     "custom_inventwo_migration_note_switch_rocker": "Der Wippschalter wurde zu einem normalen Schalter – Größe und Farben prüfen.",
     "custom_inventwo_migration_note_table_no_columns": "Keine Spaltenschlüssel gefunden – die JSON-Schlüssel der Spalten im vis-2-Editor setzen.",
     "custom_inventwo_migration_note_table_some_columns": "Nur %s von %s Spalten haben einen Schlüssel – die übrigen prüfen.",
