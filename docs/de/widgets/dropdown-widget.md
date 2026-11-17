@@ -27,6 +27,7 @@ Das Dropdown Widget zeigt eine auswählbare Optionsliste an und schreibt den gew
 | Einstellung | Beschreibung |
 |-------------|--------------|
 | **Objekt-ID** | Der Datenpunkt zum Lesen und Schreiben. Optionen werden aus der States-Liste dieses Objekts geladen. |
+| **Eigene Werte verwenden** | Verwendet eine eigene Optionsliste statt der States-Liste des Objekts — für Datenpunkte ohne States-Liste oder um nur einen Teil der Werte anzubieten. Siehe [Eigene Dropdown-Werte](#eigene-dropdown-werte). |
 | **Wert im Label anzeigen** | Bei Aktivierung zeigt jede Option den numerischen Schlüssel neben dem Text an, z. B. `1 - Niedrig`. Bei Deaktivierung wird nur der Textlabel angezeigt. Standard: aktiviert. |
 | **Text anzeigen** | Bei Aktivierung wird der Textteil der States-Liste angezeigt. Kombiniere mit **Wert im Label anzeigen**, um genau zu steuern, was erscheint. Standard: aktiviert. |
 | **Schreibgeschützt** | Bei Aktivierung wird der aktuelle Wert als Klartext in einem gestalteten Feld angezeigt — kein Dropdown-Pfeil, keine Interaktion. |
@@ -39,6 +40,18 @@ Das Dropdown Widget zeigt eine auswählbare Optionsliste an und schreibt den gew
 | ✓ | ✓ | `1 - Niedrig` (Standard) |
 | ✗ | ✓ | `Niedrig` |
 | ✓ | ✗ | `1` |
+
+---
+
+### Eigene Dropdown-Werte
+
+Nur sichtbar, wenn **Eigene Werte verwenden** aktiviert ist.
+
+| Einstellung | Beschreibung |
+|-------------|--------------|
+| **Anzahl der Werte** | Wie viele Optionen unten konfiguriert werden. |
+| **Wert** *(pro Option)* | Der Wert, der beim Auswählen dieser Option in den Datenpunkt geschrieben wird. |
+| **Anzeigetext** *(pro Option)* | Der Text, der für diese Option angezeigt wird. |
 
 ---
 
@@ -84,6 +97,7 @@ Jede Bedingung hat:
 
 ## Tipps
 
+- **Objekt ohne States-Liste:** Aktiviere **Eigene Werte verwenden** und trage die Optionen selbst ein.
 - **Das Dropdown ist leer:** Stelle sicher, dass das ausgewählte Objekt tatsächlich eine States-Liste hat. Öffne den ioBroker Admin, gehe zu Objekte, finde dein Objekt und überprüfe, ob das "States"-Feld unter dem "Common"-Tab ausgefüllt ist.
 - **Reine Anzeige:** Aktiviere **Schreibgeschützt**, um das Dropdown ausschließlich als Anzeigewidget zu verwenden — es zeigt den aktuellen Wert im gestalteten Feld an, ohne Dropdown-Verhalten.
 - **Farbliches Feedback:** Verwende **Hintergrundfarb-Bedingungen**, damit das Widget den aktuellen Zustand sofort über Farbe kommuniziert, z. B. grün für "Läuft", gelb für "Standby", rot für "Fehler".

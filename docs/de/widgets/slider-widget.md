@@ -53,6 +53,26 @@ Das Slider Widget ermöglicht es Benutzern, einen numerischen Wert durch Ziehen 
 
 ---
 
+### Farbzonen
+
+Farbzonen ändern die Farbe des aktiven Bereichs abhängig vom aktuellen Wert — z. B. grün, gelb und rot für eine Temperatur oder einen Füllstand.
+
+| Einstellung | Beschreibung |
+|-------------|--------------|
+| **Anzahl Farbzonen** | Wie viele Zonen unten konfiguriert werden. **0** schaltet die Farbzonen ab. |
+| **Einfärbung** | **Ganzer aktiver Bereich** (Standard): der aktive Bereich hat komplett die Farbe der Zone, in der der aktuelle Wert liegt. **Nur Segmente der Zonen**: jede Zone färbt nur ihren eigenen Abschnitt des aktiven Bereichs, alle bereits durchlaufenen Zonen bleiben also sichtbar. **Ganze Schiene (Skala)**: die Zonen sind immer über die ganze Schiene sichtbar, unabhängig vom Wert; der aktive Bereich wird nicht gezeichnet, den Wert zeigt der Regler. |
+| **Übergang zwischen Zonen** | *(Nicht bei Ganzer aktiver Bereich)* **Harter Schnitt**: die Farbe wechselt abrupt an jedem Zonenstart. **Verlauf**: die Farben gehen ineinander über; jede Zone hat an ihrem Startwert genau ihre Farbe. |
+| **Ab Wert** *(pro Zone)* | Die Zone gilt ab diesem Wert bis zum Startwert der nächsthöheren Zone. |
+| **Farbe** *(pro Zone)* | Farbe des aktiven Bereichs, solange der Wert in dieser Zone liegt. Gradient-Strings werden unterstützt. |
+
+Es gewinnt die Zone mit dem höchsten **Ab Wert**, der nicht über dem aktuellen Wert liegt; die Reihenfolge der Zonen spielt also keine Rolle. Unterhalb der niedrigsten Zone gilt die normale aktive Farbe.
+
+In den Modi **Nur Segmente der Zonen** und **Ganze Schiene (Skala)** können keine Gradient-Strings als Zonenfarbe verwendet werden; solche Zonen werden übersprungen. Unterhalb der niedrigsten Zone hat das Segment die normale aktive Farbe.
+
+**Beispiel:** Zonen ab `0` (grün), `60` (gelb) und `85` (rot) zeigen bis 59 grün, von 60 bis 84 gelb und ab 85 rot.
+
+---
+
 ### inventwo - Slider track
 
 Diese Gruppe steuert das Aussehen der Schiene (die Bahn, entlang der der Regler gleitet).
@@ -86,7 +106,7 @@ Diese Gruppe steuert den Regler, den der Benutzer zieht.
 ## Tipps
 
 - **Vertikaler Jalousien-Schieberegler:** Verwende **Orientierung: Vertical** und **Spurleistentyp: Inverted**, damit der gefüllte Teil anzeigt, wie weit die Jalousie geschlossen ist (oben = geschlossen, unten = offen).
-- **Reiner Anzeige-Balken:** Aktiviere **Schreibgeschützt** und setze **Daumengröße** auf 0, um einen sauberen Fortschrittsbalken ohne ziehbaren Regler anzuzeigen.
+- **Reiner Anzeige-Balken:** Aktiviere **Schreibgeschützt** und setze **Daumengröße** auf 0, um einen sauberen Fortschrittsbalken ohne ziehbaren Regler anzuzeigen. Mit **Farbzonen** wechselt der Balken zusätzlich mit dem Wert die Farbe.
 - **Stil-Wiederverwendung:** Gestalte einen Schieberegler genau nach deinen Wünschen und verwende dann **Vom Widget** in allen anderen, um diese Einstellungen zu übernehmen.
 
 ---

@@ -27,6 +27,7 @@ The Dropdown Widget shows a selectable list of options and writes the chosen val
 | Setting | What it does |
 |---------|-------------|
 | **Object ID** | The datapoint to read and write. Options are loaded from this object's states list. |
+| **Use custom values** | Use your own list of options instead of the object's states list — for datapoints without a states list or to show only some of the values. See [Custom dropdown values](#custom-dropdown-values). |
 | **Show value in label** | When enabled, each option shows the numeric key next to the text, e.g. `1 - Low`. When disabled, only the text label is shown. Default: enabled. |
 | **Show text** | When enabled, the text part of the states list is shown. Combine with **Show value in label** to control exactly what appears. Default: enabled. |
 | **Read only** | When enabled, the current value is shown as plain text in a styled box — no dropdown arrow, no interaction. |
@@ -39,6 +40,18 @@ The Dropdown Widget shows a selectable list of options and writes the chosen val
 | ✓ | ✓ | `1 - Low` (default) |
 | ✗ | ✓ | `Low` |
 | ✓ | ✗ | `1` |
+
+---
+
+### Custom dropdown values
+
+Only visible when **Use custom values** is enabled.
+
+| Setting | Description |
+|---------|-------------|
+| **Number of values** | How many options are configured below. |
+| **Value** *(per option)* | The value written to the datapoint when this option is selected. |
+| **Display text** *(per option)* | The text shown for this option. |
 
 ---
 
@@ -84,6 +97,7 @@ Each condition has:
 
 ## Tips
 
+- **Object without a states list:** Enable **Use custom values** and enter the options yourself.
 - **The dropdown is empty:** Make sure the selected object actually has a states list. Open the ioBroker Admin, go to Objects, find your object, and check if the "States" field is filled in under the "Common" tab.
 - **Read-only display:** Enable **Read only** to use the dropdown purely as a display widget — it shows the current value in the styled box without any dropdown behavior.
 - **Color feedback:** Use **Background conditions** to make the widget immediately communicate the current state through color, e.g. green for "Running", yellow for "Standby", red for "Error".

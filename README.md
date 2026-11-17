@@ -306,6 +306,12 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Slider & Radial Slider: New color zones – the active part changes its color depending on the value (e.g. green/yellow/red), either as a whole, per zone segment or as a fixed scale along the whole track, with a hard cut or a gradient between the zones
+- Radial Slider: Decimals, decimal separator and unit for the displayed value; the thumb can be hidden (thumb size 0) to use the widget as a gauge
+- Radial Slider: Optional scale ticks with labels, a needle, a second value (e.g. setpoint) and the time of the last change
+- Slider: Fixed min/max not being taken over from the object when selecting the object ID
+
 ### 2.2.0 (2026-11-17)
 - Adapter settings: New migration assistant that converts the old vis-1 widgets of the adapter vis-inventwo (`i-vis-*`) in a vis-2 project into the widgets of this adapter – with preview, a list of widgets to check manually and either an automatic backup or a converted copy as new project. It can also restore widgets shown in several views, which vis-2 drops when importing a vis-1 project. Based on the community tool [inventwo-vis1-to-vis2](https://github.com/crunchip77/inventwo-vis1-to-vis2) by crunchip77
 

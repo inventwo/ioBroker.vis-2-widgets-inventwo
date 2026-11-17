@@ -181,6 +181,83 @@ export default class InventwoGeneric<
         return this.state.rxData.type !== 'readonly';
     }
 
+    /**
+     * Returns the color of the color zone the value falls into, or null if no zone applies.
+     * Zones are configured with the groups from `createColorZoneGroups()`: the zone with the
+     * highest start value that is not above the value wins.
+     */
+    getColorZoneColor(value: any): string | null {
+        const count = Number(this.state.rxData.colorZoneCount) || 0;
+        if (count <= 0 || !this.validFieldValue(value)) {
+            return null;
+        }
+        const num = Number(value);
+        if (Number.isNaN(num)) {
+            return null;
+        }
+
+        let bestFrom: number | null = null;
+        let bestColor: string | null = null;
+        for (let i = 1; i <= count; i++) {
+            const fromRaw = this.state.rxData[`colorZoneFrom${i}`];
+            const color = this.state.rxData[`colorZoneColor${i}`];
+            if (!color || !this.validFieldValue(fromRaw)) {
+                continue;
+            }
+            const from = Number(fromRaw);
+            if (Number.isNaN(from) || num < from) {
+                continue;
+            }
+            if (bestFrom === null || from >= bestFrom) {
+                bestFrom = from;
+                bestColor = color;
+            }
+        }
+        return bestColor;
+    }
+
+    /**
+     * Color stops of the color zones along the value range (position 0..1, sorted ascending) for
+     * the zone modes "segments" and "track". Returns null if that mode is not active or no usable zone exists.
+     * The base color covers the range below the lowest zone. Gradient strings cannot be used as
+     * a stop and are skipped.
+     */
+    getColorZoneStops(min: number, max: number, baseColor: string): { pos: number; color: string }[] | null {
+        const mode = this.state.rxData.colorZoneMode;
+        if (mode !== 'segments' && mode !== 'track') {
+            return null;
+        }
+        const count = Number(this.state.rxData.colorZoneCount) || 0;
+        const range = Number(max) - Number(min);
+        if (count <= 0 || !(range > 0)) {
+            return null;
+        }
+        const isPlainColor = (color: any): boolean => !!color && !/gradient\(/i.test(String(color));
+
+        const zones: { from: number; color: string }[] = [];
+        for (let i = 1; i <= count; i++) {
+            const fromRaw = this.state.rxData[`colorZoneFrom${i}`];
+            const color = this.state.rxData[`colorZoneColor${i}`];
+            if (!isPlainColor(color) || !this.validFieldValue(fromRaw) || Number.isNaN(Number(fromRaw))) {
+                continue;
+            }
+            zones.push({ from: Number(fromRaw), color });
+        }
+        if (!zones.length) {
+            return null;
+        }
+        zones.sort((a, b) => a.from - b.from);
+
+        const stops = zones.map(zone => ({
+            pos: Math.max(0, Math.min(1, (zone.from - Number(min)) / range)),
+            color: zone.color,
+        }));
+        if (stops[0].pos > 0) {
+            stops.unshift({ pos: 0, color: isPlainColor(baseColor) ? baseColor : stops[0].color });
+        }
+        return stops;
+    }
+
     validOid(oid: string | null | undefined): boolean {
         return oid !== undefined && oid !== null && oid !== 'nothing_selected' && oid !== '';
     }

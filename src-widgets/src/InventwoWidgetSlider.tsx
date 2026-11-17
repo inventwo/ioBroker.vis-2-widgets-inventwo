@@ -11,6 +11,7 @@ import type {
 } from '@iobroker/types-vis-2';
 import React from 'react';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createColorZoneGroups } from './utils/colorZoneFields';
 
 interface SliderRxData {
     oid: null | string;
@@ -30,6 +31,11 @@ interface SliderRxData {
     stepDisplay: number;
     customSteps: string;
     readOnly: boolean;
+    colorZoneCount: number;
+    colorZoneMode: 'active' | 'segments' | 'track';
+    colorZoneTransition: 'hard' | 'smooth';
+    [key: `colorZoneFrom${number}`]: number | string;
+    [key: `colorZoneColor${number}`]: string;
     sliderRailColor: string;
     sliderRailActiveColor: string;
     trackBarType: 'normal' | 'inverted' | false;
@@ -111,12 +117,12 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                                     if (object?.common) {
                                         let changed = false;
 
-                                        if (object.common.min !== undefined && object.common.min !== data.max_value) {
-                                            data.max_value = object.common.min;
+                                        if (object.common.min !== undefined && object.common.min !== data.minValue) {
+                                            data.minValue = object.common.min;
                                             changed = true;
                                         }
-                                        if (object.common.max !== undefined && object.common.max !== data.min_value) {
-                                            data.min_value = object.common.max;
+                                        if (object.common.max !== undefined && object.common.max !== data.maxValue) {
+                                            data.maxValue = object.common.max;
                                             changed = true;
                                         }
                                         if (object.common.step !== undefined && object.common.step !== data.step) {
@@ -236,7 +242,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                         },
                     ],
                 },
-
+                ...createColorZoneGroups(),
                 {
                     name: 'attr_group_css_slider_track',
                     label: 'attr_group_css_slider_track',
@@ -535,20 +541,59 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
 
         const trackBarType = trackStyle.trackBarType;
 
+        // A matching color zone replaces the active color
+        const activeColor: string = this.getColorZoneColor(this.state.sliderValue) ?? trackStyle.sliderRailActiveColor;
+
         // Rail (inactive) und Track (active) Farben – unterstützen direkt Gradient-Strings
         const railColor: string =
-            trackBarType === 'normal'
-                ? trackStyle.sliderRailColor
-                : trackBarType === 'inverted'
-                  ? trackStyle.sliderRailActiveColor
-                  : '';
+            trackBarType === 'normal' ? trackStyle.sliderRailColor : trackBarType === 'inverted' ? activeColor : '';
         const trackColor: string =
-            trackBarType === 'normal'
-                ? trackStyle.sliderRailActiveColor
-                : trackBarType === 'inverted'
-                  ? trackStyle.sliderRailColor
-                  : '';
+            trackBarType === 'normal' ? activeColor : trackBarType === 'inverted' ? trackStyle.sliderRailColor : '';
         const thumbColor: string = thumbStyle.sliderThumbColor;
+
+        // Zone mode "segments": every zone colors only its own section of the active part.
+        // The gradient always spans the full rail length, the active part reveals a piece of it.
+        let railBackground: string = railColor;
+        let trackBackground: string = trackColor;
+        // Zone mode "track": the zones are always shown along the whole rail, the active part is not drawn.
+        const zonesOnTrack = this.state.rxData.colorZoneMode === 'track';
+        const zoneStops =
+            trackBarType || zonesOnTrack
+                ? this.getColorZoneStops(minValue, maxValue, trackStyle.sliderRailActiveColor)
+                : null;
+        if (zoneStops) {
+            const smooth = this.state.rxData.colorZoneTransition === 'smooth';
+            const parts: string[] = [];
+            zoneStops.forEach((stop, i) => {
+                const start = stop.pos * 100;
+                const end = (zoneStops[i + 1]?.pos ?? 1) * 100;
+                parts.push(`${stop.color} ${start}%`);
+                if (!smooth || i === zoneStops.length - 1) {
+                    parts.push(`${stop.color} ${end}%`);
+                }
+            });
+            const horizontal = orientation === 'horizontal';
+            const gradient = `linear-gradient(${horizontal ? 'to right' : 'to top'}, ${parts.join(', ')})`;
+            if (zonesOnTrack) {
+                railBackground = gradient;
+                trackBackground = 'transparent';
+            } else if (trackBarType === 'inverted') {
+                // inverted: the rail is the active part and already spans the full length
+                railBackground = gradient;
+            } else {
+                const fraction = Math.max(
+                    0,
+                    Math.min(1, ((Number(this.state.sliderValue) || 0) - minValue) / (maxValue - minValue)),
+                );
+                if (fraction > 0) {
+                    // stretch the gradient to the rail length: the track is only `fraction` of it
+                    const scale = 100 / fraction;
+                    trackBackground = horizontal
+                        ? `${gradient} left center / ${scale}% 100% no-repeat`
+                        : `${gradient} center bottom / 100% ${scale}% no-repeat`;
+                }
+            }
+        }
 
         // Build markLabel style (font + position)
         const markLabelFontStyle = {
@@ -621,14 +666,16 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                       },
                   },
             '& .MuiSlider-rail': {
-                background: railColor,
+                background: railBackground,
+                // MUI dims the rail by default; a zone scale must keep its real colors
+                ...(zonesOnTrack && zoneStops ? { opacity: 1 } : {}),
                 color: railColor,
                 border: 'none',
                 borderRadius: `${trackStyle.trackBorderRadius}px`,
                 boxShadow: `${trackStyle.trackShadowX}px ${this.state.rxData.trackShadowY}px ${trackStyle.trackShadowBlur}px ${trackStyle.trackShadowSize}px ${trackStyle.trackShadowColor}`,
             },
             '& .MuiSlider-track': {
-                background: trackColor,
+                background: trackBackground,
                 color: trackColor,
                 border: 'none',
                 borderRadius: `${trackStyle.trackBorderRadius}px`,

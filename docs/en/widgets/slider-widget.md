@@ -53,6 +53,26 @@ The Slider Widget lets users set a numeric value by dragging a handle along a tr
 
 ---
 
+### Color zones
+
+Color zones change the color of the active part depending on the current value — e.g. green, yellow and red for a temperature or a fill level.
+
+| Setting | Description |
+|---------|-------------|
+| **Number of color zones** | How many zones are configured below. **0** disables color zones. |
+| **Coloring** | **Whole active part** (default): the active part completely takes the color of the zone the current value is in. **Zone segments only**: every zone colors only its own section of the active part, so all zones passed so far stay visible. **Whole track (scale)**: the zones are always visible along the whole track, independent of the value; the active part is not drawn, the value is shown by the thumb. |
+| **Transition between zones** | *(Not for Whole active part)* **Hard cut**: the color changes abruptly at each zone start. **Gradient**: the colors blend into each other; each zone has its exact color at its start value. |
+| **From value** *(per zone)* | The zone applies from this value up to the start value of the next higher zone. |
+| **Color** *(per zone)* | Color of the active part while the value is inside this zone. Gradient strings are supported. |
+
+The zone with the highest **From value** that is not above the current value wins, so the order of the zones does not matter. Below the lowest zone the normal active color is used.
+
+In the modes **Zone segments only** and **Whole track (scale)** gradient strings cannot be used as zone colors; such zones are skipped. Below the lowest zone the segment has the normal active color.
+
+**Example:** zones from `0` (green), `60` (yellow) and `85` (red) show green up to 59, yellow from 60 to 84 and red from 85.
+
+---
+
 ### inventwo — Slider track
 
 This group controls the appearance of the rail (the track the thumb slides along).
@@ -86,7 +106,7 @@ This group controls the handle that the user drags.
 ## Tips
 
 - **Vertical blinds slider:** Use **Orientation: Vertical** and **Track bar type: Inverted** so the filled part shows how far the blind is closed (top = closed, bottom = open).
-- **Read-only gauge:** Enable **Read only** and set **ThumbSize** to 0 to display a clean progress bar without a draggable handle.
+- **Read-only gauge:** Enable **Read only** and set **ThumbSize** to 0 to display a clean progress bar without a draggable handle. Add **Color zones** to let the bar change its color with the value.
 - **Style reuse:** Style one slider exactly how you want it, then use **From widget** in all others to copy those settings.
 
 ---

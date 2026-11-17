@@ -11,6 +11,7 @@ import type {
 } from '@iobroker/types-vis-2';
 import React from 'react';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createColorZoneGroups } from './utils/colorZoneFields';
 
 function splitOutsideParens(str: string): string[] {
     const parts: string[] = [];
@@ -127,6 +128,34 @@ interface RadialSliderRxData {
     maxValue: number;
     step: number;
     showValue: boolean;
+    valueDecimals: number | string | null;
+    valueDecimalSeparator: string;
+    valueUnit: string;
+    colorZoneCount: number;
+    colorZoneMode: 'active' | 'segments' | 'track';
+    secondOid: string | null;
+    secondPrefix: string;
+    secondUnit: string;
+    showLastChange: boolean;
+    lastChangeFormat: string;
+    showScale: boolean;
+    scaleInterval: number | string | null;
+    scaleMinorCount: number;
+    scaleTickLength: number;
+    scaleTickWidth: number;
+    scaleColor: string;
+    scaleLabels: 'none' | 'minmax' | 'all';
+    scaleLabelSize: number;
+    scaleLabelColor: string;
+    showNeedle: boolean;
+    needleColor: string;
+    needleWidth: number;
+    needleLength: number;
+    needleCapSize: number;
+    colorZoneTransition: 'hard' | 'smooth';
+    colorZoneApplyToValue: boolean;
+    [key: `colorZoneFrom${number}`]: number | string;
+    [key: `colorZoneColor${number}`]: string;
     showLabel: boolean;
     label: string;
     readOnly: boolean;
@@ -263,6 +292,28 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                             default: true,
                         },
                         {
+                            name: 'valueDecimals',
+                            type: 'number',
+                            min: 0,
+                            max: 10,
+                            label: 'decimals',
+                            tooltip: 'value_decimals_tooltip',
+                            hidden: '!data.showValue',
+                        },
+                        {
+                            name: 'valueDecimalSeparator',
+                            type: 'text',
+                            label: 'decimal_separator',
+                            tooltip: 'tooltip_decimal_separator',
+                            hidden: '!data.showValue',
+                        },
+                        {
+                            name: 'valueUnit',
+                            type: 'text',
+                            label: 'slider_unit',
+                            hidden: '!data.showValue',
+                        },
+                        {
                             name: 'showLabel',
                             type: 'checkbox',
                             label: 'show_label',
@@ -276,6 +327,38 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                             hidden: '!data.showLabel',
                         },
                         {
+                            name: 'secondOid',
+                            type: 'id',
+                            label: 'second_oid',
+                            tooltip: 'second_oid_tooltip',
+                        },
+                        {
+                            name: 'secondPrefix',
+                            type: 'text',
+                            label: 'second_prefix',
+                            hidden: '!data.secondOid || data.secondOid == "nothing_selected"',
+                        },
+                        {
+                            name: 'secondUnit',
+                            type: 'text',
+                            label: 'second_unit',
+                            hidden: '!data.secondOid || data.secondOid == "nothing_selected"',
+                        },
+                        {
+                            name: 'showLastChange',
+                            type: 'checkbox',
+                            label: 'show_last_change',
+                            default: false,
+                        },
+                        {
+                            name: 'lastChangeFormat',
+                            type: 'text',
+                            label: 'last_change_format',
+                            tooltip: 'last_change_format_tooltip',
+                            default: 'DD.MM. hh:mm',
+                            hidden: '!data.showLastChange',
+                        },
+                        {
                             name: 'readOnly',
                             type: 'checkbox',
                             label: 'read_only',
@@ -283,6 +366,15 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                         },
                     ],
                 },
+                ...createColorZoneGroups([
+                    {
+                        name: 'colorZoneApplyToValue',
+                        type: 'checkbox',
+                        default: false,
+                        label: 'color_zone_apply_to_value',
+                        hidden: '!data.colorZoneCount',
+                    },
+                ]),
                 {
                     name: 'attr_group_css_radial_track',
                     label: 'attr_group_css_radial_track',
@@ -389,7 +481,7 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                         {
                             name: 'thumbSize',
                             type: 'slider',
-                            min: 1,
+                            min: 0,
                             max: 50,
                             step: 1,
                             default: 16,
@@ -482,6 +574,138 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                         },
                     ],
                 },
+                {
+                    name: 'attr_group_css_radial_scale',
+                    label: 'attr_group_css_radial_scale',
+                    fields: [
+                        {
+                            name: 'showScale',
+                            type: 'checkbox',
+                            label: 'show_scale',
+                            default: false,
+                        },
+                        {
+                            name: 'scaleInterval',
+                            type: 'number',
+                            label: 'scale_interval',
+                            tooltip: 'scale_interval_tooltip',
+                            hidden: '!data.showScale',
+                        },
+                        {
+                            name: 'scaleMinorCount',
+                            type: 'slider',
+                            min: 0,
+                            max: 9,
+                            step: 1,
+                            default: 0,
+                            label: 'scale_minor_count',
+                            hidden: '!data.showScale',
+                        },
+                        {
+                            name: 'scaleTickLength',
+                            type: 'slider',
+                            min: 1,
+                            max: 40,
+                            step: 1,
+                            default: 8,
+                            label: 'scale_tick_length',
+                            hidden: '!data.showScale',
+                        },
+                        {
+                            name: 'scaleTickWidth',
+                            type: 'slider',
+                            min: 1,
+                            max: 10,
+                            step: 1,
+                            default: 2,
+                            label: 'scale_tick_width',
+                            hidden: '!data.showScale',
+                        },
+                        {
+                            name: 'scaleColor',
+                            type: 'color',
+                            default: 'rgb(200,200,200)',
+                            label: 'scale_color',
+                            hidden: '!data.showScale',
+                        },
+                        {
+                            name: 'scaleLabels',
+                            type: 'select',
+                            options: [
+                                { value: 'none', label: 'scale_labels_none' },
+                                { value: 'minmax', label: 'scale_labels_minmax' },
+                                { value: 'all', label: 'scale_labels_all' },
+                            ],
+                            default: 'none',
+                            label: 'scale_labels',
+                            hidden: '!data.showScale',
+                        },
+                        {
+                            name: 'scaleLabelSize',
+                            type: 'slider',
+                            min: 6,
+                            max: 40,
+                            step: 1,
+                            default: 11,
+                            label: 'scale_label_size',
+                            hidden: '!data.showScale || !data.scaleLabels || data.scaleLabels == "none"',
+                        },
+                        {
+                            name: 'scaleLabelColor',
+                            type: 'color',
+                            default: 'rgb(200,200,200)',
+                            label: 'scale_label_color',
+                            hidden: '!data.showScale || !data.scaleLabels || data.scaleLabels == "none"',
+                        },
+                        {
+                            name: '',
+                            type: 'delimiter',
+                        },
+                        {
+                            name: 'showNeedle',
+                            type: 'checkbox',
+                            label: 'show_needle',
+                            default: false,
+                        },
+                        {
+                            name: 'needleColor',
+                            type: 'color',
+                            default: 'rgb(255,255,255)',
+                            label: 'needle_color',
+                            hidden: '!data.showNeedle',
+                        },
+                        {
+                            name: 'needleWidth',
+                            type: 'slider',
+                            min: 1,
+                            max: 20,
+                            step: 1,
+                            default: 3,
+                            label: 'needle_width',
+                            hidden: '!data.showNeedle',
+                        },
+                        {
+                            name: 'needleLength',
+                            type: 'slider',
+                            min: 10,
+                            max: 100,
+                            step: 1,
+                            default: 80,
+                            label: 'needle_length',
+                            hidden: '!data.showNeedle',
+                        },
+                        {
+                            name: 'needleCapSize',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 12,
+                            label: 'needle_cap_size',
+                            hidden: '!data.showNeedle',
+                        },
+                    ],
+                },
             ],
             visDefaultStyle: {
                 width: 200,
@@ -531,6 +755,23 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
         }
         const largeArcFlag = arcSpan > 180 ? '1' : '0';
         return ['M', start.x, start.y, 'A', radius, radius, 0, largeArcFlag, 0, end.x, end.y].join(' ');
+    }
+
+    private formatNumber(value: number): string {
+        const decimals = this.state.rxData.valueDecimals;
+        let text = String(value);
+        if (this.validFieldValue(decimals) && !Number.isNaN(Number(decimals)) && !Number.isNaN(Number(value))) {
+            text = Number(value).toFixed(Math.max(0, Math.min(10, Math.round(Number(decimals)))));
+        }
+        const separator = this.state.rxData.valueDecimalSeparator;
+        if (separator) {
+            text = text.replace('.', separator);
+        }
+        return text;
+    }
+
+    private formatDisplayValue(value: number): string {
+        return `${this.formatNumber(value)}${this.state.rxData.valueUnit ?? ''}`;
     }
 
     private handleMouseDown = (e: React.MouseEvent | React.TouchEvent): void => {
@@ -645,7 +886,8 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
         );
         const centerX = size / 2;
         const centerY = size / 2;
-        const radius = Math.max(10, (size - trackStyle.trackWidth - thumbStyle.thumbSize) / 2);
+        const thumbSize = Number(thumbStyle.thumbSize ?? 16);
+        const radius = Math.max(10, (size - trackStyle.trackWidth - thumbSize) / 2);
 
         const minValue = this.state.rxData.minValue;
         const maxValue = this.state.rxData.maxValue;
@@ -665,14 +907,131 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
         const activePath = this.describeArc(centerX, centerY, radius, startAngle, currentAngle);
         const thumbPosition = this.polarToCartesian(centerX, centerY, radius, currentAngle);
 
-        const trackGradient = cssGradientToSvgDef(trackStyle.trackColor, 'radialTrackColorGradient', size);
-        const trackActiveGradient = cssGradientToSvgDef(
-            trackStyle.trackActiveColor,
-            'radialTrackActiveColorGradient',
-            size,
+        // A matching color zone replaces the active track color (and optionally the value color)
+        const zoneColor = this.getColorZoneColor(currentValue);
+        const activeColor: string = zoneColor ?? trackStyle.trackActiveColor;
+        const valueColor: string =
+            zoneColor && this.state.rxData.colorZoneApplyToValue && !/gradient\(/i.test(zoneColor)
+                ? zoneColor
+                : this.state.rxData.valueColor;
+
+        // Zone mode "segments": the active arc is drawn as several partial arcs, one per zone
+        // (hard cut) or as many small slices with mixed colors (smooth transition).
+        // `mix` is a CSS color-mix() value; browsers that don't know it fall back to `color`.
+        const zoneSegments: { from: number; to: number; color: string; mix?: string }[] = [];
+        const zoneStops = this.getColorZoneStops(minValue, maxValue, trackStyle.trackActiveColor);
+        const fraction = Math.max(0, Math.min(1, Number.isFinite(percentage) ? percentage : 0));
+        // mode "track": the zones are always shown along the whole arc, independent of the value
+        const zoneFraction = this.state.rxData.colorZoneMode === 'track' ? 1 : fraction;
+        if (zoneStops && zoneFraction > 0) {
+            if (this.state.rxData.colorZoneTransition === 'smooth') {
+                const sliceCount = Math.max(1, Math.ceil((zoneFraction * totalAngle) / 3));
+                for (let k = 0; k < sliceCount; k++) {
+                    const from = (k / sliceCount) * zoneFraction;
+                    const to = ((k + 1) / sliceCount) * zoneFraction;
+                    const mid = (from + to) / 2;
+                    let idx = 0;
+                    for (let i = 0; i < zoneStops.length; i++) {
+                        if (zoneStops[i].pos <= mid) {
+                            idx = i;
+                        }
+                    }
+                    const stop = zoneStops[idx];
+                    const next = zoneStops[idx + 1];
+                    let mix: string | undefined;
+                    if (next && next.pos > stop.pos) {
+                        const share = ((mid - stop.pos) / (next.pos - stop.pos)) * 100;
+                        mix = `color-mix(in srgb, ${next.color} ${share.toFixed(1)}%, ${stop.color})`;
+                    }
+                    zoneSegments.push({ from, to, color: stop.color, mix });
+                }
+            } else {
+                zoneStops.forEach((stop, i) => {
+                    const to = Math.min(zoneStops[i + 1]?.pos ?? 1, zoneFraction);
+                    if (to > stop.pos) {
+                        zoneSegments.push({ from: stop.pos, to, color: stop.color });
+                    }
+                });
+            }
+        }
+        const firstSegment = zoneSegments[0];
+        const lastSegment = zoneSegments[zoneSegments.length - 1];
+        const arcStartPosition = this.polarToCartesian(centerX, centerY, radius, startAngle);
+        const zoneEndPosition = this.polarToCartesian(centerX, centerY, radius, startAngle + zoneFraction * totalAngle);
+
+        // Scale: ticks (and optional labels) on the inner side of the track
+        const range = Number(maxValue) - Number(minValue);
+        const trackWidth = Number(trackStyle.trackWidth) || 0;
+        const scaleTicks: { value: number; major: boolean }[] = [];
+        if (this.state.rxData.showScale && range > 0) {
+            let interval = Number(this.state.rxData.scaleInterval);
+            if (!(interval > 0)) {
+                interval = range / 10;
+            }
+            // never draw an absurd number of ticks
+            interval = Math.max(interval, range / 200);
+            const minorCount = Math.max(0, Math.min(9, Math.round(Number(this.state.rxData.scaleMinorCount) || 0)));
+            const majorCount = Math.floor(range / interval + 1e-9);
+            for (let i = 0; i <= majorCount; i++) {
+                const value = Number(minValue) + i * interval;
+                scaleTicks.push({ value, major: true });
+                for (let m = 1; m <= minorCount; m++) {
+                    const minorValue = value + (m * interval) / (minorCount + 1);
+                    if (minorValue < Number(maxValue) - 1e-9) {
+                        scaleTicks.push({ value: minorValue, major: false });
+                    }
+                }
+            }
+            if (majorCount * interval < range - 1e-9) {
+                scaleTicks.push({ value: Number(maxValue), major: true });
+            }
+        }
+        const tickLength = Number(this.state.rxData.scaleTickLength) || 8;
+        const tickOuterRadius = radius - trackWidth / 2 - 3;
+        const scaleLabels = this.state.rxData.scaleLabels ?? 'none';
+        const scaleLabelSize = Number(this.state.rxData.scaleLabelSize) || 11;
+        const scaleLabelRadius = tickOuterRadius - tickLength - 4 - scaleLabelSize;
+        const valueToAngle = (value: number): number => startAngle + ((value - Number(minValue)) / range) * totalAngle;
+
+        // Needle from the center to the current value
+        const needleLength = Number(this.state.rxData.needleLength) || 80;
+        const needleTip = this.polarToCartesian(
+            centerX,
+            centerY,
+            (radius * needleLength) / 100,
+            startAngle + fraction * totalAngle,
         );
+        const needleCapSize = Number(this.state.rxData.needleCapSize ?? 12);
+
+        // Additional lines below the label: second value and time of the last change
+        const smallTextStyle = {
+            fontSize: `${this.state.rxData.labelSize}px`,
+            color: this.state.rxData.labelColor,
+            fontFamily: this.state.rxStyle!['font-family'],
+            marginTop: '2px',
+        };
+        let secondText: string | null = null;
+        if (this.validOid(this.state.rxData.secondOid)) {
+            const secondValue = this.getValue(this.state.rxData.secondOid);
+            if (this.validFieldValue(secondValue)) {
+                const formatted = Number.isNaN(Number(secondValue))
+                    ? String(secondValue)
+                    : this.formatNumber(Number(secondValue));
+                secondText = `${this.state.rxData.secondPrefix ?? ''}${formatted}${this.state.rxData.secondUnit ?? ''}`;
+            }
+        }
+        let lastChangeText: string | null = null;
+        if (this.state.rxData.showLastChange && this.validOid(this.state.rxData.oid)) {
+            const lastChange = this.state.values[`${this.state.rxData.oid}.lc`];
+            if (lastChange) {
+                lastChangeText = this.formatDate(lastChange, this.state.rxData.lastChangeFormat || 'DD.MM. hh:mm');
+            }
+        }
+
+        const trackGradient = cssGradientToSvgDef(trackStyle.trackColor, 'radialTrackColorGradient', size);
+        const trackActiveGradient = cssGradientToSvgDef(activeColor, 'radialTrackActiveColorGradient', size);
         const trackStroke = trackGradient ? trackGradient.strokeRef : trackStyle.trackColor;
-        const trackActiveStroke = trackActiveGradient ? trackActiveGradient.strokeRef : trackStyle.trackActiveColor;
+        const trackActiveStroke = trackActiveGradient ? trackActiveGradient.strokeRef : activeColor;
 
         const containerStyle: SxProps = {
             width: '100%',
@@ -715,23 +1074,147 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                         }}
                     />
                     {/* Active track */}
-                    <path
-                        d={activePath}
-                        fill="none"
-                        stroke={trackActiveStroke}
-                        strokeWidth={trackStyle.trackWidth}
-                        strokeLinecap="round"
-                    />
-                    {/* Thumb */}
-                    <circle
-                        cx={thumbPosition.x}
-                        cy={thumbPosition.y}
-                        r={thumbStyle.thumbSize / 2}
-                        fill={thumbStyle.thumbColor}
-                        style={{
-                            filter: `drop-shadow(${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowColor})`,
-                        }}
-                    />
+                    {zoneSegments.length === 0 ? (
+                        <path
+                            d={activePath}
+                            fill="none"
+                            stroke={trackActiveStroke}
+                            strokeWidth={trackStyle.trackWidth}
+                            strokeLinecap="round"
+                        />
+                    ) : (
+                        <>
+                            {/* round cap at the start of the arc */}
+                            <circle
+                                cx={arcStartPosition.x}
+                                cy={arcStartPosition.y}
+                                r={trackStyle.trackWidth / 2}
+                                fill={firstSegment.color}
+                                style={firstSegment.mix ? { fill: firstSegment.mix } : undefined}
+                            />
+                            {zoneSegments.map((segment, idx) => (
+                                <path
+                                    key={idx}
+                                    d={this.describeArc(
+                                        centerX,
+                                        centerY,
+                                        radius,
+                                        startAngle + segment.from * totalAngle,
+                                        // small overlap so no gaps show between neighbouring segments
+                                        startAngle +
+                                            segment.to * totalAngle +
+                                            (idx < zoneSegments.length - 1 ? 0.4 : 0),
+                                    )}
+                                    fill="none"
+                                    stroke={segment.color}
+                                    strokeWidth={trackStyle.trackWidth}
+                                    strokeLinecap="butt"
+                                    style={segment.mix ? { stroke: segment.mix } : undefined}
+                                />
+                            ))}
+                            {/* round cap at the end of the colored arc */}
+                            <circle
+                                cx={zoneEndPosition.x}
+                                cy={zoneEndPosition.y}
+                                r={trackStyle.trackWidth / 2}
+                                fill={lastSegment.color}
+                                style={lastSegment.mix ? { fill: lastSegment.mix } : undefined}
+                            />
+                        </>
+                    )}
+                    {/* Scale ticks and labels */}
+                    {scaleTicks.map((tick, idx) => {
+                        const angle = valueToAngle(tick.value);
+                        const outer = this.polarToCartesian(centerX, centerY, tickOuterRadius, angle);
+                        const inner = this.polarToCartesian(
+                            centerX,
+                            centerY,
+                            tickOuterRadius - (tick.major ? tickLength : tickLength * 0.55),
+                            angle,
+                        );
+                        return (
+                            <line
+                                key={`tick${idx}`}
+                                x1={outer.x}
+                                y1={outer.y}
+                                x2={inner.x}
+                                y2={inner.y}
+                                stroke={this.state.rxData.scaleColor || 'rgb(200,200,200)'}
+                                strokeWidth={
+                                    tick.major
+                                        ? Number(this.state.rxData.scaleTickWidth) || 2
+                                        : Math.max(1, (Number(this.state.rxData.scaleTickWidth) || 2) / 2)
+                                }
+                                strokeLinecap="round"
+                            />
+                        );
+                    })}
+                    {scaleLabels !== 'none' &&
+                        scaleTicks
+                            .filter(
+                                tick =>
+                                    tick.major &&
+                                    (scaleLabels === 'all' ||
+                                        Math.abs(tick.value - Number(minValue)) < 1e-9 ||
+                                        Math.abs(tick.value - Number(maxValue)) < 1e-9),
+                            )
+                            .map((tick, idx) => {
+                                const pos = this.polarToCartesian(
+                                    centerX,
+                                    centerY,
+                                    scaleLabelRadius,
+                                    valueToAngle(tick.value),
+                                );
+                                return (
+                                    <text
+                                        key={`label${idx}`}
+                                        x={pos.x}
+                                        y={pos.y}
+                                        textAnchor="middle"
+                                        dominantBaseline="central"
+                                        fontSize={scaleLabelSize}
+                                        fontFamily={this.state.rxStyle!['font-family'] as string}
+                                        fill={this.state.rxData.scaleLabelColor || 'rgb(200,200,200)'}
+                                        style={{ pointerEvents: 'none' }}
+                                    >
+                                        {this.formatNumber(parseFloat(tick.value.toPrecision(10)))}
+                                    </text>
+                                );
+                            })}
+                    {/* Thumb (hidden when its size is 0, e.g. for a pure gauge) */}
+                    {thumbSize > 0 && (
+                        <circle
+                            cx={thumbPosition.x}
+                            cy={thumbPosition.y}
+                            r={thumbSize / 2}
+                            fill={thumbStyle.thumbColor}
+                            style={{
+                                filter: `drop-shadow(${thumbStyle.thumbShadowX}px ${thumbStyle.thumbShadowY}px ${thumbStyle.thumbShadowBlur}px ${thumbStyle.thumbShadowColor})`,
+                            }}
+                        />
+                    )}
+                    {/* Needle */}
+                    {this.state.rxData.showNeedle && (
+                        <>
+                            <line
+                                x1={centerX}
+                                y1={centerY}
+                                x2={needleTip.x}
+                                y2={needleTip.y}
+                                stroke={this.state.rxData.needleColor || 'rgb(255,255,255)'}
+                                strokeWidth={Number(this.state.rxData.needleWidth) || 3}
+                                strokeLinecap="round"
+                            />
+                            {needleCapSize > 0 && (
+                                <circle
+                                    cx={centerX}
+                                    cy={centerY}
+                                    r={needleCapSize / 2}
+                                    fill={this.state.rxData.needleColor || 'rgb(255,255,255)'}
+                                />
+                            )}
+                        </>
+                    )}
                 </svg>
                 {/* Center value display */}
                 <Box
@@ -748,12 +1231,12 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                         <Box
                             sx={{
                                 fontSize: `${this.state.rxData.valueSize}px`,
-                                color: this.state.rxData.valueColor,
+                                color: valueColor,
                                 fontWeight: 'bold',
                                 fontFamily: this.state.rxStyle!['font-family'],
                             }}
                         >
-                            {currentValue}
+                            {this.formatDisplayValue(currentValue)}
                         </Box>
                     )}
                     {this.state.rxData.showLabel && this.state.rxData.label && (
@@ -768,6 +1251,8 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                             {this.state.rxData.label}
                         </Box>
                     )}
+                    {secondText !== null && <Box sx={smallTextStyle}>{secondText}</Box>}
+                    {lastChangeText !== null && <Box sx={smallTextStyle}>{lastChangeText}</Box>}
                 </Box>
             </Box>
         );
