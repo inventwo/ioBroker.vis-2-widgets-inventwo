@@ -96,6 +96,13 @@ Das inventwo-Widget-Set fügt VIS 2 hochgradig anpassbare Kacheln, Steuerelement
 
 ---
 
+### Terminkalender
+**Zeigt Termine in einer Ansicht im Google-Calendar-Stil.** Monats-, Wochen-, Tages-, Mehrmonats- und Listen-Ansichten, mehrere Kalender gleichzeitig mit Legende und Farbregeln nach Termintitel. Liest das JSON des ioBroker-Adapters **ical** direkt.
+
+→ [Terminkalender Widget](widgets/event-calendar-widget.md)
+
+---
+
 ## Umstieg von vis-1?
 
 Die Adapter-Einstellungen enthalten einen Assistenten, der die alten Widgets des vis-1-Adapters **vis-inventwo** in einem importierten Projekt auf die Widgets dieses Sets umstellt.
@@ -111,4 +118,5 @@ Die Adapter-Einstellungen enthalten einen Assistenten, der die alten Widgets des
 - **Einfache Ein/Aus-Steuerung?** → [Switch Widget](widgets/switch-widget.md) oder [Checkbox Widget](widgets/checkbox-widget.md)
 - **Tabellendaten anzeigen?** → [Table Widget](widgets/table-widget.md)
 - **Ein Datum auswählen oder anzeigen?** → [Calendar Widget](widgets/calendar-widget.md)
+- **Termine anzeigen?** → [Terminkalender Widget](widgets/event-calendar-widget.md)
 - **Modus oder Szene auswählen?** → [Dropdown Widget](widgets/dropdown-widget.md)

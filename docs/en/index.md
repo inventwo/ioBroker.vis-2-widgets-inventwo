@@ -96,6 +96,13 @@ The inventwo widget set adds highly customizable tiles, controls, and display el
 
 ---
 
+### Event Calendar
+**Shows events in a Google-Calendar-style view.** Month, week, day, multi-month and list views, several calendars at once with a legend, and color rules by event title. Reads the JSON of the ioBroker **ical** adapter directly.
+
+→ [Event Calendar Widget](widgets/event-calendar-widget.md)
+
+---
+
 ## Coming from vis-1?
 
 The adapter settings contain an assistant that converts the old widgets of the vis-1 adapter **vis-inventwo** in an imported project into the widgets of this set.
@@ -111,4 +118,5 @@ The adapter settings contain an assistant that converts the old widgets of the v
 - **Simple on/off controls?** → [Switch Widget](widgets/switch-widget.md) or [Checkbox Widget](widgets/checkbox-widget.md)
 - **Displaying tabular data?** → [Table Widget](widgets/table-widget.md)
 - **Picking or displaying a date?** → [Calendar Widget](widgets/calendar-widget.md)
+- **Showing events or appointments?** → [Event Calendar Widget](widgets/event-calendar-widget.md)
 - **Selecting a mode or scene?** → [Dropdown Widget](widgets/dropdown-widget.md)
