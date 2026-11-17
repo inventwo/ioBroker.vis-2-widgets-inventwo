@@ -2,6 +2,10 @@
 node_modules
 src-widgets/node_modules
 src-widgets/build
+/admin/custom
+src-admin/node_modules
+src-admin/build
+src-admin/.__mf__temp
 /widgets
 src-widgets/.__mf__temp
 .commitinfo

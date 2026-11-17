@@ -35,7 +35,8 @@
         "build": "tsc && vite build",
         "i18n": "node node_modules/@iobroker/vis-2-widgets-react-dev/searchI18n vis-2-widgets-react-template",
         "update-browsers": "npx browserslist@latest --update-db",
-        "translate": "translate-adapter -a ../src-widgets -p ../io-package.json"
+        "translate": "translate-adapter -a ../src-widgets -p ../io-package.json",
+        "translate-admin": "translate-adapter -a ../src-admin -p ../io-package.json -b ../src-admin/src/i18n/en.json"
     },
     "eslintConfig": {
         "extends": "react-app"

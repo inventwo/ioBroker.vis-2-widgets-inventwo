@@ -96,6 +96,14 @@ The inventwo widget set adds highly customizable tiles, controls, and display el
 
 ---
 
+## Coming from vis-1?
+
+The adapter settings contain an assistant that converts the old widgets of the vis-1 adapter **vis-inventwo** in an imported project into the widgets of this set.
+
+→ [Migrating inventwo vis-1 widgets](migration.md)
+
+---
+
 ## Where to Start
 
 - **Building a control panel with buttons?** → [Universal Widget](widgets/universal-widget.md)

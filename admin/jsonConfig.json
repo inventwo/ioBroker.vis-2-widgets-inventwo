@@ -1,0 +1,20 @@
+{
+    "type": "panel",
+    "i18n": false,
+    "items": {
+        "_migration": {
+            "type": "custom",
+            "i18n": true,
+            "url": "custom/customComponents.js",
+            "name": "AdminComponentInventwoSet/Components/MigrationComponent",
+            "bundlerType": "module",
+            "guiApi": 2,
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        }
+    }
+}

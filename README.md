@@ -17,6 +17,18 @@ A collection of highly customizable widgets for **ioBroker vis 2.0** — built f
 
 ---
 
+## Migrating from vis-inventwo (vis 1)
+
+Coming from the vis-1 adapter **[vis-inventwo](https://github.com/inventwo/ioBroker.vis-inventwo)**? This adapter includes a migration tool that converts the old widgets (`i-vis-*`) of a project imported into vis 2 to the widgets of this set. You find it in the instance settings of `vis-2-widgets-inventwo` in ioBroker Admin.
+
+It shows a preview first, can write the result into a new project or back up the existing one, and lists everything that should be checked by hand afterwards. Not every widget can be converted completely.
+
+📖 **Migration guide:** [English](docs/en/migration.md) · [Deutsch](docs/de/migration.md)
+
+> **Please note:** The migration was built with care, but there is no guarantee that it works flawlessly for every project — vis-1 projects come in too many different shapes for that. If something is not converted as expected, please [open an issue](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/issues). Your feedback helps to improve the tool.
+
+---
+
 ## Widgets
 
 | Widget | Description |
@@ -294,6 +306,9 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Adapter settings: New migration assistant that converts the old vis-1 widgets of the adapter vis-inventwo (`i-vis-*`) in a vis-2 project into the widgets of this adapter – with preview, a list of widgets to check manually and either an automatic backup or a converted copy as new project. It can also restore widgets shown in several views, which vis-2 drops when importing a vis-1 project. Based on the community tool [inventwo-vis1-to-vis2](https://github.com/crunchip77/inventwo-vis1-to-vis2) by crunchip77
+
 ### 2.1.1 (2026-11-03)
 - Universal Widget: Fixed content color of images not being applied for `rgb()` colors and colors given as hex (`#rgb`, `#rrggbb`, with optional alpha)
 

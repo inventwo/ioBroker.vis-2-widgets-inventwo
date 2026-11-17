@@ -136,7 +136,7 @@
     "mode": "none",
     "singleton": true,
     "adminUI": {
-      "config": "none"
+      "config": "json"
     },
     "nogit": true,
     "onlyWWW": true,

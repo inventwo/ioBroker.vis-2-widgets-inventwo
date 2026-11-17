@@ -96,6 +96,14 @@ Das inventwo-Widget-Set fügt VIS 2 hochgradig anpassbare Kacheln, Steuerelement
 
 ---
 
+## Umstieg von vis-1?
+
+Die Adapter-Einstellungen enthalten einen Assistenten, der die alten Widgets des vis-1-Adapters **vis-inventwo** in einem importierten Projekt auf die Widgets dieses Sets umstellt.
+
+→ [inventwo-vis-1-Widgets migrieren](migration.md)
+
+---
+
 ## Wo anfangen?
 
 - **Bedienfeld mit Schaltflächen aufbauen?** → [Universal Widget](widgets/universal-widget.md)

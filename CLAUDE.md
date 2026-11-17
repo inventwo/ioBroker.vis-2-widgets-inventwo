@@ -20,10 +20,32 @@ src-widgets/src/          ← TypeScript/React-Quellcode
 
 src-widgets/build/        ← Build-Output (nicht bearbeiten)
 widgets/                  ← Kopierte Build-Artefakte für ioBroker (nicht bearbeiten)
+
+src-admin/                ← Custom-Komponenten der Instanzeinstellungen (eigenes npm-Projekt)
+  src/Components.tsx       ← Liste der exportierten Komponenten
+  src/MigrationComponent.tsx ← jsonConfig-Komponente (erbt von ConfigGeneric)
+  src/Migration.tsx        ← Migrationsseite vis-1 → vis-2
+  src/migration/           ← Umrechnungslogik (ohne UI/Dateizugriff)
+  src/i18n/                ← Übersetzungen der Einstellungsseite
+  build/                   ← Build-Output (nicht bearbeiten)
+admin/jsonConfig.json     ← Instanzeinstellungen (bindet die Custom-Komponente ein)
+admin/custom/             ← Kopierte Build-Artefakte von src-admin (nicht bearbeiten)
+
 io-package.json           ← Adapter-Konfiguration (Widgets registrieren hier)
 tasks.js                  ← Build-Skript (clean → npm install → vite build → copy)
 ```
 
+---
+
+## Instanzeinstellungen (`src-admin`)
+
+Aufbau und Build folgen der offiziellen Vorlage [ioBroker.admin-component-template](https://github.com/ioBroker/ioBroker.admin-component-template).
+
+- Quellen liegen **nur** in `src-admin/src/`, nicht in `src-widgets/`.
+- `admin/jsonConfig.json` bindet die Komponente als `type: 'custom'` ein: `name` = `<Federation-Name>/Components/<Komponente>` (Federation-Name steht in `src-admin/vite.config.ts`), dazu `guiApi: 2` und `i18n: true`.
+- Komponenten erben von `ConfigGeneric` aus `@iobroker/json-config`; die Admin-Verbindung kommt über `this.props.oContext.socket`.
+- Übersetzungen liegen in `src-admin/src/i18n/<sprache>.json` und werden beim Build nach `admin/custom/i18n/` kopiert. Der Admin lädt sie selbst; im Code nur `I18n.t(...)` aus `@iobroker/gui-components` verwenden, keine JSON-Dateien importieren.
+- Alle Schlüssel tragen den Präfix `custom_inventwo_`. Auch hier nur `de.json` und `en.json` von Hand pflegen.
 ---
 
 ## Widget-Klassen
