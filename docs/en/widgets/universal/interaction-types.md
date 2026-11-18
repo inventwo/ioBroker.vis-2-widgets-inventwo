@@ -33,6 +33,8 @@ The **Type** setting in the **Common** group defines what happens when a user cl
 - **Reset value after (ms)** — Writes **Value false** to the datapoint after this time in milliseconds (`false` if **Value false** is empty). `0` disables it. Use it for datapoints that do not reset themselves, e.g. a trigger that must go back to `false` after one second. Not available together with **Hold value**.
 - **Hold value** — When enabled, the value is written when the button is pressed down and the datapoint is restored to its previous value when the button is released. This creates a "hold to activate" behavior (e.g. for as-long-as-pressed actions).
 
+  > **Touchscreens:** Only with **Hold value** enabled does the widget block touch gestures (scrolling, zooming), so the browser does not cancel the hold. In all other cases the page can be scrolled and zoomed with a finger over the widget; a swipe gesture does not trigger an action.
+
 ---
 
 ## Nav

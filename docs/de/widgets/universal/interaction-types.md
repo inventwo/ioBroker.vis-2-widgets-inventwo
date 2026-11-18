@@ -33,6 +33,8 @@ Die **Typ**-Einstellung in der Gruppe **Common** legt fest, was passiert, wenn e
 - **Wert zurücksetzen nach (ms)** — Schreibt nach dieser Zeit in Millisekunden **Wert false** in den Datenpunkt (`false`, wenn **Wert false** leer ist). `0` schaltet es ab. Gedacht für Datenpunkte, die sich nicht selbst zurücksetzen, z. B. ein Auslöser, der nach einer Sekunde wieder auf `false` gehen muss. Nicht zusammen mit **Wert halten** verfügbar.
 - **Wert halten** — Bei Aktivierung wird der Wert geschrieben, wenn die Schaltfläche gedrückt wird, und der Datenpunkt wird auf seinen vorherigen Wert zurückgesetzt, wenn die Schaltfläche losgelassen wird. Das erzeugt ein "Halten zum Aktivieren"-Verhalten (z. B. für Aktionen, die so lange andauern, wie die Taste gedrückt wird).
 
+  > **Touchscreens:** Nur bei aktivem **Wert halten** blockiert das Widget Touch-Gesten (Scrollen, Zoomen), damit das Halten nicht vom Browser abgebrochen wird. In allen anderen Fällen lässt sich die Seite auch mit dem Finger über dem Widget scrollen und zoomen; eine Wischgeste löst dabei keine Aktion aus.
+
 ---
 
 ## Nav

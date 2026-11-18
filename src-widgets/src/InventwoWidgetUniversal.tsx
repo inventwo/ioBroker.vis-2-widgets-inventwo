@@ -3221,7 +3221,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
         }
     }
 
-    onBtnMouseUp(e: React.PointerEvent<HTMLDivElement>): void {
+    onBtnMouseUp(e: React.PointerEvent<HTMLDivElement>, cancelled = false): void {
         if (!this.isInteractionAllowed(e)) {
             return;
         }
@@ -3250,6 +3250,11 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             this._lastRestoredValue = restoreValue;
             this._lastRestoredTime = Date.now();
             this.props.context.setValue(oid, restoreValue);
+            return;
+        }
+
+        // A cancelled pointer (e.g. browser started scrolling/zooming) must not trigger a click
+        if (cancelled) {
             return;
         }
 
@@ -4513,12 +4518,12 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             this.state.rxData.type === 'readonly' || this.isClickDisabled(i)
                                 ? 'not-allowed'
                                 : 'pointer',
-                        touchAction: 'none',
+                        touchAction: this.state.rxData.type === 'button' && this.state.rxData.buttonHoldValue ? 'none' : undefined,
                         color: 'unset',
                     }}
                     onPointerDown={e => this.onBtnMouseDown(i, e)}
                     onPointerUp={e => this.onBtnMouseUp(e)}
-                    onPointerCancel={e => this.onBtnMouseUp(e)}
+                    onPointerCancel={e => this.onBtnMouseUp(e, true)}
                 >
                     <div
                         style={{
@@ -4658,11 +4663,11 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         inset: 0,
                         color: 'unset',
                         boxShadow: 'none',
-                        touchAction: 'none',
+                        touchAction: this.state.rxData.type === 'button' && this.state.rxData.buttonHoldValue ? 'none' : undefined,
                     }}
                     onPointerDown={e => this.onBtnMouseDown(i, e)}
                     onPointerUp={e => this.onBtnMouseUp(e)}
-                    onPointerCancel={e => this.onBtnMouseUp(e)}
+                    onPointerCancel={e => this.onBtnMouseUp(e, true)}
                 >
                     <CardContent
                         style={{
