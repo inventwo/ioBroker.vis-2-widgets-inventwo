@@ -53,6 +53,7 @@
     "custom_inventwo_migration_note_slider": "Suwak: sprawdź etykiety i wyświetlanie wartości.",
     "custom_inventwo_migration_note_slider_rotation": "Obrót suwaka nie jest przejmowany.",
     "custom_inventwo_migration_note_state": "„Stan” stał się przyciskiem ustawiającym wartość – sprawdź wartość i zachowanie po kliknięciu.",
+    "custom_inventwo_migration_note_state_reset_check": "Resetowanie wartości po czasie (iStateResetValueTime) zostało przejęte. Sprawdź czas (ms) i wartość resetowania („Wartość fałszywa”).",
     "custom_inventwo_migration_note_switch_rocker": "Przełącznik kołyskowy stał się zwykłym przełącznikiem – sprawdź rozmiar i kolory.",
     "custom_inventwo_migration_note_table_no_columns": "Nie znaleziono kluczy kolumn – ustaw klucze JSON kolumn w edytorze vis-2.",
     "custom_inventwo_migration_note_table_some_columns": "Tylko %s z %s kolumn ma klucz – sprawdź pozostałe.",
@@ -113,6 +114,5 @@
     "custom_inventwo_migration_target_invalid": "Dozwolone są tylko litery, cyfry oraz „-” i „_”.",
     "custom_inventwo_migration_target_name": "Nazwa nowego projektu",
     "custom_inventwo_migration_title": "Przeprowadź migrację dwóch widżetów vis-1",
-    "custom_inventwo_migration_warn_overwrite": "Bez nazwy sam projekt „%s” zostanie nadpisany. Kopia zapasowa pliku vis-views.json jest najpierw zapisywana w folderze projektu.",
-    "custom_inventwo_migration_note_state_reset_check": "Resetowanie wartości po czasie (iStateResetValueTime) zostało przejęte. Sprawdź czas (ms) i wartość resetowania („Wartość false”)."
+    "custom_inventwo_migration_warn_overwrite": "Bez nazwy sam projekt „%s” zostanie nadpisany. Kopia zapasowa pliku vis-views.json jest najpierw zapisywana w folderze projektu."
 }

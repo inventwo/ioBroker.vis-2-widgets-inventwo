@@ -33,7 +33,7 @@
     "custom_inventwo_migration_no_socket": "No se pasó ninguna conexión con el administrador a esta página.",
     "custom_inventwo_migration_note_checkbox": "Casilla de verificación: la marca de verificación, el borde y la sombra no se toman.",
     "custom_inventwo_migration_note_clock_design": "Reloj analógico: compruebe la esfera y las manecillas del reloj.",
-    "custom_inventwo_migration_note_clock_digital": "No hay ningún reloj digital en vis-2: el contenido se configuró en HTML y está vacío.",
+    "custom_inventwo_migration_note_clock_digital": "No hay un reloj digital en vis-2: el contenido se configuró en HTML y está vacío.",
     "custom_inventwo_migration_note_clock_timezone": "La zona horaria del reloj (%s) no se adopta.",
     "custom_inventwo_migration_note_colorpicker": "Selector de color: verifique los puntos de datos, el modelo de color y los elementos mostrados.",
     "custom_inventwo_migration_note_colorpicker_alpha": "El punto de datos separado para la transparencia no se asume.",
@@ -52,7 +52,8 @@
     "custom_inventwo_migration_note_radiobuttons_matrix": "La disposición matricial de los botones de opción no existe en vis-2.",
     "custom_inventwo_migration_note_slider": "Control deslizante: comprueba las etiquetas y muestra el valor.",
     "custom_inventwo_migration_note_slider_rotation": "La rotación del control deslizante no se controla.",
-    "custom_inventwo_migration_note_state": "\"Estado\" se convirtió en un botón que establece el valor: verifique el valor y haga clic en el comportamiento.",
+    "custom_inventwo_migration_note_state": "\"Estado\" se convirtió en un botón que establece el valor: verifica el valor y hace clic en el comportamiento.",
+    "custom_inventwo_migration_note_state_reset_check": "Se asumió el restablecimiento del valor después de un tiempo (iStateResetValueTime). Verifique el tiempo (ms) y el valor de reinicio (\"Valor falso\").",
     "custom_inventwo_migration_note_switch_rocker": "El interruptor basculante se convirtió en un interruptor normal: verifique el tamaño y los colores.",
     "custom_inventwo_migration_note_table_no_columns": "No se encontraron claves de columna: configure las claves JSON de las columnas en el editor vis-2.",
     "custom_inventwo_migration_note_table_some_columns": "Sólo %s de %s columnas tienen una clave; verifique las demás.",
@@ -113,6 +114,5 @@
     "custom_inventwo_migration_target_invalid": "Sólo se permiten letras, dígitos, \"-\" y \"_\".",
     "custom_inventwo_migration_target_name": "Nombre del nuevo proyecto",
     "custom_inventwo_migration_title": "Migrar widgets inventwo vis-1",
-    "custom_inventwo_migration_warn_overwrite": "Sin un nombre, el proyecto \"%s\" se sobrescribe. Primero se guarda una copia de seguridad de su vis-views.json en la carpeta del proyecto.",
-    "custom_inventwo_migration_note_state_reset_check": "Se aplicó el restablecimiento del valor tras un tiempo (iStateResetValueTime). Comprueba el tiempo (ms) y el valor de restablecimiento («Valor false»)."
+    "custom_inventwo_migration_warn_overwrite": "Sin un nombre, el proyecto \"%s\" se sobrescribe. Primero se guarda una copia de seguridad de su vis-views.json en la carpeta del proyecto."
 }
