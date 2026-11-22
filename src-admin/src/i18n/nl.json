@@ -53,6 +53,7 @@
     "custom_inventwo_migration_note_slider": "Schuifregelaar: controleer labels en waardeweergave.",
     "custom_inventwo_migration_note_slider_rotation": "De rotatie van de schuif wordt niet overgenomen.",
     "custom_inventwo_migration_note_state": "\"State\" werd een knop die de waarde instelt - waarde controleren en klikgedrag.",
+    "custom_inventwo_migration_note_state_reset_check": "Het resetten van de waarde na een bepaalde tijd (iStateResetValueTime) is overgenomen. Controleer de tijd (ms) en de resetwaarde (\"Value false\").",
     "custom_inventwo_migration_note_switch_rocker": "De tuimelschakelaar werd een normale schakelaar – controleer de maat en kleuren.",
     "custom_inventwo_migration_note_table_no_columns": "Geen kolomsleutels gevonden – stel de JSON-sleutels van de kolommen in de vis-2-editor in.",
     "custom_inventwo_migration_note_table_some_columns": "Slechts %s van %s kolommen hebben een sleutel – controleer de andere.",
@@ -69,7 +70,7 @@
     "custom_inventwo_migration_restore_summary": "%s widgets die in verschillende weergaven werden getoond, zijn hersteld vanuit het vis-1-project (%s ervan ontbreken volledig in het vis-2-project).",
     "custom_inventwo_migration_result_full": "Converteerbaar zonder nabewerking",
     "custom_inventwo_migration_result_partial": "Cabriolet, maar moet nagekeken worden",
-    "custom_inventwo_migration_result_skipped": "Niet converteerbaar (blijf ongewijzigd)",
+    "custom_inventwo_migration_result_skipped": "Niet converteerbaar (blijft ongewijzigd)",
     "custom_inventwo_migration_risk_1": "Het resultaat is niet pixel-perfect. Veelgebruikte widgets worden volledig geconverteerd, andere slechts gedeeltelijk – u krijgt een lijst met alles wat u handmatig kunt controleren.",
     "custom_inventwo_migration_risk_2": "Alleen inventwo-widgets worden geconverteerd. Widgets van andere adapters blijven zoals ze zijn.",
     "custom_inventwo_migration_risk_3": "Sluit eerst de vis-2-editor van het project. Een geopende editor kan het resultaat overschrijven wanneer deze wordt opgeslagen.",
@@ -113,6 +114,5 @@
     "custom_inventwo_migration_target_invalid": "Alleen letters, cijfers, \"-\" en \"_\" zijn toegestaan.",
     "custom_inventwo_migration_target_name": "Naam van het nieuwe project",
     "custom_inventwo_migration_title": "Migreer inventwo vis-1 widgets",
-    "custom_inventwo_migration_warn_overwrite": "Zonder naam wordt het project \"%s\" zelf overschreven. Een back-up van de vis-views.json wordt eerst in de projectmap opgeslagen.",
-    "custom_inventwo_migration_note_state_reset_check": "Het resetten van de waarde na een tijd (iStateResetValueTime) is overgenomen. Controleer de tijd (ms) en de resetwaarde (\"Waarde false\")."
+    "custom_inventwo_migration_warn_overwrite": "Zonder naam wordt het project \"%s\" zelf overschreven. Een back-up van de vis-views.json wordt eerst in de projectmap opgeslagen."
 }

@@ -4518,7 +4518,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             this.state.rxData.type === 'readonly' || this.isClickDisabled(i)
                                 ? 'not-allowed'
                                 : 'pointer',
-                        touchAction: this.state.rxData.type === 'button' && this.state.rxData.buttonHoldValue ? 'none' : undefined,
+                        touchAction:
+                            this.state.rxData.type === 'button' && this.state.rxData.buttonHoldValue
+                                ? 'none'
+                                : undefined,
                         color: 'unset',
                     }}
                     onPointerDown={e => this.onBtnMouseDown(i, e)}
@@ -4663,7 +4666,10 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         inset: 0,
                         color: 'unset',
                         boxShadow: 'none',
-                        touchAction: this.state.rxData.type === 'button' && this.state.rxData.buttonHoldValue ? 'none' : undefined,
+                        touchAction:
+                            this.state.rxData.type === 'button' && this.state.rxData.buttonHoldValue
+                                ? 'none'
+                                : undefined,
                     }}
                     onPointerDown={e => this.onBtnMouseDown(i, e)}
                     onPointerUp={e => this.onBtnMouseUp(e)}

@@ -53,6 +53,7 @@
     "custom_inventwo_migration_note_slider": "Curseur : vérifiez les étiquettes et l'affichage des valeurs.",
     "custom_inventwo_migration_note_slider_rotation": "La rotation du curseur n'est pas reprise.",
     "custom_inventwo_migration_note_state": "« État » est devenu un bouton qui définit la valeur – vérifier la valeur et cliquer sur le comportement.",
+    "custom_inventwo_migration_note_state_reset_check": "La réinitialisation de la valeur après un certain temps (iStateResetValueTime) a été prise en charge. Vérifiez le temps (ms) et la valeur de réinitialisation (\"Value false\").",
     "custom_inventwo_migration_note_switch_rocker": "L'interrupteur à bascule est devenu un interrupteur normal – vérifiez la taille et les couleurs.",
     "custom_inventwo_migration_note_table_no_columns": "Aucune clé de colonne trouvée – définissez les clés JSON des colonnes dans l'éditeur vis-2.",
     "custom_inventwo_migration_note_table_some_columns": "Seules %s des %s colonnes ont une clé – vérifiez les autres.",
@@ -113,6 +114,5 @@
     "custom_inventwo_migration_target_invalid": "Seuls les lettres, chiffres, \"-\" et \"_\" sont autorisés.",
     "custom_inventwo_migration_target_name": "Nom du nouveau projet",
     "custom_inventwo_migration_title": "Migrer les widgets inventwo vis-1",
-    "custom_inventwo_migration_warn_overwrite": "Sans nom, le projet \"%s\" lui-même est écrasé. Une sauvegarde de son vis-views.json est d'abord enregistrée dans le dossier du projet.",
-    "custom_inventwo_migration_note_state_reset_check": "La réinitialisation de la valeur après un délai (iStateResetValueTime) a été reprise. Vérifiez le délai (ms) et la valeur de réinitialisation (« Valeur false »)."
+    "custom_inventwo_migration_warn_overwrite": "Sans nom, le projet \"%s\" lui-même est écrasé. Une sauvegarde de son vis-views.json est d'abord enregistrée dans le dossier du projet."
 }
