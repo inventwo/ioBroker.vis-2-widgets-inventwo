@@ -53,7 +53,6 @@
     "custom_inventwo_migration_note_slider": "Повзунок: перевірка міток і відображення значень.",
     "custom_inventwo_migration_note_slider_rotation": "Обертання повзунка не переймається.",
     "custom_inventwo_migration_note_state": "«Стан» став кнопкою, яка встановлює значення – перевірте значення та поведінку при натисканні.",
-    "custom_inventwo_migration_note_state_reset": "Resetting the value after a time (iStateResetValueTime) does not exist in vis-2.",
     "custom_inventwo_migration_note_switch_rocker": "Клавішний перемикач став звичайним – дивіться розмір і колір.",
     "custom_inventwo_migration_note_table_no_columns": "Ключі стовпців не знайдено – установіть ключі JSON для стовпців у редакторі vis-2.",
     "custom_inventwo_migration_note_table_some_columns": "Лише %s із %s стовпців мають ключ – перевірте інші.",
@@ -114,5 +113,6 @@
     "custom_inventwo_migration_target_invalid": "Допускаються лише літери, цифри, «-» та «_».",
     "custom_inventwo_migration_target_name": "Назва нового проекту",
     "custom_inventwo_migration_title": "Migrate inventwo vis-1 віджети",
-    "custom_inventwo_migration_warn_overwrite": "Без назви сам проект \"%s\" буде перезаписано. Резервна копія його vis-views.json спочатку зберігається в папці проекту."
+    "custom_inventwo_migration_warn_overwrite": "Без назви сам проект \"%s\" буде перезаписано. Резервна копія його vis-views.json спочатку зберігається в папці проекту.",
+    "custom_inventwo_migration_note_state_reset_check": "Скидання значення через певний час (iStateResetValueTime) перенесено. Перевірте час (мс) і значення скидання («Значення false»)."
 }

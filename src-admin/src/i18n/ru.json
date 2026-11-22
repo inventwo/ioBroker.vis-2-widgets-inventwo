@@ -53,7 +53,6 @@
     "custom_inventwo_migration_note_slider": "Ползунок: проверьте метки и отображение значений.",
     "custom_inventwo_migration_note_slider_rotation": "Вращение ползунка не берется на себя.",
     "custom_inventwo_migration_note_state": "«Состояние» стало кнопкой, которая устанавливает значение — проверяет значение и поведение щелчка.",
-    "custom_inventwo_migration_note_state_reset": "Сброс значения через некоторое время (iStateResetValueTime) не существует в vis-2.",
     "custom_inventwo_migration_note_switch_rocker": "Кулисный переключатель стал обычным переключателем – проверьте размер и цвет.",
     "custom_inventwo_migration_note_table_no_columns": "Ключи столбцов не найдены — установите ключи JSON столбцов в редакторе vis-2.",
     "custom_inventwo_migration_note_table_some_columns": "Только %s из %s столбцов имеют ключ – проверьте остальные.",
@@ -114,5 +113,6 @@
     "custom_inventwo_migration_target_invalid": "Разрешены только буквы, цифры, «-» и «_».",
     "custom_inventwo_migration_target_name": "Название нового проекта",
     "custom_inventwo_migration_title": "Перенос виджетов inventwo vis-1",
-    "custom_inventwo_migration_warn_overwrite": "Без имени сам проект «%s» перезаписывается. Резервная копия файла vis-views.json сначала сохраняется в папке проекта."
+    "custom_inventwo_migration_warn_overwrite": "Без имени сам проект «%s» перезаписывается. Резервная копия файла vis-views.json сначала сохраняется в папке проекта.",
+    "custom_inventwo_migration_note_state_reset_check": "Сброс значения через некоторое время (iStateResetValueTime) перенесён. Проверьте время (мс) и значение сброса («Значение false»)."
 }

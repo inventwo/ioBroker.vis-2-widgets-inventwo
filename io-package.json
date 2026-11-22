@@ -172,6 +172,11 @@
         "vis-2": ">=2.20.0"
       }
     ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.6.20"
+      }
+    ],
     "tier": 3,
     "licenseInformation": {
       "license": "MIT",

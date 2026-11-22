@@ -53,7 +53,6 @@
     "custom_inventwo_migration_note_slider": "Dispositivo di scorrimento: controlla le etichette e la visualizzazione dei valori.",
     "custom_inventwo_migration_note_slider_rotation": "La rotazione del cursore non viene rilevata.",
     "custom_inventwo_migration_note_state": "\"Stato\" è diventato un pulsante che imposta il valore: controlla il valore e il comportamento del clic.",
-    "custom_inventwo_migration_note_state_reset": "La reimpostazione del valore dopo un periodo di tempo (iStateResetValueTime) non esiste in vis-2.",
     "custom_inventwo_migration_note_switch_rocker": "L'interruttore a bilanciere è diventato un normale interruttore: controlla dimensioni e colori.",
     "custom_inventwo_migration_note_table_no_columns": "Nessuna chiave di colonna trovata: imposta le chiavi JSON delle colonne nell'editor vis-2.",
     "custom_inventwo_migration_note_table_some_columns": "Solo %s di %s colonne hanno una chiave: controlla le altre.",
@@ -114,5 +113,6 @@
     "custom_inventwo_migration_target_invalid": "Sono consentite solo lettere, cifre, \"-\" e \"_\".",
     "custom_inventwo_migration_target_name": "Nome del nuovo progetto",
     "custom_inventwo_migration_title": "Migrare i widget inventtwo vis-1",
-    "custom_inventwo_migration_warn_overwrite": "Senza nome il progetto \"%s\" stesso verrà sovrascritto. Un backup del suo vis-views.json viene prima salvato nella cartella del progetto."
+    "custom_inventwo_migration_warn_overwrite": "Senza nome il progetto \"%s\" stesso verrà sovrascritto. Un backup del suo vis-views.json viene prima salvato nella cartella del progetto.",
+    "custom_inventwo_migration_note_state_reset_check": "Il ripristino del valore dopo un tempo (iStateResetValueTime) è stato applicato. Controlla il tempo (ms) e il valore di ripristino («Valore false»)."
 }
