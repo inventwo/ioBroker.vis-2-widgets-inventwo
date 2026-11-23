@@ -1,6 +1,6 @@
 {
     "type": "panel",
-    "i18n": true,
+    "i18n": false,
     "items": {
         "_migration": {
             "type": "custom",
