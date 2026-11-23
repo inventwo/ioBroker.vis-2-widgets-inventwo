@@ -43,7 +43,7 @@
     "custom_inventwo_migration_note_http": "HTTP: controlla l'URL e il tipo di richiesta.",
     "custom_inventwo_migration_note_image": "Widget immagine: controlla ridimensionamento, colori e ombre.",
     "custom_inventwo_migration_note_increase": "Incremento/diminuzione: verificare il valore del passo.",
-    "custom_inventwo_migration_note_invert": "Inverting the image color is not taken over.",
+    "custom_inventwo_migration_note_invert": "L'inversione del colore dell'immagine non viene trasferita.",
     "custom_inventwo_migration_note_marquee": "Marquee: la velocità ha un'altra unità in vis-2 – impostala nuovamente.",
     "custom_inventwo_migration_note_multi": "Multi widget: controlla le condizioni e l'aspetto degli stati.",
     "custom_inventwo_migration_note_nav_view": "Manca la vista di destinazione: selezionala nell'editor vis-2.",
