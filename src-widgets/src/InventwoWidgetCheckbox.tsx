@@ -132,10 +132,10 @@ export default class InventwoWidgetCheckbox extends InventwoGeneric<CheckboxRxDa
         if (!this.validOid(oid) || !oid) {
             return;
         }
-        if (this.getValue(oid) === this.convertValue(this.state.rxData.valueTrue)) {
-            this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueFalse));
+        if (this.getValue(oid) === this.convertValue(this.state.rxData.valueTrue, true)) {
+            this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueFalse, false));
         } else {
-            this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue));
+            this.props.context.setValue(oid, this.convertValue(this.state.rxData.valueTrue, true));
         }
     }
 
@@ -150,7 +150,7 @@ export default class InventwoWidgetCheckbox extends InventwoGeneric<CheckboxRxDa
 
         const oid = this.state.rxData.oid;
         const value = this.getValue(oid);
-        const isChecked = this.validOid(oid) && value === this.convertValue(this.state.rxData.valueTrue);
+        const isChecked = this.validOid(oid) && value === this.convertValue(this.state.rxData.valueTrue, true);
 
         const styles = this.getStyle('styleFromWidget', this.groupAttrs.attr_group_css_style);
 
