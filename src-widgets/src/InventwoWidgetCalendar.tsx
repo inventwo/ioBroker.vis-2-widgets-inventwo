@@ -660,25 +660,28 @@ export default class InventwoWidgetCalendar extends InventwoGeneric<CalendarRxDa
             // Month/year selection grid (opened via the header label) - reuses the day and
             // selected-day colors so it stays consistent with the rest of the calendar instead
             // of falling back to the MUI default theme color.
-            '& .MuiPickersYear-yearButton, & .MuiPickersMonth-monthButton, & .MuiYearCalendar-button, & .MuiMonthCalendar-button': {
-                color: dayStyle.dayTextColor,
-                '&:hover': {
-                    backgroundColor: dayStyle.dayHoverColor,
+            '& .MuiPickersYear-yearButton, & .MuiPickersMonth-monthButton, & .MuiYearCalendar-button, & .MuiMonthCalendar-button':
+                {
+                    color: dayStyle.dayTextColor,
+                    '&:hover': {
+                        backgroundColor: dayStyle.dayHoverColor,
+                    },
                 },
-            },
-            '& .MuiPickersYear-yearButton.Mui-disabled, & .MuiPickersMonth-monthButton.Mui-disabled, & .MuiYearCalendar-button.Mui-disabled, & .MuiMonthCalendar-button.Mui-disabled': {
-                color: dayStyle.dayDisabledTextColor,
-            },
-            '& .MuiPickersYear-yearButton.Mui-selected, & .MuiPickersMonth-monthButton.Mui-selected, & .MuiYearCalendar-button.Mui-selected, & .MuiMonthCalendar-button.Mui-selected': {
-                backgroundColor: selectedStyle.selectedBackgroundColor,
-                color: selectedStyle.selectedTextColor,
-                '&:hover': {
+            '& .MuiPickersYear-yearButton.Mui-disabled, & .MuiPickersMonth-monthButton.Mui-disabled, & .MuiYearCalendar-button.Mui-disabled, & .MuiMonthCalendar-button.Mui-disabled':
+                {
+                    color: dayStyle.dayDisabledTextColor,
+                },
+            '& .MuiPickersYear-yearButton.Mui-selected, & .MuiPickersMonth-monthButton.Mui-selected, & .MuiYearCalendar-button.Mui-selected, & .MuiMonthCalendar-button.Mui-selected':
+                {
                     backgroundColor: selectedStyle.selectedBackgroundColor,
+                    color: selectedStyle.selectedTextColor,
+                    '&:hover': {
+                        backgroundColor: selectedStyle.selectedBackgroundColor,
+                    },
+                    '&:focus': {
+                        backgroundColor: selectedStyle.selectedBackgroundColor,
+                    },
                 },
-                '&:focus': {
-                    backgroundColor: selectedStyle.selectedBackgroundColor,
-                },
-            },
         };
 
         const calendar = (
