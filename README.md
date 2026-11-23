@@ -306,7 +306,7 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.3.0 (2026-11-23)
 - Universal Widget: Password/PIN protection is now available for all types that trigger an action (switch, button, view in dialog, increase/decrease, HTTP), not only for navigation
 - Universal Widget: Type button can reset the value after a configurable time; the migration assistant takes over the reset time of vis-1
 - Slider & Radial Slider: New color zones – the active part changes its color depending on the value (e.g. green/yellow/red), either as a whole, per zone segment or as a fixed scale along the whole track, with a hard cut or a gradient between the zones
@@ -327,10 +327,6 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
 
 ### 2.0.2 (2026-10-17)
 - Removed default react 19 border on universal widget
-
-### 2.0.1 (2026-10-17)
-- Breaking: Requires vis-2 >= 2.20.0 (React 19 / MUI 9). Older vis-2 versions (React 18) are no longer supported
-- Updated dependencies to React 19 and MUI 9
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)
