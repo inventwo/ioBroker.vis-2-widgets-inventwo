@@ -7,13 +7,198 @@
 [![Downloads](https://img.shields.io/npm/dm/iobroker.vis-2-widgets-inventwo.svg)](https://www.npmjs.com/package/iobroker.vis-2-widgets-inventwo)
 [![Paypal Donation](https://img.shields.io/badge/paypal-donate%20|%20spenden-green.svg)](https://www.paypal.com/donate/?hosted_button_id=7W6M3TFZ4W9LW)
 
+**Build dashboards that look exactly the way you want.** A set of 11 widgets for **ioBroker vis 2.0** with one idea: every widget can be styled down to the last detail - colors and gradients, shapes, shadows, borders, fonts, sizes - without a single line of CSS.
+
+![Dark dashboard built with inventwo widgets](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/showcase_dark.png)
+
+📖 **[User Documentation](docs/README.md)** - detailed guides for all widgets, settings and examples.
+
 ---
 
-## About
+## Why these widgets?
 
-A collection of highly customizable widgets for **ioBroker vis 2.0** — built for users who want full control over the look and feel of their dashboards. Every widget comes with extensive styling options and integrates seamlessly with ioBroker data points.
+- 🎨 **Total design freedom** - gradients, glow, glass, neumorphism, hexagons, stars or your own polygon. Every color field accepts any CSS color, including `linear-gradient(...)`.
+- 🧩 **One widget, many jobs** - the [Universal widget](#universal) is a switch, button, navigation tile, status display, dialog opener, color picker, clock and more, with its own look for every state.
+- 📊 **Show data, don't just switch it** - gauges with color zones, scales and needles, sliders, tables with conditional row colors, calendars, event lists, tickers.
+- 🔒 **Safe for wall panels** - password/PIN protection for any action, read-only modes, "hold to activate" buttons, automatic value reset.
+- ♻️ **Consistent styling** - "From widget" lets many widgets share one look, so a redesign is a change in one place.
+- 🔁 **Coming from vis 1?** A built-in [migration assistant](#migrating-from-vis-inventwo-vis-1) converts old `i-vis-*` widgets.
 
-📖 **[User Documentation](docs/README.md)** — detailed guides for all widgets, settings and examples.
+---
+
+## See what is possible
+
+All screens on this page are built only with the widgets of this adapter - no custom CSS, no extra adapters.
+
+### Same dashboard, three looks
+The dashboard above, with the same layout and widgets. Only the colors, radii, borders and shadows in the widget settings are different.
+
+| Light | Glass |
+|---|---|
+| ![Light dashboard](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/showcase_light.png) | ![Glass dashboard](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/showcase_glass.png) |
+
+### Shapes and styles
+![Shapes and styles](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/showcase_styles.png)
+
+The Universal widget in different shapes (rounded, hexagon, star, diamond, octagon, triangle - or your own polygon) and styles (neumorphism, inset shadows, neon glow, gradients, chamfered corners, dashed borders).
+
+### Data at a glance
+![Data widgets](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/showcase_data.png)
+
+A device table with number and time formats and conditional row colors, gauges with the three color-zone modes, and an event calendar - all fed from plain datapoints.
+
+---
+
+## The widgets at a glance
+
+| Widget | What it does |
+|---|---|
+| [**Universal**](#universal) | The all-rounder: switch, button, navigation, read-only display, dialog, +/- value, HTTP request, color picker, analog clock |
+| [**Slider**](#slider) | Horizontal or vertical slider and bar display, with scale and color zones |
+| [**Radial Slider**](#radial-slider) | Circular slider and gauge with scale, needle, second value and color zones |
+| [**Switch**](#switch) | Toggle switch with custom values and labels |
+| [**Checkbox**](#checkbox) | Checkbox with custom values and labels |
+| [**Dropdown**](#dropdown) | Selection list filled from the states of a datapoint, with conditional background |
+| [**Table**](#table) | JSON data as a table: formats, sorting, filters, pagination, row colors |
+| [**Calendar**](#calendar) | Month calendar as date picker or date display |
+| [**Event Calendar**](#event-calendar) | Google-Calendar-style view for appointments (month, week, day, year, lists) |
+| [**Marquee**](#marquee) | Scrolling text ticker in any direction |
+| [**Value List**](#value-list) | Bullet list from a text or datapoint |
+
+> Every widget page in the [documentation](docs/README.md) lists all settings in detail.
+
+---
+
+## Universal
+
+*The flagship widget.* One tile that reacts to your data and looks different in every state.
+
+![Preview Universal Widget](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_universal_widget.png)
+
+**What happens on click (type)**
+- **Switch** toggles a datapoint between two values; **Button** sends a value - optionally only while pressed ("hold") or with automatic reset after a time
+- **Navigation** to another view (the active view can be highlighted); **View in dialog** with position, size, title, auto-close and optional control by datapoint
+- **Increase / decrease** a number by a step, **HTTP request** or **open URL**
+- **Read-only** for pure status tiles
+- **Password / PIN protection** for any of the actions above
+
+**What is shown (content)**
+- Icon, image, text/HTML with datapoint bindings, an embedded **view**, a full **color picker** (HEX, RGB, HSL, HSV, CIE) or an **analog clock** in several designs
+- Content can blink, rotate, mirror and scale
+
+**States and modes**
+- Any number of states, chosen by value comparison, each with its own text, icon, colors and shadows
+- **Single button** or **separated buttons** (mode selector, radio-button style)
+- Click feedback, click-through, content opacity
+
+**Design**
+- Shapes: rectangle, triangle, diamond, pentagon, hexagon, heptagon, octagon, star or a **custom polygon**, with rotation and corner radius
+- Rounded or chamfered corners, borders, several outer and inner shadows, gradient backgrounds, spacing and alignment
+
+![Preview Shapes](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_shapes.png)
+
+📖 [Universal widget](docs/en/widgets/universal-widget.md) · [Interaction types](docs/en/widgets/universal/interaction-types.md) · [Content types](docs/en/widgets/universal/content-types.md) · [Styling and shapes](docs/en/widgets/universal/styling-and-shapes.md)
+· Examples: [hexagon dashboard](docs/example-views/hexagonal-view.md), [rectangle dashboard](docs/example-views/rectangle-view.md), [design examples](docs/universal-widget-design-examples.md)
+
+---
+
+## Slider
+
+![Preview Slider](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_sliders.png)
+
+Horizontal or vertical, with min/max, step, scale (automatic or custom marks) and value label. Works as an input or as a **read-only bar display**.
+
+- **Color zones** (e.g. green / yellow / red from a value on) over the active range, as segments, or across the whole track - with hard edges or smooth gradients
+- Gradients for rail and active rail, inverted bar, individual track and thumb styling including shadows
+
+📖 [Slider documentation](docs/en/widgets/slider-widget.md)
+
+## Radial Slider
+
+![Preview Radial Slider](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/src-widgets/public/img/vis-widget-inventwo-radial-slider.png)
+
+A circular slider that doubles as a **gauge** for temperatures, power, humidity and more.
+
+- Free start and end angle - full circle, three quarters, half circle
+- Value in the center with decimals, separator and unit, optional label, **second value** (e.g. target next to actual) and **time of last change**
+- **Color zones**, **scale** with ticks and labels, and a **needle**
+- Track and thumb styling including shadows; the thumb can be hidden for pure displays
+
+📖 [Radial Slider documentation](docs/en/widgets/radial-slider-widget.md)
+
+## Switch
+
+![Preview Switches](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_switches.png)
+
+Toggle switch for boolean or any two-state datapoint: own values for on/off, texts per state, label position, and fully styled track and thumb (colors, size, radius, shadows, gradients).
+
+📖 [Switch documentation](docs/en/widgets/switch-widget.md)
+
+## Checkbox
+
+![Preview Checkbox](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_checkbox.png)
+
+Checkbox with own true/false values, texts per state, label position, and custom box size and colors.
+
+📖 [Checkbox documentation](docs/en/widgets/checkbox-widget.md)
+
+## Dropdown
+
+![Preview Dropdown](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/src-widgets/public/img/vis-widget-inventwo-dropdown.png)
+
+Selection list that takes its options from the states list of the datapoint, or from your own list of values. Optional title, read-only mode, **background color by condition**, and full control over font, colors, border, radius and shadows.
+
+📖 [Dropdown documentation](docs/en/widgets/dropdown-widget.md)
+
+## Table
+
+![Preview Table](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_table.png)
+
+Turns a JSON datapoint into a table.
+
+- Columns with title, width, alignment, prefix/suffix and **formats**: text, number, boolean, date/time, image, link, IP address; calculated columns via formula
+- **Sorting** (also multi-column), **column filters**, pagination, sticky header, sum row
+- **Row colors by condition** - highlight errors, warnings, thresholds
+- Header and row styling, borders, rounded corners, shadows
+
+📖 [Table documentation](docs/en/widgets/table-widget.md)
+
+## Calendar
+
+A month calendar as **date picker**, read-only date display or "today" highlighter. Timestamp or ISO date, past/future lock, week numbers, adjustable day size and full color styling per part (header, weekdays, days, selected day, today).
+
+📖 [Calendar documentation](docs/en/widgets/calendar-widget.md)
+
+## Event Calendar
+
+Google-Calendar-style view of appointments, fed from a JSON datapoint (for example from the **ical** adapter).
+
+- Views: month, week, day, multi-month/year and four list views
+- **Several calendars** with own colors and legend, **color rules by title**, week numbers, "+N more" per day
+- Every part of the look is configurable
+
+📖 [Event Calendar documentation](docs/en/widgets/event-calendar-widget.md)
+
+## Marquee
+
+Scrolling ticker for long texts and notifications: from a datapoint or fixed text, direction left/right/up/down, speed, gap, pause on hover, background.
+
+📖 [Marquee documentation](docs/en/widgets/marquee-widget.md)
+
+## Value List
+
+Bullet list from a single text value with any separator. Bullet types (disc, circle, square, dash, arrow, numbers, custom character), bullet color, spacing and padding.
+
+📖 [Value List documentation](docs/en/widgets/value-list-widget.md)
+
+---
+
+## Getting started
+
+1. Install the adapter **vis-2-widgets-inventwo** in ioBroker Admin (requires vis 2.0).
+2. Open the vis 2 editor and pick a widget from the **inventwo design** list.
+3. Select your datapoint and adjust the settings - the preview updates live.
+4. To reuse a look, set **From widget** in a style group and pick another widget of the same type.
 
 ---
 
@@ -25,279 +210,7 @@ It shows a preview first, can write the result into a new project or back up the
 
 📖 **Migration guide:** [English](docs/en/migration.md) · [Deutsch](docs/de/migration.md)
 
-> **Please note:** The migration was built with care, but there is no guarantee that it works flawlessly for every project — vis-1 projects come in too many different shapes for that. If something is not converted as expected, please [open an issue](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/issues). Your feedback helps to improve the tool.
-
----
-
-## Widgets
-
-| Widget | Description |
-|---|---|
-| [Universal](#widget---universal) | All-in-one widget: switch, button, nav, read-only display, color picker, analog clock and more |
-| [Slider](#widget---slider) | Horizontal or vertical slider with step display and gradient colors |
-| [Radial Slider](#widget---radial-slider) | Circular arc slider with configurable angles, track and thumb styling |
-| [Switch](#widget---switch) | Toggle switch with custom labels and track/thumb colors |
-| [Checkbox](#widget---checkbox) | Checkbox with custom true/false values and label positioning |
-| [Table](#widget---table) | Dynamic JSON data table with sorting, filtering and conditional row colors |
-| [Dropdown](#widget---dropdown) | Dropdown select auto-populated from ioBroker object states |
-| [Marquee](#widget---marquee) | Scrolling text ticker with configurable speed, direction and gap |
-| [Value List](#widget---value-list) | Bullet-point list generated from a text value or data point |
-| [Calendar](#widget---calendar) | Month calendar view, usable as a datepicker, read-only display, and/or today-highlighter |
-
----
-
-## Widget - Universal
-
-The flagship widget of this adapter — a single widget that can act as a switch, button, navigation element, read-only display, and much more.
-
-![Preview Universal Widget](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_universal_widget.png)
-
-### Interaction types
-- **Switch** – toggles a data point between two values
-- **Button** – sets a value on press; optionally holds the value as long as pressed and resets on release
-- **Navigation** – navigates to a vis view on click
-- **Read-only** – displays a value without any interaction
-- **View in Dialog** – opens a vis view in a modal dialog
-- **Increase / Decrease Value** – increments or decrements a numeric data point
-- **HTTP Request / Open URL** – sends an HTTP request or opens a URL (same tab or new tab)
-
-### Display modes
-- **Single button** – one widget with one or more states
-- **Separated buttons** – each state rendered as its own button (replaces the classic radio button list)
-
-### Content types
-Freely combine multiple content elements per state:
-
-![Preview Content Types](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_content_types.png)
-
-- **Text / HTML** – static or dynamic label
-- **Icon** – ioBroker icon library
-- **Image** – local or remote image with configurable scale, position and fill mode
-- **View in widget** – embed another vis view directly inside the widget
-- **Color Picker** – full-featured color picker (HEX, HEX8, RGB, HSL, HSV, CIE) with configurable component visibility
-
-![Preview Color Picker](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_colorpicker.png)
-
-- **Analog Clock** – SVG analog clock with configurable face design, tick marks, numbers and hands
-
-![Preview Analog Clock](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_content_type_clock_analog.png)
-
-### Other features
-- Multiple states with individual styling per state
-- Click feedback animation
-- Conditional state comparison (by value or other criteria)
-- Configurable dialog options (fullscreen, close on outside click, auto-close timer)
-
-### Design
-Every aspect of the widget is customizable:
-
-![Preview CSS Customization](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_css_customization.png)
-![Preview Design Examples](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_univseral_design_examples.png)
-
-For detailed design examples see [here](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/docs/universal-widget-design-examples.md).
-
-### Polygon shapes
-
-Widgets are not limited to rectangles. The **Shape** setting lets you choose from built-in polygon forms or define a fully custom outline:
-
-| Shape | Description |
-|-------|-------------|
-| Rectangle | Default — standard rectangular card |
-| Triangle | Equilateral triangle |
-| Diamond | 4-sided rotated square |
-| Pentagon | 5-sided polygon |
-| Hexagon | 6-sided polygon — perfect for honeycomb layouts |
-| Heptagon | 7-sided polygon |
-| Octagon | 8-sided polygon |
-| Star | 5-pointed star |
-| **Custom** | Any polygon — enter clip-path points manually |
-
-![Preview Shapes](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_shapes.png)
-
-**Additional shape options:**
-- **Rotation** (0–359°) — rotate any built-in polygon to any angle
-- **Corner radius** (0–30) — rounds all vertices uniformly using Bézier curves; works for every shape including custom
-- **Custom polygon points** — comma-separated `X% Y%` pairs in clockwise order, e.g. `40% 0%, 100% 50%, 40% 100%, 0% 50%` · Create paths visually at [https://bennettfeely.com/clippy/](https://bennettfeely.com/clippy/)
-
-All existing features — inner/outer shadow, border, gradient backgrounds, click feedback — work with every shape.
-
-> **Example:** Hexagonal honeycomb dashboard → [docs/example-views/hexagonal-view.md](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/docs/example-views/hexagonal-view.md)  
-> **Example:** Rectangular dashboard → [docs/example-views/rectangle-view.md](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/blob/main/docs/example-views/rectangle-view.md)
-
----
-
-## Widget - Slider
-
-A horizontal or vertical slider for controlling numeric data points.
-
-![Preview Slider](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_sliders.png)
-
-**Key features:**
-- Horizontal and vertical orientation
-- Configurable min, max and step values (auto-read from data point object)
-- Optional min/max value labels
-- Step display (auto or custom step values)
-- Steps can be placed inside the slider bar
-- **Read-only mode** – displays a value without allowing interaction
-- Gradient color support for rail and active rail (any CSS color string including `linear-gradient(...)`)
-- Individual styling for track, active track and thumb including shadow effects
-
----
-
-## Widget - Radial Slider
-
-A circular arc slider for an elegant alternative to the classic linear slider.
-
-![Preview Radial Slider](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/src-widgets/public/img/vis-widget-inventwo-radial-slider.png)
-
-**Key features:**
-- Freely configurable start and end angle
-- Configurable track width, track color and active track color
-- Optional value display in the center with font size and color
-- Optional label below the value
-- Thumb size and color
-- Shadow effects for both track and thumb
-
----
-
-## Widget - Switch
-
-A toggle switch for boolean or two-state data points.
-
-![Preview Switches](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_switches.png)
-
-**Key features:**
-- Custom true/false values (not limited to boolean)
-- Individual text labels for each state
-- Label position: top, bottom, start or end
-- Fully customizable track and thumb colors (including gradients)
-- "From Widget" styling – inherit styling from another switch widget
-
----
-
-## Widget - Checkbox
-
-A checkbox for boolean or two-state data points.
-
-![Preview Checkbox](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_checkbox.png)
-
-**Key features:**
-- Custom true/false values
-- Individual text labels for each state
-- Label position: top, bottom, start or end
-- Customizable box and active box colors and size
-
----
-
-## Widget - Table
-
-A dynamic data table that renders JSON objects from an ioBroker data point.
-
-![Preview Table](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/preview_table.png)
-
-**Key features:**
-- Configurable columns: key, title, prefix, suffix, placeholder
-- Column value formats: Text, Number (with decimals), Datetime, Image
-- Sortable columns with single or **multi-column sorting**
-- **Column filter** – filter rows by column value
-- **Sticky header** – header stays visible while scrolling
-- Default sort configuration (column and direction)
-- Max row limit
-- **Conditional row colors** – highlight rows based on column value conditions
-- Customizable header and row styling (background, height, border)
-
----
-
-## Widget - Dropdown
-
-A dropdown select control that auto-populates its options from the `common.states` property of an ioBroker object.
-
-![Preview Dropdown](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/src-widgets/public/img/vis-widget-inventwo-dropdown.png)
-
-**Key features:**
-- Options are automatically loaded from the data point's defined states
-- Options can display value, text label or both
-- Optional title above the dropdown
-- **Read-only mode**
-- **Conditional background color** – changes dropdown background based on value conditions (with optional application to title)
-- Customizable font, text color, background, highlight color, border (width, color, radius) and shadow
-- Individual title styling (font size, color, padding)
-
----
-
-## Widget - Marquee
-
-A horizontally scrolling text ticker — ideal for displaying long text values or notifications.
-
-**Key features:**
-- Data point or static text as source
-- Scroll direction: left or right
-- Configurable scroll speed (px/s)
-- Configurable number of text copies (prevents gaps for short texts)
-- Configurable gap between copies
-- **Pause on hover**
-- Background color support
-- Inherits font styling from vis widget settings
-
----
-
-## Widget - Value List
-
-Renders a bullet-point list from a single text value — either from a data point or entered manually.
-
-**Key features:**
-- Data point or manual text input as source
-- Freely configurable separator — any character or string:
-  - Comma: `,`
-  - Semicolon: `;`
-  - Newline: `\n`
-  - Tab: `\t`
-  - Any other custom string
-- Trimming of leading/trailing whitespace per item
-- Filtering of empty items
-- Bullet types: `•` Disc, `○` Circle, `▪` Square, `–` Dash, `›` Arrow, `1. 2. 3.` Numbered, None, Custom character
-- Individual bullet color, independent from text color
-- Text color, background, font size, text alignment
-- Configurable spacing between bullet and text
-- Configurable line spacing between items
-- Inner padding
-
----
-
-## Widget - Calendar
-
-Month calendar view, a plain date picker based on MUI's Date Calendar (datepicker, read-only date display, and/or today-highlighter — freely combinable via "Read only" and "Highlight today").
-
-**Key features:**
-- Reads/writes a date from an object ID, as timestamp (ms) or ISO date string (`YYYY-MM-DD`)
-- "Read only" mode to just display a date without allowing changes
-- "Highlight today" to mark the current day distinctly
-- Disable past and/or future dates
-- Optional month/year quick navigation via the header
-- First day of week: Monday or Sunday
-- Optional calendar week numbers, ISO-8601 or "simple" (week 1 contains Jan 1st) style
-- Configurable day cell size
-- Independent color styling for header, weekdays, regular days, selected day (incl. shadow), today marker and week numbers
-- Follows the browser language for month/weekday names
-- "From widget" style reuse across multiple Calendar widgets
-
----
-
-## Widget - Event Calendar
-
-Google-Calendar-style view for events/appointments, based on FullCalendar. Every color, font size, and border is configurable.
-
-**Key features:**
-- Point "Events (datapoint)" at a datapoint holding a JSON list of events - either a simple custom shape or the native JSON produced by the ioBroker "ical" adapter
-- All views from FullCalendar's free/MIT bundle: Month, Week, Day, Multi-month (year), and List (day/week/month/year)
-- Optional calendar week numbers (ISO-8601 or "simple"/locale-dependent), mainly for Month/Multi-month views
-- Header bar (title + prev/next/today navigation) can be shown/hidden, and navigation can be disabled independently while keeping the title
-- Correctly handles multi-day/all-day events (iCal exclusive-end convention)
-- Only needs the events datapoint - no separate object ID required
-- Configurable event color rules: color events by title (case-insensitive substring match), overriding the source color - works around the ioBroker "ical" adapter only providing one color per calendar, not per event
-- Fully configurable header (title color/size, button text/background/border/radius incl. hover), weekdays (color/background/size), day (color/size, outside-month color, weekend background), today (background/text/border color+width, live now-indicator line), event tiles (background/text/border/radius/size, "+N more" link color), and grid borders (show/hide, width, color) - each color group with independent "From widget" style reuse
-- Calendar resizes live when the widget is resized in the vis editor (no page reload needed)
-- Follows the browser language for month/weekday names
+> **Please note:** The migration was built with care, but there is no guarantee that it works flawlessly for every project - vis-1 projects come in too many different shapes for that. If something is not converted as expected, please [open an issue](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/issues). Your feedback helps to improve the tool.
 
 ---
 
@@ -306,6 +219,11 @@ Google-Calendar-style view for events/appointments, based on FullCalendar. Every
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Calendar Widget: the day, today, selected and month/year colors had no effect with the current MUI X version (renamed CSS classes), so the theme text color was used instead; fixed
+- Checkbox Widget: true/false values default to `true`/`false` when left empty (like the Switch Widget), so a checkbox without custom values reflects and toggles boolean datapoints
+- README: new overview with showcase screenshots
+
 ### 2.3.0 (2026-11-23)
 - Universal Widget: Password/PIN protection is now available for all types that trigger an action (switch, button, view in dialog, increase/decrease, HTTP), not only for navigation
 - Universal Widget: Type button can reset the value after a configurable time; the migration assistant takes over the reset time of vis-1
