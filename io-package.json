@@ -109,17 +109,17 @@
       "zh-cn": "Vis 2 输入两个部件"
     },
     "desc": {
-      "en": "Vis 2 inventwo widgets",
-      "de": "Vis 2 inventwo Widgets",
-      "ru": "Vis 2 inventwo widgets",
-      "pt": "Vis 2 inventwo widgets",
-      "nl": "Vis 2 inventwo widgets",
-      "fr": "Vis 2 widgets inventwo",
-      "it": "Vis 2 widgets inventwo",
-      "es": "Vis 2 widgets inventwo",
-      "pl": "Vis 2 wynalazły dwa widżety",
-      "uk": "Vis 2 inventwo віджети",
-      "zh-cn": "Vis 2 输入两个部件"
+      "en": "Highly customizable widget set for ioBroker vis-2: buttons, navigation, switches, checkboxes, sliders, radial sliders, dropdowns, tables, value lists, marquee text, calendars and event calendars. Colors, gradients, shapes, icons and fonts are freely configurable, so every widget fits any design.",
+      "de": "Hochgradig anpassbares Widget-Set für ioBroker vis-2: Buttons, Navigation, Schalter, Checkboxen, Slider, Radial-Slider, Dropdowns, Tabellen, Wertelisten, Lauftext, Kalender und Ereigniskalender. Farben, Verläufe, Formen, Icons und Schriften sind frei einstellbar, sodass sich jedes Widget an jeden Stil anpassen lässt.",
+      "ru": "Высоко настраиваемый набор виджетов для ioBroker vis-2: кнопки, навигация, переключатели, флажки, ползунки, радиальные ползунки, выпадающие списки, таблицы, списки значений, бегущая строка, календари и календари событий. Цвета, градиенты, формы, значки и шрифты настраиваются свободно, поэтому каждый виджет подходит под любой дизайн.",
+      "pt": "Conjunto de widgets altamente personalizável para o ioBroker vis-2: botões, navegação, interruptores, caixas de seleção, controlos deslizantes, controlos deslizantes radiais, listas suspensas, tabelas, listas de valores, texto em movimento, calendários e calendários de eventos. Cores, gradientes, formas, ícones e tipos de letra são totalmente configuráveis, para que cada widget se adapte a qualquer estilo.",
+      "nl": "Zeer aanpasbare widgetset voor ioBroker vis-2: knoppen, navigatie, schakelaars, selectievakjes, schuifregelaars, radiale schuifregelaars, dropdowns, tabellen, waardelijsten, lopende tekst, kalenders en evenementenkalenders. Kleuren, kleurverlopen, vormen, pictogrammen en lettertypen zijn vrij instelbaar, zodat elke widget bij elke stijl past.",
+      "fr": "Jeu de widgets hautement personnalisable pour ioBroker vis-2 : boutons, navigation, interrupteurs, cases à cocher, curseurs, curseurs radiaux, listes déroulantes, tableaux, listes de valeurs, texte défilant, calendriers et calendriers d'événements. Couleurs, dégradés, formes, icônes et polices sont librement configurables, de sorte que chaque widget s'adapte à n'importe quel style.",
+      "it": "Set di widget altamente personalizzabile per ioBroker vis-2: pulsanti, navigazione, interruttori, caselle di controllo, cursori, cursori radiali, menu a discesa, tabelle, elenchi di valori, testo scorrevole, calendari e calendari eventi. Colori, gradienti, forme, icone e caratteri sono liberamente configurabili, così ogni widget si adatta a qualsiasi stile.",
+      "es": "Conjunto de widgets altamente personalizable para ioBroker vis-2: botones, navegación, interruptores, casillas de verificación, controles deslizantes, controles deslizantes radiales, listas desplegables, tablas, listas de valores, texto en movimiento, calendarios y calendarios de eventos. Los colores, degradados, formas, iconos y fuentes se pueden configurar libremente, de modo que cada widget se adapta a cualquier estilo.",
+      "pl": "Wysoce konfigurowalny zestaw widżetów dla ioBroker vis-2: przyciski, nawigacja, przełączniki, pola wyboru, suwaki, suwaki promieniowe, listy rozwijane, tabele, listy wartości, tekst przewijany, kalendarze i kalendarze wydarzeń. Kolory, gradienty, kształty, ikony i czcionki można dowolnie konfigurować, dzięki czemu każdy widżet pasuje do dowolnego stylu.",
+      "uk": "Високо настроюваний набір віджетів для ioBroker vis-2: кнопки, навігація, перемикачі, прапорці, повзунки, радіальні повзунки, випадні списки, таблиці, списки значень, рядок, що біжить, календарі та календарі подій. Кольори, градієнти, форми, значки та шрифти можна вільно налаштовувати, тому кожен віджет підходить під будь-який стиль.",
+      "zh-cn": "适用于 ioBroker vis-2 的高度可定制小部件集：按钮、导航、开关、复选框、滑块、径向滑块、下拉列表、表格、值列表、滚动文字、日历和事件日历。颜色、渐变、形状、图标和字体均可自由配置，因此每个小部件都能适应任何风格。"
     },
     "authors": [
       "jkvarel <jk@inventwo.com>"
