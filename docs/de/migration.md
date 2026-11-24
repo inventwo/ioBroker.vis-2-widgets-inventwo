@@ -79,7 +79,7 @@ Um sie zurückzuholen, unter **Ursprüngliches vis-1-Projekt (optional)** das ur
 | JSON-Tabelle | Table Widget | Spalten, Formate und Farben werden übernommen; Aussehen prüfen |
 | Slider (simple) | Slider Widget | Beschriftungen und Wertanzeige prüfen |
 
-Farben (auch die Hover-Farben für Hintergrund, Rahmen und Schatten), Texte, Bilder, Eckenradius, Schatten, Rahmen, Ausrichtung, Abstände und Transparenz der Universal- und Multi-Widgets werden übernommen. Textgröße und Textschatten wandern in die CSS-Einstellungen des Widgets (`font-size`, `text-shadow`).
+Farben (auch die Hover-Farben für Hintergrund, Rahmen und Schatten; bei der Radiobutton-Liste die Hover-Hintergrundfarbe), Texte, Bilder, Eckenradius, Schatten, Rahmen, Ausrichtung, Abstände und Transparenz der Universal- und Multi-Widgets werden übernommen. Textgröße und Textschatten wandern in die CSS-Einstellungen des Widgets (`font-size`, `text-shadow`).
 
 ### Nicht umgestellt
 

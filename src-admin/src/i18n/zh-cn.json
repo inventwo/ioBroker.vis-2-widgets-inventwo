@@ -39,7 +39,6 @@
     "custom_inventwo_migration_note_colorpicker_alpha": "不接管透明度的单独数据点。",
     "custom_inventwo_migration_note_dialog_close_dp": "通过数据点 (iPopUpCloseDp) 关闭对话框不会被接管。",
     "custom_inventwo_migration_note_dialog_size": "对话框大小未以像素为单位给出 - 检查宽度和高度。",
-    "custom_inventwo_migration_note_hover": "vis-2 中不存在悬停颜色，因此已被删除。",
     "custom_inventwo_migration_note_http": "HTTP：检查 URL 和请求类型。",
     "custom_inventwo_migration_note_image": "图像小部件：检查缩放、颜色和阴影。",
     "custom_inventwo_migration_note_increase": "增加/减少：检查步长值。",
@@ -53,6 +52,7 @@
     "custom_inventwo_migration_note_slider": "滑块：检查标签和值显示。",
     "custom_inventwo_migration_note_slider_rotation": "滑块的旋转不被接管。",
     "custom_inventwo_migration_note_state": "“状态”成为一个设置值的按钮 - 检查值和点击行为。",
+    "custom_inventwo_migration_note_state_reset_check": "已采用一段时间（iStateResetValueTime）后重置值的设置。请检查时间（毫秒）和重置值（“值 false”）。",
     "custom_inventwo_migration_note_switch_rocker": "摇杆开关变成了普通开关 - 检查尺寸和颜色。",
     "custom_inventwo_migration_note_table_no_columns": "未找到列键 – 在 vi​​s-2 编辑器中设置列的 JSON 键。",
     "custom_inventwo_migration_note_table_some_columns": "%s 列中只有 %s 有键 - 检查其他列。",
@@ -82,7 +82,7 @@
     "custom_inventwo_migration_step_run": "3. 迁移",
     "custom_inventwo_migration_step_source": "1. 项目",
     "custom_inventwo_migration_summary": "%s 个视图，%s 个小部件，其中 %s 个旧发明的 vis-1 小部件。",
-    "custom_inventwo_migration_support_dropped": "在 vis-2 中不可用，因此被删除：悬停颜色、在一段时间后重置值、按数据点关闭对话框、单选按钮的矩阵排列、每个表格单元格的阈值、滑块的旋转。",
+    "custom_inventwo_migration_support_dropped": "在 vis-2 中不可用，因此被删除：通过单独的数据点关闭对话框、单选按钮的矩阵排列、每个表格单元格的阈值、滑块的旋转。",
     "custom_inventwo_migration_support_new": "vis-2 小部件",
     "custom_inventwo_migration_support_note_checkbox": "仅小部件的第一个复选框；外观没有被接管",
     "custom_inventwo_migration_support_note_clock": "检查钟面；时区和数字时钟不可用",
@@ -113,6 +113,5 @@
     "custom_inventwo_migration_target_invalid": "只允许使用字母、数字、“-”和“_”。",
     "custom_inventwo_migration_target_name": "新项目名称",
     "custom_inventwo_migration_title": "迁移 inventtwo vis-1 小部件",
-    "custom_inventwo_migration_warn_overwrite": "如果没有名称，项目“%s”本身将被覆盖。首先将其 vis-views.json 的备份保存在项目文件夹中。",
-    "custom_inventwo_migration_note_state_reset_check": "已采用一段时间（iStateResetValueTime）后重置值的设置。请检查时间（毫秒）和重置值（“值 false”）。"
+    "custom_inventwo_migration_warn_overwrite": "如果没有名称，项目“%s”本身将被覆盖。首先将其 vis-views.json 的备份保存在项目文件夹中。"
 }

@@ -79,7 +79,7 @@ To get them back, select the original project under **Original vis-1 project (op
 | JSON table | Table Widget | columns, formats and colors are taken over; check the look |
 | Slider (simple) | Slider Widget | check labels and value display |
 
-Colors (including the hover colors for background, border and shadows), texts, images, corner radius, shadows, borders, alignment, spacing and opacity of the Universal and Multi widgets are taken over. The text size and the text shadow are moved to the CSS settings of the widget (`font-size`, `text-shadow`).
+Colors (including the hover colors for background, border and shadows; for the radio button list the hover background color), texts, images, corner radius, shadows, borders, alignment, spacing and opacity of the Universal and Multi widgets are taken over. The text size and the text shadow are moved to the CSS settings of the widget (`font-size`, `text-shadow`).
 
 ### Not converted
 

@@ -646,63 +646,6 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     ],
                 },
                 {
-                    // Hover colors: no defaults on purpose – an empty field leaves that color unchanged on hover
-                    name: 'attr_group_hover',
-                    label: 'attr_group_hover',
-                    fields: [
-                        {
-                            label: 'from_widget',
-                            name: 'hoverFromWidget',
-                            type: 'widget',
-                            tpl: 'tplInventwoWidgetUniversal',
-                            all: true,
-                        },
-                        {
-                            name: '',
-                            type: 'help',
-                            text: 'vis_2_widgets_inventwo_hover_colors_help',
-                            hidden: '!!data.hoverFromWidget',
-                        },
-                        {
-                            name: 'contentColorHover',
-                            type: 'color',
-                            label: 'content_color',
-                            hidden: '!!data.hoverFromWidget || (data.contentType != "icon" && data.contentType != "image")',
-                        },
-                        {
-                            name: 'backgroundHover',
-                            type: 'color',
-                            label: 'background',
-                            hidden: '!!data.hoverFromWidget',
-                        },
-                        {
-                            name: 'textColorHover',
-                            type: 'color',
-                            label: 'text_color',
-                            hidden: '!!data.hoverFromWidget',
-                        },
-                        {
-                            name: 'borderColorHover',
-                            type: 'color',
-                            label: 'border_color',
-                            hidden: '!!data.hoverFromWidget',
-                        },
-                        {
-                            name: 'outerShadowColorHover',
-                            type: 'color',
-                            label: 'outer_shadow_color',
-                            hidden: '!!data.hoverFromWidget',
-                        },
-                        {
-                            name: 'innerShadowColorHover',
-                            type: 'color',
-                            label: 'inner_shadow_color',
-                            hidden: '!!data.hoverFromWidget',
-                        },
-                    ],
-                },
-
-                {
                     name: 'attr_group_state_default',
                     label: 'attr_group_state_default',
                     fields: [
@@ -1501,6 +1444,62 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 },
 
                 // CSS Settings
+                {
+                    // Hover colors: no defaults on purpose – an empty field leaves that color unchanged on hover
+                    name: 'attr_group_hover',
+                    label: 'attr_group_hover',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'hoverFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_hover_colors_help',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'contentColorHover',
+                            type: 'color',
+                            label: 'content_color',
+                            hidden: '!!data.hoverFromWidget || (data.contentType != "icon" && data.contentType != "image")',
+                        },
+                        {
+                            name: 'backgroundHover',
+                            type: 'color',
+                            label: 'background',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'textColorHover',
+                            type: 'color',
+                            label: 'text_color',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'borderColorHover',
+                            type: 'color',
+                            label: 'border_color',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'outerShadowColorHover',
+                            type: 'color',
+                            label: 'outer_shadow_color',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'innerShadowColorHover',
+                            type: 'color',
+                            label: 'inner_shadow_color',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                    ],
+                },
                 {
                     name: 'attr_group_css_text',
                     label: 'attr_group_css_text',

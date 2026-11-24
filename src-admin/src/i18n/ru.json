@@ -39,7 +39,6 @@
     "custom_inventwo_migration_note_colorpicker_alpha": "Отдельная точка данных для прозрачности не используется.",
     "custom_inventwo_migration_note_dialog_close_dp": "Закрытие диалогового окна по точке данных (iPopUpCloseDp) не переносится.",
     "custom_inventwo_migration_note_dialog_size": "Размер диалога не указан в пикселях – проверьте ширину и высоту.",
-    "custom_inventwo_migration_note_hover": "Цвета при наведении не существуют в vis-2 и были удалены.",
     "custom_inventwo_migration_note_http": "HTTP: проверьте URL-адрес и тип запроса.",
     "custom_inventwo_migration_note_image": "Виджет изображения: проверьте масштабирование, цвета и тени.",
     "custom_inventwo_migration_note_increase": "Увеличение/уменьшение: проверьте значение шага.",
@@ -53,6 +52,7 @@
     "custom_inventwo_migration_note_slider": "Ползунок: проверьте метки и отображение значений.",
     "custom_inventwo_migration_note_slider_rotation": "Вращение ползунка не берется на себя.",
     "custom_inventwo_migration_note_state": "«Состояние» стало кнопкой, которая устанавливает значение — проверяет значение и поведение щелчка.",
+    "custom_inventwo_migration_note_state_reset_check": "Сброс значения через некоторое время (iStateResetValueTime) перенесён. Проверьте время (мс) и значение сброса («Значение false»).",
     "custom_inventwo_migration_note_switch_rocker": "Кулисный переключатель стал обычным переключателем – проверьте размер и цвет.",
     "custom_inventwo_migration_note_table_no_columns": "Ключи столбцов не найдены — установите ключи JSON столбцов в редакторе vis-2.",
     "custom_inventwo_migration_note_table_some_columns": "Только %s из %s столбцов имеют ключ – проверьте остальные.",
@@ -82,7 +82,7 @@
     "custom_inventwo_migration_step_run": "3. Миграция",
     "custom_inventwo_migration_step_source": "1. Проект",
     "custom_inventwo_migration_summary": "%s просмотров, %s виджетов, %s из них старые, изобретают два виджета vis-1.",
-    "custom_inventwo_migration_support_dropped": "Недоступно в vis-2 и поэтому удалено: цвета при наведении, сброс значения через время, закрытие диалога по точке данных, матричное расположение переключателей, пороговые значения на ячейку таблицы, вращение ползунков.",
+    "custom_inventwo_migration_support_dropped": "Недоступно в vis-2 и поэтому удалено: закрытие диалога через отдельную точку данных, матричное расположение переключателей, пороговые значения на ячейку таблицы, вращение ползунков.",
     "custom_inventwo_migration_support_new": "виджет ВИС-2",
     "custom_inventwo_migration_support_note_checkbox": "только первый чекбокс виджета; взгляд не перехвачен",
     "custom_inventwo_migration_support_note_clock": "проверьте циферблат; часовой пояс и цифровые часы недоступны",
@@ -113,6 +113,5 @@
     "custom_inventwo_migration_target_invalid": "Разрешены только буквы, цифры, «-» и «_».",
     "custom_inventwo_migration_target_name": "Название нового проекта",
     "custom_inventwo_migration_title": "Перенос виджетов inventwo vis-1",
-    "custom_inventwo_migration_warn_overwrite": "Без имени сам проект «%s» перезаписывается. Резервная копия файла vis-views.json сначала сохраняется в папке проекта.",
-    "custom_inventwo_migration_note_state_reset_check": "Сброс значения через некоторое время (iStateResetValueTime) перенесён. Проверьте время (мс) и значение сброса («Значение false»)."
+    "custom_inventwo_migration_warn_overwrite": "Без имени сам проект «%s» перезаписывается. Резервная копия файла vis-views.json сначала сохраняется в папке проекта."
 }

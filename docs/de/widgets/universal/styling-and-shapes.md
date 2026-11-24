@@ -167,7 +167,7 @@ Beim Klicken kann die Kachel kurz zu einer anderen Farbe blinken, um dem Benutze
 
 ---
 
-### Hover
+### inventwo - Hover
 
 Optionale Farben, die verwendet werden, solange der Mauszeiger über der Kachel steht (im Modus **Getrennte Tasten**: über der einzelnen Taste). Alle Felder sind standardmäßig leer — ein leeres Feld bedeutet, dass sich diese Farbe beim Hover **nicht** ändert. Bestehende Kacheln behalten also ihr Aussehen.
 

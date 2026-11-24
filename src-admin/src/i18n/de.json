@@ -82,7 +82,7 @@
     "custom_inventwo_migration_step_run": "3. Migrieren",
     "custom_inventwo_migration_step_source": "1. Projekt",
     "custom_inventwo_migration_summary": "%s Views, %s Widgets, davon %s alte inventwo-vis-1-Widgets.",
-    "custom_inventwo_migration_support_dropped": "In vis-2 nicht vorhanden und deshalb verworfen: das Zurücksetzen eines Werts nach einer Zeit, das Schließen eines Dialogs per Datenpunkt, die Matrix-Anordnung von Radiobuttons, Schwellwerte pro Tabellenzelle, die Drehung von Slidern.",
+    "custom_inventwo_migration_support_dropped": "In vis-2 nicht vorhanden und deshalb verworfen: das Schließen eines Dialogs über einen eigenen Datenpunkt, die Matrix-Anordnung von Radiobuttons, Schwellwerte pro Tabellenzelle, die Drehung von Slidern.",
     "custom_inventwo_migration_support_new": "vis-2-Widget",
     "custom_inventwo_migration_support_note_checkbox": "nur die erste Checkbox des Widgets; Aussehen wird nicht übernommen",
     "custom_inventwo_migration_support_note_clock": "Ziffernblatt prüfen; Zeitzone und Digitaluhr gibt es nicht",

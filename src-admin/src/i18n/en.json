@@ -81,7 +81,7 @@
     "custom_inventwo_migration_support_note_table": "columns, formats and colors are taken over; check the look",
     "custom_inventwo_migration_support_note_slider": "check labels and value display",
     "custom_inventwo_migration_support_note_color_slider": "no counterpart in vis-2",
-    "custom_inventwo_migration_support_dropped": "Not available in vis-2 and therefore dropped: resetting a value after a time, closing a dialog by data point, the matrix arrangement of radio buttons, thresholds per table cell, the rotation of sliders.",
+    "custom_inventwo_migration_support_dropped": "Not available in vis-2 and therefore dropped: closing a dialog via a separate data point, the matrix arrangement of radio buttons, thresholds per table cell, the rotation of sliders.",
     "custom_inventwo_migration_source_vis2": "vis-2 project",
     "custom_inventwo_migration_target_name": "Name of the new project",
     "custom_inventwo_migration_target_help_optional": "Optional. Leave empty to convert the project itself.",

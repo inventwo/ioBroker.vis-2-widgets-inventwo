@@ -750,6 +750,8 @@ function convertRadiobuttonList(widget: VisWidget): ConvertedEntry {
         ...styleFromOld(old),
         countStates: count,
     };
+    // vis-1 hover color → hover group (empty = no change on hover)
+    setIf(data, 'backgroundHover', old.iButtonColHover);
     for (let i = 1; i <= count; i++) {
         const text = old[`iTextFalse${i}`] || '';
         data[`value${i}`] = String(old[`iValue${i}`] ?? '');

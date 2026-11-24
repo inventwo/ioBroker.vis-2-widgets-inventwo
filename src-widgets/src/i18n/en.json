@@ -13,7 +13,7 @@
   "widget_dropdown": "Dropdown",
   "attr_group_css": "inventwo Widget Design",
   "attr_group_click_feedback": "Click feedback",
-  "attr_group_hover": "Hover",
+  "attr_group_hover": "inventwo - Hover",
   "hover_colors_help": "Colors while the mouse is over the widget. Empty fields do not change on hover.",
   "attr_group_states": "State",
   "attr_group_state_default": "Default state",

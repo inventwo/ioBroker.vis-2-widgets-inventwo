@@ -167,7 +167,7 @@ When clicked, the tile can briefly flash to a different color, giving the user v
 
 ---
 
-### Hover
+### inventwo - Hover
 
 Optional colors that are used while the mouse pointer is over the tile (in **Separated buttons** mode: over the individual button). All fields are empty by default — an empty field means that this color does **not** change on hover, so existing tiles keep their look.
 
