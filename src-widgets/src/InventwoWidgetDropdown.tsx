@@ -633,8 +633,8 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         const displayLabel = currentOption
             ? currentOption.label
             : value !== undefined && value !== null
-                ? String(value)
-                : '';
+              ? String(value)
+              : '';
 
         const titleElement = title ? (
             <div
