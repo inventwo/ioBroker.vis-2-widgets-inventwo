@@ -4644,7 +4644,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                         opacity: valueData.styles.backgroundOpacity,
                         position: 'absolute',
                         inset: 0,
-                        borderColor: valueData.borderColor,
+                        borderColor: valueData.borderColor || 'transparent',
                         borderTopWidth: `${valueData.styles.borderSizeTop}px`,
                         borderBottomWidth: `${valueData.styles.borderSizeBottom}px`,
                         borderLeftWidth: `${valueData.styles.borderSizeLeft}px`,

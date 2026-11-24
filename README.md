@@ -222,6 +222,7 @@ It shows a preview first, can write the result into a new project or back up the
 ### **WORK IN PROGRESS**
 - Calendar Widget: the day, today, selected and month/year colors had no effect with the current MUI X version (renamed CSS classes), so the theme text color was used instead; fixed
 - Checkbox Widget: true/false values default to `true`/`false` when left empty (like the Switch Widget), so a checkbox without custom values reflects and toggles boolean datapoints
+- Universal Widget: no more white border when the border color is left empty (border is now transparent instead of falling back to the text color) (#353)
 - README: new overview with showcase screenshots
 
 ### 2.3.0 (2026-11-23)
