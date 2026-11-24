@@ -633,8 +633,8 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
         const displayLabel = currentOption
             ? currentOption.label
             : value !== undefined && value !== null
-              ? String(value)
-              : '';
+                ? String(value)
+                : '';
 
         const titleElement = title ? (
             <div
@@ -735,7 +735,11 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                     style: {
                         maxHeight: 400,
                         backgroundColor: style.backgroundColor,
+                        backgroundImage: 'none',
                         boxShadow: shadow,
+                        border: 'none',
+                        outline: 'none',
+                        borderRadius: 0,
                     },
                 },
             },
