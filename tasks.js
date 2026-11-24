@@ -17,6 +17,9 @@ function tsClean() {
 
 function tsCopyAllFiles() {
     copyFiles([`${SRC_TS}build/customWidgets.js`], `widgets/${adapterName}`);
+    // Module federation manifest/stats (generated since the React 19 build), requested by the loader
+    copyFiles([`${SRC_TS}build/mf-manifest.json`], `widgets/${adapterName}`);
+    copyFiles([`${SRC_TS}build/mf-stats.json`], `widgets/${adapterName}`);
     copyFiles([`${SRC_TS}build/assets/*.*`], `widgets/${adapterName}/assets`);
     copyFiles([`${SRC_TS}build/img/*`], `widgets/${adapterName}/img`);
 }
