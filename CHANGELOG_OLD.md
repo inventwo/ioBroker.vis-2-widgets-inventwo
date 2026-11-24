@@ -1,4 +1,7 @@
 # Older changes
+## 2.0.2 (2026-10-17)
+- Removed default react 19 border on universal widget
+
 ## 2.0.1 (2026-10-17)
 - Breaking: Requires vis-2 >= 2.20.0 (React 19 / MUI 9). Older vis-2 versions (React 18) are no longer supported
 - Updated dependencies to React 19 and MUI 9

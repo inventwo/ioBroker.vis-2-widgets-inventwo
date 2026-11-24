@@ -219,7 +219,7 @@ It shows a preview first, can write the result into a new project or back up the
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.4.0 (2026-11-24)
 - Calendar Widget: the day, today, selected and month/year colors had no effect with the current MUI X version (renamed CSS classes), so the theme text color was used instead; fixed
 - Checkbox Widget: true/false values default to `true`/`false` when left empty (like the Switch Widget), so a checkbox without custom values reflects and toggles boolean datapoints
 - Universal Widget: no more white border when the border color is left empty (border is now transparent instead of falling back to the text color) (#353)
@@ -248,9 +248,6 @@ It shows a preview first, can write the result into a new project or back up the
 ### 2.1.0 (2026-11-03)
 - Universal Widget: Up to 5 additional inner and outer shadows per widget; X/Y offsets of shadows may now be negative (#286)
 - Universal Widget (View in dialog): New option "Set value false on close" – closing the dialog (close button, click outside, timeout) writes "Value false" to the object ID, as long as it still holds "Value true" (#309)
-
-### 2.0.2 (2026-10-17)
-- Removed default react 19 border on universal widget
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)
