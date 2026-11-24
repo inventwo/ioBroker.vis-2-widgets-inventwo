@@ -55,7 +55,7 @@ Die meisten Style-Gruppen haben ein **Vom Widget**-Feld. Wähle ein anderes Univ
 
 - [Interaktionstypen](universal/interaction-types.md) — Switch, Button, Nav, Dialog, HTTP und mehr
 - [Inhaltstypen](universal/content-types.md) — Icon, Image, HTML, View in widget, Color picker, Analoguhr
-- [Styling und Formen](universal/styling-and-shapes.md) — Alle Style-Gruppen, Formen, Klick-Feedback
+- [Styling und Formen](universal/styling-and-shapes.md) — Alle Style-Gruppen, Formen, Klick-Feedback, Hover
 
 ---
 

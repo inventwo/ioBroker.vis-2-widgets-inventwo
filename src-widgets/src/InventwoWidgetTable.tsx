@@ -902,6 +902,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                 'overflow-y': 'visible',
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-table.png',
+            visOrder: 8,
         };
     }
 

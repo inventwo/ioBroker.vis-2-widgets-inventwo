@@ -50,6 +50,7 @@ export interface UniversalWidgetStylesStyles
         UniversalWidgetOuterShadowStyles,
         UniversalWidgetInnerShadowStyles,
         UniversalWidgetClickFeedbackStyles,
+        UniversalWidgetHoverStyles,
         UniversalWidgetShapeStyles {}
 
 export interface UniversalWidgetStyles extends UniversalWidgetDefaultState {
@@ -152,4 +153,14 @@ export interface UniversalWidgetClickFeedbackStyles {
     borderColorFeedback: string;
     outerShadowColorFeedback: string;
     innerShadowColorFeedback: string;
+}
+
+/** Optional hover colors – empty = the color does not change on hover */
+export interface UniversalWidgetHoverStyles {
+    contentColorHover: string;
+    backgroundHover: string;
+    textColorHover: string;
+    borderColorHover: string;
+    outerShadowColorHover: string;
+    innerShadowColorHover: string;
 }

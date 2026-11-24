@@ -595,9 +595,11 @@ function convertUniversal(widget: VisWidget, isMulti: boolean): ConvertResult {
     if (isMulti) {
         notes.push({ key: 'migration_note_multi' });
     }
-    if ([old.iButtonColHover, old.iShadowColorHover, old.iShadowInnerColorHover, old.iBorderColorHover].some(isSet)) {
-        notes.push({ key: 'migration_note_hover' });
-    }
+    // vis-1 hover colors → hover group (only set fields, empty = no change on hover)
+    setIf(data, 'backgroundHover', old.iButtonColHover);
+    setIf(data, 'borderColorHover', old.iBorderColorHover);
+    setIf(data, 'outerShadowColorHover', old.iShadowColorHover);
+    setIf(data, 'innerShadowColorHover', old.iShadowInnerColorHover);
 
     return {
         widget: wrapWidget('tplInventwoWidgetUniversal', data, widget, cssFromOld(old, widget)),

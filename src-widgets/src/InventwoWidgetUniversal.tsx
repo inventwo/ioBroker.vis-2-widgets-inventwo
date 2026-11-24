@@ -29,6 +29,7 @@ import type {
     UniversalWidgetBorderStyles,
     UniversalWidgetClickFeedbackStyles,
     UniversalWidgetContentStyles,
+    UniversalWidgetHoverStyles,
     UniversalWidgetInnerShadowStyles,
     UniversalWidgetOuterShadowStyles,
     UniversalWidgetShadowLayer,
@@ -40,6 +41,16 @@ import type {
     UniversalWidgetTransparencyStyles,
     UniversalWidgetValueData,
 } from './types/UniversalWidgetValueData';
+
+/** Color fields of the "Hover" group – all optional, without default values */
+const HOVER_COLOR_FIELDS: (keyof UniversalWidgetHoverStyles)[] = [
+    'contentColorHover',
+    'backgroundHover',
+    'textColorHover',
+    'borderColorHover',
+    'outerShadowColorHover',
+    'innerShadowColorHover',
+];
 
 const styles = {
     dialogTitle: {
@@ -66,6 +77,8 @@ interface UniversalState extends VisRxWidgetState {
     navPasswordInput: string;
     navPasswordError: boolean;
     navPendingIndex: number | null;
+    /** Button under the mouse pointer: 'single' in singleButton mode, the 1-based index in separatedButtons mode */
+    hoveredButton: number | 'single' | null;
 }
 
 export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCompleteRxData, UniversalState> {
@@ -98,6 +111,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             navPasswordInput: '',
             navPasswordError: false,
             navPendingIndex: null,
+            hoveredButton: null,
         };
     }
 
@@ -628,6 +642,62 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             type: 'color',
                             label: 'inner_shadow_color',
                             hidden: '!!data.clickThrough || !!data.clickFeedbackFromWidget',
+                        },
+                    ],
+                },
+                {
+                    // Hover colors: no defaults on purpose – an empty field leaves that color unchanged on hover
+                    name: 'attr_group_hover',
+                    label: 'attr_group_hover',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'hoverFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetUniversal',
+                            all: true,
+                        },
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_hover_colors_help',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'contentColorHover',
+                            type: 'color',
+                            label: 'content_color',
+                            hidden: '!!data.hoverFromWidget || (data.contentType != "icon" && data.contentType != "image")',
+                        },
+                        {
+                            name: 'backgroundHover',
+                            type: 'color',
+                            label: 'background',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'textColorHover',
+                            type: 'color',
+                            label: 'text_color',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'borderColorHover',
+                            type: 'color',
+                            label: 'border_color',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'outerShadowColorHover',
+                            type: 'color',
+                            label: 'outer_shadow_color',
+                            hidden: '!!data.hoverFromWidget',
+                        },
+                        {
+                            name: 'innerShadowColorHover',
+                            type: 'color',
+                            label: 'inner_shadow_color',
+                            hidden: '!!data.hoverFromWidget',
                         },
                     ],
                 },
@@ -2248,6 +2318,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 'overflow-y': 'visible',
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-universal.png',
+            visOrder: 1,
         };
     }
 
@@ -2852,6 +2923,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                 'clickFeedbackFromWidget',
                 this.groupAttrs.attr_group_click_feedback,
             ) as UniversalWidgetClickFeedbackStyles),
+            ...(this.getStyle('hoverFromWidget', this.groupAttrs.attr_group_hover) as UniversalWidgetHoverStyles),
             ...(this.getStyle(
                 'shapeStyleFromWidget',
                 this.groupAttrs.attr_group_css_shape,
@@ -2880,11 +2952,72 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
             }
         }
 
+        // Hover first, so that the click feedback still wins while it is shown
+        if (
+            !this.props.editMode &&
+            this.state.hoveredButton !== null &&
+            this.state.hoveredButton === (index ?? 'single')
+        ) {
+            dataWithStyles = this.replaceWithHoverData(dataWithStyles);
+        }
+
         if (this.state.showFeedback && !this.state.rxData.clickThrough) {
             dataWithStyles = this.replaceWithClickFeedbackData(dataWithStyles);
         }
 
         return dataWithStyles;
+    }
+
+    /** True, if at least one hover color is set (on this widget or on the referenced "From Widget") */
+    hasHoverColors(): boolean {
+        const style = this.getStyle('hoverFromWidget', this.groupAttrs.attr_group_hover ?? []);
+        return HOVER_COLOR_FIELDS.some(field => this.validFieldValue(style[field]));
+    }
+
+    /**
+     * Pointer entered a button. Only a real mouse sets the hover state, so a tap on a touch device
+     * does not leave a "sticky" hover color behind (same idea as `@media (hover: hover)`).
+     * Widgets without any hover color do not re-render at all.
+     */
+    onBtnPointerEnter(i: number | null, e: React.PointerEvent): void {
+        if (this.props.editMode || e.pointerType !== 'mouse') {
+            return;
+        }
+        if (!this.hasHoverColors()) {
+            return;
+        }
+        const key = i ?? 'single';
+        if (this.state.hoveredButton !== key) {
+            this.setState({ hoveredButton: key });
+        }
+    }
+
+    onBtnPointerLeave(i: number | null): void {
+        if (this.state.hoveredButton !== null && this.state.hoveredButton === (i ?? 'single')) {
+            this.setState({ hoveredButton: null });
+        }
+    }
+
+    replaceWithHoverData(data: UniversalWidgetValueData): UniversalWidgetValueData {
+        if (this.validFieldValue(data.styles.backgroundHover)) {
+            data.background = data.styles.backgroundHover;
+        }
+        if (this.validFieldValue(data.styles.contentColorHover)) {
+            data.contentColor = data.styles.contentColorHover;
+        }
+        if (this.validFieldValue(data.styles.textColorHover)) {
+            data.textColor = data.styles.textColorHover;
+        }
+        if (this.validFieldValue(data.styles.borderColorHover)) {
+            data.borderColor = data.styles.borderColorHover;
+        }
+        if (this.validFieldValue(data.styles.outerShadowColorHover)) {
+            data.outerShadowColor = data.styles.outerShadowColorHover;
+        }
+        if (this.validFieldValue(data.styles.innerShadowColorHover)) {
+            data.innerShadowColor = data.styles.innerShadowColorHover;
+        }
+        return data;
     }
 
     /**
@@ -4527,6 +4660,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     onPointerDown={e => this.onBtnMouseDown(i, e)}
                     onPointerUp={e => this.onBtnMouseUp(e)}
                     onPointerCancel={e => this.onBtnMouseUp(e, true)}
+                    onPointerEnter={e => this.onBtnPointerEnter(i, e)}
+                    onPointerLeave={() => this.onBtnPointerLeave(i)}
                 >
                     <div
                         style={{
@@ -4674,6 +4809,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     onPointerDown={e => this.onBtnMouseDown(i, e)}
                     onPointerUp={e => this.onBtnMouseUp(e)}
                     onPointerCancel={e => this.onBtnMouseUp(e, true)}
+                    onPointerEnter={e => this.onBtnPointerEnter(i, e)}
+                    onPointerLeave={() => this.onBtnPointerLeave(i)}
                 >
                     <CardContent
                         style={{

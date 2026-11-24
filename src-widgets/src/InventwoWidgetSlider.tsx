@@ -466,6 +466,7 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                 height: 40,
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-slider.png',
+            visOrder: 4,
         };
     }
 

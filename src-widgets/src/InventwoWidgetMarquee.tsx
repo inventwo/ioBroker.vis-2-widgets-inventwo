@@ -191,7 +191,8 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
                 width: 300,
                 height: 40,
             },
-            visPrev: '',
+            visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-marquee.png',
+            visOrder: 9,
         };
     }
 

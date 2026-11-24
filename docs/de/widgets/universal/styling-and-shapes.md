@@ -167,6 +167,27 @@ Beim Klicken kann die Kachel kurz zu einer anderen Farbe blinken, um dem Benutze
 
 ---
 
+### Hover
+
+Optionale Farben, die verwendet werden, solange der Mauszeiger über der Kachel steht (im Modus **Getrennte Tasten**: über der einzelnen Taste). Alle Felder sind standardmäßig leer — ein leeres Feld bedeutet, dass sich diese Farbe beim Hover **nicht** ändert. Bestehende Kacheln behalten also ihr Aussehen.
+
+| Einstellung | Beschreibung |
+|-------------|--------------|
+| **Vom Widget** | Übernimmt die Hover-Farben von einem anderen Universal Widget. |
+| **Inhaltsfarbe** | Inhaltsfarbe (Icon-Färbung, Bildfilter) beim Hover. Nur bei Icon- und Bild-Inhalt sichtbar. |
+| **Hintergrund** | Hintergrund beim Hover. Farbverläufe wie `linear-gradient(...)` werden unterstützt. |
+| **Textfarbe** | Textfarbe beim Hover. |
+| **Rahmenfarbe** | Rahmenfarbe beim Hover. Nur sichtbar, wenn der Rahmen einen Stil und eine Stärke hat (siehe **inventwo — Rahmen**). |
+| **Äußere Schattenfarbe** | Äußere Schattenfarbe beim Hover. Nur sichtbar, wenn der äußere Schatten einen Versatz, eine Unschärfe oder eine Größe hat. |
+| **Innere Schattenfarbe** | Innere Schattenfarbe beim Hover. Nur sichtbar, wenn der innere Schatten einen Versatz, eine Unschärfe oder eine Größe hat. |
+
+- Eine gesetzte Hover-Farbe gilt beim Hover unabhängig vom aktuellen Zustand; leere Felder behalten die Farbe des aktiven Zustands.
+- Während das Klick-Feedback angezeigt wird, haben dessen Farben Vorrang vor den Hover-Farben.
+- Hover reagiert nur auf eine Maus. Auf Touch-Geräten bleibt nach dem Antippen keine Hover-Farbe stehen.
+- Im VIS-Editor (Edit-Modus) werden die Hover-Farben nicht angezeigt.
+
+---
+
 ## Stil-Wiederverwendung mit "Vom Widget"
 
 Die meisten Style-Gruppen haben eine **Vom Widget**-Option oben. Wenn du dort ein anderes Universal Widget auswählst, werden alle Einstellungen in dieser Gruppe zur Laufzeit von dem ausgewählten Widget übernommen.

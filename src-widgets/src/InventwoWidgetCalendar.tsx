@@ -491,6 +491,7 @@ export default class InventwoWidgetCalendar extends InventwoGeneric<CalendarRxDa
                 'overflow-y': 'visible',
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-calendar.png',
+            visOrder: 10,
         };
     }
 

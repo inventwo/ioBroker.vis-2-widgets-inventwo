@@ -110,6 +110,7 @@ export default class InventwoWidgetCheckbox extends InventwoGeneric<CheckboxRxDa
                 height: 40,
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-checkbox.png',
+            visOrder: 3,
         };
     }
 

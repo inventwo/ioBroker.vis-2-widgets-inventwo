@@ -588,6 +588,7 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                 height: 50,
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-dropdown.png',
+            visOrder: 6,
         };
     }
 

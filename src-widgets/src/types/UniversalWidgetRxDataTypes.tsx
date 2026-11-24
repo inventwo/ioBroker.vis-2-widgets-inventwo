@@ -6,6 +6,7 @@ import type {
     UniversalWidgetClickFeedbackStyles,
     UniversalWidgetContentStyles,
     UniversalWidgetDefaultState,
+    UniversalWidgetHoverStyles,
     UniversalWidgetInnerShadowStyles,
     UniversalWidgetOuterShadowStyles,
     UniversalWidgetShapeStyles,
@@ -30,6 +31,7 @@ export interface UniversalCompleteRxData
         UniversalWidgetOuterShadowStyles,
         UniversalWidgetInnerShadowStyles,
         UniversalWidgetClickFeedbackStyles,
+        UniversalWidgetHoverStyles,
         UniversalWidgetShapeStyles {}
 
 export interface UniversalRxData {

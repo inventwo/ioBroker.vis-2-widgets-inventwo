@@ -79,13 +79,13 @@ Um sie zurückzuholen, unter **Ursprüngliches vis-1-Projekt (optional)** das ur
 | JSON-Tabelle | Table Widget | Spalten, Formate und Farben werden übernommen; Aussehen prüfen |
 | Slider (simple) | Slider Widget | Beschriftungen und Wertanzeige prüfen |
 
-Farben, Texte, Bilder, Eckenradius, Schatten, Rahmen, Ausrichtung, Abstände und Transparenz der Universal- und Multi-Widgets werden übernommen. Textgröße und Textschatten wandern in die CSS-Einstellungen des Widgets (`font-size`, `text-shadow`).
+Farben (auch die Hover-Farben für Hintergrund, Rahmen und Schatten), Texte, Bilder, Eckenradius, Schatten, Rahmen, Ausrichtung, Abstände und Transparenz der Universal- und Multi-Widgets werden übernommen. Textgröße und Textschatten wandern in die CSS-Einstellungen des Widgets (`font-size`, `text-shadow`).
 
 ### Nicht umgestellt
 
 Für die Farb-Slider (`i-vis-slider-color-hor`, `i-vis-slider-color-vert`) gibt es kein Gegenstück. Sie bleiben unverändert und stehen unter **Widgets ohne Umstellung**.
 
-In VIS 2 nicht vorhanden und deshalb verworfen: Hover-Farben, die Digitaluhr, der separate Datenpunkt zum Schließen eines Dialogs, die Matrix-Anordnung von Radiobuttons, Schwellwerte pro Tabellenzelle, die Drehung von Slidern.
+In VIS 2 nicht vorhanden und deshalb verworfen: die Digitaluhr, der separate Datenpunkt zum Schließen eines Dialogs, die Matrix-Anordnung von Radiobuttons, Schwellwerte pro Tabellenzelle, die Drehung von Slidern.
 
 Ein Dialog lässt sich in VIS 2 weiterhin per Datenpunkt schließen: Er folgt der **Objekt-ID** des Widgets und ist nur geöffnet, solange dieser Datenpunkt **Wert true** enthält (siehe [Interaktionstypen](widgets/universal/interaction-types.md#view-in-dialog)). Nur für den zusätzlichen Schließen-Datenpunkt aus vis-1 gibt es kein Gegenstück.
 

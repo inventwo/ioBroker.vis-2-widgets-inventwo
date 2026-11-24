@@ -145,6 +145,7 @@ class InventwoWidgetValueList extends InventwoGeneric<ValueListRxData, ValueList
                 height: 150,
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-value-list.png',
+            visOrder: 7,
         };
     }
 

@@ -55,7 +55,7 @@ Most style groups have a **From widget** field. Select another Universal Widget 
 
 - [Interaction Types](universal/interaction-types.md) — Switch, Button, Nav, Dialog, HTTP, and more
 - [Content Types](universal/content-types.md) — Icon, Image, HTML, View in widget, Color picker, Analog clock
-- [Styling and Shapes](universal/styling-and-shapes.md) — All style groups, shapes, click feedback
+- [Styling and Shapes](universal/styling-and-shapes.md) — All style groups, shapes, click feedback, hover
 
 ---
 

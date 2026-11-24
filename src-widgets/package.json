@@ -29,7 +29,8 @@
         "vite-plugin-commonjs": "^0.10.4"
     },
     "scripts": {
-        "start": "vite --port 4173",
+        "start": "node dev-upload-img.js && vite --port 4173",
+        "upload-img": "node dev-upload-img.js",
         "lint": "eslint -c eslint.config.mjs",
         "lint-fix": "eslint -c eslint.config.mjs --fix",
         "build": "tsc && vite build",

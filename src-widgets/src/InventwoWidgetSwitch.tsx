@@ -295,6 +295,7 @@ export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, 
                 height: 40,
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-switch.png',
+            visOrder: 2,
         };
     }
     // Do not delete this method. It is used by vis to read the widget configuration.

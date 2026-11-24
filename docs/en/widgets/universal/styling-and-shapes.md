@@ -167,6 +167,27 @@ When clicked, the tile can briefly flash to a different color, giving the user v
 
 ---
 
+### Hover
+
+Optional colors that are used while the mouse pointer is over the tile (in **Separated buttons** mode: over the individual button). All fields are empty by default — an empty field means that this color does **not** change on hover, so existing tiles keep their look.
+
+| Setting | What it does |
+|---------|-------------|
+| **From widget** | Takes the hover colors from another Universal Widget. |
+| **Content color** | Content color (icon tint, image filter) on hover. Only shown for icon and image content. |
+| **Background** | Background on hover. Gradients such as `linear-gradient(...)` are supported. |
+| **Text color** | Text color on hover. |
+| **Border color** | Border color on hover. Only visible if the border has a style and a size (see **inventwo — Border**). |
+| **Outer shadow color** | Outer shadow color on hover. Only visible if the outer shadow has an offset, blur or size. |
+| **Inner shadow color** | Inner shadow color on hover. Only visible if the inner shadow has an offset, blur or size. |
+
+- A set hover color applies on hover regardless of the current state; colors left empty keep the color of the active state.
+- While the click feedback is shown, its colors take priority over the hover colors.
+- Hover only reacts to a mouse. On touch devices, a tap does not leave a hover color behind.
+- In the VIS editor (edit mode) the hover colors are not shown.
+
+---
+
 ## Style Reuse with "From Widget"
 
 Most style groups have a **From widget** option at the top. When you select another Universal Widget here, all settings in that group are copied from the selected widget at runtime.

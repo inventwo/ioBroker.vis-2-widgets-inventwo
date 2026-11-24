@@ -226,6 +226,9 @@ It shows a preview first, can write the result into a new project or back up the
 - Dropdown Widget: the opened list no longer shows a rounded border on iOS (explicit square paper without border/outline) (#350)
 - Build: `mf-manifest.json` and `mf-stats.json` are now copied into `widgets/` and thus included in the npm package (fixes 404 errors in the browser) (#349)
 - README: new overview with showcase screenshots
+- New preview images for all widgets in the vis-2 editor, rendered from real widgets (Radial Slider now shows the gauge look with color zones and scale); the Marquee Widget got a preview image for the first time
+- Fixed order of the widgets in the vis-2 editor palette (`visOrder`); before, the order depended on which widget finished loading first
+- Universal Widget: new optional hover colors (content, background incl. gradients, text, border, outer/inner shadow) with "From widget" support; empty fields leave the color unchanged, mouse only (no sticky hover on touch devices); the migration assistant now takes over the vis-1 hover colors
 
 ### 2.3.0 (2026-11-23)
 - Universal Widget: Password/PIN protection is now available for all types that trigger an action (switch, button, view in dialog, increase/decrease, HTTP), not only for navigation
