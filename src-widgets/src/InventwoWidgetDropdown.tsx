@@ -732,6 +732,10 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
 
         const menuProps = {
             slotProps: {
+                list: {
+                    disablePadding: true,
+                    sx: { padding: 0 },
+                },
                 paper: {
                     style: {
                         maxHeight: 400,
@@ -750,13 +754,24 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
             fontSize: `${style.fontSize}px`,
             color: style.textColor,
             backgroundColor: style.backgroundColor,
+            // Safari/iPadOS: Eintrag über die volle Breite, ohne Rundung/Abstand
+            margin: 0,
+            borderRadius: 0,
+            WebkitTapHighlightColor: 'transparent',
             '&:hover': {
+                backgroundColor: style.highlightColor,
+            },
+            // Safari markiert den fokussierten Eintrag per :focus-visible (MUI-Standard: Primärfarbe/blau)
+            '&.Mui-focusVisible': {
                 backgroundColor: style.highlightColor,
             },
             '&.Mui-selected': {
                 backgroundColor: style.highlightColor,
             },
             '&.Mui-selected:hover': {
+                backgroundColor: style.highlightColor,
+            },
+            '&.Mui-selected.Mui-focusVisible': {
                 backgroundColor: style.highlightColor,
             },
         };
