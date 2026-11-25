@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "vis-2-widgets-inventwo",
-    "version": "2.4.0",
+    "version": "2.4.1",
     "news": {
+      "2.4.1": {
+        "en": "Dropdown Widget: the opened option list looked different on Safari/iPadOS (rounded, inset and blue selected item); items now span the full width with square corners and use the configured highlight color",
+        "de": "Dropdown Widget: Die geöffnete Optionsliste sah auf Safari/iPadOS anders aus (gerundet, eingezogen und blau ausgewählt); Elemente sind jetzt überall eckig und haben die eingestellte Markierungsfarbe",
+        "ru": "Выпадающий виджет: открытый список опций на Safari/iPadOS выглядел иначе (выбранный элемент закруглен, со вставкой и синим цветом); теперь элементы занимают всю ширину с квадратными углами и используют настроенный цвет подсветки",
+        "pt": "Widget suspenso: a lista de opções aberta parecia diferente no Safari/iPadOS (item arredondado, inserido e azul); os itens agora abrangem toda a largura com cantos quadrados e usam a cor de destaque configurada",
+        "nl": "Dropdown Widget: de lijst met geopende opties zag er anders uit op Safari/iPadOS (afgerond, met inzet en blauw geselecteerd item); items beslaan nu de volledige breedte met vierkante hoeken en gebruiken de geconfigureerde markeringskleur",
+        "fr": "Widget déroulant : la liste d'options ouverte était différente sur Safari/iPadOS (élément sélectionné arrondi, incrusté et bleu) ; les éléments sont désormais sur toute la largeur, avec des coins carrés",
+        "it": "Widget a discesa: l'elenco delle opzioni aperto era diverso su Safari/iPadOS (elemento arrotondato, inserito e blu); ora gli elementi hanno angoli quadrati e usano il colore di evidenziazione",
+        "es": "Widget desplegable: la lista de opciones abierta tenía un aspecto diferente en Safari/iPadOS (elemento seleccionado redondeado, insertado y azul); los artículos ahora ocupan todo lo ancho con esquinas cuadradas y utilizan el color de resaltado",
+        "pl": "Widżet rozwijany: otwarta lista opcji wyglądała inaczej na Safari/iPadOS (zaokrąglony, wstawiony i niebieski wybrany element); elementy obejmują teraz pełną szerokość z kwadratowymi narożnikami i używają skonfigurowanego koloru podświetlenia",
+        "uk": "Віджет, що випадає: відкритий список опцій виглядав інакше на Safari/iPadOS (закруглений, вставлений та синій вибраний елемент); елементи тепер охоплюють всю ширину з квадратними кутами та використовують налаштований колір виділення",
+        "zh-cn": "下拉控件：在 Safari/iPadOS 上，打开的选项列表看起来有所不同（圆形、内嵌和蓝色的选定项目）；项目现在以方角覆盖整个宽度，并使用配置的高亮颜色"
+      },
       "2.4.0": {
         "en": "Calendar Widget: the day, today, selected and month/year colors had no effect with the current MUI X version (renamed CSS classes), so the theme text color was used instead; fixed\nCheckbox Widget: true/false values default to `true`/`false` when left empty (like the Switch Widget), so a checkbox without custom values reflects and toggles boolean datapoints\nUniversal Widget: no more white border when the border color is left empty (border is now transparent instead of falling back to the text color) (#353)\nDropdown Widget: the opened list no longer shows a rounded border on iOS (explicit square paper without border/outline) (#350)\nBuild: `mf-manifest.json` and `mf-stats.json` are now copied into `widgets/` and thus included in the npm package (fixes 404 errors in the browser) (#349)\nREADME: new overview with showcase screenshots\nNew preview images for all widgets in the vis-2 editor, rendered from real widgets (Radial Slider now shows the gauge look with color zones and scale); the Marquee Widget got a preview image for the first time\nFixed order of the widgets in the vis-2 editor palette (`visOrder`); before, the order depended on which widget finished loading first\nUniversal Widget: new optional hover colors (content, background incl. gradients, text, border, outer/inner shadow) with \"From widget\" support; empty fields leave the color unchanged, mouse only (no sticky hover on touch devices); the migration assistant now takes over the vis-1 hover colors",
         "de": "Kalender-Widget: Tag, Heute, Auswahl und Monat/Jahr hatten keine Wirkung in der aktuellen MUI X-Version (in CSS-Klassen), also die Theme-Farbe; behoben\nCheckbox-Widget: Wahr/Falsch sind standardmäßig leer (wie das Switch-Widget), sodass ein Feld ohne eigene Werte boolesche Datenpunkte wiedergibt und umschaltet\nUniversal Widget: kein weißer Rand mehr, wenn die Rahmenfarbe leer ist (der Rand ist jetzt transparent und nicht mehr in der Textfarbe) (#353)\nDropdown-Widget: Die geöffnete Liste hat auf iOS keinen runden Rand mehr (quadratisches Papier ohne Rand) (#350)\nBuild: `mf-manifest.json` und `mf-stats.json` sind jetzt in `widgets/` kopiert und somit im npm-Paket enthalten (behebt 404-Fehler im Browser) (#349)\nREADME: Neue Übersicht mit Screenshots\nNeue Vorschaubilder für alle Widgets im Vis-2-Editor, gerendert aus echten Widgets (Radial Slider zeigt jetzt die Anzeige mit Farbzonen und Skala); das Marquee-Widget hat erstmals ein Vorschaubild\nFeste Reihenfolge der Widgets im Vis-2-Editor (`visOrder`); vorher hing die Reihenfolge davon ab, welches Widget zuerst geladen wurde\nUniversal-Widget: neue optionale Hover-Farben (Inhalt, Hintergrund inkl. Farbverläufe, Text, Rand, äußerer/innerer Schatten) mit „From Widget“ -Unterstützung; leere Felder lassen die Farbe unverändert, nur Maus (kein Sticky Hover auf Touch-Geräten); der Migrationsassistent übernimmt nun die Vis-1-Farben",
@@ -80,19 +93,6 @@
         "pl": "Usunięto domyślną granicę React 19 na uniwersalnym widżecie",
         "uk": "Вилучено типову межу React 19 на універсальному віджеті",
         "zh-cn": "移除了通用控件上的默认 react 19 边框"
-      },
-      "2.0.1": {
-        "en": "Breaking: Requires vis-2 >= 2.20.0 (React 19 / MUI 9). Older vis-2 versions (React 18) are no longer supported\nUpdated dependencies to React 19 and MUI 9",
-        "de": "Neu: Benötigt VIS-2 >= 2.20.0 (React 19/MUI 9). Ältere Versionen (React 18) werden nicht mehr unterstützt\nAbhängigkeiten zu React 19 und MUI 9 geändert",
-        "ru": "Срочно: требуется версия vis-2 >= 2.20.0 (React 19/MUI 9). Старые версии vis-2 (React 18) больше не поддерживаются\nОбновленные зависимости от React 19 и MUI 9",
-        "pt": "Quebra: Requer vis-2 >= 2.20.0 (React 19/MUI 9). Versões antigas do Vis-2 (React 18) não são mais aceitas\nNovas dependências do React 19 e MUI 9",
-        "nl": "Breaking: vereist vis-2 >= 2.20.0 (React 19/MUI 9). Oudere versies versus 2 (React 18) worden niet langer ondersteund\nBijgewerkte afhankelijkheden voor React 19 en MUI 9",
-        "fr": "Rupture : nécessite vis-2 >= 2.20.0 (React 19/MUI 9). Les anciennes versions Vis-2 (React 18) ne sont plus supportées\nDépendances mises à jour à React 19 et MUI 9",
-        "it": "Rottura: richiede vis-2 >= 2.20.0 (React 19/MUI 9). Le vecchie versioni vis-2 (React 18) non sono più supportate\nDipendenze aggiornate da React 19 e MUI 9",
-        "es": "Última hora: requiere vis-2 >= 2.20.0 (React 19/MUI 9). Las versiones antiguas de la vis-2 (React 18) ya no se admiten\nSe actualizaron las dependencias a React 19 y MUI 9",
-        "pl": "Breaking: Wymaga vis-2 >= 2.20.0 (React 19/MUI 9). Starsze wersje vis-2 (React 18) nie są już obsługiwane\nZaktualizowano zależności do React 19 i MUI 9",
-        "uk": "Порушення: Потрібен vis-2 >= 2.20.0 (Реакт 19/MUI 9). Старі версії vis-2 (React 18) більше не підтримуються\nОновлені залежності до React 19 і MUI 9",
-        "zh-cn": "中断：需要 vis-2 >= 2.20.0（React 19/MUI 9）。不再支持较早的 vis-2 版本 (React 18)\n更新了对 React 19 和 MUI 9 的依赖关系"
       }
     },
     "titleLang": {

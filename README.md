@@ -219,7 +219,7 @@ It shows a preview first, can write the result into a new project or back up the
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.4.1 (2026-11-25)
 - Dropdown Widget: the opened option list looked different on Safari/iPadOS (rounded, inset and blue selected item); items now span the full width with square corners and use the configured highlight color
 
 ### 2.4.0 (2026-11-24)
@@ -247,10 +247,6 @@ It shows a preview first, can write the result into a new project or back up the
 
 ### 2.1.1 (2026-11-03)
 - Universal Widget: Fixed content color of images not being applied for `rgb()` colors and colors given as hex (`#rgb`, `#rrggbb`, with optional alpha)
-
-### 2.1.0 (2026-11-03)
-- Universal Widget: Up to 5 additional inner and outer shadows per widget; X/Y offsets of shadows may now be negative (#286)
-- Universal Widget (View in dialog): New option "Set value false on close" – closing the dialog (close button, click outside, timeout) writes "Value false" to the object ID, as long as it still holds "Value true" (#309)
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)

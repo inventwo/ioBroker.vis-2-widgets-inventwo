@@ -1,4 +1,8 @@
 # Older changes
+## 2.1.0 (2026-11-03)
+- Universal Widget: Up to 5 additional inner and outer shadows per widget; X/Y offsets of shadows may now be negative (#286)
+- Universal Widget (View in dialog): New option "Set value false on close" – closing the dialog (close button, click outside, timeout) writes "Value false" to the object ID, as long as it still holds "Value true" (#309)
+
 ## 2.0.2 (2026-10-17)
 - Removed default react 19 border on universal widget
 
