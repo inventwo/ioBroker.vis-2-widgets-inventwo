@@ -103,6 +103,14 @@ The inventwo widget set adds highly customizable tiles, controls, and display el
 
 ---
 
+## Design Presets
+
+Save the design of any inventwo widget as a preset and apply it to other widgets of the same type, copy and paste designs between widgets, or export and import presets as a file. The **Design presets** entry in the widget palette shows all presets with preview pictures and adds a new widget with a preset's design to the view. Only the design is transferred — no datapoints, texts or actions.
+
+→ [Design Presets](design-presets.md)
+
+---
+
 ## Coming from vis-1?
 
 The adapter settings contain an assistant that converts the old widgets of the vis-1 adapter **vis-inventwo** in an imported project into the widgets of this set.

@@ -113,4 +113,5 @@ This group controls the handle that the user drags.
 
 ## See Also
 
+- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
 - [Radial Slider Widget](radial-slider-widget.md) — the same control displayed as a circular arc dial

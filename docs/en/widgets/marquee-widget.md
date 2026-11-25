@@ -48,5 +48,6 @@ Font family, font size, text color, font weight, and letter spacing are all set 
 
 ## See Also
 
+- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
 - [Value List Widget](value-list-widget.md) — displays a list instead of scrolling text
 - [Universal Widget](universal-widget.md) — for static text inside a styled tile

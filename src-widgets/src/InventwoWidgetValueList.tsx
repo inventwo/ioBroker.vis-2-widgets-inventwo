@@ -2,6 +2,8 @@ import React from 'react';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import type { DesignSpec } from './utils/designPresets/designFields';
 
 interface ValueListRxData {
     oid: null | string;
@@ -22,6 +24,20 @@ interface ValueListRxData {
 }
 
 type ValueListState = VisRxWidgetState;
+
+/**
+ * Design attributes of the Value List widget for design presets: bullets, spacing and padding. Never the datapoint, the
+ * text or how it is split.
+ */
+export const VALUE_LIST_DESIGN_SPEC: DesignSpec = {
+    version: 1,
+    groups: {
+        attr_group_valuelist_style: true,
+    },
+};
+
+/** Stable reference for the design preset field, which needs the widget info it is part of */
+const getValueListWidgetInfo = (): RxWidgetInfo => InventwoWidgetValueList.getWidgetInfo();
 
 class InventwoWidgetValueList extends InventwoGeneric<ValueListRxData, ValueListState> {
     constructor(props: VisRxWidgetProps) {
@@ -73,6 +89,18 @@ class InventwoWidgetValueList extends InventwoGeneric<ValueListRxData, ValueList
                             label: 'valuelist_ignore_empty',
                             default: true,
                         },
+                    ],
+                },
+                {
+                    name: 'attr_group_design_presets',
+                    label: 'attr_group_design_presets',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_design_presets_help_generic',
+                        },
+                        createDesignPresetField(getValueListWidgetInfo, VALUE_LIST_DESIGN_SPEC) as any,
                     ],
                 },
                 {

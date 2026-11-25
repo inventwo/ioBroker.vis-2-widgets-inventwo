@@ -219,6 +219,11 @@ It shows a preview first, can write the result into a new project or back up the
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Design presets for all inventwo widgets: save, apply, copy/paste, export and import the design of a widget (only design, no datapoints, texts or actions), with preview pictures; presets are stored on the server and available in all projects
+- New palette entry "Design presets": gallery with the widget types on the left and their presets on the right, inserts a new widget with a preset's design into the current view
+- Built-in design presets for all widget types ship with the adapter: read-only (cannot be deleted or overwritten, names are reserved), marked as "Built-in", can be applied, exported and added to a view; "Export all" exports only own presets
+
 ### 2.4.1 (2026-11-25)
 - Dropdown Widget: the opened option list looked different on Safari/iPadOS (rounded, inset and blue selected item); items now span the full width with square corners and use the configured highlight color
 

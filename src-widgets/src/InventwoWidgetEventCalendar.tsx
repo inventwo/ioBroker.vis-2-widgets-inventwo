@@ -22,6 +22,8 @@ import fcZhCnLocale from '@fullcalendar/core/locales/zh-cn';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import type { DesignSpec } from './utils/designPresets/designFields';
 
 const SUPPORTED_LOCALES = ['en', 'de', 'ru', 'pt', 'nl', 'fr', 'it', 'es', 'pl', 'uk', 'zh-cn'];
 
@@ -260,6 +262,26 @@ interface EventCalendarState extends VisRxWidgetState {
     events: EventInput[];
 }
 
+/**
+ * Design attributes of the Event Calendar widget for design presets: colors, font sizes, corners and borders of header,
+ * weekdays, days, today, events and grid. Never datapoints, the view, navigation, week settings, event limits, color
+ * rules or calendar sources.
+ */
+export const EVENT_CALENDAR_DESIGN_SPEC: DesignSpec = {
+    version: 1,
+    groups: {
+        attr_group_css_calendar_fc_header: true,
+        attr_group_css_calendar_fc_weekdays: true,
+        attr_group_css_calendar_fc_day: true,
+        attr_group_css_calendar_fc_today: true,
+        attr_group_css_calendar_fc_event: true,
+        attr_group_css_calendar_fc_border: true,
+    },
+};
+
+/** Stable reference for the design preset field, which needs the widget info it is part of */
+const getEventCalendarWidgetInfo = (): RxWidgetInfo => InventwoWidgetEventCalendar.getWidgetInfo();
+
 export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCalendarRxData, EventCalendarState> {
     private fullCalendarRef = React.createRef<FullCalendar>();
     private fullCalendarResizeObserver: ResizeObserver | null = null;
@@ -398,6 +420,18 @@ export default class InventwoWidgetEventCalendar extends InventwoGeneric<EventCa
                             tooltip: 'calendar_fc_max_events_per_day_help',
                             hidden: "data.fcView !== 'month' && data.fcView !== 'multiMonth'",
                         },
+                    ],
+                },
+                {
+                    name: 'attr_group_design_presets',
+                    label: 'attr_group_design_presets',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_design_presets_help_generic',
+                        },
+                        createDesignPresetField(getEventCalendarWidgetInfo, EVENT_CALENDAR_DESIGN_SPEC) as any,
                     ],
                 },
                 {

@@ -19,6 +19,8 @@ import 'dayjs/locale/zh-cn';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import type { DesignSpec } from './utils/designPresets/designFields';
 
 const SUPPORTED_LOCALES = ['en', 'de', 'ru', 'pt', 'nl', 'fr', 'it', 'es', 'pl', 'uk', 'zh-cn'];
 
@@ -125,6 +127,27 @@ interface CalendarRxData {
 interface CalendarState extends VisRxWidgetState {
     selectedValue: Dayjs | null;
 }
+
+/**
+ * Design attributes of the Calendar widget for design presets: day size, today highlight and the colors, corners and
+ * shadows of header, weekdays, days, selection, today and week numbers. Never the datapoint, its format, date
+ * restrictions, navigation or week settings.
+ */
+export const CALENDAR_DESIGN_SPEC: DesignSpec = {
+    version: 1,
+    groups: {
+        common: ['showToday', 'daySize'],
+        attr_group_css_calendar_header: true,
+        attr_group_css_calendar_weekdays: true,
+        attr_group_css_calendar_day: true,
+        attr_group_css_calendar_day_selected: true,
+        attr_group_css_calendar_today: true,
+        attr_group_css_calendar_week_number: true,
+    },
+};
+
+/** Stable reference for the design preset field, which needs the widget info it is part of */
+const getCalendarWidgetInfo = (): RxWidgetInfo => InventwoWidgetCalendar.getWidgetInfo();
 
 export default class InventwoWidgetCalendar extends InventwoGeneric<CalendarRxData, CalendarState> {
     private adapterCache: { key: string; AdapterClass: typeof AdapterDayjs } | null = null;
@@ -235,6 +258,18 @@ export default class InventwoWidgetCalendar extends InventwoGeneric<CalendarRxDa
                             default: 36,
                             label: 'day_size',
                         },
+                    ],
+                },
+                {
+                    name: 'attr_group_design_presets',
+                    label: 'attr_group_design_presets',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_design_presets_help_generic',
+                        },
+                        createDesignPresetField(getCalendarWidgetInfo, CALENDAR_DESIGN_SPEC) as any,
                     ],
                 },
                 {

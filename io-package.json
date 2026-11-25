@@ -160,7 +160,8 @@
           "InventwoWidgetMarquee",
           "InventwoWidgetValueList",
           "InventwoWidgetCalendar",
-          "InventwoWidgetEventCalendar"
+          "InventwoWidgetEventCalendar",
+          "InventwoWidgetDesignPresets"
         ]
       }
     },
@@ -185,5 +186,15 @@
   },
   "native": {},
   "objects": [],
-  "instanceObjects": []
+  "instanceObjects": [
+    {
+      "_id": "",
+      "type": "meta",
+      "common": {
+        "name": "inventwo design presets",
+        "type": "meta.user"
+      },
+      "native": {}
+    }
+  ]
 }

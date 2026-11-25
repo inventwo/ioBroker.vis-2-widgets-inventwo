@@ -106,5 +106,6 @@ Each condition has:
 
 ## See Also
 
+- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
 - [Universal Widget](universal-widget.md) — for custom button/tile layouts with per-state styling
 - [Table Widget](table-widget.md) — for displaying tabular data

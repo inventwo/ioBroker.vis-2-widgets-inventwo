@@ -49,6 +49,9 @@ What is rendered inside the tile. Options: Icon, Image, Text/HTML, View in widge
 ### From Widget (style reuse)
 Most style groups have a **From widget** field. Select another Universal Widget and all settings from that group are copied from it. This is how you keep many tiles visually consistent without configuring each one individually.
 
+### Design Presets
+In the group **inventwo - Design presets** you can copy and paste the design of a tile, save it as a named preset, apply it to several selected widgets at once, and export or import presets as a file. Only the design is transferred, never datapoints, texts, icons or actions. → [Design Presets](../design-presets.md)
+
 ---
 
 ## Detail Pages
@@ -56,6 +59,7 @@ Most style groups have a **From widget** field. Select another Universal Widget 
 - [Interaction Types](universal/interaction-types.md) — Switch, Button, Nav, Dialog, HTTP, and more
 - [Content Types](universal/content-types.md) — Icon, Image, HTML, View in widget, Color picker, Analog clock
 - [Styling and Shapes](universal/styling-and-shapes.md) — All style groups, shapes, click feedback, hover
+- [Design Presets](../design-presets.md) — Copy, save, apply, export and import the design of a tile
 
 ---
 

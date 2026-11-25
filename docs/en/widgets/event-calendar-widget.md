@@ -202,5 +202,6 @@ Note the exclusive end for the all-day "Vacation" example above: to show the eve
 
 ## See Also
 
+- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
 - [Calendar Widget](calendar-widget.md) — plain date picker without events
 - [Table Widget](table-widget.md) — for displaying date values as part of a larger data table

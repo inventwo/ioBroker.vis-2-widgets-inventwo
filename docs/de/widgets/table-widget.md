@@ -183,5 +183,6 @@ Fügt einen Schlagschatten um den Tabellen-Container hinzu. X-Offset, Y-Offset, 
 
 ## Siehe auch
 
+- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
 - [Dropdown Widget](dropdown-widget.md) — zum Auswählen aus einer Liste vordefinierter Werte
 - [Value List Widget](value-list-widget.md) — für einfache Aufzählungslisten aus Textwerten

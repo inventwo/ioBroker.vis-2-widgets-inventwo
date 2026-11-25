@@ -52,5 +52,6 @@ The Checkbox Widget displays a standard checkbox that toggles a datapoint betwee
 
 ## See Also
 
+- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
 - [Switch Widget](switch-widget.md) — similar behavior with a toggle-switch appearance
 - [Universal Widget](universal-widget.md) — fully custom tile with the same toggle behavior plus icons and shapes

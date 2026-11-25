@@ -103,6 +103,14 @@ Das inventwo-Widget-Set fügt VIS 2 hochgradig anpassbare Kacheln, Steuerelement
 
 ---
 
+## Design-Presets
+
+Speichere das Design eines beliebigen inventwo-Widgets als Preset und wende es auf andere Widgets desselben Typs an, kopiere Designs zwischen Widgets oder exportiere und importiere Presets als Datei. Der Eintrag **Design-Presets** in der Widget-Palette zeigt alle Presets mit Vorschaubild und fügt ein neues Widget mit dem Design eines Presets in die Ansicht ein. Übertragen wird nur das Design — keine Datenpunkte, Texte oder Aktionen.
+
+→ [Design-Presets](design-presets.md)
+
+---
+
 ## Umstieg von vis-1?
 
 Die Adapter-Einstellungen enthalten einen Assistenten, der die alten Widgets des vis-1-Adapters **vis-inventwo** in einem importierten Projekt auf die Widgets dieses Sets umstellt.

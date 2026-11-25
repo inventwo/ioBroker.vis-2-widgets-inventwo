@@ -4,6 +4,8 @@ import type { SelectChangeEvent } from '@mui/material';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import type { DesignSpec } from './utils/designPresets/designFields';
 
 interface DropdownRxData {
     oid: null | string;
@@ -49,6 +51,20 @@ interface DropdownRxData {
 interface DropdownState extends VisRxWidgetState {
     options: Array<{ value: string | number; label: string }>;
 }
+
+/**
+ * Design attributes of the Dropdown widget for design presets: font size, colors, border, corners, title styling and
+ * shadows. Never the datapoint, options, title text or the background conditions.
+ */
+export const DROPDOWN_DESIGN_SPEC: DesignSpec = {
+    version: 1,
+    groups: {
+        attr_group_css_dropdown: true,
+    },
+};
+
+/** Stable reference for the design preset field, which needs the widget info it is part of */
+const getDropdownWidgetInfo = (): RxWidgetInfo => InventwoWidgetDropdown.getWidgetInfo();
 
 export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxData, DropdownState> {
     constructor(props: VisRxWidgetProps) {
@@ -241,6 +257,18 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             type: 'text',
                             label: 'title',
                         },
+                    ],
+                },
+                {
+                    name: 'attr_group_design_presets',
+                    label: 'attr_group_design_presets',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_design_presets_help_generic',
+                        },
+                        createDesignPresetField(getDropdownWidgetInfo, DROPDOWN_DESIGN_SPEC) as any,
                     ],
                 },
                 {

@@ -11,6 +11,8 @@ import type {
 } from '@iobroker/types-vis-2';
 import React from 'react';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import type { DesignSpec } from './utils/designPresets/designFields';
 import { createColorZoneGroups } from './utils/colorZoneFields';
 
 interface SliderRxData {
@@ -53,6 +55,33 @@ interface SliderRxData {
 interface SliderState extends VisRxWidgetState {
     sliderValue: number | null;
 }
+
+/**
+ * Design attributes of the Slider widget for design presets: spacing of the title, orientation, value label, min/max
+ * and step marks display, color zone rendering and the colors, sizes, corners and shadows of track and thumb. Never the
+ * datapoint, title, unit, min/max/step, the step values or the color zones themselves (their thresholds depend on
+ * min/max, their colors belong to them).
+ */
+export const SLIDER_DESIGN_SPEC: DesignSpec = {
+    version: 1,
+    groups: {
+        common: [
+            'sliderTitleSpacing',
+            'orientation',
+            'showMinMax',
+            'valueLabelDisplay',
+            'showSteps',
+            'stepsInside',
+            'stepsAbove',
+        ],
+        attr_group_color_zones: ['colorZoneMode', 'colorZoneTransition'],
+        attr_group_css_slider_track: true,
+        attr_group_css_slider_slider_thumb: true,
+    },
+};
+
+/** Stable reference for the design preset field, which needs the widget info it is part of */
+const getSliderWidgetInfo = (): RxWidgetInfo => InventwoWidgetSlider.getWidgetInfo();
 
 export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, SliderState> {
     constructor(props: VisRxWidgetProps) {
@@ -240,6 +269,18 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                             hidden: '!data.showSteps || data.stepMode != "custom"',
                             tooltip: 'custom_steps_tooltip',
                         },
+                    ],
+                },
+                {
+                    name: 'attr_group_design_presets',
+                    label: 'attr_group_design_presets',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_design_presets_help_generic',
+                        },
+                        createDesignPresetField(getSliderWidgetInfo, SLIDER_DESIGN_SPEC) as any,
                     ],
                 },
                 ...createColorZoneGroups(),

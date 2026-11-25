@@ -113,4 +113,5 @@ Diese Gruppe steuert den Regler, den der Benutzer zieht.
 
 ## Siehe auch
 
+- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
 - [Radial Slider Widget](radial-slider-widget.md) — dieselbe Steuerung als kreisförmiger Bogenschieberegler

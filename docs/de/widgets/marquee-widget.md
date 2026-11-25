@@ -48,5 +48,6 @@ Schriftfamilie, Schriftgröße, Textfarbe, Schriftstärke und Buchstabenabstand 
 
 ## Siehe auch
 
+- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
 - [Value List Widget](value-list-widget.md) — zeigt eine Liste statt Scrolltext an
 - [Universal Widget](universal-widget.md) — für statischen Text in einer gestalteten Kachel

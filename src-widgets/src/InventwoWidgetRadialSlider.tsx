@@ -11,6 +11,8 @@ import type {
 } from '@iobroker/types-vis-2';
 import React from 'react';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import type { DesignSpec } from './utils/designPresets/designFields';
 import { createColorZoneGroups } from './utils/colorZoneFields';
 
 function splitOutsideParens(str: string): string[] {
@@ -184,6 +186,41 @@ interface RadialSliderState extends VisRxWidgetState {
     sliderValue: number | null;
     isDragging: boolean;
 }
+
+/**
+ * Design attributes of the Radial Slider widget for design presets: arc angles, color zone rendering, track, thumb,
+ * size and color of value and label, scale ticks and needle. Never datapoints, min/max/step, texts, units, formats,
+ * which texts are shown, the scale interval or the color zones themselves (their thresholds depend on min/max, their
+ * colors belong to them).
+ */
+export const RADIAL_SLIDER_DESIGN_SPEC: DesignSpec = {
+    version: 1,
+    groups: {
+        common: ['startAngle', 'endAngle'],
+        attr_group_color_zones: ['colorZoneMode', 'colorZoneTransition', 'colorZoneApplyToValue'],
+        attr_group_css_radial_track: true,
+        attr_group_css_radial_thumb: true,
+        attr_group_css_radial_value: true,
+        attr_group_css_radial_scale: [
+            'showScale',
+            'scaleMinorCount',
+            'scaleTickLength',
+            'scaleTickWidth',
+            'scaleColor',
+            'scaleLabels',
+            'scaleLabelSize',
+            'scaleLabelColor',
+            'showNeedle',
+            'needleColor',
+            'needleWidth',
+            'needleLength',
+            'needleCapSize',
+        ],
+    },
+};
+
+/** Stable reference for the design preset field, which needs the widget info it is part of */
+const getRadialSliderWidgetInfo = (): RxWidgetInfo => InventwoWidgetRadialSlider.getWidgetInfo();
 
 export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSliderRxData, RadialSliderState> {
     private containerRef: React.RefObject<HTMLDivElement | null>;
@@ -364,6 +401,18 @@ export default class InventwoWidgetRadialSlider extends InventwoGeneric<RadialSl
                             label: 'read_only',
                             default: false,
                         },
+                    ],
+                },
+                {
+                    name: 'attr_group_design_presets',
+                    label: 'attr_group_design_presets',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_design_presets_help_generic',
+                        },
+                        createDesignPresetField(getRadialSliderWidgetInfo, RADIAL_SLIDER_DESIGN_SPEC) as any,
                     ],
                 },
                 ...createColorZoneGroups([

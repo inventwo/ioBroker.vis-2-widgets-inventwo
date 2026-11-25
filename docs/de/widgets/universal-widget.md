@@ -49,6 +49,9 @@ Was innerhalb der Kachel gerendert wird. Optionen: Icon, Image, Text/HTML, View 
 ### Vom Widget (Stil-Wiederverwendung)
 Die meisten Style-Gruppen haben ein **Vom Widget**-Feld. Wähle ein anderes Universal Widget aus, und alle Einstellungen dieser Gruppe werden von dort übernommen. So hältst du viele Kacheln optisch konsistent, ohne jede einzeln konfigurieren zu müssen.
 
+### Design-Presets
+In der Gruppe **inventwo - Design-Presets** kannst du das Design einer Kachel kopieren und einfügen, als benanntes Preset speichern, auf mehrere ausgewählte Widgets gleichzeitig anwenden und Presets als Datei exportieren oder importieren. Übertragen wird nur das Design, nie Datenpunkte, Texte, Icons oder Aktionen. → [Design-Presets](../design-presets.md)
+
 ---
 
 ## Detailseiten
@@ -56,6 +59,7 @@ Die meisten Style-Gruppen haben ein **Vom Widget**-Feld. Wähle ein anderes Univ
 - [Interaktionstypen](universal/interaction-types.md) — Switch, Button, Nav, Dialog, HTTP und mehr
 - [Inhaltstypen](universal/content-types.md) — Icon, Image, HTML, View in widget, Color picker, Analoguhr
 - [Styling und Formen](universal/styling-and-shapes.md) — Alle Style-Gruppen, Formen, Klick-Feedback, Hover
+- [Design-Presets](../design-presets.md) — Design einer Kachel kopieren, speichern, anwenden, exportieren und importieren
 
 ---
 

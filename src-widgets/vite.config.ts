@@ -32,12 +32,16 @@ const config = {
                 './InventwoWidgetValueList': './src/InventwoWidgetValueList',
                 './InventwoWidgetCalendar': './src/InventwoWidgetCalendar',
                 './InventwoWidgetEventCalendar': './src/InventwoWidgetEventCalendar',
+                './InventwoWidgetDesignPresets': './src/InventwoWidgetDesignPresets',
                 './translations': './src/translations',
             },
             remotes: {},
             shared: moduleFederationShared(pack),
         }),
-        react(),
+        // vis-2 loads the widgets via module federation, so the page never runs the React Fast Refresh preamble.
+        // Helper modules with own React components (e.g. the design preset field) would otherwise fail in the dev
+        // server. The widget classes extend visRxWidget and are not affected.
+        react({ exclude: [/\/node_modules\//, /\/src\/utils\//] }),
         commonjs(),
     ],
     resolve: {

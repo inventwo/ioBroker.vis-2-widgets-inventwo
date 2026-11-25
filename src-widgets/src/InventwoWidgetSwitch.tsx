@@ -4,6 +4,8 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import type { DesignSpec } from './utils/designPresets/designFields';
 
 interface SwitchRxData {
     oid: null | string;
@@ -13,6 +15,22 @@ interface SwitchRxData {
     textTrue: string;
     textPosition: 'top' | 'bottom' | 'start' | 'end';
 }
+
+/**
+ * Design attributes of the Switch widget for design presets: text position and the colors, sizes, corners and shadows
+ * of track and thumb. Never the datapoint, values or texts.
+ */
+export const SWITCH_DESIGN_SPEC: DesignSpec = {
+    version: 1,
+    groups: {
+        common: ['textPosition'],
+        attr_group_css_track: true,
+        attr_group_css_thumb: true,
+    },
+};
+
+/** Stable reference for the design preset field, which needs the widget info it is part of */
+const getSwitchWidgetInfo = (): RxWidgetInfo => InventwoWidgetSwitch.getWidgetInfo();
 
 export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, VisRxWidgetState> {
     static getWidgetInfo(): RxWidgetInfo {
@@ -63,6 +81,18 @@ export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, 
                             default: 'end',
                             label: 'text_position',
                         },
+                    ],
+                },
+                {
+                    name: 'attr_group_design_presets',
+                    label: 'attr_group_design_presets',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_design_presets_help_generic',
+                        },
+                        createDesignPresetField(getSwitchWidgetInfo, SWITCH_DESIGN_SPEC) as any,
                     ],
                 },
                 {

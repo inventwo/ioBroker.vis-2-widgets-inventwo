@@ -2,6 +2,8 @@ import React from 'react';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import type { DesignSpec } from './utils/designPresets/designFields';
 
 interface MarqueeRxData {
     oid: null | string;
@@ -20,6 +22,20 @@ interface MarqueeState extends VisRxWidgetState {
     textHeight: number;
     containerHeight: number;
 }
+
+/**
+ * Design attributes of the Marquee widget for design presets: direction, speed, repetitions, gap and background. Never
+ * the datapoint, the text or the hover behaviour.
+ */
+export const MARQUEE_DESIGN_SPEC: DesignSpec = {
+    version: 1,
+    groups: {
+        common: ['direction', 'speed', 'textRepeat', 'gap', 'backgroundColor'],
+    },
+};
+
+/** Stable reference for the design preset field, which needs the widget info it is part of */
+const getMarqueeWidgetInfo = (): RxWidgetInfo => InventwoWidgetMarquee.getWidgetInfo();
 
 export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData, MarqueeState> {
     private containerRef = React.createRef<HTMLDivElement>();
@@ -184,6 +200,18 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
                             type: 'color',
                             label: 'background',
                         },
+                    ],
+                },
+                {
+                    name: 'attr_group_design_presets',
+                    label: 'attr_group_design_presets',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_design_presets_help_generic',
+                        },
+                        createDesignPresetField(getMarqueeWidgetInfo, MARQUEE_DESIGN_SPEC) as any,
                     ],
                 },
             ],

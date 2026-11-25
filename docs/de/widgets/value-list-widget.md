@@ -54,5 +54,6 @@ Das Value List Widget nimmt einen Textwert — aus einem Datenpunkt oder manuell
 
 ## Siehe auch
 
+- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
 - [Marquee Widget](marquee-widget.md) — zeigt einen einzelnen Scrolltext statt einer Liste an
 - [Table Widget](table-widget.md) — für strukturierte Tabellendaten aus einem JSON-Array

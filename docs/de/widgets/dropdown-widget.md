@@ -106,5 +106,6 @@ Jede Bedingung hat:
 
 ## Siehe auch
 
+- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
 - [Universal Widget](universal-widget.md) — für individuelle Schaltflächen-/Kachelgestaltung mit Styling pro Zustand
 - [Table Widget](table-widget.md) — zum Anzeigen von Tabellendaten

@@ -21,6 +21,8 @@ import './assets/inventwo.css';
 import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
+import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import type { DesignSpec } from './utils/designPresets/designFields';
 import type { ColorPickerProps } from '@jaames/iro/dist/ColorPicker';
 import type { UniversalCompleteRxData } from './types/UniversalWidgetRxDataTypes';
 import type {
@@ -51,6 +53,127 @@ const HOVER_COLOR_FIELDS: (keyof UniversalWidgetHoverStyles)[] = [
     'outerShadowColorHover',
     'innerShadowColorHover',
 ];
+
+/**
+ * Design attributes of the Universal Widget for design presets: colors, borders, shadows, spacing, corners, shape,
+ * alignment and the look of dialog, color picker and analog clock. Never datapoints, texts, icons, images, views,
+ * actions, passwords or the number of states.
+ */
+export const UNIVERSAL_DESIGN_SPEC: DesignSpec = {
+    version: 1,
+    groups: {
+        common: ['direction', 'buttonSize', 'btnSpacing'],
+        attr_group_type_view_in_dialog: [
+            'dialogWidth',
+            'dialogHeight',
+            'dialogPadding',
+            'dialogBackground',
+            'dialogPosition',
+            'dialogPositionX',
+            'dialogPositionY',
+            'dialogTitleHide',
+            'dialogTitleColor',
+            'dialogTitleSize',
+            'dialogTitlePaddingTop',
+            'dialogTitlePaddingBottom',
+            'dialogTitlePaddingLeft',
+            'dialogTitlePaddingRight',
+            'dialogCloseButtonBackground',
+            'dialogCloseButtonColor',
+            'dialogCloseButtonSize',
+            'dialogBorderRadiusTopLeft',
+            'dialogBorderRadiusTopRight',
+            'dialogBorderRadiusBottomRight',
+            'dialogBorderRadiusBottomLeft',
+        ],
+        attr_group_click_feedback: [
+            'feedbackDuration',
+            'contentColorFeedback',
+            'backgroundFeedback',
+            'textColorFeedback',
+            'borderColorFeedback',
+            'outerShadowColorFeedback',
+            'innerShadowColorFeedback',
+        ],
+        attr_group_state_default: [
+            'contentColor',
+            'background',
+            'textColor',
+            'borderColor',
+            'outerShadowColor',
+            'innerShadowColor',
+        ],
+        countStates: [
+            'contentColor',
+            'contentColorTrue',
+            'background',
+            'backgroundTrue',
+            'textColor',
+            'textColorTrue',
+            'borderColor',
+            'borderColorTrue',
+            'outerShadowColor',
+            'outerShadowColorTrue',
+            'innerShadowColor',
+            'innerShadowColorTrue',
+            'contentSize',
+            'contentMirror',
+        ],
+        attr_content_color_picker: [
+            'colorPickerWidth',
+            'colorPickerHandleSize',
+            'colorPickerHandleMargin',
+            'colorPickerComponentsSpace',
+            'colorPickerDirection',
+            'colorPickerBorderWidth',
+            'colorPickerBorderColor',
+            'colorPickerShowWheel',
+            'colorPickerShowBox',
+            'colorPickerShowHue',
+            'colorPickerShowSaturation',
+            'colorPickerShowValue',
+            'colorPickerShowRed',
+            'colorPickerShowGreen',
+            'colorPickerShowBlue',
+            'colorPickerShowAlpha',
+            'colorPickerShowKelvin',
+        ],
+        attr_content_analog_clock: true,
+        attr_group_hover: true,
+        attr_group_css_text: true,
+        attr_group_css_content: [
+            'scaleContentToFit',
+            'contentMarginTop',
+            'contentMarginBottom',
+            'contentMarginLeft',
+            'contentMarginRight',
+            'contentSize',
+            'contentRotation',
+            'contentMirror',
+            'imageObjectFit',
+            'imageBackgroundSize',
+            'imageObjectPosition',
+        ],
+        attr_group_css_alignment: true,
+        attr_group_css_transparency: true,
+        attr_group_css_spacing: true,
+        attr_group_css_border_radius: true,
+        attr_group_css_border: true,
+        attr_group_css_outer_shadow: true,
+        outerShadowExtras: true,
+        attr_group_css_inner_shadow: true,
+        innerShadowExtras: true,
+        attr_group_css_shape: true,
+    },
+    // The additional shadow layers follow the "From widget" reference of their shadow group
+    fromWidgetOf: {
+        outerShadowExtras: 'outerShadowStyleFromWidget',
+        innerShadowExtras: 'innerShadowStyleFromWidget',
+    },
+};
+
+/** Stable reference for the design preset field, which needs the widget info it is part of */
+const getUniversalWidgetInfo = (): RxWidgetInfo => InventwoWidgetUniversal.getWidgetInfo();
 
 const styles = {
     dialogTitle: {
@@ -278,6 +401,18 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             tooltip: 'tooltip_button_reset_time',
                             hidden: 'data.type != "button" || data.buttonHoldValue',
                         },
+                    ],
+                },
+                {
+                    name: 'attr_group_design_presets',
+                    label: 'attr_group_design_presets',
+                    fields: [
+                        {
+                            name: '',
+                            type: 'help',
+                            text: 'vis_2_widgets_inventwo_design_presets_help',
+                        },
+                        createDesignPresetField(getUniversalWidgetInfo, UNIVERSAL_DESIGN_SPEC) as any,
                     ],
                 },
 
