@@ -219,6 +219,9 @@ It shows a preview first, can write the result into a new project or back up the
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Dropdown Widget: the opened option list looked different on Safari/iPadOS (rounded, inset and blue selected item); items now span the full width with square corners and use the configured highlight color
+
 ### 2.4.0 (2026-11-24)
 - Calendar Widget: the day, today, selected and month/year colors had no effect with the current MUI X version (renamed CSS classes), so the theme text color was used instead; fixed
 - Checkbox Widget: true/false values default to `true`/`false` when left empty (like the Switch Widget), so a checkbox without custom values reflects and toggles boolean datapoints
