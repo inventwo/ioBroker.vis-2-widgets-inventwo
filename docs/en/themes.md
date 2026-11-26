@@ -212,7 +212,21 @@ Numeric values are written as numbers, e.g. `setState('vis-2-widgets-inventwo.0.
 
 ## CSS Variables
 
-The values of the active theme are also available as CSS variables in every view. Use them anywhere CSS is accepted — for example as view background: set the background of the view to `var(--iw-background)`, so the view background changes together with the theme. Use the field `background`, not `background-color` — only `background` can show gradients (e.g. theme "Glass"). Other widgets (also from other widget sets) can use the variables in their CSS fields too, e.g. `color: var(--iw-text)`.
+The values of the active theme are also available as CSS variables in every view. Use them anywhere CSS is accepted. Other widgets (also from other widget sets) can use the variables in their CSS fields too, e.g. `color: var(--iw-text)`.
+
+### View background that follows the theme
+
+The background belongs to the view, not to a widget. To make it change together with the theme, enter the variable `--iw-background` in the settings of the view:
+
+1. Click an empty spot of the view in the editor, so that no widget is selected.
+2. Open the tab **View** in the attribute panel on the right and there the group **CSS background (background-...)**.
+3. Leave **Image** and **Background class** empty. Only then the checkbox **One parameter** is shown.
+4. Check **One parameter**. The single fields (`-color`, `-image`, `-repeat` …) disappear and the field **background** appears instead.
+5. Enter `var(--iw-background)` in the field **background**.
+
+Without the checkbox there is only the field `-color` (`background-color`). That is not enough: some themes (e.g. Glass, Synthwave, Forest) use a gradient as background, and only `background` can show it.
+
+This is set per view: every view whose background should follow the theme needs this entry.
 
 | Variable | Token |
 |---|---|

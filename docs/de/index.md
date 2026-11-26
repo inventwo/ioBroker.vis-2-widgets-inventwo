@@ -128,7 +128,7 @@ Kopple Widgets an ein Theme — einen gemeinsamen Satz aus Farben, Ecken, Rahmen
 
 ![Dasselbe Dashboard in allen zwölf mitgelieferten Themes](../../img/themes_overview.png)
 
- Jeder Theme-Wert ist ein Datenpunkt, sodass Skripte zwischen einem hellen und einem dunklen Theme wechseln oder die Akzentfarbe ändern können. Die Werte stehen außerdem als CSS-Variablen bereit, z. B. `var(--iw-background)` als View-Hintergrund.
+ Jeder Theme-Wert ist ein Datenpunkt, sodass Skripte zwischen einem hellen und einem dunklen Theme wechseln oder die Akzentfarbe ändern können. Die Werte stehen außerdem als CSS-Variablen bereit, z. B. `var(--iw-background)` als View-Hintergrund (siehe [View-Hintergrund mit dem Theme wechseln](themes.md#view-hintergrund-mit-dem-theme-wechseln)).
 
 → [Themes](themes.md)
 

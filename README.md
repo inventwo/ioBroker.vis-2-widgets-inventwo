@@ -65,7 +65,7 @@ A theme is a shared set of **colors, corners, border, shadow and font**. Couple 
 - **Own values always win** - override a single color on one widget, the rest still follows the theme; decoupling keeps the current look
 - **Theme manager** in the editor: create, duplicate, rename, edit with live preview, export and import themes, reset built-in themes to the original
 - **Every theme value is a datapoint** under `vis-2-widgets-inventwo.0.themes` - switch to a dark theme at sunset with a script, or change the accent color from anywhere
-- **CSS variables** (`--iw-*`) for everything else, e.g. `var(--iw-background)` as view background
+- **CSS variables** (`--iw-*`) for everything else, e.g. `var(--iw-background)` as view background - see [View background that follows the theme](docs/en/themes.md#view-background-that-follows-the-theme)
 
 | Theme Customizer (runtime) | Theme manager (editor) |
 |---|---|

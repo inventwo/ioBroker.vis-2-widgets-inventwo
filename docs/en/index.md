@@ -128,7 +128,7 @@ Couple widgets to a theme — a shared set of colors, corners, border, shadow an
 
 ![The same dashboard in all twelve built-in themes](../../img/themes_overview.png)
 
- Every theme value is a datapoint, so scripts can switch between a light and a dark theme or change the accent color. The values are also available as CSS variables, e.g. `var(--iw-background)` as view background.
+ Every theme value is a datapoint, so scripts can switch between a light and a dark theme or change the accent color. The values are also available as CSS variables, e.g. `var(--iw-background)` as view background (see [View background that follows the theme](themes.md#view-background-that-follows-the-theme)).
 
 → [Themes](themes.md)
 

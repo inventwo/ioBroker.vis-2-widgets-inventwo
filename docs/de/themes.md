@@ -212,7 +212,21 @@ Zahlenwerte werden als Zahl geschrieben, z. B. `setState('vis-2-widgets-inventwo
 
 ## CSS-Variablen
 
-Die Werte des aktiven Themes stehen in jeder View auch als CSS-Variablen bereit. Du kannst sie überall verwenden, wo CSS möglich ist — zum Beispiel als View-Hintergrund: Setze den Hintergrund der View auf `var(--iw-background)`, dann wechselt der View-Hintergrund mit dem Theme. Verwende dafür das Feld `background` und nicht `background-color` — nur `background` kann Verläufe darstellen (z. B. beim Theme „Glass“). Auch andere Widgets (auch aus anderen Widget-Sets) können die Variablen in ihren CSS-Feldern nutzen, z. B. `color: var(--iw-text)`.
+Die Werte des aktiven Themes stehen in jeder View auch als CSS-Variablen bereit. Du kannst sie überall verwenden, wo CSS möglich ist. Auch andere Widgets (auch aus anderen Widget-Sets) können die Variablen in ihren CSS-Feldern nutzen, z. B. `color: var(--iw-text)`.
+
+### View-Hintergrund mit dem Theme wechseln
+
+Der Hintergrund der View gehört zur View, nicht zu einem Widget. Damit er mit dem Theme wechselt, trägst du die Variable `--iw-background` in den Einstellungen der View ein:
+
+1. Klicke im Editor auf eine leere Stelle der View, sodass kein Widget ausgewählt ist.
+2. Öffne rechts im Attributfenster den Reiter **Seite** und darin die Gruppe **CSS-Hintergrund (background-...)**.
+3. Lass **Bild** und **Hintergrundklasse** leer. Nur dann wird die Checkbox **Ein Parameter** angezeigt.
+4. Setze den Haken bei **Ein Parameter**. Die Einzelfelder (`-color`, `-image`, `-repeat` …) verschwinden, stattdessen erscheint das Feld **background**.
+5. Trage im Feld **background** `var(--iw-background)` ein.
+
+Ohne den Haken gibt es nur das Feld `-color` (`background-color`). Das reicht nicht: Einige Themes (z. B. Glass, Synthwave, Forest) haben einen Farbverlauf als Hintergrund, und den kann nur `background` darstellen.
+
+Das gilt je View: Jede View, deren Hintergrund mitwechseln soll, braucht diesen Eintrag.
 
 | Variable | Token |
 |---|---|
