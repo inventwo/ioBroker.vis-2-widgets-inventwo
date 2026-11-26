@@ -273,7 +273,7 @@ It shows a preview first, can write the result into a new project or back up the
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.0.0 (2026-11-26)
 - **Themes:** couple any inventwo widget to a theme (colors, corners, border, shadow, font) in the new attribute group "inventwo - Theme"; own values always win, decoupling keeps the current look. Twelve built-in themes: Graphite, Linen, Ocean, Glass, Retro 98, Neo Brutal, Synthwave, Terminal, Soft Pastel, Night Vision, High Contrast, Forest
 - Every theme value is a datapoint under `vis-2-widgets-inventwo.0.themes` (active theme in `themes.active`), so scripts can switch themes or change single values; the active theme is also available as CSS variables (`--iw-*`, e.g. `var(--iw-background)` as view background)
 - New theme manager (palette entry "Themes"): create, duplicate, rename and delete themes, edit all values with live preview, set the active theme, export and import theme files; built-in themes are marked "Built-in" (or "Built-in · modified") and can be reset to the original
@@ -309,9 +309,6 @@ It shows a preview first, can write the result into a new project or back up the
 
 ### 2.2.0 (2026-11-17)
 - Adapter settings: New migration assistant that converts the old vis-1 widgets of the adapter vis-inventwo (`i-vis-*`) in a vis-2 project into the widgets of this adapter – with preview, a list of widgets to check manually and either an automatic backup or a converted copy as new project. It can also restore widgets shown in several views, which vis-2 drops when importing a vis-1 project. Based on the community tool [inventwo-vis1-to-vis2](https://github.com/crunchip77/inventwo-vis1-to-vis2) by crunchip77
-
-### 2.1.1 (2026-11-03)
-- Universal Widget: Fixed content color of images not being applied for `rgb()` colors and colors given as hex (`#rgb`, `#rrggbb`, with optional alpha)
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)
