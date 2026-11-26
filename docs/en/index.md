@@ -103,11 +103,34 @@ The inventwo widget set adds highly customizable tiles, controls, and display el
 
 ---
 
-## Design Presets
+### Theme Customizer
+**Lets users change the look at runtime.** Theme cards for all themes, view background, colors with suggestions and a color picker, corners, border, shadow and font, e.g. on a wall tablet — for all devices or only the current one.
 
-Save the design of any inventwo widget as a preset and apply it to other widgets of the same type, copy and paste designs between widgets, or export and import presets as a file. The **Design presets** entry in the widget palette shows all presets with preview pictures and adds a new widget with a preset's design to the view. Only the design is transferred — no datapoints, texts or actions.
+![Theme Customizer](../../img/theme_customizer_en.png)
 
-→ [Design Presets](design-presets.md)
+→ [Theme Customizer Widget](widgets/theme-customizer-widget.md)
+
+---
+
+## Presets
+
+Ready-made forms for every widget — cards, tiles, segmented buttons, clocks, color wheel, gauges, rings, agenda and more. The **Presets** entry in the widget palette shows them with preview pictures and adds a new widget to the view with one click; templates such as **Analog Clock** or **Progress Ring** also set up the widget, so you only pick the datapoint. Save your own presets, apply them to many widgets at once, copy and paste designs, or export and import them as a file. Datapoints, texts and actions are never transferred.
+
+![Preset gallery](../../img/presets_gallery_en.png)
+
+→ [Presets](design-presets.md)
+
+---
+
+## Themes
+
+Couple widgets to a theme — a shared set of colors, corners, border, shadow and font — and restyle the whole dashboard in one place. Twelve themes are built in, and the theme manager lets you create your own.
+
+![The same dashboard in all twelve built-in themes](../../img/themes_overview.png)
+
+ Every theme value is a datapoint, so scripts can switch between a light and a dark theme or change the accent color. The values are also available as CSS variables, e.g. `var(--iw-background)` as view background.
+
+→ [Themes](themes.md)
 
 ---
 
@@ -128,3 +151,4 @@ The adapter settings contain an assistant that converts the old widgets of the v
 - **Picking or displaying a date?** → [Calendar Widget](widgets/calendar-widget.md)
 - **Showing events or appointments?** → [Event Calendar Widget](widgets/event-calendar-widget.md)
 - **Selecting a mode or scene?** → [Dropdown Widget](widgets/dropdown-widget.md)
+- **One look for all widgets, light and dark?** → [Themes](themes.md)

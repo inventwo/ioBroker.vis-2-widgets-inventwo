@@ -103,11 +103,34 @@ Das inventwo-Widget-Set fügt VIS 2 hochgradig anpassbare Kacheln, Steuerelement
 
 ---
 
-## Design-Presets
+### Theme-Anpassung
+**Lässt Nutzer das Aussehen zur Laufzeit ändern.** Theme-Karten für alle Themes, View-Hintergrund, Farben mit Vorschlägen und Farbwähler, Ecken, Rahmen, Schatten und Schrift, z. B. auf einem Wandtablet — für alle Geräte oder nur das aktuelle.
 
-Speichere das Design eines beliebigen inventwo-Widgets als Preset und wende es auf andere Widgets desselben Typs an, kopiere Designs zwischen Widgets oder exportiere und importiere Presets als Datei. Der Eintrag **Design-Presets** in der Widget-Palette zeigt alle Presets mit Vorschaubild und fügt ein neues Widget mit dem Design eines Presets in die Ansicht ein. Übertragen wird nur das Design — keine Datenpunkte, Texte oder Aktionen.
+![Theme-Anpassung](../../img/theme_customizer_de.png)
 
-→ [Design-Presets](design-presets.md)
+→ [Widget Theme-Anpassung](widgets/theme-customizer-widget.md)
+
+---
+
+## Presets
+
+Fertige Formen für jedes Widget — Karten, Kacheln, Segment-Buttons, Uhren, Farbrad, Anzeigen, Ringe, Agenda und mehr. Der Eintrag **Presets** in der Widget-Palette zeigt sie mit Vorschaubild und fügt mit einem Klick ein neues Widget in die Ansicht ein; Vorlagen wie **Analog Clock** oder **Progress Ring** richten das Widget gleich mit ein, sodass du nur noch den Datenpunkt wählst. Speichere eigene Presets, wende sie auf mehrere Widgets auf einmal an, kopiere Designs oder exportiere und importiere sie als Datei. Datenpunkte, Texte und Aktionen werden nie übertragen.
+
+![Preset-Galerie](../../img/presets_gallery_de.png)
+
+→ [Presets](design-presets.md)
+
+---
+
+## Themes
+
+Kopple Widgets an ein Theme — einen gemeinsamen Satz aus Farben, Ecken, Rahmen, Schatten und Schrift — und gestalte das ganze Dashboard an einer Stelle um. Zwölf Themes sind mitgeliefert, im Theme-Manager legst du eigene an.
+
+![Dasselbe Dashboard in allen zwölf mitgelieferten Themes](../../img/themes_overview.png)
+
+ Jeder Theme-Wert ist ein Datenpunkt, sodass Skripte zwischen einem hellen und einem dunklen Theme wechseln oder die Akzentfarbe ändern können. Die Werte stehen außerdem als CSS-Variablen bereit, z. B. `var(--iw-background)` als View-Hintergrund.
+
+→ [Themes](themes.md)
 
 ---
 
@@ -128,3 +151,4 @@ Die Adapter-Einstellungen enthalten einen Assistenten, der die alten Widgets des
 - **Ein Datum auswählen oder anzeigen?** → [Calendar Widget](widgets/calendar-widget.md)
 - **Termine anzeigen?** → [Terminkalender Widget](widgets/event-calendar-widget.md)
 - **Modus oder Szene auswählen?** → [Dropdown Widget](widgets/dropdown-widget.md)
+- **Ein Look für alle Widgets, hell und dunkel?** → [Themes](themes.md)

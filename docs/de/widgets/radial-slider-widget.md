@@ -155,5 +155,6 @@ Die Winkel werden im Uhrzeigersinn von oben gemessen (12-Uhr-Position = 0°).
 
 ## Siehe auch
 
-- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Themes](../themes.md) — Design dieses Widgets an ein gemeinsames Theme koppeln (Farben, Ecken, Rahmen, Schatten, Schrift)
 - [Slider Widget](slider-widget.md) — dieselbe Steuerung als gerader horizontaler oder vertikaler Schieberegler

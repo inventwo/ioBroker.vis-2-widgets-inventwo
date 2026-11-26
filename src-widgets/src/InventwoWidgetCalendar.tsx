@@ -20,6 +20,7 @@ import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
 import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import { createThemeFields } from './utils/themes/ThemeField';
 import type { DesignSpec } from './utils/designPresets/designFields';
 
 const SUPPORTED_LOCALES = ['en', 'de', 'ru', 'pt', 'nl', 'fr', 'it', 'es', 'pl', 'uk', 'zh-cn'];
@@ -259,6 +260,11 @@ export default class InventwoWidgetCalendar extends InventwoGeneric<CalendarRxDa
                             label: 'day_size',
                         },
                     ],
+                },
+                {
+                    name: 'attr_group_theme',
+                    label: 'attr_group_theme',
+                    fields: createThemeFields(getCalendarWidgetInfo) as any,
                 },
                 {
                     name: 'attr_group_design_presets',

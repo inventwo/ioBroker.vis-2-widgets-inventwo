@@ -33,6 +33,7 @@ const config = {
                 './InventwoWidgetCalendar': './src/InventwoWidgetCalendar',
                 './InventwoWidgetEventCalendar': './src/InventwoWidgetEventCalendar',
                 './InventwoWidgetDesignPresets': './src/InventwoWidgetDesignPresets',
+                './InventwoWidgetThemeCustomizer': './src/InventwoWidgetThemeCustomizer',
                 './translations': './src/translations',
             },
             remotes: {},

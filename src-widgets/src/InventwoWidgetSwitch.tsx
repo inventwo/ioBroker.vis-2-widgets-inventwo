@@ -5,6 +5,7 @@ import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
 import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import { createThemeFields } from './utils/themes/ThemeField';
 import type { DesignSpec } from './utils/designPresets/designFields';
 
 interface SwitchRxData {
@@ -82,6 +83,11 @@ export default class InventwoWidgetSwitch extends InventwoGeneric<SwitchRxData, 
                             label: 'text_position',
                         },
                     ],
+                },
+                {
+                    name: 'attr_group_theme',
+                    label: 'attr_group_theme',
+                    fields: createThemeFields(getSwitchWidgetInfo) as any,
                 },
                 {
                     name: 'attr_group_design_presets',

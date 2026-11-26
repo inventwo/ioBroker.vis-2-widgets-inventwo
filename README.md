@@ -7,7 +7,9 @@
 [![Downloads](https://img.shields.io/npm/dm/iobroker.vis-2-widgets-inventwo.svg)](https://www.npmjs.com/package/iobroker.vis-2-widgets-inventwo)
 [![Paypal Donation](https://img.shields.io/badge/paypal-donate%20|%20spenden-green.svg)](https://www.paypal.com/donate/?hosted_button_id=7W6M3TFZ4W9LW)
 
-**Build dashboards that look exactly the way you want.** A set of 11 widgets for **ioBroker vis 2.0** with one idea: every widget can be styled down to the last detail - colors and gradients, shapes, shadows, borders, fonts, sizes - without a single line of CSS.
+**Build dashboards that look exactly the way you want.** A set of 12 widgets for **ioBroker vis 2.0** with one idea: every widget can be styled down to the last detail - colors and gradients, shapes, shadows, borders, fonts, sizes - without a single line of CSS.
+
+**New: [Themes](#themes) and [Presets](#presets).** Restyle the whole dashboard with one click - twelve built-in themes, your own themes, and a Theme Customizer widget that lets you change theme and colors right on the wall tablet. Presets give every widget a ready-made form, from cards and tiles to clocks, gauges and rings.
 
 ![Dark dashboard built with inventwo widgets](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/showcase_dark.png)
 
@@ -17,6 +19,8 @@
 
 ## Why these widgets?
 
+- 🌗 **Themes with a live customizer** - couple widgets to a theme and switch the look of the whole dashboard at once: twelve built-in themes, your own themes in a theme manager, and a [Theme Customizer](#theme-customizer) widget for changes at runtime.
+- 🧱 **Presets** - ready-made forms for every widget (cards, tiles, segmented buttons, clocks, color wheel, gauges, rings, agenda …) to insert from a gallery, plus your own presets to reuse anywhere.
 - 🎨 **Total design freedom** - gradients, glow, glass, neumorphism, hexagons, stars or your own polygon. Every color field accepts any CSS color, including `linear-gradient(...)`.
 - 🧩 **One widget, many jobs** - the [Universal widget](#universal) is a switch, button, navigation tile, status display, dialog opener, color picker, clock and more, with its own look for every state.
 - 📊 **Show data, don't just switch it** - gauges with color zones, scales and needles, sliders, tables with conditional row colors, calendars, event lists, tickers.
@@ -49,6 +53,45 @@ A device table with number and time formats and conditional row colors, gauges w
 
 ---
 
+## Themes
+
+![The same dashboard in all twelve built-in themes](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/themes_overview.png)
+
+*One dashboard, twelve looks - nothing changed but the theme.*
+
+A theme is a shared set of **colors, corners, border, shadow and font**. Couple a widget to a theme in the attribute group **inventwo - Theme** and it takes its look from there; change the theme and every coupled widget follows immediately - in the editor and on every display.
+
+- **Twelve built-in themes:** Graphite, Linen, Ocean, Glass, Retro 98, Neo Brutal, Synthwave, Terminal, Soft Pastel, Night Vision, High Contrast and Forest
+- **Own values always win** - override a single color on one widget, the rest still follows the theme; decoupling keeps the current look
+- **Theme manager** in the editor: create, duplicate, rename, edit with live preview, export and import themes, reset built-in themes to the original
+- **Every theme value is a datapoint** under `vis-2-widgets-inventwo.0.themes` - switch to a dark theme at sunset with a script, or change the accent color from anywhere
+- **CSS variables** (`--iw-*`) for everything else, e.g. `var(--iw-background)` as view background
+
+| Theme Customizer (runtime) | Theme manager (editor) |
+|---|---|
+| ![Theme Customizer widget](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/theme_customizer_en.png) | ![Theme manager](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/theme_manager_en.png) |
+
+The **[Theme Customizer](#theme-customizer)** widget brings all of this to the dashboard itself: pick a theme, the view background, accent color, corners, border, shadow and font at runtime - for all devices or only for the current one.
+
+📖 [Themes](docs/en/themes.md) · [Theme Customizer widget](docs/en/widgets/theme-customizer-widget.md)
+
+---
+
+## Presets
+
+![Preset gallery](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/presets_gallery_en.png)
+
+Presets store the **form** of a widget - layout, sizes, spacing, shape, angles, feedback - while the theme provides the colors. Open **Presets** in the widget palette to browse them with preview pictures and insert a new widget with one click.
+
+- **Built-in presets for every widget type**, e.g. Card, Tile, Segmented Buttons, Neumorphic, Hexagon, Slider, Thermostat, Needle Gauge, Table and Month Calendar
+- **Ready-made templates** that also set up the widget for you: Analog Clock, Minimal Clock, Color Wheel, White Tone, Plus/Minus Buttons, Popup Tile, Shutter, Half Gauge, Progress Ring, Dimmer Ring, Vertical Ticker and Agenda - just pick the datapoint
+- **Your own presets:** save the design of any widget, apply it to many widgets at once, copy and paste designs, export and import them as a file; they are stored on the server and available in all projects
+- Datapoints, texts, actions and passwords are never part of a preset
+
+📖 [Presets documentation](docs/en/design-presets.md)
+
+---
+
 ## The widgets at a glance
 
 | Widget | What it does |
@@ -64,6 +107,7 @@ A device table with number and time formats and conditional row colors, gauges w
 | [**Event Calendar**](#event-calendar) | Google-Calendar-style view for appointments (month, week, day, year, lists) |
 | [**Marquee**](#marquee) | Scrolling text ticker in any direction |
 | [**Value List**](#value-list) | Bullet list from a text or datapoint |
+| [**Theme Customizer**](#theme-customizer) | Change theme, colors, corners, border, shadow and font at runtime |
 
 > Every widget page in the [documentation](docs/README.md) lists all settings in detail.
 
@@ -191,6 +235,14 @@ Bullet list from a single text value with any separator. Bullet types (disc, cir
 
 📖 [Value List documentation](docs/en/widgets/value-list-widget.md)
 
+## Theme Customizer
+
+![Theme Customizer](https://github.com/inventwo/ioBroker.vis-2-widgets-inventwo/raw/main/img/theme_customizer_en.png)
+
+Lets users restyle the dashboard at runtime, e.g. on a wall tablet: theme cards for all themes, view background, accent and surface colors with suggestions and a color picker, corners, border, shadow and font. Changes apply to all devices or only to the current device. See [Themes](#themes).
+
+📖 [Theme Customizer documentation](docs/en/widgets/theme-customizer-widget.md)
+
 ---
 
 ## Getting started
@@ -198,7 +250,9 @@ Bullet list from a single text value with any separator. Bullet types (disc, cir
 1. Install the adapter **vis-2-widgets-inventwo** in ioBroker Admin (requires vis 2.0).
 2. Open the vis 2 editor and pick a widget from the **inventwo design** list.
 3. Select your datapoint and adjust the settings - the preview updates live.
-4. To reuse a look, set **From widget** in a style group and pick another widget of the same type.
+4. Want a finished look right away? Open **Presets** in the palette and insert a widget from the gallery.
+5. Couple your widgets to a theme in **inventwo - Theme** and switch the look of all of them at once - or add a **Theme Customizer** to change it at runtime.
+6. To reuse a look between single widgets, set **From widget** in a style group and pick another widget of the same type.
 
 ---
 
@@ -220,9 +274,15 @@ It shows a preview first, can write the result into a new project or back up the
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-- Design presets for all inventwo widgets: save, apply, copy/paste, export and import the design of a widget (only design, no datapoints, texts or actions), with preview pictures; presets are stored on the server and available in all projects
-- New palette entry "Design presets": gallery with the widget types on the left and their presets on the right, inserts a new widget with a preset's design into the current view
-- Built-in design presets for all widget types ship with the adapter: read-only (cannot be deleted or overwritten, names are reserved), marked as "Built-in", can be applied, exported and added to a view; "Export all" exports only own presets
+- **Themes:** couple any inventwo widget to a theme (colors, corners, border, shadow, font) in the new attribute group "inventwo - Theme"; own values always win, decoupling keeps the current look. Twelve built-in themes: Graphite, Linen, Ocean, Glass, Retro 98, Neo Brutal, Synthwave, Terminal, Soft Pastel, Night Vision, High Contrast, Forest
+- Every theme value is a datapoint under `vis-2-widgets-inventwo.0.themes` (active theme in `themes.active`), so scripts can switch themes or change single values; the active theme is also available as CSS variables (`--iw-*`, e.g. `var(--iw-background)` as view background)
+- New theme manager (palette entry "Themes"): create, duplicate, rename and delete themes, edit all values with live preview, set the active theme, export and import theme files; built-in themes are marked "Built-in" (or "Built-in · modified") and can be reset to the original
+- New widget **Theme Customizer**: switch the theme and adjust every theme value at runtime (colors with suggestions and a color picker, corners, border incl. 3D styles, shadow, font), for all devices or only the current device
+- **Presets** for all inventwo widgets: save, apply, copy/paste, export and import the design of a widget with a preview picture; stored on the server and available in all projects; datapoints, texts, actions and passwords are never transferred; on theme-coupled widgets the fields controlled by the theme are left out
+- New palette entry "Presets": gallery of all presets by widget type, inserts a new widget with the preset into the current view, imports preset files
+- Built-in presets for all widget types (one per form, e.g. Card, Tile, Segmented Buttons, Hexagon, Thermostat, Needle Gauge, Striped Table), read-only; templates also set up the widget and its size: Analog Clock, Minimal Clock, Color Wheel, White Tone, Plus/Minus Buttons, Popup Tile, Shutter, Half Gauge, Progress Ring, Dimmer Ring, Vertical Ticker, Agenda
+- Universal and Table: the border style "outset" can be selected again (the option set "inset" before)
+- Marquee, Table and Universal widgets: subscriptions are cleaned up correctly when the widget is removed
 
 ### 2.4.1 (2026-11-25)
 - Dropdown Widget: the opened option list looked different on Safari/iPadOS (rounded, inset and blue selected item); items now span the full width with square corners and use the configured highlight color

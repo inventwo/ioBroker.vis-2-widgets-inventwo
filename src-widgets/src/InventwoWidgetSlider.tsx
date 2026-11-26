@@ -12,6 +12,7 @@ import type {
 import React from 'react';
 import { createDocsLinkField } from './utils/docLinkField';
 import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import { createThemeFields } from './utils/themes/ThemeField';
 import type { DesignSpec } from './utils/designPresets/designFields';
 import { createColorZoneGroups } from './utils/colorZoneFields';
 
@@ -270,6 +271,11 @@ export default class InventwoWidgetSlider extends InventwoGeneric<SliderRxData, 
                             tooltip: 'custom_steps_tooltip',
                         },
                     ],
+                },
+                {
+                    name: 'attr_group_theme',
+                    label: 'attr_group_theme',
+                    fields: createThemeFields(getSliderWidgetInfo) as any,
                 },
                 {
                     name: 'attr_group_design_presets',

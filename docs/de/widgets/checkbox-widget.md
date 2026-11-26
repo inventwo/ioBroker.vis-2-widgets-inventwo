@@ -52,6 +52,7 @@ Das Checkbox Widget zeigt eine Standard-Checkbox an, die einen Datenpunkt zwisch
 
 ## Siehe auch
 
-- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Themes](../themes.md) — Design dieses Widgets an ein gemeinsames Theme koppeln (Farben, Ecken, Rahmen, Schatten, Schrift)
 - [Switch Widget](switch-widget.md) — ähnliches Verhalten mit Umschalter-Darstellung
 - [Universal Widget](universal-widget.md) — vollständig anpassbare Kachel mit demselben Schaltverhalten plus Icons und Formen

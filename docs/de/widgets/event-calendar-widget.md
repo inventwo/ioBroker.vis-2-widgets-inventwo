@@ -202,6 +202,7 @@ Beachte das exklusive Ende beim Beispiel "Urlaub" oben: Damit der Termin vom 5. 
 
 ## Siehe auch
 
-- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Themes](../themes.md) — Design dieses Widgets an ein gemeinsames Theme koppeln (Farben, Ecken, Rahmen, Schatten, Schrift)
 - [Kalender Widget](calendar-widget.md) — reiner Datepicker ohne Termine
 - [Tabelle Widget](table-widget.md) — zur Anzeige von Datumswerten als Teil einer größeren Datentabelle

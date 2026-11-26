@@ -126,6 +126,7 @@ Wird nur angezeigt, wenn **Kalenderwochen anzeigen** aktiviert ist.
 
 ## Siehe auch
 
-- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Themes](../themes.md) — Design dieses Widgets an ein gemeinsames Theme koppeln (Farben, Ecken, Rahmen, Schatten, Schrift)
 - [Terminkalender Widget](event-calendar-widget.md) — zur Anzeige von Terminen in Monats-/Wochen-/Tagesansicht
 - [Tabelle Widget](table-widget.md) — zur Anzeige von Datumswerten als Teil einer größeren Datentabelle

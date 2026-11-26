@@ -3,6 +3,7 @@ import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
 import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import { createThemeFields } from './utils/themes/ThemeField';
 import type { DesignSpec } from './utils/designPresets/designFields';
 
 interface MarqueeRxData {
@@ -79,6 +80,7 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
     }
 
     componentWillUnmount(): void {
+        super.componentWillUnmount();
         if (this.measureTimeout !== null) {
             clearTimeout(this.measureTimeout);
         }
@@ -201,6 +203,11 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
                             label: 'background',
                         },
                     ],
+                },
+                {
+                    name: 'attr_group_theme',
+                    label: 'attr_group_theme',
+                    fields: createThemeFields(getMarqueeWidgetInfo) as any,
                 },
                 {
                     name: 'attr_group_design_presets',

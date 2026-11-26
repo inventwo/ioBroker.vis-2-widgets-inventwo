@@ -73,6 +73,7 @@ The thumb is the round handle that slides back and forth.
 
 ## See Also
 
-- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Themes](../themes.md) — couple the design of this widget to a shared theme (colors, corners, border, shadow, font)
 - [Checkbox Widget](checkbox-widget.md) — similar behavior, displayed as a checkbox instead of a toggle
 - [Universal Widget](universal-widget.md) — fully custom tile with the same toggle behavior plus icons and shapes

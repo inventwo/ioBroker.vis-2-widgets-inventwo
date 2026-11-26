@@ -155,5 +155,6 @@ The angles are measured clockwise from the top (12 o'clock position = 0°).
 
 ## See Also
 
-- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Themes](../themes.md) — couple the design of this widget to a shared theme (colors, corners, border, shadow, font)
 - [Slider Widget](slider-widget.md) — the same control as a straight horizontal or vertical slider

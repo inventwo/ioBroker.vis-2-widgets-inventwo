@@ -183,6 +183,7 @@ Adds a drop shadow around the table container. Set X offset, Y offset, blur, siz
 
 ## See Also
 
-- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Themes](../themes.md) — couple the design of this widget to a shared theme (colors, corners, border, shadow, font)
 - [Dropdown Widget](dropdown-widget.md) — for selecting from a list of predefined values
 - [Value List Widget](value-list-widget.md) — for simple bullet-point lists from text values

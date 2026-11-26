@@ -209,6 +209,31 @@ export function isDesignKey(groups: DesignGroup[], key: string): boolean {
     });
 }
 
+/** Attributes a basic setup must never set: datapoints, passwords, addresses, view references and scripts */
+const SETUP_FORBIDDEN = /oid|password|pin|url|script|^view|^(bindings|signals|lc|visibility)/i;
+const SETUP_KEY = /^[A-Za-z][A-Za-z0-9_]*$/;
+
+/**
+ * Basic setup of a built-in preset (e.g. widget type, mode, content type, value range): plain values of harmless
+ * attributes only. User presets never carry a setup.
+ */
+export function sanitizeSetup(raw: unknown): DesignData {
+    const result: DesignData = {};
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+        return result;
+    }
+    Object.entries(raw as Record<string, unknown>).forEach(([key, value]) => {
+        if (!SETUP_KEY.test(key) || SETUP_FORBIDDEN.test(key)) {
+            return;
+        }
+        const setupValue = toDesignValue(value);
+        if (setupValue !== undefined && setupValue !== null) {
+            result[key] = setupValue;
+        }
+    });
+    return result;
+}
+
 /** Keeps only design attributes with plain values; used for everything that comes from outside (import, clipboard) */
 export function sanitizeDesign(groups: DesignGroup[], raw: unknown): DesignData {
     const result: DesignData = {};

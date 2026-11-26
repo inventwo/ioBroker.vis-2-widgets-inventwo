@@ -20,8 +20,10 @@ import {
 } from '@mui/material';
 import {
     Add as AddIcon,
+    ColorLens as ThemesIcon,
     Delete as DeleteIcon,
     FileDownload as ExportIcon,
+    FileUpload as ImportIcon,
     Palette as PaletteIcon,
     Refresh as RefreshIcon,
 } from '@mui/icons-material';
@@ -35,9 +37,18 @@ import type {
 } from '@iobroker/types-vis-2';
 
 import { BuiltinChip } from './BuiltinChip';
-import { type DesignData, getDesignGroups, sanitizeDesign } from './designFields';
-import { type DesignPreset, loadPresets, serializePresets, updatePresets } from './presetStore';
+import { type DesignData, getDesignGroups, sanitizeDesign, sanitizeSetup } from './designFields';
+import {
+    type DesignPreset,
+    importPresetFile,
+    loadPresets,
+    MAX_IMPORT_FILE_SIZE,
+    serializePresets,
+    updatePresets,
+    errorText,
+} from './presetStore';
 import { PRESET_WIDGET_TYPES, type PresetWidgetType } from './registry';
+import { ThemeManager } from '../themes/ThemeManager';
 
 const I18N_PREFIX = 'vis_2_widgets_inventwo_';
 const WIDGET_SET = 'vis-2-widgets-inventwo';
@@ -176,7 +187,12 @@ export function presetDesignValues(type: PresetWidgetType, preset: DesignPreset)
             result[key] = value;
         }
     });
-    return result;
+    return { ...result, ...sanitizeSetup(preset.setup) };
+}
+
+/** Start size of a built-in preset as widget style */
+function sizeStyle(preset: DesignPreset): LooseRecord | undefined {
+    return preset.size ? { width: `${preset.size.width}px`, height: `${preset.size.height}px` } : undefined;
 }
 
 function pixels(value: unknown): number {
@@ -229,7 +245,7 @@ async function insertPresetWidget(
 
     const visAddWidget = (window as unknown as { visAddWidget?: VisAddWidget }).visAddWidget;
     if (typeof visAddWidget === 'function') {
-        await visAddWidget(info.id, left, top, design);
+        await visAddWidget(info.id, left, top, design, sizeStyle(preset));
         return;
     }
 
@@ -247,6 +263,7 @@ async function insertPresetWidget(
 
     const style: LooseRecord = { bindings: [], left: `${left}px`, top: `${top}px` };
     Object.assign(style, info.visDefaultStyle ?? {});
+    Object.assign(style, sizeStyle(preset) ?? {});
     if (style.position === 'relative') {
         style.width = '100%';
     }
@@ -284,6 +301,7 @@ interface PresetGalleryState {
 
 /** Dialog with the saved presets of all widget types */
 class PresetGallery extends React.Component<PresetGalleryProps, PresetGalleryState> {
+    private readonly fileInput = React.createRef<HTMLInputElement>();
     private mounted = false;
 
     constructor(props: PresetGalleryProps) {
@@ -320,12 +338,12 @@ class PresetGallery extends React.Component<PresetGalleryProps, PresetGallerySta
                 this.setState({
                     list,
                     selected,
-                    error: error ? `${t('design_preset_error_load')}: ${String(error)}` : '',
+                    error: error ? `${t('design_preset_error_load')}: ${errorText(error)}` : '',
                 });
             }
         } catch (e) {
             if (this.mounted) {
-                this.setState({ error: `${t('design_preset_error_load')}: ${String(e)}` });
+                this.setState({ error: `${t('design_preset_error_load')}: ${errorText(e)}` });
             }
         } finally {
             if (this.mounted) {
@@ -340,7 +358,7 @@ class PresetGallery extends React.Component<PresetGalleryProps, PresetGallerySta
             .then(() => this.props.onClose())
             .catch(e => {
                 if (this.mounted) {
-                    this.setState({ busy: false, error: `${t('design_preset_error_insert')}: ${e}` });
+                    this.setState({ busy: false, error: `${t('design_preset_error_insert')}: ${errorText(e)}` });
                 }
             });
     }
@@ -361,9 +379,51 @@ class PresetGallery extends React.Component<PresetGalleryProps, PresetGallerySta
             })
             .catch(e => {
                 if (this.mounted) {
-                    this.setState({ busy: false, error: `${t('design_preset_error_storage')}: ${e}` });
+                    this.setState({ busy: false, error: `${t('design_preset_error_storage')}: ${errorText(e)}` });
                 }
             });
+    };
+
+    /**
+     * Imports a preset file with presets of any supported widget types (unknown types are skipped), then reloads the
+     * gallery and shows the first widget type that got presets.
+     */
+    private onImportFile = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const file = e.target.files?.[0];
+        e.target.value = '';
+        if (!file) {
+            return;
+        }
+        this.setState({ busy: true, error: '', status: '' });
+        const importFile = async (): Promise<void> => {
+            if (file.size > MAX_IMPORT_FILE_SIZE) {
+                throw new Error(t('design_preset_error_import'));
+            }
+            const targets = PRESET_WIDGET_TYPES.map(type => ({
+                widget: type.id,
+                groups: getDesignGroups(type.getWidgetInfo(), type.spec),
+            }));
+            const result = await importPresetFile(this.props.palette.socket, await file.text(), targets);
+            if (!result) {
+                throw new Error(t('design_preset_error_import'));
+            }
+            const count = result.reduce((sum, entry) => sum + entry.presets.length, 0);
+            if (!this.mounted) {
+                return;
+            }
+            if (!count) {
+                this.setState({ busy: false, status: t('design_preset_imported_none_all') });
+                return;
+            }
+            lastSelectedType = result[0].widget;
+            this.setState({ selected: result[0].widget, status: t('design_preset_imported', count) });
+            await this.reload();
+        };
+        importFile().catch(error => {
+            if (this.mounted) {
+                this.setState({ busy: false, error: `${t('design_preset_error_storage')}: ${errorText(error)}` });
+            }
+        });
     };
 
     private renderCard(type: PresetWidgetType, preset: DesignPreset): React.JSX.Element {
@@ -578,6 +638,25 @@ class PresetGallery extends React.Component<PresetGalleryProps, PresetGallerySta
                                 </IconButton>
                             </span>
                         </Tooltip>
+                        <Tooltip title={t('design_preset_import_hint')}>
+                            <span>
+                                <IconButton
+                                    size="small"
+                                    disabled={busy}
+                                    onClick={() => this.fileInput.current?.click()}
+                                    aria-label={t('design_preset_import')}
+                                >
+                                    <ImportIcon />
+                                </IconButton>
+                            </span>
+                        </Tooltip>
+                        <input
+                            ref={this.fileInput}
+                            type="file"
+                            accept="application/json,.json"
+                            style={{ display: 'none' }}
+                            onChange={this.onImportFile}
+                        />
                     </DialogTitle>
                     <DialogContent
                         dividers
@@ -632,34 +711,67 @@ class PresetGallery extends React.Component<PresetGalleryProps, PresetGallerySta
 
 interface PresetPaletteEntryState {
     open: boolean;
+    themesOpen: boolean;
 }
 
 /**
- * Entry of the widget palette (`customPalette`): a button that opens the preset gallery. Class component on purpose,
+ * Entry of the widget palette (`customPalette`): buttons that open the preset gallery and the theme manager. Class component on purpose,
  * see the note on Fast Refresh in `vite.config.ts`.
  */
 export class PresetPaletteEntry extends React.Component<CustomPaletteProperties, PresetPaletteEntryState> {
     constructor(props: CustomPaletteProperties) {
         super(props);
-        this.state = { open: false };
+        this.state = { open: false, themesOpen: false };
     }
 
     render(): React.JSX.Element {
         return (
             <>
-                <Button
-                    variant="contained"
-                    size="small"
-                    fullWidth
-                    startIcon={<PaletteIcon />}
-                    onClick={() => this.setState({ open: true })}
+                {/* two equal buttons side by side: same height, a gap between them, no line breaks */}
+                <Box
+                    sx={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr',
+                        gap: 1,
+                        width: '100%',
+                        '& .MuiButton-root': {
+                            minWidth: 0,
+                            minHeight: 32,
+                            px: 1,
+                            textTransform: 'none',
+                            whiteSpace: 'nowrap',
+                            lineHeight: 1.2,
+                        },
+                        '& .MuiButton-startIcon': { mr: 0.75 },
+                    }}
                 >
-                    {t('widget_design_presets')}
-                </Button>
+                    <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<PaletteIcon />}
+                        onClick={() => this.setState({ open: true })}
+                    >
+                        {t('widget_design_presets')}
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        size="small"
+                        startIcon={<ThemesIcon />}
+                        onClick={() => this.setState({ themesOpen: true })}
+                    >
+                        {t('theme_manager_title')}
+                    </Button>
+                </Box>
                 {this.state.open ? (
                     <PresetGallery
                         palette={this.props}
                         onClose={() => this.setState({ open: false })}
+                    />
+                ) : null}
+                {this.state.themesOpen ? (
+                    <ThemeManager
+                        socket={this.props.socket}
+                        onClose={() => this.setState({ themesOpen: false })}
                     />
                 ) : null}
             </>

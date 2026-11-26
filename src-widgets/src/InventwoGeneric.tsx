@@ -2,11 +2,18 @@ import type { VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import type VisRxWidget from '@iobroker/types-vis-2/visRxWidget';
 import type React from 'react';
 
+import { applyTheme, removeTheme } from './utils/themes/themeMaps';
+import { themeStore } from './utils/themes/themeStore';
+
 export default class InventwoGeneric<
     RxData extends Record<string, any>,
     State extends Partial<VisRxWidgetState> = VisRxWidgetState,
 > extends (window.visRxWidget as typeof VisRxWidget)<RxData, State> {
     protected groupAttrs: Record<string, string[]> = {};
+    /** Unsubscribes from the theme store; set while mounted */
+    private themeUnsubscribe: (() => void) | null = null;
+    /** True once the widget's DOM element was seen, used to detect an unmount without componentWillUnmount */
+    private themeElementSeen = false;
 
     static getI18nPrefix(): string {
         return 'vis_2_widgets_inventwo_';
@@ -29,6 +36,124 @@ export default class InventwoGeneric<
                 }
             });
         });
+    }
+
+    componentDidMount(): void {
+        super.componentDidMount();
+        try {
+            void themeStore.init(this.props.context.socket);
+            this.themeUnsubscribe?.();
+            this.themeUnsubscribe = themeStore.subscribe(() => this.onThemeStoreChanged());
+        } catch (error) {
+            console.warn('[inventwo themes] Cannot connect widget to the theme store', error);
+        }
+    }
+
+    componentWillUnmount(): void {
+        this.themeUnsubscribe?.();
+        this.themeUnsubscribe = null;
+        super.componentWillUnmount();
+    }
+
+    /** Rebuilds rxData/rxStyle of a coupled widget when a theme, a token or the active theme changed */
+    private onThemeStoreChanged(): void {
+        // Some widgets override componentWillUnmount without calling super: detect the unmount by the DOM element
+        const element = (this as unknown as { refService?: React.RefObject<HTMLElement | null> }).refService?.current;
+        if (element?.isConnected) {
+            this.themeElementSeen = true;
+        } else if (this.themeElementSeen) {
+            this.themeUnsubscribe?.();
+            this.themeUnsubscribe = null;
+            return;
+        }
+        const data = this.state as unknown as { rxData?: Record<string, any>; data?: Record<string, any> };
+        if (data.rxData?.designTheme || data.data?.designTheme) {
+            this.onStateChanged();
+        }
+    }
+
+    /** Widget type, also available inside the super constructor */
+    private getThemeTpl(): string {
+        return (this.props as { tpl?: string } | undefined)?.tpl || this.getWidgetInfo().id;
+    }
+
+    /**
+     * Applies the coupled theme to rxData/rxStyle of a pending state (or removes token values written before if the
+     * widget is not coupled anymore). Uses no instance fields: it runs inside the super constructor too.
+     */
+    private applyThemeToState(target: { rxData?: Record<string, any>; rxStyle?: Record<string, any> }): void {
+        const rxData = target.rxData;
+        if (!rxData || typeof rxData !== 'object') {
+            return;
+        }
+        const theme = themeStore.resolve(rxData.designTheme);
+        if (theme) {
+            applyTheme(this.getThemeTpl(), rxData, target.rxStyle, theme);
+        } else {
+            removeTheme(rxData, target.rxStyle);
+        }
+    }
+
+    /**
+     * vis-2 builds rxData/rxStyle from the widget data and the bindings here. Empty design fields of a coupled widget
+     * get the token values of its theme (own values win). With `doNotApplyState` (constructor) the result is patched,
+     * otherwise the pending `this.newState` that vis-2 applies 50 ms later.
+     */
+    onStateChanged(
+        id?: Parameters<VisRxWidget<RxData, State>['onStateChanged']>[0],
+        state?: ioBroker.State | null,
+        doNotApplyState?: boolean,
+    ): ReturnType<VisRxWidget<RxData, State>['onStateChanged']> {
+        const result = super.onStateChanged(id, state, doNotApplyState);
+        try {
+            if (doNotApplyState) {
+                if (result) {
+                    this.applyThemeToState(result);
+                }
+            } else if (this.newState) {
+                this.applyThemeToState(this.newState);
+            } else {
+                // vis-2 found no difference between the plain data and the current state, so the current state has
+                // no theme values yet (e.g. the themes were loaded after the first render): apply them now.
+                const current = this.state as unknown as {
+                    rxData?: Record<string, any>;
+                    rxStyle?: Record<string, any>;
+                };
+                const theme = themeStore.resolve(current?.rxData?.designTheme);
+                if (theme && current.rxData) {
+                    const rxData = { ...current.rxData };
+                    const rxStyle = current.rxStyle ? { ...current.rxStyle } : undefined;
+                    applyTheme(this.getThemeTpl(), rxData, rxStyle, theme);
+                    if (
+                        JSON.stringify(rxData) !== JSON.stringify(current.rxData) ||
+                        JSON.stringify(rxStyle) !== JSON.stringify(current.rxStyle)
+                    ) {
+                        this.setState({ rxData, rxStyle } as unknown as Pick<typeof this.state, 'rxData'>);
+                    }
+                }
+            }
+        } catch (error) {
+            console.warn('[inventwo themes] Cannot apply theme', error);
+        }
+        return result;
+    }
+
+    /** Data of a widget, with the empty design fields filled from its theme if it is coupled */
+    private static themedWidgetData(
+        widget: { tpl?: string; data?: Record<string, any> } | undefined,
+    ): Record<string, any> {
+        const data = widget?.data || {};
+        try {
+            const theme = themeStore.resolve(data.designTheme);
+            if (theme && widget?.tpl) {
+                const copy = { ...data };
+                applyTheme(widget.tpl, copy, undefined, theme);
+                return copy;
+            }
+        } catch (error) {
+            console.warn('[inventwo themes] Cannot apply theme', error);
+        }
+        return data;
     }
 
     onChange(_e: any, value: any): void {
@@ -54,7 +179,9 @@ export default class InventwoGeneric<
             let found = false;
             // first try to find widget in the same view
             const thisView = this.props.context.views[this.props.view];
-            const widgetData = thisView?.widgets?.[wid]?.data;
+            const widgetData = thisView?.widgets?.[wid]?.data
+                ? InventwoGeneric.themedWidgetData(thisView.widgets[wid])
+                : undefined;
             if (widgetData) {
                 // extract palette settings from widget settings
                 attrList.forEach(attr => {
@@ -72,7 +199,7 @@ export default class InventwoGeneric<
                 for (let v = 0; v < viewIds.length; v++) {
                     const view = this.props.context.views[viewIds[v]];
                     if (view.name !== this.props.view && view.widgets?.[wid]?.data) {
-                        const widgetData1 = view.widgets[wid].data;
+                        const widgetData1 = InventwoGeneric.themedWidgetData(view.widgets[wid]);
                         // extract palette settings from widget settings
                         attrList.forEach(attr => {
                             let attrName = attr;

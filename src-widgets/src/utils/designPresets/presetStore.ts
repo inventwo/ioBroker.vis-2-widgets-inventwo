@@ -1,6 +1,6 @@
 import type { Connection } from '@iobroker/gui-components';
 
-import { type DesignData, type DesignGroup, sanitizeDesign } from './designFields';
+import { type DesignData, type DesignGroup, sanitizeDesign, sanitizeSetup } from './designFields';
 
 /** File storage of the adapter instance; created as `meta.user` object (see `instanceObjects` in io-package.json) */
 export const PRESET_NAMESPACE = 'vis-2-widgets-inventwo.0';
@@ -39,6 +39,13 @@ export interface DesignPreset {
     /** ISO time of the last save */
     saved: string;
     design: DesignData;
+    /**
+     * Basic setup that only built-in presets carry (widget type, mode, content type, value range …). It is applied
+     * together with the design and never stored in or read from user files.
+     */
+    setup?: DesignData;
+    /** Start size of a widget inserted from the gallery (built-in presets only) */
+    size?: { width: number; height: number };
     /** Small picture of the widget at the time of saving, a `data:image/png;base64,…` URL */
     thumbnail?: string;
     /**
@@ -101,10 +108,20 @@ export function nameKey(name: string): string {
     return cleanName(name).toLowerCase();
 }
 
+/** Width and height in pixels between 10 and 2000, or undefined */
+function sanitizeSize(raw: unknown): { width: number; height: number } | undefined {
+    const size = raw as { width?: unknown; height?: unknown } | null;
+    const ok = (value: unknown): value is number =>
+        typeof value === 'number' && Number.isFinite(value) && value >= 10 && value <= 2000;
+    return size && ok(size.width) && ok(size.height) ? { width: size.width, height: size.height } : undefined;
+}
+
 /** Copy without the in-memory `builtin` flag, as it is written into a file */
 function toStored(preset: DesignPreset): DesignPreset {
     const stored = { ...preset };
     delete stored.builtin;
+    delete stored.setup;
+    delete stored.size;
     return stored;
 }
 
@@ -123,7 +140,12 @@ export function parsePresetFile(text: string, widget: string, groups: DesignGrou
 }
 
 /** Like `parsePresetFile`, for an already parsed file */
-export function parsePresetData(json: unknown, widget: string, groups: DesignGroup[]): DesignPreset[] | null {
+export function parsePresetData(
+    json: unknown,
+    widget: string,
+    groups: DesignGroup[],
+    allowSetup = false,
+): DesignPreset[] | null {
     if (!json || typeof json !== 'object' || (json as PresetFile).format !== PRESET_FORMAT) {
         return null;
     }
@@ -145,7 +167,8 @@ export function parsePresetData(json: unknown, widget: string, groups: DesignGro
             return;
         }
         const design = sanitizeDesign(groups, preset.design);
-        if (!Object.keys(design).length) {
+        const setup = allowSetup ? sanitizeSetup(preset.setup) : {};
+        if (!Object.keys(design).length && !Object.keys(setup).length) {
             return;
         }
         result.push({
@@ -157,6 +180,8 @@ export function parsePresetData(json: unknown, widget: string, groups: DesignGro
                     ? preset.saved
                     : new Date().toISOString(),
             design,
+            ...(Object.keys(setup).length ? { setup } : {}),
+            ...(allowSetup && sanitizeSize(preset.size) ? { size: sanitizeSize(preset.size) } : {}),
             thumbnail: sanitizeThumbnail(preset.thumbnail),
         });
     });
@@ -216,7 +241,7 @@ export async function loadBuiltinPresets(widget: string, groups: DesignGroup[]):
     if (cached) {
         return cached;
     }
-    const presets = (parsePresetData(await loadBuiltinFile(), widget, groups) ?? []).map(p => ({
+    const presets = (parsePresetData(await loadBuiltinFile(), widget, groups, true) ?? []).map(p => ({
         ...p,
         builtin: true,
     }));
@@ -332,6 +357,78 @@ export async function updatePresets(
     await writeAll(socket, [...kept, ...added]);
 }
 
+/** A widget type presets can be imported for, with its design groups */
+export interface ImportTarget {
+    widget: string;
+    groups: DesignGroup[];
+}
+
+/** Presets imported for one widget type, with the names they were saved under */
+export interface ImportedPresets {
+    widget: string;
+    presets: DesignPreset[];
+}
+
+/**
+ * Imports the presets of an export (or storage) file for the given widget types and saves them as own presets.
+ * Presets of other widget types and invalid entries are skipped; a preset with the name of a built-in preset gets a
+ * free name like "Name (2)", and an own preset with the same name is replaced. Used by the attribute field (one type)
+ * and the gallery (all types), so both behave the same.
+ *
+ * @param socket   Connection to the file storage
+ * @param text     Content of the file
+ * @param targets  Widget types to import, each with its design groups
+ * @returns The imported presets per widget type (only types with presets, in the order of `targets`), or `null` if
+ *          the text is not a preset file or too large
+ */
+export async function importPresetFile(
+    socket: Connection,
+    text: string,
+    targets: ImportTarget[],
+): Promise<ImportedPresets[] | null> {
+    if (text.length > MAX_IMPORT_FILE_SIZE) {
+        return null;
+    }
+    let json: unknown;
+    try {
+        json = JSON.parse(text);
+    } catch {
+        return null;
+    }
+    const found: ImportedPresets[] = [];
+    for (const target of targets) {
+        const presets = parsePresetData(json, target.widget, target.groups);
+        if (!presets) {
+            // the format check does not depend on the widget type, so the whole file is invalid
+            return null;
+        }
+        if (presets.length) {
+            found.push({ widget: target.widget, presets });
+        }
+    }
+    if (!found.length) {
+        return found;
+    }
+    // Names of the own presets are not used for renamed ones, so a renamed preset never replaces an existing one
+    const existing: unknown[] = await readAll(socket);
+    const result: ImportedPresets[] = [];
+    for (const { widget, presets } of found) {
+        const taken = existing
+            .filter(
+                (p): p is DesignPreset =>
+                    !!p &&
+                    typeof p === 'object' &&
+                    (p as DesignPreset).widget === widget &&
+                    typeof (p as DesignPreset).name === 'string',
+            )
+            .map(p => p.name);
+        const renamed = await renameReserved(widget, presets, taken);
+        await updatePresets(socket, widget, renamed);
+        result.push({ widget, presets: renamed });
+    }
+    return result;
+}
+
 export function createPreset(
     name: string,
     widget: string,
@@ -353,4 +450,9 @@ export function createPreset(
 export function serializePresets(presets: DesignPreset[]): string {
     const file: PresetFile = { format: PRESET_FORMAT, version: PRESET_FORMAT_VERSION, presets: presets.map(toStored) };
     return JSON.stringify(file, null, 2);
+}
+
+/** Message of a caught error without the "Error: " prefix that String(error) adds */
+export function errorText(error: unknown): string {
+    return error instanceof Error ? error.message : String(error);
 }

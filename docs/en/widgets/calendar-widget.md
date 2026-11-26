@@ -126,6 +126,7 @@ Only shown when **Show calendar week numbers** is enabled.
 
 ## See Also
 
-- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Themes](../themes.md) — couple the design of this widget to a shared theme (colors, corners, border, shadow, font)
 - [Event Calendar Widget](event-calendar-widget.md) — for showing events/appointments in a month/week/day view
 - [Table Widget](table-widget.md) — for displaying date values as part of a larger data table

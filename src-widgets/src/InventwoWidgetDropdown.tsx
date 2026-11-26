@@ -5,6 +5,7 @@ import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetProps } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
 import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import { createThemeFields } from './utils/themes/ThemeField';
 import type { DesignSpec } from './utils/designPresets/designFields';
 
 interface DropdownRxData {
@@ -258,6 +259,11 @@ export default class InventwoWidgetDropdown extends InventwoGeneric<DropdownRxDa
                             label: 'title',
                         },
                     ],
+                },
+                {
+                    name: 'attr_group_theme',
+                    label: 'attr_group_theme',
+                    fields: createThemeFields(getDropdownWidgetInfo) as any,
                 },
                 {
                     name: 'attr_group_design_presets',

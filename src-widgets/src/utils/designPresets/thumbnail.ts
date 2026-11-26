@@ -246,6 +246,12 @@ async function render(element: HTMLElement, maxSize: number): Promise<string | u
     clone.style.height = `${height}px`;
     // offsetWidth/offsetHeight include padding and border
     clone.style.boxSizing = 'border-box';
+    // The outer element is the vis wrapper: its background, border and shadow come from the CSS tab of the widget,
+    // which a preset does not store. The picture shows only what the preset transfers, never a backdrop around it.
+    clone.style.background = 'none';
+    clone.style.border = 'none';
+    clone.style.boxShadow = 'none';
+    clone.style.outline = 'none';
 
     const scale = Math.min(maxSize / width, maxSize / height, MAX_UPSCALE);
     const targetWidth = Math.max(1, Math.round(width * scale));

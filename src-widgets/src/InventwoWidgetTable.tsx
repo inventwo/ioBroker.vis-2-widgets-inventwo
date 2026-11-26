@@ -30,6 +30,7 @@ import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetState, VisRxWidgetPr
 import React from 'react';
 import { createDocsLinkField } from './utils/docLinkField';
 import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import { createThemeFields } from './utils/themes/ThemeField';
 import type { DesignSpec } from './utils/designPresets/designFields';
 
 interface SortCriterion {
@@ -338,6 +339,11 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                             label: 'show_sum_row',
                         },
                     ],
+                },
+                {
+                    name: 'attr_group_theme',
+                    label: 'attr_group_theme',
+                    fields: createThemeFields(getTableWidgetInfo) as any,
                 },
                 {
                     name: 'attr_group_design_presets',
@@ -858,7 +864,8 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
                                 { value: 'dotted', label: 'dotted' },
                                 { value: 'double', label: 'double' },
                                 { value: 'groove', label: 'groove' },
-                                { value: 'inset', label: 'outset' },
+                                { value: 'inset', label: 'inset' },
+                                { value: 'outset', label: 'outset' },
                                 { value: 'ridge', label: 'ridge' },
                                 { value: 'solid', label: 'solid' },
                             ],
@@ -996,6 +1003,7 @@ export default class InventwoWidgetTable extends InventwoGeneric<TableRxData, Ta
     }
 
     componentWillUnmount(): void {
+        super.componentWillUnmount();
         this.resizeObserver?.disconnect();
     }
 

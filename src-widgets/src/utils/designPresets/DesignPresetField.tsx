@@ -7,7 +7,6 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Divider,
     IconButton,
     ListSubheader,
     MenuItem,
@@ -15,7 +14,7 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
-import type { Theme } from '@mui/material/styles';
+import type { SxProps, Theme } from '@mui/material/styles';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -39,16 +38,17 @@ import {
 import {
     type DesignPreset,
     createPreset,
+    importPresetFile,
     MAX_IMPORT_FILE_SIZE,
     loadPresets,
     nameKey,
-    parsePresetFile,
-    renameReserved,
     serializePresets,
     updatePresets,
+    errorText,
 } from './presetStore';
 import { BuiltinChip } from './BuiltinChip';
 import { captureWidgetThumbnail } from './thumbnail';
+import { getThemeMapping } from '../themes/themeMaps';
 
 const I18N_PREFIX = 'vis_2_widgets_inventwo_';
 const t = (key: string, ...args: (string | number)[]): string => I18n.t(`${I18N_PREFIX}${key}`, ...args);
@@ -87,6 +87,28 @@ const thumbnailBackground = (theme: Theme): Record<string, unknown> => ({
     overflow: 'hidden',
     background: `repeating-conic-gradient(${theme.palette.action.selected} 0% 25%, transparent 0% 50%) 50% / 12px 12px`,
 });
+
+/**
+ * A group of icon buttons in the action row. Groups are separated by a thin line on their left side; each group is
+ * moved 1px to the left and the row clips its overflow, so a group at the start of a (wrapped) line shows no line.
+ */
+const buttonGroup: SxProps<Theme> = {
+    position: 'relative',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 0.25,
+    ml: '-1px',
+    px: 0.5,
+    '&::before': {
+        content: '""',
+        position: 'absolute',
+        left: 0,
+        top: 6,
+        bottom: 6,
+        borderLeft: 1,
+        borderColor: 'divider',
+    },
+};
 
 /** Small icon button with the label as tooltip; the span keeps the tooltip working while the button is disabled */
 function iconButton(
@@ -217,7 +239,7 @@ class DesignPresetField extends React.Component<DesignPresetFieldProps, DesignPr
             return;
         }
         if (error) {
-            this.setStatus('error', `${t('design_preset_error_load')}: ${String(error)}`);
+            this.setStatus('error', `${t('design_preset_error_load')}: ${errorText(error)}`);
         }
         this.setState(state => {
             const wanted = select === undefined ? state.selected : presetKey({ name: select });
@@ -239,7 +261,7 @@ class DesignPresetField extends React.Component<DesignPresetFieldProps, DesignPr
         try {
             this.setStatus('ok', await action());
         } catch (e) {
-            this.setStatus('error', `${t('design_preset_error_storage')}: ${e}`);
+            this.setStatus('error', `${t('design_preset_error_storage')}: ${errorText(e)}`);
         } finally {
             if (this.mounted) {
                 this.setState({ busy: false });
@@ -251,8 +273,51 @@ class DesignPresetField extends React.Component<DesignPresetFieldProps, DesignPr
         return extractDesign(this.info, this.props.spec, this.props.data, this.props.fieldProps.context.views);
     }
 
-    private apply(design: DesignData): void {
-        this.props.onDataChange(buildApplyPatch(this.groups, design));
+    /**
+     * Fields the theme controls in the selected widgets that are coupled to a theme. A preset only brings the form
+     * into such widgets: colors, corners, border, shadow and font stay with the theme (and own values stay own).
+     */
+    private themeControlledFields(setup: DesignData = {}): Set<string> {
+        const { selectedWidgets, selectedView, context } = this.props.fieldProps;
+        const widgets = context.views[selectedView]?.widgets;
+        const ids = Array.isArray(selectedWidgets) ? selectedWidgets.map(String) : [this.selectedWidgetId];
+        const dataList: Record<string, any>[] = [];
+        ids.forEach(id => {
+            const widget = id && widgets ? widgets[id as keyof typeof widgets] : undefined;
+            if (widget?.tpl === this.widget && widget.data) {
+                dataList.push(widget.data as Record<string, any>);
+            }
+        });
+        if (!dataList.length && this.props.data) {
+            dataList.push(this.props.data);
+        }
+        const fields = new Set<string>();
+        dataList
+            .filter(data => !!data.designTheme)
+            // the mapping of the Universal widget depends on mode and number of states, which a setup may change
+            .forEach(data =>
+                Object.keys(getThemeMapping(this.widget, { ...data, ...setup })).forEach(field => fields.add(field)),
+            );
+        return fields;
+    }
+
+    /**
+     * Writes the design (and the basic setup of a built-in preset) into the selected widgets; returns true if
+     * theme-controlled fields were left out
+     */
+    private apply(design: DesignData, setup: DesignData = {}): boolean {
+        const themed = this.themeControlledFields(setup);
+        const values: DesignData = {};
+        let skipped = false;
+        Object.entries(design).forEach(([key, value]) => {
+            if (themed.has(key)) {
+                skipped = true;
+            } else {
+                values[key] = value;
+            }
+        });
+        this.props.onDataChange({ ...buildApplyPatch(this.groups, values), ...setup });
+        return skipped;
     }
 
     private onCopy = (): void => {
@@ -272,15 +337,20 @@ class DesignPresetField extends React.Component<DesignPresetFieldProps, DesignPr
             this.setStatus('error', t('design_preset_clipboard_empty'));
             return;
         }
-        this.apply(design);
-        this.setStatus('ok', t('design_preset_pasted'));
+        const themed = this.apply(design);
+        this.setStatus('ok', t(themed ? 'design_preset_pasted_themed' : 'design_preset_pasted'));
     };
 
     private onApply = (): void => {
         const preset = this.selectedPreset;
         if (preset) {
-            this.apply(preset.design);
-            this.setStatus('ok', t('design_preset_applied', preset.name));
+            const setup = preset.setup ?? {};
+            const themed = this.apply(preset.design, setup);
+            let text = t(themed ? 'design_preset_applied_themed' : 'design_preset_applied', preset.name);
+            if (Object.keys(setup).length) {
+                text = `${text}. ${t('design_preset_applied_setup')}`;
+            }
+            this.setStatus('ok', text);
         }
     };
 
@@ -325,20 +395,16 @@ class DesignPresetField extends React.Component<DesignPresetFieldProps, DesignPr
             if (file.size > MAX_IMPORT_FILE_SIZE) {
                 throw new Error(t('design_preset_error_import'));
             }
-            const parsed = parsePresetFile(await file.text(), this.widget, this.groups);
-            if (!parsed) {
+            const result = await importPresetFile(this.socket, await file.text(), [
+                { widget: this.widget, groups: this.groups },
+            ]);
+            if (!result) {
                 throw new Error(t('design_preset_error_import'));
             }
-            if (!parsed.length) {
+            const imported = result[0]?.presets ?? [];
+            if (!imported.length) {
                 return t('design_preset_imported_none');
             }
-            // Names of built-in presets are reserved: such presets get a free name like "Name (2)"
-            const imported = await renameReserved(
-                this.widget,
-                parsed,
-                this.userPresets.map(p => p.name),
-            );
-            await updatePresets(this.socket, this.widget, imported);
             await this.reload(imported[0].name);
             return t('design_preset_imported', imported.length);
         });
@@ -457,72 +523,84 @@ class DesignPresetField extends React.Component<DesignPresetFieldProps, DesignPr
                     </Box>
                 ) : null}
 
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 0.25 }}>
-                    {iconButton(
-                        t('design_preset_apply'),
-                        <DoneIcon fontSize="small" />,
-                        this.onApply,
-                        noSelection || mixedTypes,
-                        'primary',
-                    )}
-                    {iconButton(
-                        t('design_preset_save'),
-                        <SaveIcon fontSize="small" />,
-                        // A built-in preset cannot be overwritten, so its name is not suggested
-                        () =>
-                            this.setState({
-                                name: selectedPreset && !selectedPreset.builtin ? selectedPreset.name : '',
-                                dialog: 'save',
-                            }),
-                        busy || !this.single,
-                    )}
-                    {iconButton(
-                        selectedPreset?.builtin ? t('design_preset_builtin_readonly') : t('design_preset_delete'),
-                        <DeleteIcon fontSize="small" />,
-                        () => this.setState({ dialog: 'delete' }),
-                        noSelection || !!selectedPreset?.builtin,
-                    )}
-                    {iconButton(
-                        t('design_preset_export'),
-                        <FileDownloadIcon fontSize="small" />,
-                        () =>
-                            selectedPreset &&
-                            download(`${safeFileName(selectedPreset.name)}.json`, serializePresets([selectedPreset])),
-                        noSelection,
-                    )}
-                </Box>
-
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 0.25 }}>
-                    {iconButton(
-                        t('design_preset_copy'),
-                        <ContentCopyIcon fontSize="small" />,
-                        this.onCopy,
-                        busy || !this.single,
-                    )}
-                    {iconButton(
-                        t('design_preset_paste'),
-                        <ContentPasteIcon fontSize="small" />,
-                        this.onPaste,
-                        busy || mixedTypes,
-                    )}
-                    <Divider
-                        orientation="vertical"
-                        flexItem
-                        sx={{ mx: 0.5, my: 0.5 }}
-                    />
-                    {iconButton(
-                        t('design_preset_import'),
-                        <FileUploadIcon fontSize="small" />,
-                        () => this.fileInput.current?.click(),
-                        busy,
-                    )}
-                    {iconButton(
-                        t('design_preset_export_all'),
-                        <DownloadForOfflineIcon fontSize="small" />,
-                        // Only the own presets: the built-in ones ship with the adapter anyway
-                        () => download('inventwo-design-presets.json', serializePresets(userPresets)),
-                        busy || !userPresets.length,
-                    )}
+                {/* One row in groups: preset actions | quick copy | files. A group wraps as a whole if space is short;
+                    the negative margin lines up the first button with the dropdown (see `buttonGroup`) */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        rowGap: 0.25,
+                        overflow: 'hidden',
+                        ml: '-3px',
+                    }}
+                >
+                    <Box sx={buttonGroup}>
+                        {iconButton(
+                            t('design_preset_apply'),
+                            <DoneIcon fontSize="small" />,
+                            this.onApply,
+                            noSelection || mixedTypes,
+                            'primary',
+                        )}
+                        {iconButton(
+                            t('design_preset_save'),
+                            <SaveIcon fontSize="small" />,
+                            // A built-in preset cannot be overwritten, so its name is not suggested
+                            () =>
+                                this.setState({
+                                    name: selectedPreset && !selectedPreset.builtin ? selectedPreset.name : '',
+                                    dialog: 'save',
+                                }),
+                            busy || !this.single,
+                        )}
+                        {iconButton(
+                            selectedPreset?.builtin ? t('design_preset_builtin_readonly') : t('design_preset_delete'),
+                            <DeleteIcon fontSize="small" />,
+                            () => this.setState({ dialog: 'delete' }),
+                            noSelection || !!selectedPreset?.builtin,
+                        )}
+                    </Box>
+                    <Box sx={buttonGroup}>
+                        {iconButton(
+                            t('design_preset_copy'),
+                            <ContentCopyIcon fontSize="small" />,
+                            this.onCopy,
+                            busy || !this.single,
+                        )}
+                        {iconButton(
+                            t('design_preset_paste'),
+                            <ContentPasteIcon fontSize="small" />,
+                            this.onPaste,
+                            busy || mixedTypes,
+                        )}
+                    </Box>
+                    <Box sx={buttonGroup}>
+                        {iconButton(
+                            t('design_preset_import'),
+                            <FileUploadIcon fontSize="small" />,
+                            () => this.fileInput.current?.click(),
+                            busy,
+                        )}
+                        {iconButton(
+                            t('design_preset_export'),
+                            <FileDownloadIcon fontSize="small" />,
+                            () =>
+                                selectedPreset &&
+                                download(
+                                    `${safeFileName(selectedPreset.name)}.json`,
+                                    serializePresets([selectedPreset]),
+                                ),
+                            noSelection,
+                        )}
+                        {iconButton(
+                            t('design_preset_export_all'),
+                            <DownloadForOfflineIcon fontSize="small" />,
+                            // Only the own presets: the built-in ones ship with the adapter anyway
+                            () => download('inventwo-design-presets.json', serializePresets(userPresets)),
+                            busy || !userPresets.length,
+                        )}
+                    </Box>
                     <input
                         ref={this.fileInput}
                         type="file"

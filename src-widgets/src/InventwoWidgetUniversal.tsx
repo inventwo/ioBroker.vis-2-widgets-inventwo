@@ -22,6 +22,7 @@ import InventwoGeneric from './InventwoGeneric';
 import type { RxRenderWidgetProps, RxWidgetInfo, VisRxWidgetProps, VisRxWidgetState } from '@iobroker/types-vis-2';
 import { createDocsLinkField } from './utils/docLinkField';
 import { createDesignPresetField } from './utils/designPresets/DesignPresetField';
+import { createThemeFields } from './utils/themes/ThemeField';
 import type { DesignSpec } from './utils/designPresets/designFields';
 import type { ColorPickerProps } from '@jaames/iro/dist/ColorPicker';
 import type { UniversalCompleteRxData } from './types/UniversalWidgetRxDataTypes';
@@ -402,6 +403,11 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                             hidden: 'data.type != "button" || data.buttonHoldValue',
                         },
                     ],
+                },
+                {
+                    name: 'attr_group_theme',
+                    label: 'attr_group_theme',
+                    fields: createThemeFields(getUniversalWidgetInfo, { surface: true }) as any,
                 },
                 {
                     name: 'attr_group_design_presets',
@@ -2131,7 +2137,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                                 { value: 'dotted', label: 'dotted' },
                                 { value: 'double', label: 'double' },
                                 { value: 'groove', label: 'groove' },
-                                { value: 'inset', label: 'outset' },
+                                { value: 'inset', label: 'inset' },
+                                { value: 'outset', label: 'outset' },
                                 { value: 'ridge', label: 'ridge' },
                                 { value: 'solid', label: 'solid' },
                             ],
@@ -2771,6 +2778,7 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
     }
 
     componentWillUnmount(): void {
+        super.componentWillUnmount();
         if (this._buttonResetTimer) {
             clearTimeout(this._buttonResetTimer);
         }

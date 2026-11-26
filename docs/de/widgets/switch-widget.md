@@ -73,6 +73,7 @@ Der Thumb ist der runde Griff, der hin- und hergleitet.
 
 ## Siehe auch
 
-- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Themes](../themes.md) — Design dieses Widgets an ein gemeinsames Theme koppeln (Farben, Ecken, Rahmen, Schatten, Schrift)
 - [Checkbox Widget](checkbox-widget.md) — ähnliches Verhalten, als Checkbox dargestellt statt als Schalter
 - [Universal Widget](universal-widget.md) — vollständig anpassbare Kachel mit demselben Schaltverhalten plus Icons und Formen

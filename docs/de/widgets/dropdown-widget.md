@@ -106,6 +106,7 @@ Jede Bedingung hat:
 
 ## Siehe auch
 
-- [Design-Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Presets](../design-presets.md) — Design dieses Widgets speichern, anwenden, kopieren und teilen
+- [Themes](../themes.md) — Design dieses Widgets an ein gemeinsames Theme koppeln (Farben, Ecken, Rahmen, Schatten, Schrift)
 - [Universal Widget](universal-widget.md) — für individuelle Schaltflächen-/Kachelgestaltung mit Styling pro Zustand
 - [Table Widget](table-widget.md) — zum Anzeigen von Tabellendaten

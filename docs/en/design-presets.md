@@ -1,12 +1,14 @@
 > 🌐 **English** | [Deutsch](../de/design-presets.md)
 
-# Design Presets
+# Presets
 
-Design presets let you save the look of a widget once and reuse it on other widgets — in the same view, in other views, or in other projects. Presets can also be exported as a file and shared with other users.
+Presets let you save the look of a widget once and reuse it on other widgets — in the same view, in other views, or in other projects. Presets can also be exported as a file and shared with other users.
 
-Design presets are available for **all inventwo widgets**: Universal, Slider, Radial Slider, Switch, Checkbox, Dropdown, Marquee, Value List, Table, Calendar and Event Calendar. A preset always belongs to **one widget type** and can only be applied to widgets of that type (a Slider preset cannot be applied to a Switch).
+Presets are available for **all inventwo widgets**: Universal, Slider, Radial Slider, Switch, Checkbox, Dropdown, Marquee, Value List, Table, Calendar and Event Calendar. A preset always belongs to **one widget type** and can only be applied to widgets of that type (a Slider preset cannot be applied to a Switch).
 
 A preset only contains the **design** of a widget, never its function or content. Datapoints (Object IDs), values, texts, icons, images, views and actions are never transferred. Which attributes count as design for each widget type is listed in [What Is Transferred per Widget](#what-is-transferred-per-widget).
+
+Presets and [themes](themes.md) share the work: a preset sets the **form** of a widget (layout, sizes, spacing, font sizes, shape, angles, feedback), a theme its **look** (colors, corners, border, shadow, font). See [Presets on theme-coupled widgets](#presets-on-theme-coupled-widgets).
 
 ---
 
@@ -14,14 +16,14 @@ A preset only contains the **design** of a widget, never its function or content
 
 There are two places:
 
-- **Attribute group** — select an inventwo widget in the VIS 2 editor. The group **inventwo - Design presets** is located directly below the general group. Here you save, apply, copy and paste the design of the selected widget(s).
-- **Palette entry** — in edit mode, the inventwo widget set in the widget palette on the left contains the entry **Design presets**. It opens a gallery with the presets of all widget types (see [Preset Gallery](#preset-gallery)).
+- **Attribute group** — select an inventwo widget in the VIS 2 editor. The group **inventwo - Presets** is located below the general group, directly after the group **inventwo - Theme** ([Themes](themes.md)). Here you save, apply, copy and paste the design of the selected widget(s).
+- **Palette entry** — in edit mode, the inventwo widget set in the widget palette on the left contains the entry **Presets**. It opens a gallery with the presets of all widget types (see [Preset Gallery](#preset-gallery)).
 
 ---
 
 ## Built-in Presets
 
-The adapter ships with a set of ready-made presets for all widget types. They are marked with the label **Built-in** and are listed before your own presets: in the dropdown under **Built-in presets**, followed by **My presets**.
+The adapter ships with ready-made presets for all widget types, one per form, named after it: e.g. **Card**, **Tile**, **Segmented Buttons**, **Neumorphic** and **Hexagon** for the Universal widget, **Thermostat** and **Needle Gauge** for the Radial Slider, **Table** and **Striped Table** for the Table. There are no color variants: the colors come from a [theme](themes.md). Applied to a widget that is not coupled to a theme, a built-in preset brings its own colors along. They are marked with the label **Built-in** and are listed before your own presets: in the dropdown under **Built-in presets**, followed by **My presets**.
 
 - Built-in presets can be **applied**, **exported** and **added to a view** from the gallery, exactly like your own presets.
 - They are **read-only**: they cannot be deleted or overwritten.
@@ -29,21 +31,44 @@ The adapter ships with a set of ready-made presets for all widget types. They ar
 - They are part of the adapter, not of the file `design-presets.json`, and they are **updated with adapter updates**. To keep a modified version, apply the built-in preset to a widget, change it and save it under a new name.
 - If your own presets cannot be loaded (e.g. the file storage is not reachable), the built-in presets are still shown together with the error message.
 
+### Templates with a basic setup
+Some built-in presets are **templates**: besides the design they bring a matching basic setup, e.g. type, mode, content type or value range. Datapoints, passwords, URLs and views are never part of it; select them afterwards as usual.
+
+| Widget | Template | Basic setup |
+|---|---|---|
+| Universal | **Analog Clock**, **Minimal Clock** | Type "Read only", content analog clock |
+| Universal | **Color Wheel**, **White Tone** | Type "Read only", content color picker (color wheel or white tone slider), color model hex |
+| Universal | **Plus/Minus Buttons** | Type "Increase/decrease value", two separate buttons −1 / +1 |
+| Universal | **Popup Tile** | Type "View in dialog", closes on click outside |
+| Universal | **Segmented Buttons** | Separate buttons with three states |
+| Slider | **Shutter** | Vertical shutter slider 0–100 |
+| Radial Slider | **Thermostat** | 5–30 °C in steps of 0.5 |
+| Radial Slider | **Half Gauge** | Half-circle gauge, read only |
+| Radial Slider | **Progress Ring** | Progress ring 0–100 %, read only |
+| Radial Slider | **Dimmer Ring** | Dimmer 0–100 % |
+| Marquee | **Vertical Ticker** | Text scrolling from bottom to top |
+| Event Calendar | **Agenda** | List view of the week |
+
+- **Insert** from the gallery creates the widget with design, basic setup and a matching **start size**.
+- **Apply** on an existing widget also sets the basic setup, so it changes e.g. the type or value range. The status message says so. Undo works as usual.
+- The white tone slider of **White Tone** writes the color value (hex) of the white tone, not a Kelvin number.
+- Your own presets only contain the design, never a basic setup.
+
 ---
 
 ## The Attribute Group
 
-The group shows a **Preset** dropdown with the [built-in presets](#built-in-presets) and all saved presets of this widget type, each with a small preview picture. Below the dropdown the preview of the selected preset is shown. The actions are compact icon buttons; hover over a button to see its name.
+The group shows a **Preset** dropdown with the [built-in presets](#built-in-presets) and all saved presets of this widget type, each with a small preview picture. Below the dropdown the preview of the selected preset is shown. The actions are compact icon buttons in one row, grouped by thin separator lines: **Apply · Save as preset · Delete** | **Copy design · Paste design** | **Import · Export · Export all**. If the attribute panel is too narrow, a whole group moves to the next line. Hover over a button to see its name.
 
 | Button | What it does |
 |---|---|
 | **Apply** | Applies the selected preset to all selected widgets. |
 | **Save as preset** | Asks for a name and saves the design of the selected widget together with a preview picture. If one of your presets with that name already exists, it is overwritten after a warning. Names of built-in presets cannot be used. |
 | **Delete** | Deletes the selected preset (after confirmation). Only your own presets can be deleted. |
-| **Export** | Downloads the selected preset as a `.json` file. |
 | **Copy design** | Copies the design of the selected widget without saving a preset (see below). |
 | **Paste design** | Pastes the copied design into all selected widgets. |
 | **Import** | Imports presets from a `.json` file, e.g. from an export or shared by another user. |
+| **Export** | Downloads the selected preset as a `.json` file. |
 | **Export all** | Downloads all **own** presets of this widget type as one `.json` file. Built-in presets are not included, as they ship with the adapter anyway; a single built-in preset can be exported with **Export**. |
 
 ### Quick copy between widgets
@@ -54,13 +79,18 @@ For a one-off transfer you don't need to save a preset:
 
 The copied design is kept in the browser's local storage (one per widget type), so it is only available in this browser.
 
+### Presets on theme-coupled widgets
+If a widget is coupled to a [theme](themes.md), **Apply** and **Paste design** leave out every field the theme controls for that widget (colors, corners, border, shadow; see the token table in the theme documentation). The widget gets the form of the preset and keeps the look of its theme; own values you set in these fields stay as they are. The status message says so. Widgets that are not coupled get the complete design. With several selected widgets, the theme fields are left out for all of them as soon as one of them is coupled.
+
+Saving a preset and inserting a widget from the gallery are not affected.
+
 ### Multiple widgets at once
 **Apply** and **Paste design** work on all currently selected widgets of the same type. Select several widgets in the editor and apply the design to all of them in one step.
 
 **Save as preset** and **Copy design** require exactly **one** selected widget.
 
 ### Preview pictures
-When a preset is saved, a small picture of the widget is taken and stored with the preset. It is shown in the dropdown, below the dropdown and in the gallery. The picture is only an orientation aid and may differ slightly from the real widget:
+When a preset is saved, a small picture of the widget is taken and stored with the preset. It shows only the widget itself: the view background and the background, border and shadow from the **CSS** tab are left out, as the preset does not transfer them either. It is shown in the dropdown, below the dropdown and in the gallery. The picture is only an orientation aid and may differ slightly from the real widget:
 
 - text may be drawn in a fallback font, because fonts are not embedded,
 - pseudo-elements (`::before`/`::after`) are not captured,
@@ -72,16 +102,19 @@ If no picture can be created, the preset is saved anyway — without a preview.
 
 ## Preset Gallery
 
-Click **Design presets** in the inventwo widget set of the palette (edit mode). A dialog opens with the widget types on the left (with the number of presets each) and the presets of the selected type on the right, each as a card with preview picture and name. The gallery opens on the type you looked at last. Built-in presets carry the label **Built-in**; your own presets also show their save date.
+![Preset gallery](../../img/presets_gallery_en.png)
+
+Click **Presets** in the inventwo widget set of the palette (edit mode). A dialog opens with the widget types on the left (with the number of presets each) and the presets of the selected type on the right, each as a card with preview picture and name. The gallery opens on the type you looked at last. Built-in presets carry the label **Built-in**; your own presets also show their save date.
 
 | Action | What it does |
 |---|---|
-| **Insert** | Adds a new widget of the preset's type to the currently selected view. It gets the design of the preset; all other attributes get their normal default values. Then select the datapoint, texts etc. as usual. |
+| **Insert** | Adds a new widget of the preset's type to the currently selected view. It gets the design of the preset, for [templates](#templates-with-a-basic-setup) also their basic setup and start size; all other attributes get their normal default values. Then select the datapoint, texts etc. as usual. |
 | **Export** (icon) | Downloads this preset as a `.json` file. |
 | **Delete** (icon) | Deletes this preset (after confirmation). Only shown for your own presets. |
 | **Refresh** (icon in the title) | Reloads the list, e.g. after presets were saved in another browser tab. |
+| **Import** (icon in the title) | Imports presets from a `.json` file for **all** widget types it contains, e.g. an export with presets of several widget types. Afterwards the gallery shows the first widget type that got presets. |
 
-Presets are created and imported in the attribute group of a widget, not in the gallery.
+New presets are saved in the attribute group of a widget.
 
 ---
 
@@ -210,8 +243,7 @@ Built-in presets are not stored in this file; they are part of the adapter.
 
 The export file is a JSON file (format id `inventwo-design-presets`, with a format version) and contains the preview pictures. Please don't edit it by hand.
 
-When importing in the attribute group of a widget:
-- only presets for this widget type are imported,
+When importing in the attribute group of a widget, only presets for this widget type are imported. The import in the [gallery](#preset-gallery) takes the presets of all supported widget types; presets of unknown widget types are skipped. In both cases:
 - only design attributes are taken over — everything else in the file is ignored,
 - a preset with the same name is replaced,
 - a preset with the name of a built-in preset gets a suffix like ` (2)` instead,
@@ -224,4 +256,5 @@ When importing in the attribute group of a widget:
 ## See Also
 
 - [Universal Widget](widgets/universal-widget.md)
+- [Themes](themes.md) — couple widgets to a shared, script-controllable theme
 - [Styling and Shapes](widgets/universal/styling-and-shapes.md) — all style groups of the Universal Widget

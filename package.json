@@ -1,7 +1,7 @@
 {
   "name": "iobroker.vis-2-widgets-inventwo",
   "version": "2.4.1",
-  "description": "ioBroker vis2 inventwo widgets",
+  "description": "ioBroker vis2 inventwo widgets with themes and presets",
   "author": "jkvarel <jk@inventwo.com>",
   "contributors": [
     "jkvarel <jk@inventwo.com>"
@@ -15,7 +15,9 @@
   "keywords": [
     "ioBroker",
     "visualization",
-    "inventwo"
+    "inventwo",
+    "themes",
+    "presets"
   ],
   "devDependencies": {
     "@alcalzone/release-script": "^5.2.1",

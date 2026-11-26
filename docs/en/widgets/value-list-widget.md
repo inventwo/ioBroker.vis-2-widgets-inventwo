@@ -54,6 +54,7 @@ The Value List Widget takes a text value — from a datapoint or typed in manual
 
 ## See Also
 
-- [Design Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Presets](../design-presets.md) — save, apply, copy and share the design of this widget
+- [Themes](../themes.md) — couple the design of this widget to a shared theme (colors, corners, border, shadow, font)
 - [Marquee Widget](marquee-widget.md) — displays a single scrolling text instead of a list
 - [Table Widget](table-widget.md) — for structured tabular data from a JSON array
