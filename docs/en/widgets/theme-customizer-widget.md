@@ -49,7 +49,7 @@ Accent color and corner radius are shown by default; every other value is switch
 | Setting | What it does |
 |---|---|
 | **Show themes** | Shows the theme cards. Default: on. |
-| **Theme filter** | Comma-separated theme IDs, e.g. `dark,light`, to show only these themes. Empty = all themes. |
+| **Theme filter** | Dropdown with all themes: check the themes that should appear as cards. No selection = all themes. Deleted themes stay marked as "Unknown theme" until you uncheck them. |
 | **Offer color picker** | Adds a color picker button to every color. Off = only the suggestions can be chosen. Default: on. |
 
 ### Customizer Groups

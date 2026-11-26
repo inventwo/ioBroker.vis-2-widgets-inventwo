@@ -271,7 +271,7 @@ Im Bearbeitungsmodus zeigt das Widget seinen Inhalt, ändert aber nichts.
 | **Titel** | Optionaler Titel über den Bereichen. |
 | **Änderungen gelten für** | **Alle Geräte** (Standard): Das aktive Theme wird in den Datenpunkt `themes.active` geschrieben. **Nur dieses Gerät**: Die Auswahl wird im Browser dieses Geräts gespeichert und überschreibt dort das globale Theme. **Auswahl durch Nutzer**: Das Widget zeigt einen Schalter **Nur dieses Gerät**, der Nutzer entscheidet selbst. |
 | **Themes anzeigen** | Zeigt die Theme-Karten. |
-| **Theme-Filter** | Theme-IDs, durch Komma getrennt, z. B. `dark,light`. Leer = alle Themes. |
+| **Theme-Filter** | Auswahlliste mit allen Themes, mehrere ankreuzbar. Keine Auswahl = alle Themes. |
 | **Farbwähler anbieten** | Ergänzt jede Farbe um einen Knopf mit Farbwähler. |
 | **Customizer-Gruppen** | Je Theme-Wert eine Checkbox (Farben, Form, Rahmen, Schatten, Schrift); Farben und Schriftarten nehmen eigene Vorschläge. Siehe [Widget Theme-Anpassung](widgets/theme-customizer-widget.md#customizer-gruppen). |
 | **Theme-Layout** | **Raster** (Karten umbrechen auf mehrere Zeilen) oder **Zeile (scrollbar)**. |

@@ -271,7 +271,7 @@ In edit mode the widget shows its content but does not change anything.
 | **Title** | Optional title above the sections. |
 | **Apply changes to** | **All devices** (default): the active theme is written to the datapoint `themes.active`. **This device only**: the choice is stored in the browser of this device and overrides the global theme there. **User chooses**: the widget shows a switch **This device only**, so the user decides. |
 | **Show themes** | Shows the theme cards. |
-| **Theme filter** | Comma-separated theme IDs, e.g. `dark,light`. Empty = all themes. |
+| **Theme filter** | Dropdown with all themes, several can be checked. No selection = all themes. |
 | **Offer color picker** | Adds a color picker button to every color. |
 | **Customizer groups** | One checkbox per theme value (Colors, Shape, Border, Shadow, Font); colors and fonts take own suggestions. See [Theme Customizer Widget](widgets/theme-customizer-widget.md#customizer-groups). |
 | **Theme layout** | **Grid** (cards wrap to several lines) or **Row (scrollable)**. |

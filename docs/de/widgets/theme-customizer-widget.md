@@ -49,7 +49,7 @@ Akzentfarbe und Eckenradius sind standardmäßig sichtbar; alle anderen Werte sc
 | Einstellung | Was sie tut |
 |---|---|
 | **Themes anzeigen** | Zeigt die Theme-Karten. Standard: an. |
-| **Theme-Filter** | Theme-IDs, durch Komma getrennt, z. B. `dark,light`, um nur diese Themes zu zeigen. Leer = alle Themes. |
+| **Theme-Filter** | Auswahlliste mit allen Themes: Kreuze die Themes an, die als Karte erscheinen sollen. Keine Auswahl = alle Themes. Gelöschte Themes bleiben als „Unbekanntes Theme“ markiert, bis du sie abwählst. |
 | **Farbwähler anbieten** | Ergänzt jede Farbe um einen Knopf mit Farbwähler. Aus = nur die Vorschläge sind wählbar. Standard: an. |
 
 ### Customizer-Gruppen

@@ -17,6 +17,7 @@ import {
 } from './utils/themes/themeTokens';
 import { themeStore, type ThemeInfo, type ThemeScope } from './utils/themes/themeStore';
 import ThemeColorPicker from './utils/themes/ThemeColorPicker';
+import { createThemeFilterField, parseThemeFilter } from './utils/themes/ThemeFilterField';
 
 type CustomizerScope = 'global' | 'device' | 'choice';
 
@@ -207,13 +208,11 @@ export default class InventwoWidgetThemeCustomizer extends InventwoGeneric<
                             label: 'theme_customizer_show_themes',
                             default: true,
                         },
-                        {
-                            name: 'themeFilter',
-                            type: 'text',
+                        createThemeFilterField('themeFilter', {
                             label: 'theme_customizer_theme_filter',
                             tooltip: 'theme_customizer_theme_filter_tooltip',
                             hidden: '!data.showThemes',
-                        },
+                        }),
                         {
                             name: 'showColorPicker',
                             type: 'checkbox',
@@ -430,7 +429,7 @@ export default class InventwoWidgetThemeCustomizer extends InventwoGeneric<
 
     /** Themes shown as cards, optionally filtered by the `themeFilter` attribute */
     private getVisibleThemes(themes: ThemeInfo[]): ThemeInfo[] {
-        const filter = splitList(this.state.rxData.themeFilter, ',');
+        const filter = parseThemeFilter(this.state.rxData.themeFilter);
         if (!filter.length) {
             return themes;
         }
