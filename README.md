@@ -273,7 +273,7 @@ It shows a preview first, can write the result into a new project or back up the
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.0.1 (2026-11-27)
 - Marquee widget: border radius, border and outer shadow (also usable via themes and presets), so it can look like the Universal widget
 - Universal: an empty outer shadow color now means no shadow (before, the default card shadow of MUI was shown)
 - Presets on theme-coupled widgets: values that use the theme CSS variables (`var(--iw-…)`, e.g. a shadow color with `color-mix(...)`) are applied now instead of being left out; empty theme fields of a coupled widget are no longer stored as "not set", so applying the preset does not clear them in other widgets
@@ -313,9 +313,6 @@ It shows a preview first, can write the result into a new project or back up the
 - Radial Slider: Optional scale ticks with labels, a needle, a second value (e.g. setpoint) and the time of the last change
 - Slider: Fixed min/max not being taken over from the object when selecting the object ID
 - Universal Widget: Scrolling and pinch-zoom with the finger on touchscreens now also work over the widget; only a button with **Hold value** still blocks touch gestures. A gesture that turns into scrolling no longer triggers the action
-
-### 2.2.0 (2026-11-17)
-- Adapter settings: New migration assistant that converts the old vis-1 widgets of the adapter vis-inventwo (`i-vis-*`) in a vis-2 project into the widgets of this adapter – with preview, a list of widgets to check manually and either an automatic backup or a converted copy as new project. It can also restore widgets shown in several views, which vis-2 drops when importing a vis-1 project. Based on the community tool [inventwo-vis1-to-vis2](https://github.com/crunchip77/inventwo-vis1-to-vis2) by crunchip77
 
 ## Older changes
 Can be found in [CHANGELOG_OLD.md](CHANGELOG_OLD.md)

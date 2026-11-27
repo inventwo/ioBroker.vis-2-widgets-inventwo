@@ -1,4 +1,7 @@
 # Older changes
+## 2.2.0 (2026-11-17)
+- Adapter settings: New migration assistant that converts the old vis-1 widgets of the adapter vis-inventwo (`i-vis-*`) in a vis-2 project into the widgets of this adapter – with preview, a list of widgets to check manually and either an automatic backup or a converted copy as new project. It can also restore widgets shown in several views, which vis-2 drops when importing a vis-1 project. Based on the community tool [inventwo-vis1-to-vis2](https://github.com/crunchip77/inventwo-vis1-to-vis2) by crunchip77
+
 ## 2.1.1 (2026-11-03)
 - Universal Widget: Fixed content color of images not being applied for `rgb()` colors and colors given as hex (`#rgb`, `#rrggbb`, with optional alpha)
 
