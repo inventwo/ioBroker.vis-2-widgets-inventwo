@@ -445,10 +445,7 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
         const pauseOnHover = this.state.rxData.pauseOnHover;
         const backgroundColor = this.state.rxData.backgroundColor;
 
-        const outerShadow = this.getStyle(
-            'outerShadowStyleFromWidget',
-            this.groupAttrs.attr_group_css_outer_shadow,
-        );
+        const outerShadow = this.getStyle('outerShadowStyleFromWidget', this.groupAttrs.attr_group_css_outer_shadow);
         const border = this.getStyle('borderStyleFromWidget', this.groupAttrs.attr_group_css_border);
         const radius = this.getStyle('borderRadiusStyleFromWidget', this.groupAttrs.attr_group_css_border_radius);
         const boxShadow = outerShadow.outerShadowColor

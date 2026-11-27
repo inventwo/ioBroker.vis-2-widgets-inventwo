@@ -276,7 +276,12 @@ class DesignPresetField extends React.Component<DesignPresetFieldProps, DesignPr
      * removes such a value (e.g. the shadow offset and blur) from another widget.
      */
     private currentDesign(): DesignData {
-        const design = extractDesign(this.info, this.props.spec, this.props.data ?? {}, this.props.fieldProps.context.views);
+        const design = extractDesign(
+            this.info,
+            this.props.spec,
+            this.props.data ?? {},
+            this.props.fieldProps.context.views,
+        );
         if (this.props.data?.designTheme) {
             Object.keys(getThemeMapping(this.widget, this.props.data)).forEach(field => {
                 if (design[field] === null) {
