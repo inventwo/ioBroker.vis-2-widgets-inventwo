@@ -60,12 +60,14 @@ Each theme contains the following values. The datapoint of a value is `vis-2-wid
 | Token | Label | Meaning | Type |
 |---|---|---|---|
 | `background` | View background | Background of the view. Not applied to widgets, only available as CSS variable `--iw-background` (see [CSS Variables](#css-variables)). Gradients allowed. | Color |
-| `surface` | Surface | Background of cards: table rows, dialogs, Marquee, Universal widget with theme background "Card". Gradients allowed. | Color |
+| `surface` | Card | Background of cards: table rows, dialogs, Marquee, Universal widget with theme background "Card". Gradients allowed. | Color |
 | `surfaceVariant` | Tiles & buttons | Background of tiles and buttons: Universal widget (default), Dropdown, table header, separated buttons. Gradients allowed. | Color |
 | `accent` | Accent | Highlight color: active slider track and thumb, switch "on", checked checkbox, selected day, events, click feedback, active separated button. Gradients allowed. | Color |
-| `onAccent` | Text on accent | Text and icon color on accent backgrounds. | Color |
+| `onAccent` | Text on accent | Text color on accent backgrounds. | Color |
+| `onAccentIcon` | Icons on accent | Icon and content color on accent backgrounds (Universal widget: active state with "Accent fill", click feedback). If the value is missing, **Text on accent** applies. | Color |
 | `text` | Text | Main text color; also fills the CSS text color (`color`) of the widgets. | Color |
-| `textMuted` | Secondary text | Icons, labels, scales, weekdays and other secondary text. | Color |
+| `textMuted` | Secondary text | Labels, scales, weekdays and other secondary text. | Color |
+| `icon` | Icons / content | Icons and content (content color) of the Universal widget, also of inactive separated buttons, and the arrows in the header of the calendar. If a theme has no value (e.g. a theme from an older version), the value of **Secondary text** applies. | Color |
 | `track` | Track | Inactive track of sliders, radial sliders and switches. | Color |
 | `thumb` | Thumb | Thumb of the switch. | Color |
 | `radius` | Corner radius | Corners of tiles, tables and dialogs. | Number (px), 0–100 |
@@ -73,7 +75,9 @@ Each theme contains the following values. The datapoint of a value is `vis-2-wid
 | `border` | Border color | Color of borders and lines. | Color |
 | `borderWidth` | Border width | Width of the border of tiles, tables and the Dropdown. | Number (px), 0–20 |
 | `borderStyle` | Border style | `none`, `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset` or `outset` (the last four draw a 3D edge from the border color). | Text |
-| `shadow` | Shadow color | Color of all shadows. | Color |
+| `shadow` | Shadow color (cards) | Shadow of cards (Universal widget with theme background "Card", table) and of all other shadows (slider, switch, dropdown, calendar). | Color |
+| `shadowTile` | Shadow color (tiles & buttons) | Shadow of tiles and buttons: Universal widget with theme background "Tile", separated buttons. `rgba(0,0,0,0)` = no shadow. If the value is missing, the shadow color (cards) applies. | Color |
+| `glow` | Glow | Shadow color of the active state when **Glow in active state** is checked (Universal widget). If the value is missing, the accent color with 40 % opacity applies. | Color |
 | `shadowX` | Shadow X offset | Horizontal offset of the outer shadow. | Number (px), −50–50 |
 | `shadowY` | Shadow Y offset | Vertical offset of the outer shadow. | Number (px), −50–50 |
 | `shadowBlur` | Shadow blur | Blur of the outer shadow. | Number (px), 0–100 |
@@ -100,16 +104,29 @@ When you couple a widget, the fields the theme controls are **cleared**, so that
 ### Decoupling keeps the look
 When you set the dropdown back to **No theme**, the current theme values are written into the empty fields. The widget keeps its look and can be edited freely from now on.
 
-### Universal widget: theme background
-For the Universal widget the group has the additional setting **Theme background**:
+### Universal widget: theme background, active state and label
+For the Universal widget the group has four additional settings. **Theme background**:
 
-| Option | Background of the widget |
-|---|---|
-| **Tile** (default) | Theme value **Tiles & buttons** |
-| **Card** | Theme value **Surface** |
-| **None (own background)** | The theme does not set the background; the widget keeps its own background (e.g. a transparent icon button) |
+| Option | Background of the widget | Shadow |
+|---|---|---|
+| **Tile** (default) | Theme value **Tiles & buttons** | **Shadow color (tiles & buttons)** |
+| **Card** | Theme value **Card** | **Shadow color (cards)** |
+| **None (own background)** | The theme does not set the background; the widget keeps its own background (e.g. a transparent icon button) | The theme sets no shadow |
 
-States of the Universal widget: in the mode **Separated buttons** inactive buttons use **Tiles & buttons** and **Secondary text**, the active button **Accent** and **Text on accent**. A single button with one state uses **Accent** and **Text on accent**. Widgets with several states keep their own state colors.
+**Active state** sets how the theme shows the active state: state 1 of a button with one state (e.g. "this view is open" or "light on"), the active button in the mode **Separated buttons**. The setting only appears in these two cases; widgets with several states keep their own state colors.
+
+| Option | Background | Icon | Text |
+|---|---|---|---|
+| **Accent fill** (default) | Accent | Icons on accent | Text on accent |
+| **Subtle (icon in accent color)** | Tiles & buttons (with theme background "Card": Card) | Accent | Text |
+
+**Glow in active state** gives the active state a shadow in the theme color **Glow**, with both options. Unchecked, the active state has the shadow of its surface (cards or tiles & buttons).
+
+**Label** sets the text color in the inactive state: **Text** or **Secondary text**. **Default** uses text, in the mode **Separated buttons** secondary text.
+
+In the inactive state the icon gets the color **Icons / content**, separated buttons use the background **Tiles & buttons**. The click feedback always uses **Accent**, **Icons on accent** and **Text on accent**.
+
+If a field already has an own value (e.g. `contentColor1 = var(--iw-accent)`), it wins here too. For a new selection to take effect, clear the own values with **Reset own values**.
 
 ### What the theme controls per widget
 
@@ -231,12 +248,14 @@ This is set per view: every view whose background should follow the theme needs 
 | Variable | Token |
 |---|---|
 | `--iw-background` | View background |
-| `--iw-surface` | Surface |
+| `--iw-surface` | Card |
 | `--iw-surface-variant` | Tiles & buttons |
 | `--iw-accent` | Accent |
 | `--iw-on-accent` | Text on accent |
+| `--iw-on-accent-icon` | Icons on accent |
 | `--iw-text` | Text |
 | `--iw-text-muted` | Secondary text |
+| `--iw-icon` | Icons / content |
 | `--iw-track` | Track |
 | `--iw-thumb` | Thumb |
 | `--iw-radius` | Corner radius (with `px`) |
@@ -244,7 +263,9 @@ This is set per view: every view whose background should follow the theme needs 
 | `--iw-border` | Border color |
 | `--iw-border-width` | Border width (with `px`) |
 | `--iw-border-style` | Border style |
-| `--iw-shadow` | Shadow color |
+| `--iw-shadow` | Shadow color (cards) |
+| `--iw-shadow-tile` | Shadow color (tiles & buttons) |
+| `--iw-glow` | Glow |
 | `--iw-shadow-x` | Shadow X offset (with `px`) |
 | `--iw-shadow-y` | Shadow Y offset (with `px`) |
 | `--iw-shadow-blur` | Shadow blur (with `px`) |

@@ -87,6 +87,14 @@ export function getDesignGroups(info: RxWidgetInfo, spec: DesignSpec): DesignGro
     return result;
 }
 
+/**
+ * True if the value refers to a CSS variable of the themes (`var(--iw-…)`, also inside `color-mix(…)` or a gradient).
+ * Such a value follows the active theme by itself, so it may go into a widget that is coupled to a theme.
+ */
+export function usesThemeVariable(value: unknown): boolean {
+    return typeof value === 'string' && /var\(\s*--iw-/.test(value);
+}
+
 /** A binding like `{oid}` or `{v:oid;...}` refers to a datapoint and is therefore not part of a design */
 export function isBinding(value: unknown): boolean {
     return typeof value === 'string' && /\{[^{}]+\}/.test(value);

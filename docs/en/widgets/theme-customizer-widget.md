@@ -24,7 +24,7 @@ In edit mode the widget shows its content but does not change anything. Try it i
 | Section | What it does |
 |---|---|
 | **Theme** | One card per theme with a small preview. Tap a card to make this theme the active theme. |
-| **Colors** (accent, view background, surface, text, border color, shadow color, …) | Round color chips with suggestions. Tap one to set this color in the active theme. The last button (rainbow, pipette) opens a color picker for an own color, including opacity: while dragging, the coupled widgets follow live. |
+| **Colors** (accent, view background, card, text, border color, shadow color, …) | Round color chips with suggestions. Tap one to set this color in the active theme. The last button (rainbow, pipette) opens a color picker for an own color, including opacity: while dragging, the coupled widgets follow live. |
 | **Numbers** (corner radius, border width, shadow offset, blur and spread) | Slider with the value in px. |
 | **Border style** | Buttons: None, Solid, Dashed, Dotted, Double, Groove, Ridge, Inset, Outset. |
 | **Font** | Buttons with font suggestions, each shown in its own font. **Default** = font of the view. |

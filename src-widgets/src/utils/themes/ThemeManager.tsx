@@ -35,6 +35,7 @@ import {
     RestartAlt as RestoreIcon,
     SettingsBackupRestore as ResetIcon,
     Star as StarIcon,
+    Tune as TuneIcon,
 } from '@mui/icons-material';
 import { ColorPicker, I18n, type Connection } from '@iobroker/gui-components';
 
@@ -266,7 +267,13 @@ function ThemePreview(props: { tokens: ThemeTokens }): React.JSX.Element {
                 tk.surface,
                 <>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}>
-                        <span>{t('theme_preview_slider')}</span>
+                        <Box
+                            component="span"
+                            sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}
+                        >
+                            <TuneIcon sx={{ fontSize: 16, color: String(tk.icon) }} />
+                            {t('theme_preview_slider')}
+                        </Box>
                         <Box
                             component="span"
                             sx={{ color: String(tk.textMuted) }}

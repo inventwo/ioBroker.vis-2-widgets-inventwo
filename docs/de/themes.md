@@ -60,12 +60,14 @@ Jedes Theme enthält die folgenden Werte. Der Datenpunkt eines Werts ist `vis-2-
 | Token | Bezeichnung | Bedeutung | Typ |
 |---|---|---|---|
 | `background` | View-Hintergrund | Hintergrund der View. Wird nicht auf Widgets angewendet, sondern steht nur als CSS-Variable `--iw-background` bereit (siehe [CSS-Variablen](#css-variablen)). Verläufe erlaubt. | Farbe |
-| `surface` | Fläche | Hintergrund von Karten: Tabellenzeilen, Dialoge, Marquee, Universal Widget mit Theme-Hintergrund „Karte“. Verläufe erlaubt. | Farbe |
+| `surface` | Karte | Hintergrund von Karten: Tabellenzeilen, Dialoge, Marquee, Universal Widget mit Theme-Hintergrund „Karte“. Verläufe erlaubt. | Farbe |
 | `surfaceVariant` | Kacheln & Buttons | Hintergrund von Kacheln und Buttons: Universal Widget (Standard), Dropdown, Tabellenkopf, getrennte Schaltflächen. Verläufe erlaubt. | Farbe |
 | `accent` | Akzent | Hervorhebungsfarbe: aktive Slider-Spur und Regler, Switch „an“, angehakte Checkbox, ausgewählter Tag, Termine, Klick-Feedback, aktive getrennte Schaltfläche. Verläufe erlaubt. | Farbe |
-| `onAccent` | Text auf Akzent | Text- und Icon-Farbe auf Akzent-Hintergründen. | Farbe |
+| `onAccent` | Text auf Akzent | Textfarbe auf Akzent-Hintergründen. | Farbe |
+| `onAccentIcon` | Icons auf Akzent | Icon- und Inhaltsfarbe auf Akzent-Hintergründen (Universal Widget: aktiver Zustand mit „Akzentfläche“, Klick-Feedback). Fehlt der Wert, gilt **Text auf Akzent**. | Farbe |
 | `text` | Text | Haupt-Textfarbe; füllt auch die CSS-Textfarbe (`color`) der Widgets. | Farbe |
-| `textMuted` | Sekundärer Text | Icons, Beschriftungen, Skalen, Wochentage und andere Nebentexte. | Farbe |
+| `textMuted` | Sekundärer Text | Beschriftungen, Skalen, Wochentage und andere Nebentexte. | Farbe |
+| `icon` | Icons / Inhalt | Icons und Inhalte (Inhaltsfarbe) des Universal Widgets, auch der inaktiven getrennten Schaltflächen, und die Pfeile im Kopf des Kalenders. Fehlt der Wert in einem Theme (z. B. ein Theme aus einer älteren Version), gilt der Wert von **Sekundärer Text**. | Farbe |
 | `track` | Spur | Inaktive Spur von Slidern, Radial Slidern und Switches. | Farbe |
 | `thumb` | Regler | Regler (Knopf) des Switches. | Farbe |
 | `radius` | Eckenradius | Ecken von Kacheln, Tabellen und Dialogen. | Zahl (px), 0–100 |
@@ -73,7 +75,9 @@ Jedes Theme enthält die folgenden Werte. Der Datenpunkt eines Werts ist `vis-2-
 | `border` | Rahmenfarbe | Farbe von Rahmen und Linien. | Farbe |
 | `borderWidth` | Rahmenbreite | Breite des Rahmens von Kacheln, Tabellen und Dropdown. | Zahl (px), 0–20 |
 | `borderStyle` | Rahmenstil | `none`, `solid`, `dashed`, `dotted`, `double`, `groove`, `ridge`, `inset` oder `outset` (die letzten vier zeichnen aus der Rahmenfarbe eine 3D-Kante). | Text |
-| `shadow` | Schattenfarbe | Farbe aller Schatten. | Farbe |
+| `shadow` | Schattenfarbe (Karten) | Schatten von Karten (Universal Widget mit Theme-Hintergrund „Karte“, Tabelle) und aller übrigen Schatten (Slider, Switch, Dropdown, Kalender). | Farbe |
+| `shadowTile` | Schattenfarbe (Kacheln & Buttons) | Schatten von Kacheln und Buttons: Universal Widget mit Theme-Hintergrund „Kachel“, getrennte Schaltflächen. `rgba(0,0,0,0)` = kein Schatten. Fehlt der Wert, gilt die Schattenfarbe (Karten). | Farbe |
+| `glow` | Leuchten | Schattenfarbe des aktiven Zustands, wenn **Leuchten im aktiven Zustand** eingeschaltet ist (Universal Widget). Fehlt der Wert, gilt die Akzentfarbe mit 40 % Deckkraft. | Farbe |
 | `shadowX` | Schatten X-Versatz | Horizontaler Versatz des äußeren Schattens. | Zahl (px), −50–50 |
 | `shadowY` | Schatten Y-Versatz | Vertikaler Versatz des äußeren Schattens. | Zahl (px), −50–50 |
 | `shadowBlur` | Schatten-Unschärfe | Unschärfe des äußeren Schattens. | Zahl (px), 0–100 |
@@ -100,16 +104,29 @@ Beim Koppeln werden die Felder, die das Theme steuert, **geleert**, damit das Th
 ### Entkoppeln behält das Aussehen
 Stellst du die Auswahl zurück auf **Kein Theme**, werden die aktuellen Theme-Werte in die leeren Felder geschrieben. Das Widget behält sein Aussehen und lässt sich ab dann frei bearbeiten.
 
-### Universal Widget: Theme-Hintergrund
-Beim Universal Widget hat die Gruppe zusätzlich die Einstellung **Theme-Hintergrund**:
+### Universal Widget: Theme-Hintergrund, aktiver Zustand und Beschriftung
+Beim Universal Widget hat die Gruppe zusätzlich vier Einstellungen. **Theme-Hintergrund**:
 
-| Option | Hintergrund des Widgets |
-|---|---|
-| **Kachel** (Standard) | Theme-Wert **Kacheln & Buttons** |
-| **Karte** | Theme-Wert **Fläche** |
-| **Keiner (eigener Hintergrund)** | Das Theme setzt keinen Hintergrund; das Widget behält seinen eigenen (z. B. eine transparente Icon-Schaltfläche) |
+| Option | Hintergrund des Widgets | Schatten |
+|---|---|---|
+| **Kachel** (Standard) | Theme-Wert **Kacheln & Buttons** | **Schattenfarbe (Kacheln & Buttons)** |
+| **Karte** | Theme-Wert **Karte** | **Schattenfarbe (Karten)** |
+| **Keiner (eigener Hintergrund)** | Das Theme setzt keinen Hintergrund; das Widget behält seinen eigenen (z. B. eine transparente Icon-Schaltfläche) | Das Theme setzt keinen Schatten |
 
-Zustände des Universal Widgets: Im Modus **Getrennte Tasten** verwenden inaktive Schaltflächen **Kacheln & Buttons** und **Sekundärer Text**, die aktive Schaltfläche **Akzent** und **Text auf Akzent**. Eine einzelne Schaltfläche mit einem Zustand verwendet **Akzent** und **Text auf Akzent**. Widgets mit mehreren Zuständen behalten ihre eigenen Zustandsfarben.
+**Aktiver Zustand** legt fest, wie das Theme den aktiven Zustand zeigt: bei einer Schaltfläche mit einem Zustand den Zustand 1 (z. B. „diese View ist offen“ oder „Licht an“), im Modus **Getrennte Tasten** die aktive Taste. Die Einstellung erscheint nur in diesen beiden Fällen; Widgets mit mehreren Zuständen behalten ihre eigenen Zustandsfarben.
+
+| Option | Hintergrund | Icon | Text |
+|---|---|---|---|
+| **Akzentfläche** (Standard) | Akzent | Icons auf Akzent | Text auf Akzent |
+| **Dezent (Icon in Akzentfarbe)** | Kacheln & Buttons (bei Theme-Hintergrund „Karte“: Karte) | Akzent | Text |
+
+**Leuchten im aktiven Zustand** gibt dem aktiven Zustand einen Schatten in der Theme-Farbe **Leuchten**, bei beiden Optionen. Ohne Haken hat der aktive Zustand den Schatten seiner Fläche (Karten bzw. Kacheln & Buttons).
+
+**Beschriftung** legt die Textfarbe im inaktiven Zustand fest: **Text** oder **Sekundärer Text**. **Standard** verwendet Text, im Modus **Getrennte Tasten** Sekundärer Text.
+
+Im inaktiven Zustand bekommt das Icon die Farbe **Icons / Inhalt**, bei getrennten Tasten ist der Hintergrund **Kacheln & Buttons**. Das Klick-Feedback verwendet immer **Akzent**, **Icons auf Akzent** und **Text auf Akzent**.
+
+Hat ein Feld schon einen eigenen Wert (z. B. `contentColor1 = var(--iw-accent)`), gewinnt dieser auch hier. Damit eine neue Auswahl wirkt, setze die eigenen Werte mit **Eigene Werte zurücksetzen** zurück.
 
 ### Was das Theme je Widget steuert
 
@@ -231,12 +248,14 @@ Das gilt je View: Jede View, deren Hintergrund mitwechseln soll, braucht diesen 
 | Variable | Token |
 |---|---|
 | `--iw-background` | View-Hintergrund |
-| `--iw-surface` | Fläche |
+| `--iw-surface` | Karte |
 | `--iw-surface-variant` | Kacheln & Buttons |
 | `--iw-accent` | Akzent |
 | `--iw-on-accent` | Text auf Akzent |
+| `--iw-on-accent-icon` | Icons auf Akzent |
 | `--iw-text` | Text |
 | `--iw-text-muted` | Sekundärer Text |
+| `--iw-icon` | Icons / Inhalt |
 | `--iw-track` | Spur |
 | `--iw-thumb` | Regler |
 | `--iw-radius` | Eckenradius (mit `px`) |
@@ -244,7 +263,9 @@ Das gilt je View: Jede View, deren Hintergrund mitwechseln soll, braucht diesen 
 | `--iw-border` | Rahmenfarbe |
 | `--iw-border-width` | Rahmenbreite (mit `px`) |
 | `--iw-border-style` | Rahmenstil |
-| `--iw-shadow` | Schattenfarbe |
+| `--iw-shadow` | Schattenfarbe (Karten) |
+| `--iw-shadow-tile` | Schattenfarbe (Kacheln & Buttons) |
+| `--iw-glow` | Leuchten |
 | `--iw-shadow-x` | Schatten X-Versatz (mit `px`) |
 | `--iw-shadow-y` | Schatten Y-Versatz (mit `px`) |
 | `--iw-shadow-blur` | Schatten-Unschärfe (mit `px`) |

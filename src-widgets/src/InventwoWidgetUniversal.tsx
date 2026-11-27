@@ -57,12 +57,15 @@ const HOVER_COLOR_FIELDS: (keyof UniversalWidgetHoverStyles)[] = [
 
 /**
  * Design attributes of the Universal Widget for design presets: colors, borders, shadows, spacing, corners, shape,
- * alignment and the look of dialog, color picker and analog clock. Never datapoints, texts, icons, images, views,
+ * alignment, the theme settings (theme background, active state, label) and the look of dialog, color picker and
+ * analog clock. Never the theme coupling itself, datapoints, texts, icons, images, views,
  * actions, passwords or the number of states.
  */
 export const UNIVERSAL_DESIGN_SPEC: DesignSpec = {
     version: 1,
     groups: {
+        // theme settings belong to the form of the widget; without a coupled theme they have no effect
+        attr_group_theme: ['designThemeSurface', 'designThemeActive', 'designThemeGlow', 'designThemeLabel'],
         common: ['direction', 'buttonSize', 'btnSpacing'],
         attr_group_type_view_in_dialog: [
             'dialogWidth',
@@ -4917,7 +4920,8 @@ export default class InventwoWidgetUniversal extends InventwoGeneric<UniversalCo
                     style={{
                         background: valueData.background,
                         borderRadius,
-                        boxShadow: shadow,
+                        // without any shadow color MUI would draw its own card shadow
+                        boxShadow: shadow || 'none',
                         opacity: valueData.styles.backgroundOpacity,
                         position: 'absolute',
                         inset: 0,

@@ -80,7 +80,13 @@ Für eine einmalige Übertragung musst du kein Preset speichern:
 Das kopierte Design wird im lokalen Speicher des Browsers abgelegt (eines je Widget-Typ) und steht daher nur in diesem Browser zur Verfügung.
 
 ### Presets auf Theme-gekoppelten Widgets
-Ist ein Widget an ein [Theme](themes.md) gekoppelt, lassen **Anwenden** und **Design einfügen** alle Felder aus, die das Theme bei diesem Widget steuert (Farben, Ecken, Rahmen, Schatten; siehe die Token-Tabelle in der Theme-Doku). Das Widget bekommt die Form des Presets und behält das Aussehen seines Themes; eigene Werte in diesen Feldern bleiben, wie sie sind. Die Statusmeldung weist darauf hin. Widgets ohne Theme bekommen das vollständige Design. Sind mehrere Widgets ausgewählt, werden die Theme-Felder bei allen ausgelassen, sobald eines davon gekoppelt ist.
+Ist ein Widget an ein [Theme](themes.md) gekoppelt, lassen **Anwenden** und **Design einfügen** alle Felder mit festen Werten aus, die das Theme bei diesem Widget steuert (Farben, Ecken, Rahmen, Schatten; siehe die Token-Tabelle in der Theme-Doku). Das Widget bekommt die Form des Presets und behält das Aussehen seines Themes; eigene Werte in diesen Feldern bleiben, wie sie sind. Die Statusmeldung weist darauf hin. Widgets ohne Theme bekommen das vollständige Design.
+
+Werte, die die CSS-Variablen der Themes nutzen, werden dagegen auch in gekoppelte Widgets übernommen, denn sie wechseln selbst mit dem Theme. Beispiel: Eine Schattenfarbe `color-mix(in srgb, var(--iw-accent) 40%, transparent)` kommt mit dem Preset mit und folgt danach der Akzentfarbe des aktiven Themes.
+
+Speicherst oder kopierst du das Design eines gekoppelten Widgets, kommen leere Theme-Felder nicht als „nicht gesetzt“ ins Preset. Sie zeigen ja den Wert des Themes. Beim Anwenden bleiben diese Felder im Ziel-Widget deshalb unverändert, statt geleert zu werden (z. B. Versatz und Unschärfe des Schattens).
+
+Beim Universal Widget gehören die Theme-Einstellungen **Theme-Hintergrund**, **Aktiver Zustand** und **Beschriftung** zum Preset. Sie werden mit gespeichert und angewendet, auch auf Widgets ohne Theme; dort wirken sie erst, wenn du das Widget koppelst. Die Kopplung selbst (Auswahl des Themes) überträgt ein Preset nie. Sind mehrere Widgets ausgewählt, werden die Theme-Felder bei allen ausgelassen, sobald eines davon gekoppelt ist.
 
 Das Speichern eines Presets und das Einfügen eines Widgets aus der Galerie sind davon nicht betroffen.
 

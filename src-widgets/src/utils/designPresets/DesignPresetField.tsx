@@ -34,6 +34,7 @@ import {
     extractDesign,
     getDesignGroups,
     sanitizeDesign,
+    usesThemeVariable,
 } from './designFields';
 import {
     type DesignPreset,
@@ -269,13 +270,27 @@ class DesignPresetField extends React.Component<DesignPresetFieldProps, DesignPr
         }
     }
 
+    /**
+     * Design of the selected widget. In a widget coupled to a theme, an empty theme-controlled field shows the theme
+     * value; it is left out of the design instead of being taken as "not set", so that applying the design never
+     * removes such a value (e.g. the shadow offset and blur) from another widget.
+     */
     private currentDesign(): DesignData {
-        return extractDesign(this.info, this.props.spec, this.props.data, this.props.fieldProps.context.views);
+        const design = extractDesign(this.info, this.props.spec, this.props.data ?? {}, this.props.fieldProps.context.views);
+        if (this.props.data?.designTheme) {
+            Object.keys(getThemeMapping(this.widget, this.props.data)).forEach(field => {
+                if (design[field] === null) {
+                    delete design[field];
+                }
+            });
+        }
+        return design;
     }
 
     /**
      * Fields the theme controls in the selected widgets that are coupled to a theme. A preset only brings the form
-     * into such widgets: colors, corners, border, shadow and font stay with the theme (and own values stay own).
+     * into such widgets: fixed colors, corners, border, shadow and font stay with the theme (and own values stay
+     * own). Values that use the CSS variables of the themes (`var(--iw-…)`) are taken over, they follow the theme.
      */
     private themeControlledFields(setup: DesignData = {}): Set<string> {
         const { selectedWidgets, selectedView, context } = this.props.fieldProps;
@@ -306,11 +321,18 @@ class DesignPresetField extends React.Component<DesignPresetFieldProps, DesignPr
      * theme-controlled fields were left out
      */
     private apply(design: DesignData, setup: DesignData = {}): boolean {
-        const themed = this.themeControlledFields(setup);
+        // The theme settings of the preset (e.g. the active state) decide which fields the theme controls afterwards
+        const themeSettings: DesignData = {};
+        Object.entries(design).forEach(([key, value]) => {
+            if (key.startsWith('designTheme')) {
+                themeSettings[key] = value ?? '';
+            }
+        });
+        const themed = this.themeControlledFields({ ...themeSettings, ...setup });
         const values: DesignData = {};
         let skipped = false;
         Object.entries(design).forEach(([key, value]) => {
-            if (themed.has(key)) {
+            if (themed.has(key) && !usesThemeVariable(value)) {
                 skipped = true;
             } else {
                 values[key] = value;

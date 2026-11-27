@@ -80,7 +80,13 @@ For a one-off transfer you don't need to save a preset:
 The copied design is kept in the browser's local storage (one per widget type), so it is only available in this browser.
 
 ### Presets on theme-coupled widgets
-If a widget is coupled to a [theme](themes.md), **Apply** and **Paste design** leave out every field the theme controls for that widget (colors, corners, border, shadow; see the token table in the theme documentation). The widget gets the form of the preset and keeps the look of its theme; own values you set in these fields stay as they are. The status message says so. Widgets that are not coupled get the complete design. With several selected widgets, the theme fields are left out for all of them as soon as one of them is coupled.
+If a widget is coupled to a [theme](themes.md), **Apply** and **Paste design** leave out every field with a fixed value that the theme controls for that widget (colors, corners, border, shadow; see the token table in the theme documentation). The widget gets the form of the preset and keeps the look of its theme; own values you set in these fields stay as they are. The status message says so. Widgets that are not coupled get the complete design.
+
+Values that use the CSS variables of the themes are applied to coupled widgets too, because they change with the theme by themselves. Example: a shadow color `color-mix(in srgb, var(--iw-accent) 40%, transparent)` comes with the preset and then follows the accent color of the active theme.
+
+When you save or copy the design of a coupled widget, empty theme fields are not stored as "not set", as they show the value of the theme. Applying the preset therefore leaves these fields in the target widget unchanged instead of clearing them (e.g. offset and blur of the shadow).
+
+For the Universal widget the theme settings **Theme background**, **Active state** and **Label** belong to the preset. They are saved and applied, also to widgets without a theme; there they take effect once you couple the widget. A preset never transfers the coupling itself (the selected theme). With several selected widgets, the theme fields are left out for all of them as soon as one of them is coupled.
 
 Saving a preset and inserting a widget from the gallery are not affected.
 

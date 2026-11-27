@@ -14,6 +14,38 @@ function add(mapping: ThemeMapping, token: ThemeTokenKey, ...fields: string[]): 
     fields.forEach(field => (mapping[field] = token));
 }
 
+/**
+ * Look of the active state (`designThemeActive`): `accent` fills the button with the accent color, `subtle` keeps
+ * the tile and colors only the icon. `designThemeGlow` adds a shadow in the glow color to either of them.
+ */
+type ActiveStyle = 'accent' | 'subtle';
+
+interface ActiveLook {
+    style: ActiveStyle;
+    /** Background of the active state with the subtle look */
+    tile: ThemeTokenKey;
+    /** Shadow color of the active state */
+    shadow: ThemeTokenKey;
+}
+
+/** Adds the fields of an active state: background, icon, text and shadow color */
+function addActive(
+    m: ThemeMapping,
+    look: ActiveLook,
+    fields: { background: string; content: string; text: string; shadow: string },
+): void {
+    if (look.style === 'accent') {
+        add(m, 'accent', fields.background);
+        add(m, 'onAccentIcon', fields.content);
+        add(m, 'onAccent', fields.text);
+    } else {
+        add(m, look.tile, fields.background);
+        add(m, 'accent', fields.content);
+        add(m, 'text', fields.text);
+    }
+    add(m, look.shadow, fields.shadow);
+}
+
 function universalMapping(data: Record<string, any>): ThemeMapping {
     const m: ThemeMapping = {};
     const surface = data.designThemeSurface || 'tile';
@@ -22,10 +54,24 @@ function universalMapping(data: Record<string, any>): ThemeMapping {
     } else if (surface !== 'none') {
         add(m, 'surfaceVariant', 'background');
     }
-    add(m, 'textMuted', 'contentColor');
-    add(m, 'text', 'textColor');
+    // Shadow of the surface: cards and tiles have their own shadow color; without an own surface there is none
+    const surfaceShadow: ThemeTokenKey = surface === 'card' ? 'shadow' : 'shadowTile';
+    // `glow` was a value of `designThemeActive` before the separate setting `designThemeGlow`
+    const glow = !!data.designThemeGlow || data.designThemeActive === 'glow';
+    const active: ActiveLook = {
+        style: data.designThemeActive === 'subtle' || data.designThemeActive === 'glow' ? 'subtle' : 'accent',
+        // without an own surface the active button gets the tile color
+        tile: surface === 'card' ? 'surface' : 'surfaceVariant',
+        shadow: glow ? 'glow' : surfaceShadow,
+    };
+    // Label (text) in the inactive state: `text` or `muted`; separated buttons used the secondary text before
+    const label = data.designThemeLabel;
+    add(m, 'icon', 'contentColor');
+    add(m, label === 'muted' ? 'textMuted' : 'text', 'textColor');
     add(m, 'border', 'borderColor');
-    add(m, 'shadow', 'outerShadowColor');
+    if (surface !== 'none') {
+        add(m, surfaceShadow, 'outerShadowColor');
+    }
     add(
         m,
         'radius',
@@ -41,7 +87,8 @@ function universalMapping(data: Record<string, any>): ThemeMapping {
     add(m, 'shadowBlur', 'outerShadowBlur');
     add(m, 'shadowSize', 'outerShadowSize');
     add(m, 'accent', 'backgroundFeedback');
-    add(m, 'onAccent', 'contentColorFeedback', 'textColorFeedback');
+    add(m, 'onAccentIcon', 'contentColorFeedback');
+    add(m, 'onAccent', 'textColorFeedback');
     add(m, 'surface', 'dialogBackground');
     add(m, 'text', 'dialogTitleColor', 'dialogCloseButtonColor');
     add(
@@ -60,17 +107,29 @@ function universalMapping(data: Record<string, any>): ThemeMapping {
     if (data.mode === 'separatedButtons') {
         for (let i = 1; i <= count; i++) {
             add(m, 'surfaceVariant', `background${i}`);
-            add(m, 'accent', `backgroundTrue${i}`);
-            add(m, 'textMuted', `contentColor${i}`, `textColor${i}`);
-            add(m, 'onAccent', `contentColorTrue${i}`, `textColorTrue${i}`);
+            add(m, 'icon', `contentColor${i}`);
+            add(m, label === 'text' ? 'text' : 'textMuted', `textColor${i}`);
             add(m, 'border', `borderColor${i}`, `borderColorTrue${i}`);
-            add(m, 'shadow', `outerShadowColor${i}`, `outerShadowColorTrue${i}`);
+            add(m, 'shadowTile', `outerShadowColor${i}`);
+            addActive(
+                m,
+                { ...active, tile: 'surfaceVariant', shadow: glow ? 'glow' : 'shadowTile' },
+                {
+                    background: `backgroundTrue${i}`,
+                    content: `contentColorTrue${i}`,
+                    text: `textColorTrue${i}`,
+                    shadow: `outerShadowColorTrue${i}`,
+                },
+            );
         }
     } else if (Number(data.countStates) === 1) {
-        add(m, 'accent', 'background1');
-        add(m, 'onAccent', 'contentColor1', 'textColor1');
         add(m, 'border', 'borderColor1');
-        add(m, 'shadow', 'outerShadowColor1');
+        addActive(m, active, {
+            background: 'background1',
+            content: 'contentColor1',
+            text: 'textColor1',
+            shadow: 'outerShadowColor1',
+        });
     }
     return m;
 }
@@ -156,12 +215,12 @@ const STATIC_MAPPINGS: Record<string, ThemeMapping> = (() => {
     add(
         calendar,
         'textMuted',
-        'headerIconColor',
         'weekdayTextColor',
         'dayOutsideMonthTextColor',
         'dayDisabledTextColor',
         'weekNumberTextColor',
     );
+    add(calendar, 'icon', 'headerIconColor');
     add(calendar, 'surfaceVariant', 'dayHoverColor');
     add(calendar, 'accent', 'selectedBackgroundColor', 'todayBorderColor');
     add(calendar, 'onAccent', 'selectedTextColor');

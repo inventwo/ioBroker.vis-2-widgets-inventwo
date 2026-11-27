@@ -53,7 +53,7 @@ Die meisten Style-Gruppen haben ein **Vom Widget**-Feld. Wähle ein anderes Univ
 In der Gruppe **inventwo - Presets** kannst du das Design einer Kachel kopieren und einfügen, als benanntes Preset speichern, auf mehrere ausgewählte Widgets gleichzeitig anwenden und Presets als Datei exportieren oder importieren. Übertragen wird nur das Design, nie Datenpunkte, Texte, Icons oder Aktionen. → [Presets](../design-presets.md)
 
 ### Themes
-In der Gruppe **inventwo - Theme** koppelst du eine Kachel an ein Theme: Hintergrund, Farben, Rahmen, Ecken und Schatten kommen dann aus dem Theme und ändern sich mit ihm, eigene Werte haben Vorrang. **Theme-Hintergrund** legt fest, ob die Kachel die Kachel-Fläche, die Karten-Fläche oder ihren eigenen Hintergrund verwendet. → [Themes](../themes.md)
+In der Gruppe **inventwo - Theme** koppelst du eine Kachel an ein Theme: Hintergrund, Farben, Rahmen, Ecken und Schatten kommen dann aus dem Theme und ändern sich mit ihm, eigene Werte haben Vorrang. **Theme-Hintergrund** legt fest, ob die Kachel die Kachel-Fläche, die Karten-Fläche oder ihren eigenen Hintergrund verwendet. **Aktiver Zustand** wählt, wie der aktive Zustand aussieht (volle Akzentfläche oder dezent mit Icon in Akzentfarbe), **Leuchten im aktiven Zustand** gibt ihm einen Schein in Akzentfarbe, **Beschriftung** die Textfarbe im inaktiven Zustand. → [Themes](../themes.md)
 
 ---
 

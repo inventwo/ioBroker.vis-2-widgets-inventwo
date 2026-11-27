@@ -90,7 +90,12 @@ class ThemeField extends React.Component<ThemeFieldProps, ThemeFieldState> {
     }
 
     private get ref(): string {
-        return String(this.props.data.designTheme ?? '');
+        // with a multi selection vis-2 passes no `data`; use the value the selected widgets share
+        if (this.props.data) {
+            return String(this.props.data.designTheme ?? '');
+        }
+        const values = new Set(this.getEntries().map(e => String(e.data.designTheme ?? '')));
+        return values.size === 1 ? [...values][0] : '';
     }
 
     /** The selected widgets; with a single selection the data of the field is used, it is always up to date */
@@ -110,7 +115,7 @@ class ThemeField extends React.Component<ThemeFieldProps, ThemeFieldState> {
         if (!entries.length) {
             const id = ids[0];
             const tpl = (id && widgets?.[id]?.tpl) || this.props.getWidgetInfo().id;
-            entries.push({ tpl, data: this.props.data });
+            entries.push({ tpl, data: this.props.data ?? {} });
         }
         return entries;
     }
@@ -377,13 +382,14 @@ class ThemeField extends React.Component<ThemeFieldProps, ThemeFieldState> {
 
 /** Options of `createThemeFields` */
 export interface ThemeFieldsOptions {
-    /** Adds `designThemeSurface` (which theme surface is used as background); Universal widget only */
+    /** Adds `designThemeSurface`, `designThemeActive`, `designThemeGlow` and `designThemeLabel`; Universal widget only */
     surface?: boolean;
 }
 
 /**
  * Returns the fields of the attribute group `attr_group_theme`: a short help, the theme selection (`designTheme`) and,
- * with `options.surface`, the surface the theme uses as background (`designThemeSurface`).
+ * with `options.surface`, the surface the theme uses as background (`designThemeSurface`), the look of the active
+ * state (`designThemeActive`, `designThemeGlow`) and the color of the label (`designThemeLabel`).
  *
  * `getWidgetInfo` is only called lazily: the fields are created while the widget info is built, so the widget type
  * cannot be read from it here (endless recursion). That is why the Universal widget passes `{ surface: true }`.
@@ -436,6 +442,43 @@ export function createThemeFields(
                 { value: 'none', label: 'design_theme_surface_none' },
             ],
             default: 'tile',
+            noBinding: true,
+            hidden: '!data.designTheme',
+        });
+        fields.push({
+            name: 'designThemeActive',
+            type: 'select',
+            label: 'design_theme_state',
+            tooltip: 'design_theme_state_tooltip',
+            options: [
+                { value: 'accent', label: 'design_theme_state_accent' },
+                { value: 'subtle', label: 'design_theme_state_subtle' },
+            ],
+            default: 'accent',
+            noBinding: true,
+            // only a single button with one state and separated buttons have a state the theme colors
+            hidden: "!data.designTheme || (data.mode !== 'separatedButtons' && Number(data.countStates) !== 1)",
+        });
+        fields.push({
+            name: 'designThemeGlow',
+            type: 'checkbox',
+            label: 'design_theme_glow',
+            tooltip: 'design_theme_glow_tooltip',
+            noBinding: true,
+            hidden: "!data.designTheme || (data.mode !== 'separatedButtons' && Number(data.countStates) !== 1)",
+        });
+        fields.push({
+            name: 'designThemeLabel',
+            type: 'select',
+            label: 'design_theme_label',
+            tooltip: 'design_theme_label_tooltip',
+            options: [
+                // empty: text, with separated buttons the secondary text (as before this option)
+                { value: '', label: 'design_theme_label_auto' },
+                { value: 'text', label: 'design_theme_label_text' },
+                { value: 'muted', label: 'design_theme_label_muted' },
+            ],
+            default: '',
             noBinding: true,
             hidden: '!data.designTheme',
         });

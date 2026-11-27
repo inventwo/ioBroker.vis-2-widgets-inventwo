@@ -24,7 +24,7 @@ Im Bearbeitungsmodus zeigt das Widget seinen Inhalt, ändert aber nichts. Probie
 | Bereich | Was er tut |
 |---|---|
 | **Theme** | Eine Karte je Theme mit kleiner Vorschau. Ein Tipp auf eine Karte macht dieses Theme zum aktiven Theme. |
-| **Farben** (Akzent, View-Hintergrund, Fläche, Text, Rahmenfarbe, Schattenfarbe, …) | Runde Farbchips mit Vorschlägen. Ein Tipp setzt diese Farbe im aktiven Theme. Der letzte Knopf (Regenbogen, Pipette) öffnet einen Farbwähler für eine eigene Farbe, inklusive Deckkraft: Beim Ziehen folgen die gekoppelten Widgets live. |
+| **Farben** (Akzent, View-Hintergrund, Karte, Text, Rahmenfarbe, Schattenfarbe, …) | Runde Farbchips mit Vorschlägen. Ein Tipp setzt diese Farbe im aktiven Theme. Der letzte Knopf (Regenbogen, Pipette) öffnet einen Farbwähler für eine eigene Farbe, inklusive Deckkraft: Beim Ziehen folgen die gekoppelten Widgets live. |
 | **Zahlen** (Eckenradius, Rahmenbreite, Schatten-Versatz, -Unschärfe und -Ausdehnung) | Schieberegler mit dem Wert in px. |
 | **Rahmenstil** | Knöpfe: Keiner, Durchgezogen, Gestrichelt, Gepunktet, Doppelt, Rille, Grat, Vertieft, Erhaben. |
 | **Schriftart** | Knöpfe mit Schriftvorschlägen, jeweils in der eigenen Schrift dargestellt. **Standard** = Schrift der View. |

@@ -275,6 +275,10 @@ It shows a preview first, can write the result into a new project or back up the
 -->
 ### **WORK IN PROGRESS**
 - Marquee widget: border radius, border and outer shadow (also usable via themes and presets), so it can look like the Universal widget
+- Universal: an empty outer shadow color now means no shadow (before, the default card shadow of MUI was shown)
+- Presets on theme-coupled widgets: values that use the theme CSS variables (`var(--iw-…)`, e.g. a shadow color with `color-mix(...)`) are applied now instead of being left out; empty theme fields of a coupled widget are no longer stored as "not set", so applying the preset does not clear them in other widgets
+- **Themes:** new theme color **Icons / content** (`icon`, CSS variable `--iw-icon`) for the icons and content of the Universal widget and the calendar header arrows, separate from **Secondary text**; built-in themes start with their previous secondary text color, themes without the value fall back to it
+- **Themes:** new theme colors **Icons on accent** (`onAccentIcon`), **Shadow color (tiles & buttons)** (`shadowTile`, the previous shadow color is now for cards; in the built-in themes both start with the same value) and **Glow** (`glow`, defaults to the accent color with 40 % opacity); Universal widget: new settings **Active state** (accent fill or subtle with accent icon), **Glow in active state** and **Label** (text or secondary text) in the group "inventwo - Theme"; with theme background "None" the theme sets no shadow; Universal presets save and apply these settings (never the theme coupling itself)
 
 ### 3.0.0 (2026-11-26)
 - **Themes:** couple any inventwo widget to a theme (colors, corners, border, shadow, font) in the new attribute group "inventwo - Theme"; own values always win, decoupling keeps the current look. Twelve built-in themes: Graphite, Linen, Ocean, Glass, Retro 98, Neo Brutal, Synthwave, Terminal, Soft Pastel, Night Vision, High Contrast, Forest

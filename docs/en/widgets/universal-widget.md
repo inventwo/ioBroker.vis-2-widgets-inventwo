@@ -53,7 +53,7 @@ Most style groups have a **From widget** field. Select another Universal Widget 
 In the group **inventwo - Presets** you can copy and paste the design of a tile, save it as a named preset, apply it to several selected widgets at once, and export or import presets as a file. Only the design is transferred, never datapoints, texts, icons or actions. → [Presets](../design-presets.md)
 
 ### Themes
-In the group **inventwo - Theme** you couple a tile to a theme: background, colors, border, corners and shadow then come from the theme and change together with it, own values win. **Theme background** chooses whether the tile uses the tile surface, the card surface or keeps its own background. → [Themes](../themes.md)
+In the group **inventwo - Theme** you couple a tile to a theme: background, colors, border, corners and shadow then come from the theme and change together with it, own values win. **Theme background** chooses whether the tile uses the tile surface, the card surface or keeps its own background. **Active state** chooses how the active state looks (full accent fill or subtle with the icon in accent color), **Glow in active state** adds a glow in accent color, **Label** the text color in the inactive state. → [Themes](../themes.md)
 
 ---
 

@@ -7,6 +7,7 @@ import {
     THEME_TOKENS,
     type ThemeTokenKey,
     type ThemeTokens,
+    completeTokens,
     getTokenDef,
     isThemeTokenKey,
     sanitizeTokenValue,
@@ -31,7 +32,7 @@ export interface ThemeInfo {
     id: string;
     name: string;
     order: number;
-    /** Complete; values missing in the data points are taken from DEFAULT_TOKENS */
+    /** Complete; values missing in the data points follow `completeTokens` (fallback token, then DEFAULT_TOKENS) */
     tokens: ThemeTokens;
 }
 
@@ -124,7 +125,7 @@ function buildThemes(): ThemeInfo[] {
                 id,
                 name: raw.name,
                 order: raw.order,
-                tokens: { ...DEFAULT_TOKENS, ...(tokenValues.get(id) || {}) },
+                tokens: completeTokens(tokenValues.get(id) || {}, id),
             }))
             .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
     }
@@ -624,15 +625,17 @@ export const themeStore = {
         const displayName = cleanName(name, 'Theme');
         const existing = [...channels.keys()];
         const themeId = id && isValidThemeId(id) && !channels.has(id) ? id : themeIdFromName(displayName, existing);
-        const values: ThemeTokens = { ...DEFAULT_TOKENS };
+        const given: Partial<ThemeTokens> = {};
         if (tokens) {
             THEME_TOKENS.forEach(def => {
                 const value = sanitizeTokenValue(def.key, tokens[def.key]);
                 if (value !== undefined) {
-                    values[def.key] = value;
+                    given[def.key] = value;
                 }
             });
         }
+        // e.g. an imported file from an older version without `icon`
+        const values = completeTokens(given);
         const order = nextOrder();
 
         await ensureBaseObjects(conn);

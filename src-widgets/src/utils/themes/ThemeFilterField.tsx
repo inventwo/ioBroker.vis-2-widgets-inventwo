@@ -78,7 +78,7 @@ class ThemeFilterField extends React.Component<ThemeFilterFieldProps, ThemeFilte
 
     render(): React.JSX.Element {
         const themes = themeStore.getThemes();
-        const selected = parseThemeFilter(this.props.data[this.props.attr]);
+        const selected = parseThemeFilter(this.props.data?.[this.props.attr]);
         const unknown = selected.filter(id => !themes.some(theme => theme.id === id));
 
         return (
