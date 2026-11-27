@@ -111,6 +111,22 @@ const STATIC_MAPPINGS: Record<string, ThemeMapping> = (() => {
 
     const marquee: ThemeMapping = {};
     add(marquee, 'surface', 'backgroundColor');
+    add(marquee, 'border', 'borderColor');
+    add(
+        marquee,
+        'radius',
+        'borderRadiusTopLeft',
+        'borderRadiusTopRight',
+        'borderRadiusBottomRight',
+        'borderRadiusBottomLeft',
+    );
+    add(marquee, 'borderWidth', 'borderSizeTop', 'borderSizeBottom', 'borderSizeLeft', 'borderSizeRight');
+    add(marquee, 'borderStyle', 'borderStyle');
+    add(marquee, 'shadow', 'outerShadowColor');
+    add(marquee, 'shadowX', 'outerShadowX');
+    add(marquee, 'shadowY', 'outerShadowY');
+    add(marquee, 'shadowBlur', 'outerShadowBlur');
+    add(marquee, 'shadowSize', 'outerShadowSize');
 
     const valueList: ThemeMapping = {};
     add(valueList, 'accent', 'bulletColor');

@@ -32,6 +32,9 @@ export const MARQUEE_DESIGN_SPEC: DesignSpec = {
     version: 1,
     groups: {
         common: ['direction', 'speed', 'textRepeat', 'gap', 'backgroundColor'],
+        attr_group_css_border_radius: true,
+        attr_group_css_border: true,
+        attr_group_css_outer_shadow: true,
     },
 };
 
@@ -205,6 +208,195 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
                     ],
                 },
                 {
+                    name: 'attr_group_css_border_radius',
+                    label: 'attr_group_css_border_radius',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'borderRadiusStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetMarquee',
+                            all: true,
+                        },
+                        {
+                            name: 'borderRadiusTopLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 12,
+                            label: 'top_left',
+                            hidden: '!!data.borderRadiusStyleFromWidget',
+                        },
+                        {
+                            name: 'borderRadiusTopRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'top_right',
+                            hidden: '!!data.borderRadiusStyleFromWidget',
+                        },
+                        {
+                            name: 'borderRadiusBottomRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 12,
+                            label: 'bottom_right',
+                            hidden: '!!data.borderRadiusStyleFromWidget',
+                        },
+                        {
+                            name: 'borderRadiusBottomLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 0,
+                            label: 'bottom_left',
+                            hidden: '!!data.borderRadiusStyleFromWidget',
+                        },
+                    ],
+                },
+                {
+                    name: 'attr_group_css_border',
+                    label: 'attr_group_css_border',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'borderStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetMarquee',
+                            all: true,
+                        },
+                        {
+                            name: 'borderColor',
+                            type: 'color',
+                            label: 'border_color',
+                        },
+                        {
+                            name: 'borderSizeTop',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 0,
+                            label: 'size_top',
+                            hidden: '!!data.borderStyleFromWidget',
+                        },
+                        {
+                            name: 'borderSizeBottom',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 0,
+                            label: 'size_bottom',
+                            hidden: '!!data.borderStyleFromWidget',
+                        },
+                        {
+                            name: 'borderSizeLeft',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 0,
+                            label: 'size_left',
+                            hidden: '!!data.borderStyleFromWidget',
+                        },
+                        {
+                            name: 'borderSizeRight',
+                            type: 'slider',
+                            min: 0,
+                            max: 10,
+                            step: 1,
+                            default: 0,
+                            label: 'size_right',
+                            hidden: '!!data.borderStyleFromWidget',
+                        },
+                        {
+                            name: 'borderStyle',
+                            type: 'select',
+                            options: [
+                                { value: 'none', label: 'none' },
+                                { value: 'dashed', label: 'dashed' },
+                                { value: 'dotted', label: 'dotted' },
+                                { value: 'double', label: 'double' },
+                                { value: 'groove', label: 'groove' },
+                                { value: 'inset', label: 'inset' },
+                                { value: 'outset', label: 'outset' },
+                                { value: 'ridge', label: 'ridge' },
+                                { value: 'solid', label: 'solid' },
+                            ],
+                            default: 'none',
+                            label: 'border_style',
+                            hidden: '!!data.borderStyleFromWidget',
+                        },
+                    ],
+                },
+                {
+                    name: 'attr_group_css_outer_shadow',
+                    label: 'attr_group_css_outer_shadow',
+                    fields: [
+                        {
+                            label: 'from_widget',
+                            name: 'outerShadowStyleFromWidget',
+                            type: 'widget',
+                            tpl: 'tplInventwoWidgetMarquee',
+                            all: true,
+                        },
+                        {
+                            name: 'outerShadowColor',
+                            type: 'color',
+                            label: 'outer_shadow_color',
+                            default: 'rgb(0,0,0)',
+                            hidden: '!!data.outerShadowStyleFromWidget',
+                        },
+                        {
+                            name: 'outerShadowX',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 2,
+                            label: 'x_offset',
+                            hidden: '!!data.outerShadowStyleFromWidget',
+                        },
+                        {
+                            name: 'outerShadowY',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 2,
+                            label: 'y_offset',
+                            hidden: '!!data.outerShadowStyleFromWidget',
+                        },
+                        {
+                            name: 'outerShadowBlur',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 2,
+                            label: 'blur',
+                            hidden: '!!data.outerShadowStyleFromWidget',
+                        },
+                        {
+                            name: 'outerShadowSize',
+                            type: 'slider',
+                            min: 0,
+                            max: 50,
+                            step: 1,
+                            default: 1,
+                            label: 'size',
+                            hidden: '!!data.outerShadowStyleFromWidget',
+                        },
+                    ],
+                },
+                {
                     name: 'attr_group_theme',
                     label: 'attr_group_theme',
                     fields: createThemeFields(getMarqueeWidgetInfo) as any,
@@ -225,6 +417,8 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
             visDefaultStyle: {
                 width: 300,
                 height: 40,
+                'overflow-x': 'visible',
+                'overflow-y': 'visible',
             },
             visPrev: 'widgets/vis-2-widgets-inventwo/img/vis-widget-inventwo-marquee.png',
             visOrder: 9,
@@ -250,6 +444,17 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
         const gap = this.state.rxData.gap ?? 50;
         const pauseOnHover = this.state.rxData.pauseOnHover;
         const backgroundColor = this.state.rxData.backgroundColor;
+
+        const outerShadow = this.getStyle(
+            'outerShadowStyleFromWidget',
+            this.groupAttrs.attr_group_css_outer_shadow,
+        );
+        const border = this.getStyle('borderStyleFromWidget', this.groupAttrs.attr_group_css_border);
+        const radius = this.getStyle('borderRadiusStyleFromWidget', this.groupAttrs.attr_group_css_border_radius);
+        const boxShadow = outerShadow.outerShadowColor
+            ? `${outerShadow.outerShadowX ?? 0}px ${outerShadow.outerShadowY ?? 0}px ${outerShadow.outerShadowBlur ?? 0}px ${outerShadow.outerShadowSize ?? 0}px ${outerShadow.outerShadowColor}`
+            : undefined;
+        const borderRadius = `${radius.borderRadiusTopLeft ?? 0}px ${radius.borderRadiusTopRight ?? 0}px ${radius.borderRadiusBottomRight ?? 0}px ${radius.borderRadiusBottomLeft ?? 0}px`;
 
         const isVertical = direction === 'up' || direction === 'down';
         const { textWidth, textHeight } = this.state;
@@ -339,6 +544,15 @@ export default class InventwoWidgetMarquee extends InventwoGeneric<MarqueeRxData
                     flexDirection: isVertical ? 'column' : 'row',
                     background: backgroundColor || undefined,
                     position: 'relative',
+                    boxSizing: 'border-box',
+                    boxShadow,
+                    borderRadius,
+                    borderColor: border.borderColor,
+                    borderStyle: border.borderStyle,
+                    borderTopWidth: `${border.borderSizeTop ?? 0}px`,
+                    borderBottomWidth: `${border.borderSizeBottom ?? 0}px`,
+                    borderLeftWidth: `${border.borderSizeLeft ?? 0}px`,
+                    borderRightWidth: `${border.borderSizeRight ?? 0}px`,
                 }}
             >
                 {styleContent ? <style>{styleContent}</style> : null}

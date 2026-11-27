@@ -38,6 +38,12 @@ Font family, font size, text color, font weight, and letter spacing are all set 
 
 ---
 
+## Corners, Border and Shadow
+
+Like the Universal Widget, the Marquee Widget has the groups **Border radius**, **Border** and **Outer shadow**. Set the radius per corner, border width per side with style and color, and the shadow offset, blur, size and color. Each group can also be taken from another Marquee Widget via **From widget**.
+
+---
+
 ## Tips
 
 - **Avoid gaps:** If your text is short and you see a gap between the end of one pass and the start of the next, increase **Text copies** until the gap disappears.

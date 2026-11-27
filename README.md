@@ -273,6 +273,9 @@ It shows a preview first, can write the result into a new project or back up the
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- Marquee widget: border radius, border and outer shadow (also usable via themes and presets), so it can look like the Universal widget
+
 ### 3.0.0 (2026-11-26)
 - **Themes:** couple any inventwo widget to a theme (colors, corners, border, shadow, font) in the new attribute group "inventwo - Theme"; own values always win, decoupling keeps the current look. Twelve built-in themes: Graphite, Linen, Ocean, Glass, Retro 98, Neo Brutal, Synthwave, Terminal, Soft Pastel, Night Vision, High Contrast, Forest
 - Every theme value is a datapoint under `vis-2-widgets-inventwo.0.themes` (active theme in `themes.active`), so scripts can switch themes or change single values; the active theme is also available as CSS variables (`--iw-*`, e.g. `var(--iw-background)` as view background)

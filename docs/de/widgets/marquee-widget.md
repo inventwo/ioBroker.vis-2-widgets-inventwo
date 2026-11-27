@@ -38,6 +38,12 @@ Schriftfamilie, Schriftgröße, Textfarbe, Schriftstärke und Buchstabenabstand 
 
 ---
 
+## Ecken, Rahmen und Schatten
+
+Wie das Universal Widget hat das Marquee Widget die Gruppen **Rahmenradius**, **Rahmen** und **Äußerer Schatten**. Der Radius lässt sich pro Ecke einstellen, die Rahmenbreite pro Seite samt Stil und Farbe, beim Schatten Versatz, Unschärfe, Größe und Farbe. Jede Gruppe kann außerdem über **Von Widget** von einem anderen Marquee Widget übernommen werden.
+
+---
+
 ## Tipps
 
 - **Lücken vermeiden:** Wenn dein Text kurz ist und du eine Lücke zwischen dem Ende eines Durchlaufs und dem Start des nächsten siehst, erhöhe **Textkopien**, bis die Lücke verschwindet.
